@@ -29,6 +29,7 @@ class SitePageModal extends React.Component {
     }            
 
     handleSaved = () => {
+        this.setState({ setShow: false });
         this.props.handleAddEdit(this.state.sitePage.appSiteId);
     }
 

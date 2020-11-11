@@ -2,23 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Jumbotron, Image, Container,Breadcrumb} from 'react-bootstrap';
 import { appSiteService } from '../../_services';
+import parse from 'html-react-parser';
 
 const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
 
 function List({ match }) {
     const { path } = match;
-    const [appSites, setAppSites] = useState(null);
+    const [appSites, setAppSites] = useState(null)
+
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        appSiteService.getAppSites('',0,0).then(x => setAppSites(x.result));
+        setLoading(true)
+        appSiteService.getAppSites('',0,0).then((x) => { 
+            setLoading(false)
+            setAppSites(x.result)}
+        );
     }, []);
 
     function deleteAppSite(appSiteId) {
+        setLoading(true)
         setAppSites(appSites.map(x => {
             if (x.appSiteId === appSiteId) { x.isDeleting = true; }
             return x;
         }));
-        appSiteService.deleteAppSite(appSiteId).then(() => {
+        appSiteService.deleteAppSite(appSiteId).then(() => {            
+            setLoading(false)
             setAppSites(appSites => appSites.filter(x => x.appSiteId !== appSiteId));
         });
     }
@@ -28,11 +37,11 @@ function List({ match }) {
             <Breadcrumb>
                 <Breadcrumb.Item href="/">Home</Breadcrumb.Item>                
                 <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>                
-                <Breadcrumb.Item active>Ristoranti</Breadcrumb.Item>
+                <Breadcrumb.Item active>Siti</Breadcrumb.Item>
             </Breadcrumb>
             <Jumbotron>
-                <h1>Ristoranti</h1>
-                <p>Elenco dei ristoranti disponibili: ogni sito viene collegato a un singolo ristorante e visualizza le relative informazioni.</p>
+                <h1>Siti</h1>
+                <p>Elenco dei siti disponibili.</p>
             </Jumbotron>
             
             <Link to={`${path}/add/0`} className="btn btn-sm btn-success mb-2">nuovo</Link>
@@ -50,7 +59,7 @@ function List({ match }) {
                             <td><Image src={baseImageUrl+appSite.companyLogo} fluid /></td>
                             <td>
                                 <b>{appSite.name}</b><br />
-                                <p>{appSite.homeDescription}</p>
+                                {parse(appSite.description)}
                             </td>
                             <td style={{ whiteSpace: 'nowrap' }}>
                                 <Link to={`${path}/edit/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">dettagli</Link>
@@ -64,7 +73,7 @@ function List({ match }) {
                             </td>
                         </tr>
                     )}
-                    {!appSites &&
+                    {!appSites && loading &&
                         <tr>
                             <td colSpan="4" className="text-center">
                                 <span className="spinner-border spinner-border-lg align-center"></span>

@@ -11,9 +11,6 @@ const baseEditorPlugins = [
 ];
 const baseEditorToolbar = 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help';
 
-// Guarda BOOTSTRAP
-//https://react-bootstrap.netlify.app/components/navs/#tabs
-
 const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
 
 class AddEdit extends React.Component {
@@ -266,15 +263,12 @@ class AddEdit extends React.Component {
                         </Form.Text>
                     </Form.Group>
 
-                    {this.state.appSite && this.state.appSite.appSiteId > 0 && !this.state.appSite.isDefault &&
+                    {/* {this.state.appSite && this.state.appSite.appSiteId > 0 && !this.state.appSite.isDefault &&
                     <div>
                         <Button onClick={this.setDefaultAppSite} variant="success">
                             Imposta come Ristorante di Default
                         </Button> 
-                    </div>
-                    }
-                    
-
+                    </div>} */}                                    
                 </Card.Body>
                 <Card.Footer>
                     <Button onClick={this.onSubmit} variant="success">

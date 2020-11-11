@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -77,16 +77,15 @@ function AddEdit({ history, match }) {
     return (
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
             {({ errors, touched, isSubmitting, setFieldValue }) => {
-                //useEffect(() => {
-                    if (!isAddMode) {
-                        // get user and set form fields
-                        accountService.getById(id).then(user => {
-                            const fields = ['title', 'firstName', 'lastName', 'email', 'role'];
-                            fields.forEach(field => setFieldValue(field, user[field], false));
-                        });
-                    }
-                //}, []);
-
+                
+                if (!isAddMode) {
+                    // get user and set form fields
+                    accountService.getById(id).then(user => {
+                        const fields = ['title', 'firstName', 'lastName', 'email', 'role'];
+                        fields.forEach(field => setFieldValue(field, user[field], false));
+                    });
+                }
+                
                 return (
                     <Form>
                         <h1>{isAddMode ? 'Add User' : 'Edit User'}</h1>

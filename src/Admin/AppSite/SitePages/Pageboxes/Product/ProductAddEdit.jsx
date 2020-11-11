@@ -52,7 +52,7 @@ class ProductAddEdit extends React.Component {
     }
 
     handleChangeNumber(evt) {
-        const value = parseFloat(evt.target.value);
+        const value = parseFloat(evt.target.value || 0);
         this.setState({
             product: {
                 ...this.state.product,
@@ -137,7 +137,7 @@ class ProductAddEdit extends React.Component {
                     alertService.success('Prodotto aggiunto con successo', { keepAfterRouteChange: true });
                 }                
                 this.handleClose();  
-                this.props.handleAddEdit(this.state.product.appSiteId, this.product.sitePageId, this.product.pageBoxId);                                              
+                this.props.handleAddEdit(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId);                                              
             })
             .catch(error => {
                 alertService.error(error);
@@ -153,7 +153,7 @@ class ProductAddEdit extends React.Component {
                     alertService.success('Aggiornamento riuscito', { keepAfterRouteChange: true });
                 }                                
                 this.handleClose();
-                this.props.handleAddEdit(this.state.product.appSiteId, this.state.product.sitePageId, this.state.product.pageBoxId);                            
+                this.props.handleAddEdit(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId);                            
             })
             .catch(error => {
                 alertService.error(error);

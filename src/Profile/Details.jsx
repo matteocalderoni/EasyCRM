@@ -19,15 +19,12 @@ function Details({ match }) {
                 <Card.Body>
                     <Card.Title>Profilo</Card.Title>
                     <Card.Text>
-                    <p>
                         <strong>Nome: </strong> {user.title} {user.firstName} {user.lastName}<br />
                         <strong>Email: </strong> {user.email}
-                    </p>
                     </Card.Text>
                     <Link to={`${path}/update`}>Modifica profilo</Link>
                 </Card.Body>
             </Card>
-
         </div>
     );
 }

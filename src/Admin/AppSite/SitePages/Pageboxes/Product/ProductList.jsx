@@ -47,7 +47,7 @@ class ProductList extends React.Component{
                     <h2>Contenitore <b>Prodotti</b></h2>
                 </Jumbotron>
 
-                <ProductAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} productId={0} handleAddEdit={(rId,sId,pId) => this.handleAddEdit(rId,sId,pId)} />
+                <ProductAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} productId={0} handleAddEdit={(appSiteId, sitePageId, pageBoxId) => this.handleAddEdit(appSiteId, sitePageId, pageBoxId)} />
                 <ProductTypeList appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId}  />
                 
                 <ListGroup className="text-left mart2">                                    

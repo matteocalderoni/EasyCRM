@@ -9,17 +9,24 @@ const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
 function SitePageList ({ match }){
     const appSiteId = parseInt(match.params.appSiteId);
     const [sitePages, setSitePages] = useState(null);
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        appSiteService.getPagesOfAppSite(appSiteId).then(x => setSitePages(x.result));
-    }, []);    
+        setLoading(true)
+        appSiteService.getPagesOfAppSite(appSiteId).then((x) => { 
+            setLoading(false)
+            setSitePages(x.result)}
+        );
+    }, [appSiteId]);    
     
     function deleteSitePage(sitePage) {
+        setLoading(true)
         setSitePages(sitePages.map(x => {
             if (x.appSiteId === appSiteId && x.sitePageId === sitePage.sitePageId) { x.isDeleting = true; }
             return x;
         }));
-        appSiteService.deleteAppSite(appSiteId, sitePage.sitePageId).then(() => {
+        appSiteService.deleteSitePage(appSiteId, sitePage.sitePageId).then(() => {
+            setLoading(false)
             appSiteService.getPagesOfAppSite(appSiteId).then(x => setSitePages(x.result || []));
         });        
     }
@@ -43,7 +50,7 @@ function SitePageList ({ match }){
                     Utilizzare immagini ottimizzate per un caricamento rapido.
                 </p>
             </Jumbotron>
-            <SitePageModal appSiteId={appSiteId} sitePageId={0} handleSaved={(appSiteId) => handleAddEdit(appSiteId)} />
+            <SitePageModal appSiteId={appSiteId} sitePageId={0} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
             
             <Row>
             {sitePages && sitePages.map(sitePage =>                                    
@@ -64,7 +71,7 @@ function SitePageList ({ match }){
                     </Card>                                            
                 </Col>                    
             )}                                    
-            {!sitePages &&                
+            {!sitePages && loading &&               
                 <Col className="text-center">
                     <span className="spinner-border spinner-border-lg align-center"></span>
                 </Col>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Container, Jumbotron, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Jumbotron, Row, Col, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function Overview({ match }) {
     const { path } = match;
@@ -7,8 +8,7 @@ function Overview({ match }) {
     return (
         <Container>
             <Jumbotron>
-                <h1>Admin</h1>
-                <p>Questa sezione è accessibile solo dagli utenti del ruolo admin.</p>
+                <h1>Dashboard</h1>
             </Jumbotron> 
             <Row>
                 <Col>
@@ -18,18 +18,18 @@ function Overview({ match }) {
                             <Card.Text>
                                 Creazione e modifica degli utenti con accesso ad area di gestione.
                             </Card.Text>
-                            <Button href={`${path}/users`} variant="primary">Vai</Button>
+                            <Link to={`${path}/users`} variant="primary">Vai</Link>
                         </Card.Body>                        
                     </Card>
                 </Col>
                 <Col>
                     <Card className="mart2">
                         <Card.Body>
-                            <Card.Title>Gestione ristoranti</Card.Title>
+                            <Card.Title>Gestione siti</Card.Title>
                             <Card.Text>
                                 Gestione delle sedi disponibili. Assegnazione orari e dipendenti.
                             </Card.Text>
-                            <Button href={`${path}/sites`} variant="primary">Vai</Button>
+                            <Link to={`${path}/sites`} variant="primary">Vai</Link>
                         </Card.Body>                        
                     </Card>
                 </Col>

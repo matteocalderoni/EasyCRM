@@ -1,5 +1,6 @@
 import React from 'react';
-import { Container, Jumbotron, Row, Col,Card, Button } from 'react-bootstrap';
+import { Container, Jumbotron, Row, Col,Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { accountService } from '../_services';
 
@@ -9,7 +10,7 @@ function Home() {
     return (
         <Container>
             <Jumbotron className="mart2">
-                <h1>Benvenuto {user.firstName}!</h1>
+                <h1>Benvenuto {user.firstName} {user.lastName}!</h1>
                 <p>Tramite questa sezione è possibile gestire i contenuti del sito: dati del ristorante, menù e blog.</p>
             </Jumbotron>
             <Row>
@@ -20,7 +21,7 @@ function Home() {
                             <Card.Text>
                                 Gestione profilo personale: modifica email e password.
                             </Card.Text>
-                            <Button href="/profile" variant="primary">Vai</Button>
+                            <Link to="/profile" variant="primary">Vai</Link>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -31,7 +32,7 @@ function Home() {
                             <Card.Text>
                                 Gestione contenuti del sito: ristoranti, menù e blog.
                             </Card.Text>
-                            <Button href="/admin" variant="primary">Vai</Button>
+                            <Link to="/admin" variant="primary">Vai</Link>
                         </Card.Body>
                     </Card>
                 </Col>

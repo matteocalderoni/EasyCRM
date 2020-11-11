@@ -19,7 +19,7 @@ function PageBoxList({ match }) {
 
     useEffect(() => {
         appSiteService.getBoxesOfPage(appSiteId, pageId).then(x => setPageBoxes(x.result || []));
-    }, []);  
+    }, [appSiteId, pageId]);  
 
     
     function deletePageBox(pageBox) {
