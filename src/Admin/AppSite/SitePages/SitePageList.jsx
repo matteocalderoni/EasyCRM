@@ -4,7 +4,7 @@ import { Container, Jumbotron, Card, Button, Row, Col, Breadcrumb } from 'react-
 import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 
-const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function SitePageList ({ match }){
     const appSiteId = parseInt(match.params.appSiteId);

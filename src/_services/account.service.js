@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { fetchWrapper, history } from '../_helpers';
 
 const userSubject = new BehaviorSubject(null);
-const baseUrl = `${process.env.REACT_APP_API_URL}/accounts`;
+const baseUrl = `${process.env.REACT_APP_API_URL}/Accounts`;
 
 export const accountService = {
     login,

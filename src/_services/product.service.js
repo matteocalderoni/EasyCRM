@@ -1,7 +1,7 @@
 //import { config } from 'config';
 import { fetchWrapper } from '../_helpers';
 
-const baseUrl = `${process.env.REACT_APP_API_URL}/product`;
+const baseUrl = `${process.env.REACT_APP_API_URL}/Aroduct`;
 
 export const productService = {
     getProductsOfBox,

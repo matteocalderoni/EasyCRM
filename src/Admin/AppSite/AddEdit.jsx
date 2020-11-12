@@ -11,7 +11,7 @@ const baseEditorPlugins = [
 ];
 const baseEditorToolbar = 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help';
 
-const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class AddEdit extends React.Component {
 

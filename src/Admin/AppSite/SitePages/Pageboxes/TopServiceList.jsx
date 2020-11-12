@@ -4,7 +4,7 @@ import { appSiteService } from '../../../../_services';
 import { TopServiceAddEdit } from './TopServiceAddEdit';
 import parse from 'html-react-parser';
 
-const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class TopServiceList extends React.Component{
 

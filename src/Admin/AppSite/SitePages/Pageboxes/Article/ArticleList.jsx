@@ -5,7 +5,7 @@ import { ArticleAddEdit } from './ArticleAddEdit';
 import { CategoryList } from './CategoryList';
 import parse from 'html-react-parser';
 
-const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class ArticleList extends React.Component{
 

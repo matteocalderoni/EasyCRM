@@ -5,7 +5,7 @@ import { Image, Form, Button, Modal, Row, Col } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import './article.css';
 
-const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 const baseEditorPlugins = [
     'advlist autolink lists link image charmap print preview anchor',
     'searchreplace visualblocks code fullscreen',

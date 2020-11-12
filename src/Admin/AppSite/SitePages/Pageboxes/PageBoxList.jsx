@@ -10,7 +10,7 @@ import { ArticleList } from './Article';
 import { SimpleMap } from '../../../../_components';
 import parse from 'html-react-parser';
 
-const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function PageBoxList({ match }) {
     const appSiteId = parseInt(match.params.appSiteId);

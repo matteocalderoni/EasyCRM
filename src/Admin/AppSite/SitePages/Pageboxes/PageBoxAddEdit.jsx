@@ -5,7 +5,7 @@ import { Form, Button, Card, Image } from 'react-bootstrap'
 import { BoxTypes } from '../../../../_helpers'
 import { Editor } from "@tinymce/tinymce-react";
 
-const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 const baseEditorPlugins = [
     'advlist autolink lists link image charmap print preview anchor',
     'searchreplace visualblocks code fullscreen',

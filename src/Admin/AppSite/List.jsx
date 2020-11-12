@@ -4,7 +4,7 @@ import { Jumbotron, Image, Container,Breadcrumb} from 'react-bootstrap';
 import { appSiteService } from '../../_services';
 import parse from 'html-react-parser';
 
-const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function List({ match }) {
     const { path } = match;

@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import { appSiteService } from '../_services';
 import { Image } from 'react-bootstrap';
 
-const baseImageUrl = `${process.env.REACT_APP_API_URL}/Resources/Images/`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
  
 const AnyReactComponent = ({ imageUrl }) => <div><Image src={baseImageUrl+imageUrl} /></div>;
  
