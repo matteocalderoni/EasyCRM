@@ -36,9 +36,10 @@ class Uploader extends Component {
       // Request made to the backend api 
       // Send formData object 
       fetchWrapper.postFile(`${baseUrl}/CloudUpload`, event.target.files[0])
-        .then(() => {
+        .then((result) => {
           this.setState({ isUploaded: true });
-          this.props.onFileNameChange(this.state.fileName);
+          //this.props.onFileNameChange(this.state.fileName);
+          this.props.onFileNameChange(result.fileName);
         }); 
     };         
      
