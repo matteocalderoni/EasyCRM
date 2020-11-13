@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Jumbotron, Image, Container,Breadcrumb} from 'react-bootstrap';
-import { appSiteService } from '../../_services';
+import { appSiteService, accountService } from '../../_services';
+import { Role } from '../../_helpers';
 import parse from 'html-react-parser';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function List({ match }) {
     const { path } = match;
-    const [appSites, setAppSites] = useState(null)
-
+    const user = accountService.userValue;
+    
+    const [appSites, setAppSites] = useState(null)    
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -33,7 +35,7 @@ function List({ match }) {
     }
 
     return (
-        <Container>
+        <Container fluid>
             <Breadcrumb>
                 <Breadcrumb.Item href="/">Home</Breadcrumb.Item>                
                 <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>                
@@ -41,10 +43,14 @@ function List({ match }) {
             </Breadcrumb>
             <Jumbotron>
                 <h1>Siti</h1>
-                <p>Elenco dei siti disponibili.</p>
+                <p>In questa sezione puoi visualizzare i tuoi siti.<br />
+                Tramite la sezione 'Dettagli' puoi modificare le informazioni relative ai tuoi riferimenti.<br />
+                Tramite la sezione 'Pagine' puoi visualizzare, modificare e aggiungere le pagine del relativo sito.</p>
             </Jumbotron>
             
-            <Link to={`${path}/add/0`} className="btn btn-sm btn-success mb-2">nuovo</Link>
+            {user.role === Role.Admin &&
+                <Link to={`${path}/add/0`} className="btn btn-sm btn-success mb-2">nuovo</Link>
+            }
             <table className="table table-striped">
                 <thead>
                     <tr>

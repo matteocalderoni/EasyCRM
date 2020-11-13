@@ -195,7 +195,7 @@ class ArticleAddEdit extends React.Component {
                     <Row>
                         <Col sm={4} className="text-center">
                             <Image src={baseImageUrl+this.state.article.imageUrl} fluid />                    
-                            <Uploader fileName={this.state.article.imageUrl} onFileNameChange={this.handleFileName} />      
+                            <Uploader prefix={this.state.article.appSiteId} fileName={this.state.article.imageUrl} onFileNameChange={this.handleFileName} />      
                             <small>Utilizzare immagini con formato 640 X 640 px.</small>
                         </Col>
                         <Col sm={4}>

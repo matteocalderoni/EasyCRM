@@ -150,7 +150,7 @@ class TopServiceAddEdit extends React.Component {
                     
                     <div className="text-center">
                         <Image src={baseImageUrl+this.state.imageUrl} fluid />                    
-                        <Uploader fileName={this.state.imageUrl} onFileNameChange={this.handleFileName} />      
+                        <Uploader prefix={this.state.appSiteId} fileName={this.state.imageUrl} onFileNameChange={this.handleFileName} />      
                         <small>Utilizzare immagini con formato 640 X 640 px.</small>
                     </div>
 

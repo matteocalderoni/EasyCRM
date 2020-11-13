@@ -49,7 +49,7 @@ class OpenTimeList extends React.Component{
     
     render() {
         return (
-            <Container>
+            <Container fluid>
                 <Jumbotron>
                     <h2>Contenitore <b>Giorni di servizio</b></h2>
                 </Jumbotron>

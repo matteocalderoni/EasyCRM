@@ -156,7 +156,7 @@ class PageBoxAddEdit extends React.Component {
                 {this.state.pageBox && this.state.pageBox.boxType && (this.state.pageBox.boxType === 8 || this.state.pageBox.boxType === 9) &&
                 <div className="text-center mart2">
                     <Image src={baseImageUrl+this.state.pageBox.imageUrl} fluid />
-                    <Uploader fileName={this.state.pageBox.imageUrl} onFileNameChange={this.handleFileName} />      
+                    <Uploader prefix={this.state.pageBox.appSiteId} fileName={this.state.pageBox.imageUrl} onFileNameChange={this.handleFileName} />      
                     <small>Utilizzare immagini con formato 640 X 640 px.</small>
                 </div>
                 }                            

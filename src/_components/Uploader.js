@@ -11,7 +11,7 @@ class Uploader extends Component {
       this.state = { 
         // Initially, no file is selected 
         selectedFile: null,
-        fileName: props.fileName,
+        fileName: props.fileName,        
         isUploaded: true        
       };                   
     }
@@ -33,9 +33,11 @@ class Uploader extends Component {
         fileName: event.target.files[0].name,
         isUploaded: false
       });                 
+
+      const fileName = (this.props.prefix + '/' || '') + new Date().getTime() + '.jpeg';
       // Request made to the backend api 
       // Send formData object 
-      fetchWrapper.postFile(`${baseUrl}/CloudUpload`, event.target.files[0])
+      fetchWrapper.postFile(`${baseUrl}/CloudUpload`, event.target.files[0], fileName)
         .then((result) => {
           this.setState({ isUploaded: true });
           //this.props.onFileNameChange(this.state.fileName);

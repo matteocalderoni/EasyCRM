@@ -179,7 +179,7 @@ class ProductAddEdit extends React.Component {
 
                     <div className="text-center">
                         <Image src={baseImageUrl+this.state.product.imageUrl} fluid />                    
-                        <Uploader fileName={this.state.product.imageUrl} onFileNameChange={this.handleFileName} />      
+                        <Uploader prefix={this.state.product.appSiteId} fileName={this.state.product.imageUrl} onFileNameChange={this.handleFileName} />      
                         <small>Utilizzare immagini con formato 640 X 640 px.</small>
                     </div>                    
 

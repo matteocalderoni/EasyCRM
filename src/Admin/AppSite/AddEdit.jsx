@@ -146,7 +146,7 @@ class AddEdit extends React.Component {
 
     render() {
         return (            
-          <Container>
+          <Container fluid>
               <Breadcrumb>
                 <Breadcrumb.Item href="/">Home</Breadcrumb.Item>                
                 <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>          
@@ -154,7 +154,7 @@ class AddEdit extends React.Component {
                 <Breadcrumb.Item active>Siteo {this.state.appSiteId}</Breadcrumb.Item>
             </Breadcrumb>
               <Jumbotron>
-                <h1>Gestione dati del <b>Sito</b></h1>
+                <h1>Gestione dati del <b>Sito</b></h1>                
                 <Row>
                     <Col sm={2}>
                         <Image src={baseImageUrl+this.state.appSite.companyLogo} fluid />                    
@@ -164,14 +164,14 @@ class AddEdit extends React.Component {
                             <Form.Label>Nome del Sito</Form.Label>
                             <Form.Control type="text" size="lg" className="form-control" name="name" value={this.state.appSite.name} onChange={this.handleChange} maxLength={200} />
                             <Form.Text className="text-muted">
-                                Ragione sociale del Ristorante (max 200 caratteri).
+                                Ragione sociale della tua attività (max 200 caratteri).
                             </Form.Text>
                         </Form.Group>
                     </Col>
                 </Row>              
                 <Row>
                     <Col sm={8}>
-                        <Uploader fileName={this.state.appSite.companyLogo} onFileNameChange={this.handleFileName} />                                               
+                        <Uploader prefix={this.state.appSite.appSiteId} fileName={this.state.appSite.companyLogo} onFileNameChange={this.handleFileName} />                                               
                     </Col>
                     <Col className="text-right">
                         <Button onClick={this.onSubmit} variant="success">

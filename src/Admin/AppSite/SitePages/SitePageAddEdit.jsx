@@ -75,7 +75,7 @@ class SitePageAddEdit extends React.Component {
     }
 
     handleEditorChange = (content, editor) => {
-        console.log('Content was updated:', content);
+        //console.log('Content was updated:', content);
         this.setState({
             sitePage: {
                 ...this.state.sitePage,
@@ -139,18 +139,22 @@ class SitePageAddEdit extends React.Component {
         return (            
           <>
             <Card>
-                <Card.Img src={baseImageUrl+this.state.sitePage.imageUrl} />
+                {this.state.sitePage.sitePageId > 0 &&
+                    <Card.Img src={baseImageUrl+this.state.sitePage.imageUrl} />
+                }
                 <Card.Body>
-                    <div>
-                        <Uploader fileName={this.state.sitePage.imageUrl} onFileNameChange={this.handleFileName} />      
-                        <small>Questa immagine viene utilizzate come sfondo della pagina. Utilizzare un immagine con formato 1920 X 1080 px.</small>
-                    </div>
+                    {this.state.sitePage.sitePageId > 0 &&
+                        <div>
+                            <Uploader prefix={this.state.sitePage.appSiteId} fileName={this.state.sitePage.imageUrl} onFileNameChange={this.handleFileName} />      
+                            <small>Questa immagine viene utilizzate come sfondo della pagina. Utilizzare un immagine con formato 1920 X 1080 px.</small>
+                        </div>
+                    }
                     
                     <Form.Group>
                         <Form.Label>Ordinamento</Form.Label>
                         <input type="number" className="form-control" name="sortId" value={this.state.sitePage.sortId} onChange={this.handleChangeNumber}  />
                         <Form.Text className="text-muted">
-                            Valore per ordinamento crescente.
+                            Le pagine vengono visualizzate in ordine crescente.
                         </Form.Text>
                     </Form.Group>      
 
@@ -162,19 +166,22 @@ class SitePageAddEdit extends React.Component {
                         </Form.Text>
                     </Form.Group>                                                     
 
-
-                    <label>Testo per slide</label>
-                    <Editor
-                        apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                        initialValue={this.state.sitePage.slideText}
-                        init={{
-                        height: 500,
-                        menubar: false,
-                        plugins: baseEditorPlugins,
-                        toolbar: baseEditorToolbar
-                        }}
-                        onEditorChange={this.handleEditorChange}
-                    />
+                    {this.state.sitePage.sitePageId > 0 &&
+                        <div>
+                            <label>Testo per slide</label>
+                            <Editor
+                                apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                initialValue={this.state.sitePage.slideText}
+                                init={{
+                                height: 500,
+                                menubar: false,
+                                plugins: baseEditorPlugins,
+                                toolbar: baseEditorToolbar
+                                }}
+                                onEditorChange={this.handleEditorChange}
+                            />
+                        </div>
+                    }
 
                     <Form.Group>
                         <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.sitePage.isPublished} onChange={this.handleChangeBool} />
@@ -186,7 +193,7 @@ class SitePageAddEdit extends React.Component {
                 </Card.Body>    
                 <Card.Footer>
                     <Button onClick={this.onSubmit} variant="success">
-                        Salva
+                        Salva le modifiche
                     </Button> 
                 </Card.Footer>
             </Card>                    

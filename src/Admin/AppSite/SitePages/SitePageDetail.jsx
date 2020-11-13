@@ -6,7 +6,7 @@ function SitePageDetail({ match }) {
     const { appSiteId, pageId } = match.params;  
 
     return (
-        <Container>
+        <Container fluid>
             <Breadcrumb>
                 <Breadcrumb.Item href="/">Home</Breadcrumb.Item>                
                 <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>          

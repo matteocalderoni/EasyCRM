@@ -15,7 +15,11 @@ code {
 .mart0 { margin-top: 0px; }
 .mart2 { margin-top: 2%; }
 .mart5 { margin-top: 5%; }
+.mart7 { margin-top: 7%; }
+.mart10 { margin-top: 10%; }
 
 .modal-90w { width: 90%; }
+
+.brand-logo { height: 40px; }
 
 .simple-map { padding-bottom: 5%;}

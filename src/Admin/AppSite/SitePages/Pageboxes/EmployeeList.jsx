@@ -41,7 +41,7 @@ class EmployeeList extends React.Component{
     
     render() {
         return (
-            <Container>
+            <Container fluid>
                 <Jumbotron>
                     <h2>Contenitore <b>Dipendenti</b></h2>
                 </Jumbotron>

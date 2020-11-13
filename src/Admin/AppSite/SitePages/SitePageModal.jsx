@@ -37,11 +37,11 @@ class SitePageModal extends React.Component {
         return (            
           <>
             <Button variant="primary" className="mr-1" onClick={this.handleShow}>
-                {this.state.sitePage.sitePageId > 0 ? 'Modifica' : 'Crea'}
+                {this.state.sitePage.sitePageId > 0 ? 'Modifica la pagina' : 'Crea una nuova pagina'}
             </Button>
             <Modal show={this.state.setShow} size="lg" onHide={this.handleClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{this.state.sitePage.sitePageId > 0 ? 'Modifica' : 'Nuova'}</Modal.Title>
+                    <Modal.Title>{this.state.sitePage.sitePageId > 0 ? 'Modifica la pagina' : 'Nuova una nuova pagina'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {this.state.setShow &&
@@ -49,8 +49,8 @@ class SitePageModal extends React.Component {
                     }                    
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.handleClose} variant="primary">
-                        chiudi
+                    <Button onClick={this.handleClose} variant="default">
+                        chiudi e annulla
                     </Button> 
                 </Modal.Footer>
             </Modal>              

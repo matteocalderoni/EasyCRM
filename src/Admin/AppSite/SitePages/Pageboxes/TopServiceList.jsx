@@ -41,7 +41,7 @@ class TopServiceList extends React.Component{
     
     render() {
         return (
-            <Container>
+            <Container fluid>
                 <Jumbotron>
                     <h2>Contenitore <b>Servizi</b></h2>
                 </Jumbotron>

@@ -27,13 +27,13 @@ function post(url, body) {
     return fetch(url, requestOptions).then(handleResponse);
 }
 
-function postFile(url, file) {
+function postFile(url, file, fileName) {
     // Check file selected
     if (file == null) 
         return;
     // Create form data
     const formData = new FormData();
-    formData.append('file', file, file.name);
+    formData.append('file', file, fileName);
     const requestOptions = {
         method: 'POST',
         headers: { ...authHeader(url) },

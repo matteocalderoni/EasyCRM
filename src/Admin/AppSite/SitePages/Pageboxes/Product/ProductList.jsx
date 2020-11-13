@@ -42,7 +42,7 @@ class ProductList extends React.Component{
     
     render() {
         return (
-            <Container>
+            <Container fluid>
                 <Jumbotron>
                     <h2>Contenitore <b>Prodotti</b></h2>
                 </Jumbotron>
