@@ -1,6 +1,6 @@
 import { fetchWrapper } from '../_helpers';
 import React,{Component} from 'react'; 
-import { Button } from 'react-bootstrap';
+import { Label } from 'react-bootstrap';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 
@@ -50,9 +50,10 @@ class Uploader extends Component {
         <div> 
             <input type="file" onChange={this.onFileUpload} /> 
             {!this.state.isUploaded && 
-            <Button onClick={this.onFileUpload} variant="success"> 
-              carica 
-            </Button> 
+            <label> 
+              <span className="spinner-border spinner-border-lg align-center"></span>
+               Caricamento in corso... Attendere il completamento... 
+            </label> 
             }            
         </div> 
       ); 

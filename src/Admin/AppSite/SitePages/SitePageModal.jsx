@@ -41,7 +41,7 @@ class SitePageModal extends React.Component {
             </Button>
             <Modal show={this.state.setShow} size="lg" onHide={this.handleClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{this.state.sitePage.sitePageId > 0 ? 'Modifica la pagina' : 'Nuova una nuova pagina'}</Modal.Title>
+                    <Modal.Title>{this.state.sitePage.sitePageId > 0 ? 'Modifica la pagina' : 'Crea una nuova pagina'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {this.state.setShow &&

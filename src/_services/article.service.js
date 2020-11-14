@@ -20,8 +20,8 @@ function getArticlesOfBox(appSiteId, pageId, boxId) {
     return fetchWrapper.post(`${baseUrl}/SearchArticlesOfBox`, { appSiteId, pageId, boxId });
 }
 
-function getCategories(search,page,count) {
-    return fetchWrapper.post(`${baseUrl}/SearchCategories`, { search, page, count });
+function getCategories(search,page,count, appSiteId, sitePageId, pageBoxId) {
+    return fetchWrapper.post(`${baseUrl}/SearchCategories`, { search, page, count, appSiteId, sitePageId, pageBoxId });
 }
 
 function getArticleById(appSiteId, pageId, boxId, articleId) {

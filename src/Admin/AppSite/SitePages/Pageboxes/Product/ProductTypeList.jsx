@@ -116,7 +116,7 @@ class ProductTypeList extends React.Component {
         return (
             <>
                 <Button variant="secondary" className="mr-1" onClick={this.handleShow}>
-                    Gestione Categoria
+                    Gestione Categoria Prodotti
                 </Button>
                 <Modal
                     size="lg"

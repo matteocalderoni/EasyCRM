@@ -183,10 +183,10 @@ class SitePageAddEdit extends React.Component {
                         </div>
                     }
 
-                    <Form.Group>
+                    <Form.Group className="mart2">
                         <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.sitePage.isPublished} onChange={this.handleChangeBool} />
                         <Form.Text>
-                            Solo i contenuti pubblici vengono visualizzati nel sito.
+                            Solo i contenuti pubblici vengono visualizzati nel sito. Puoi creare la pagina e salvarla come bozza per pubblicarla al momento opportuno.
                         </Form.Text>
                     </Form.Group>
 

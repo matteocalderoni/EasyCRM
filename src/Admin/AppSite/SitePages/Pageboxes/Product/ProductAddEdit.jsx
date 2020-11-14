@@ -81,7 +81,6 @@ class ProductAddEdit extends React.Component {
     }
 
     handleEditorChange = (content, editor) => {
-        console.log('Content was updated:', content);
         this.setState({
             product: {
                 ...this.state.product,
@@ -91,7 +90,7 @@ class ProductAddEdit extends React.Component {
     }
 
     getProductTypes() {
-        productService.getProductTypes('',0,0)
+        productService.getProductTypes('',0,0, this.props.appSiteId,this.props.sitePageId,this.props.pageBoxId)
             .then((_productTypes) => {
                 this.setState({ productTypes: (_productTypes.totalCount > 0 ? _productTypes.result : []) })                
             });
@@ -242,10 +241,10 @@ class ProductAddEdit extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.onSubmit} variant="success" className="mr-1">
-                        Salva
+                        Salva le modifiche
                     </Button> 
-                    <Button onClick={this.handleClose} variant="primary" className="mr-1">
-                        annulla
+                    <Button onClick={this.handleClose} variant="default" className="mr-1">
+                        annulla e chiudi
                     </Button> 
                 </Modal.Footer>
             </Modal>              

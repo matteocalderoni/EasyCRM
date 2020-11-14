@@ -5,7 +5,8 @@ import { Image } from 'react-bootstrap';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
  
-const AnyReactComponent = ({ imageUrl }) => <div><Image src={baseImageUrl+imageUrl} /></div>;
+const AnyReactComponent = ({ imageUrl }) => <div><Image style={{height:30}} fluid src={baseImageUrl+imageUrl} /></div>;
+//const AnyReactComponent = ({ imageUrl }) => <b>[+]</b>;
  
 class SimpleMap extends Component {
   static defaultProps = {

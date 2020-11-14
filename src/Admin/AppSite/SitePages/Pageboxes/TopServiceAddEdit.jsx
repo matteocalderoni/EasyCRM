@@ -57,7 +57,6 @@ class TopServiceAddEdit extends React.Component {
     }
 
     handleEditorChange = (content, editor) => {
-        console.log('Content was updated:', content);
         this.setState({
             description: content           
         });
@@ -144,7 +143,7 @@ class TopServiceAddEdit extends React.Component {
                 size="lg"
                 keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{this.state.topServiceId > 0 ? 'Modifica ' : 'Nuovo '} Servizio</Modal.Title>
+                    <Modal.Title>{this.state.topServiceId > 0 ? 'Modifica il ' : 'Crea un nuovo '} Servizio</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     
@@ -208,10 +207,10 @@ class TopServiceAddEdit extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.onSubmit} variant="success" className="mr-1">
-                        Salva
+                        Salva le modifiche
                     </Button> 
-                    <Button onClick={this.handleClose} variant="primary" className="mr-1">
-                        annulla
+                    <Button onClick={this.handleClose} variant="default" className="mr-1">
+                        annulla e chiudi
                     </Button> 
                 </Modal.Footer>
             </Modal>              

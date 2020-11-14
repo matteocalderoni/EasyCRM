@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Image, Container,Breadcrumb} from 'react-bootstrap';
+import { Jumbotron, Image, Container,Breadcrumb, Row, Col, Button} from 'react-bootstrap';
 import { appSiteService, accountService } from '../../_services';
 import { Role } from '../../_helpers';
 import parse from 'html-react-parser';
@@ -49,45 +49,38 @@ function List({ match }) {
             </Jumbotron>
             
             {user.role === Role.Admin &&
-                <Link to={`${path}/add/0`} className="btn btn-sm btn-success mb-2">nuovo</Link>
+                <Link to={`${path}/add/0`} className="btn btn-sm btn-success mb-2">Crea un nuovo Sito</Link>
             }
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th style={{ width: '10%' }}>Logo</th>
-                        <th style={{ width: '70%' }}>Name</th>
-                        <th style={{ width: '20%' }}></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {appSites && appSites.map(appSite =>
-                        <tr key={appSite.appSiteId}>
-                            <td><Image src={baseImageUrl+appSite.companyLogo} fluid /></td>
-                            <td>
-                                <b>{appSite.name}</b><br />
-                                {parse(appSite.description)}
-                            </td>
-                            <td style={{ whiteSpace: 'nowrap' }}>
-                                <Link to={`${path}/edit/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">dettagli</Link>
-                                <Link to={`${path}/sitepages/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">pagine</Link>
-                                <button onClick={() => deleteAppSite(appSite.appSiteId)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={appSite.isDeleting}>
-                                    {appSite.isDeleting 
-                                        ? <span className="spinner-border spinner-border-sm"></span>
-                                        : <span>elimina</span>
-                                    }
-                                </button>
-                            </td>
-                        </tr>
-                    )}
-                    {!appSites && loading &&
-                        <tr>
-                            <td colSpan="4" className="text-center">
-                                <span className="spinner-border spinner-border-lg align-center"></span>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <Row>                    
+                <Col sm={2}><h3>Logo</h3></Col>
+                <Col sm={10}><h3>Nome del Sito</h3></Col>
+            </Row>                
+            {appSites && appSites.map(appSite =>
+                <Row key={appSite.appSiteId}>
+                    <Col sm={2}><Image src={baseImageUrl+appSite.companyLogo} fluid /></Col>
+                    <Col sm={6}>
+                        <b>{appSite.name}</b><br />
+                        {parse(appSite.description)}
+                    </Col>
+                    <Col sm={4} style={{ whiteSpace: 'nowrap' }}>
+                        <Link to={`${path}/edit/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">dettagli</Link>
+                        <Link to={`${path}/sitepages/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">pagine</Link>
+                        <Button onClick={() => deleteAppSite(appSite.appSiteId)} className="btn btn-sm btn-danger" disabled={appSite.isDeleting}>
+                            {appSite.isDeleting 
+                                ? <span className="spinner-border spinner-border-sm"></span>
+                                : <span>elimina</span>
+                            }
+                        </Button>
+                    </Col>
+                </Row>
+            )}
+            {!appSites && loading &&
+                <Row>
+                    <Col colSpan="4" className="text-center">
+                        <span className="spinner-border spinner-border-lg align-center"></span>
+                    </Col>
+                </Row>
+            }                
         </Container>
     );
 }

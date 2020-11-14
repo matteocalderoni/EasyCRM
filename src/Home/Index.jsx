@@ -11,8 +11,9 @@ function Home() {
         <Container>
             <Jumbotron className="mart2">
                 <h1>Benvenuto {user.firstName} {user.lastName}!</h1>
-                <p>Questa piattaforma si basa sua una gestione <b>semplice</b> e <b>intuitiva</b> per pubblicare i <b>tuoi contenuti online</b>.<br />
-                Ti permette di creare rapidamente delle <b>nuove PAGINE</b> e con i <b>CONTENITORI</b> disponibili puoi rapidamente aggiungere testo, immagini e molto altro.</p>
+                <p>Easy<b>CRM</b> è un <b>C</b>ontent <b>R</b>apid <b>M</b>anagament: un sistema rapido e semplice per gestire i contenuti online.</p>
+                <small>Questa piattaforma si basa sua una gestione <b>semplice</b> e <b>intuitiva</b> per pubblicare i <b>tuoi contenuti online</b>.<br />
+                Ti permette di creare rapidamente delle <b>nuove PAGINE</b> e con i <b>CONTENITORI</b> disponibili puoi rapidamente aggiungere testo, immagini e molto altro.</small>                
             </Jumbotron>
             <Row>
                 <Col>

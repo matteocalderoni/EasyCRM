@@ -47,7 +47,7 @@ class ArticleList extends React.Component{
                     <h2>Contenitore <b>Articoli</b></h2>
                 </Jumbotron>
                 
-                <ArticleAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} articleId={0} handleAddEdit={(rId,sId,pId) => this.handleAddEdit(rId,sId,pId)} />
+                <ArticleAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} articleId={0} handleAddEdit={(appSiteId, sitePageId, pageBoxId) => this.handleAddEdit(appSiteId, sitePageId, pageBoxId)} />
                 <CategoryList />
                 
                 <Row>

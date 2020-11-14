@@ -1,6 +1,7 @@
 import React from 'react';
 import { articleService, alertService } from '../../../../../_services';
 import { Uploader } from '../../../../../_components'
+import { CardSizes } from '../../../../../_helpers/cardSize';
 import { Image, Form, Button, Modal, Row, Col } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import './article.css';
@@ -88,7 +89,6 @@ class ArticleAddEdit extends React.Component {
     }
 
     handleEditorChangeHtml = (content, editor) => {
-        console.log('Content was updated:', content);
         this.setState({
             article: {
                 ...this.state.article,
@@ -232,6 +232,19 @@ class ArticleAddEdit extends React.Component {
                                     onEditorChange={this.handleEditorChangeDescription}
                                 />                                            
                             </div>
+
+                            <Form.Group>
+                                <Form.Label>Dimensione</Form.Label>
+                                <Form.Control as="select" value={this.state.article.cardSize} name="cardSize" onChange={this.handleChangeNumber}>
+                                    <option value={0}>Seleziona una dimensione</option>
+                                    {CardSizes && CardSizes.map(cardSize =>
+                                        <option key={cardSize.value} value={parseInt(cardSize.value)}>{cardSize.label}</option>
+                                    )}   
+                                </Form.Control>
+                                <Form.Text className="text-muted">
+                                    I tipi servono per impostare il formato e le proprietà del contenitore.
+                                </Form.Text>
+                            </Form.Group>
                                                         
                             <Form.Group>
                                 <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.article.isPublished} onChange={this.handleChangeBool} />
@@ -277,10 +290,10 @@ class ArticleAddEdit extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.onSubmit} variant="success" className="mr-1">
-                        Salva
+                        Salva le modifiche
                     </Button> 
-                    <Button onClick={this.handleClose} variant="primary" className="mr-1">
-                        annulla
+                    <Button onClick={this.handleClose} variant="default" className="mr-1">
+                        annulla e chiudi
                     </Button> 
                 </Modal.Footer>
             </Modal>              

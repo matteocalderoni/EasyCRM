@@ -60,7 +60,6 @@ class EmployeeAddEdit extends React.Component {
     }
 
     handleEditorChange = (content, editor) => {
-        console.log('Content was updated:', content);
         this.setState({
             description: content                 
         });
@@ -233,7 +232,10 @@ class EmployeeAddEdit extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.onSubmit} variant="success">
-                        Salva
+                        Salva le modifiche
+                    </Button> 
+                    <Button onClick={this.handleClose} variant="default" className="mr-1">
+                        annulla e chiudi
                     </Button> 
                 </Modal.Footer>
             </Modal>              

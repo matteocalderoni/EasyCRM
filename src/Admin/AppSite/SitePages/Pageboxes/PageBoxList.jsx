@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Jumbotron, Card, Button, Breadcrumb } from 'react-bootstrap';
 import { appSiteService } from '../../../../_services';
 import { PageBoxModal } from './PageBoxModal';
@@ -13,18 +14,43 @@ import parse from 'html-react-parser';
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function PageBoxList({ match }) {
-    const appSiteId = parseInt(match.params.appSiteId);
-    const pageId = parseInt(match.params.pageId);
-    const [pageBoxes, setPageBoxes] = useState(null);
+    const appSiteId = parseInt(match.params.appSiteId)
+    const pageId = parseInt(match.params.pageId)
+    const [appSite, setAppSite] = useState(null)
+    const [sitePage, setSitePage] = useState(null)
+    const [pageBoxes, setPageBoxes] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        appSiteService.getBoxesOfPage(appSiteId, pageId).then(x => setPageBoxes(x.result || []));
+        setLoading(true)
+        appSiteService.getBoxesOfPage(appSiteId, pageId).then((x) => { 
+            setLoading(false)
+            setPageBoxes(x.result || [])
+        });
+    }, [appSiteId, pageId]);  
+
+    useEffect(() => {
+        setLoading(true)
+        appSiteService.getAppSiteById(appSiteId).then((x) => { 
+            setLoading(false)
+            setAppSite(x)
+        });
+    }, [appSiteId]);  
+    
+    useEffect(() => {
+        setLoading(true)
+        appSiteService.getSitePageById(appSiteId, pageId).then((x) => { 
+            setLoading(false)
+            setSitePage(x)
+        });
     }, [appSiteId, pageId]);  
 
     
     function deletePageBox(pageBox) {
+        setLoading(true)
         appSiteService.deletePageBox(pageBox.appSiteId, pageBox.sitePageId, pageBox.pageBoxId)
             .then(() => {
+                setLoading(false)
                 appSiteService.getBoxesOfPage(appSiteId, pageId).then(x => setPageBoxes(x.result));
             });
     }
@@ -40,19 +66,33 @@ function PageBoxList({ match }) {
                 <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>          
                 <Breadcrumb.Item href="/admin/sites">Siti</Breadcrumb.Item>                      
                 <Breadcrumb.Item href={'/admin/sites/sitepages/'+ appSiteId}>
-                    Pagine del sito {appSiteId}         
+                    Pagine del sito {appSite && <b>{appSite.name}</b>}                  
                 </Breadcrumb.Item>                
-                <Breadcrumb.Item active>Pagina {pageId}</Breadcrumb.Item>
+                <Breadcrumb.Item active>
+                    Pagina {sitePage && <b>{sitePage.title}</b>}
+                </Breadcrumb.Item>
             </Breadcrumb>
             <Jumbotron>
-                <h2>Gestione <b>Contenuti della pagina</b></h2>
+                <h5>Gestione <b>Contenuti della pagina</b></h5>   
+                {sitePage && 
+                <>
+                    <h1>{sitePage.title}</h1>                      
+                    <Link to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`}>
+                        modifica la pagina
+                    </Link>
+                </>
+                }
                 <p>
                     Tramite questa sezione si configurano i contenuti della pagina.
                     Utilizzare immagini ottimizzate per un caricamento rapido.
                 </p>
             </Jumbotron>
             <PageBoxModal appSiteId={appSiteId} sitePageId={pageId} pageBoxId={0} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId) } />
-            
+            {(!pageBoxes || loading) &&               
+                <div className="text-center">
+                    <span className="spinner-border spinner-border-lg align-center"></span>
+                </div>
+            }
             {pageBoxes && pageBoxes.map(pageBox =>                                    
                 <Card className="mart2 text-center" key={pageBox.pageBoxId}>
                     <Card.Body>
@@ -89,12 +129,7 @@ function PageBoxList({ match }) {
                         <Button variant="danger" onClick={() => deletePageBox(pageBox)}>elimina</Button>
                     </Card.Footer>
                 </Card>                                            
-            )}                    
-            {!pageBoxes &&                
-                <div className="text-center">
-                    <span className="spinner-border spinner-border-lg align-center"></span>
-                </div>
-            }                
+            )}                                
         </Container>
     );
 

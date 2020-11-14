@@ -77,7 +77,6 @@ class PageBoxAddEdit extends React.Component {
     }
 
     handleEditorChange = (content, editor) => {
-        console.log('Content was updated:', content);
         this.setState({
             pageBox: {
                 ...this.state.pageBox,
@@ -165,7 +164,7 @@ class PageBoxAddEdit extends React.Component {
                     <Form.Label>Ordinamento</Form.Label>
                     <input type="number" className="form-control" name="sortId" value={this.state.pageBox.sortId} onChange={this.handleChangeNumber}  />
                     <Form.Text className="text-muted">
-                        Valore per ordinamento crescente.
+                        Valore per ordinamento crescente dei contenitori nella pagina.
                     </Form.Text>
                 </Form.Group>      
 
@@ -179,30 +178,33 @@ class PageBoxAddEdit extends React.Component {
                 </Form.Group>                    
                 
                 {this.state.pageBox && this.state.pageBox.boxType && (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&                 
-                <Editor
-                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                    initialValue={this.state.pageBox.description}
-                    init={{
-                    height: 500,
-                    menubar: false,
-                    plugins: baseEditorPlugins,
-                    toolbar: baseEditorToolbar
-                    }}
-                    onEditorChange={this.handleEditorChange}
-                />                
+                <Form.Group>
+                    <Form.Label>Descrizione del contenitore</Form.Label>
+                    <Editor
+                        apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                        initialValue={this.state.pageBox.description}
+                        init={{
+                        height: 500,
+                        menubar: false,
+                        plugins: baseEditorPlugins,
+                        toolbar: baseEditorToolbar
+                        }}
+                        onEditorChange={this.handleEditorChange}
+                    />
+                </Form.Group>                
                 }
 
-                <Form.Group>
+                <Form.Group className="mart2">
                     <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.pageBox.isPublished} onChange={this.handleChangeBool} />
                     <Form.Text>
-                        Solo i contenuti pubblici vengono visualizzati nel sito.
+                        Solo i contenuti pubblici vengono visualizzati nel sito. Puoi creare il contenitore e salvarlo come bozza per pubblicarlo al momento opportuno.
                     </Form.Text>
                 </Form.Group>
 
             </Card.Body>
             <Card.Footer>
                 <Button onClick={this.onSubmit} variant="success" className="mr-1">
-                    Salva
+                    Salva le modifiche
                 </Button> 
             </Card.Footer>
         </Card>

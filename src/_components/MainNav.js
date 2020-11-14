@@ -51,7 +51,7 @@ function AdminNav({ match }) {
 
     return (
         <>
-            <Navbar bg="light" className="mart7" variant="light">
+            <Navbar bg="light" className="sub-navbar" variant="light">
                 <Nav bg="light" className="mr-auto">
                     <NavLink to={`${path}/`} className="nav-item nav-link">Dashboard</NavLink>        
                     {user.role === Role.Admin &&

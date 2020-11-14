@@ -8,7 +8,8 @@ const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function SitePageList ({ match }){
     const appSiteId = parseInt(match.params.appSiteId);
-    const [sitePages, setSitePages] = useState(null);
+    const [appSite, setAppSite] = useState(null)
+    const [sitePages, setSitePages] = useState(null)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -17,6 +18,14 @@ function SitePageList ({ match }){
             setLoading(false)
             setSitePages(x.result)}
         );
+    }, [appSiteId]);    
+    
+    useEffect(() => {
+        setLoading(true)
+        appSiteService.getAppSiteById(appSiteId).then((x) => { 
+            setLoading(false)
+            setAppSite(x)
+        });
     }, [appSiteId]);    
     
     function deleteSitePage(sitePage) {
@@ -41,17 +50,24 @@ function SitePageList ({ match }){
                 <Breadcrumb.Item href="/">Home</Breadcrumb.Item>                
                 <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>                
                 <Breadcrumb.Item href="/admin/sites">Siti</Breadcrumb.Item>                
-                <Breadcrumb.Item active>Sito {appSiteId}</Breadcrumb.Item>
+                <Breadcrumb.Item active>
+                    Sito {appSite && <b>{appSite.name}</b>}                
+                </Breadcrumb.Item>
             </Breadcrumb>
             <Jumbotron>
-                <h2>Gestione <b>Pagine del Sito</b></h2>
+                <h5>Gestione <b>Pagine del Sito</b></h5>
+                {appSite && <h1>{appSite.name}</h1>}                
                 <p>
                     Tramite questa sezione si configurano le pagine del sito relative al ristorante.<br />
                     Utilizzare immagini ottimizzate per un caricamento rapido.
                 </p>
             </Jumbotron>
             <SitePageModal appSiteId={appSiteId} sitePageId={0} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
-            
+            {loading &&               
+                <Col className="text-center">
+                    <span className="spinner-border spinner-border-lg align-center"></span>
+                </Col>
+            }
             <Row>
             {sitePages && sitePages.map(sitePage =>                                    
                 <Col sm={6} md={4} key={sitePage.sitePageId}>
@@ -70,12 +86,7 @@ function SitePageList ({ match }){
                         </Card.Body>
                     </Card>                                            
                 </Col>                    
-            )}                                    
-            {!sitePages && loading &&               
-                <Col className="text-center">
-                    <span className="spinner-border spinner-border-lg align-center"></span>
-                </Col>
-            }
+            )}                                                
             </Row>                
         </Container>
     );

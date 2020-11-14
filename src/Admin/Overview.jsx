@@ -22,7 +22,7 @@ function Overview({ match }) {
             <Row>
                 {user.role === Role.Admin &&
                     <Col>
-                        <Card className="mart2">
+                        <Card className="mart1">
                             <Card.Body>
                                 <Card.Title>Gestione utenti</Card.Title>
                                 <Card.Text>
@@ -34,7 +34,7 @@ function Overview({ match }) {
                     </Col>
                 }
                 <Col>
-                    <Card className="mart2">
+                    <Card className="mart1">
                         <Card.Body>
                             <Card.Title>Gestione siti</Card.Title>
                             <Card.Text>
