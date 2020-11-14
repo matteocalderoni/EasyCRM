@@ -45,7 +45,7 @@ function AdminNav({ match }) {
     const [user, setUser] = useState({});
 
     useEffect(() => {
-        const subscription = accountService.user.subscribe(x => setUser(x));
+        accountService.user.subscribe(x => setUser(x));
         //return subscription.unsubscribe;
     }, []);
 

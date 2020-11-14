@@ -44,7 +44,7 @@ function SitePageDetail({ match }) {
             </Breadcrumb>
             <Jumbotron>
                 <h5>Gestione della pagina</h5>                
-                {sitePage && 
+                {sitePage && loading && 
                 <>
                     <h1>{sitePage.title}</h1>                      
                     <Link to={`/admin/sites/sitepages/pageboxes/${appSiteId}/${pageId}`}>

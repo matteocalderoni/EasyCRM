@@ -13,8 +13,7 @@ function Admin({ match }) {
     const [user, setUser] = useState({});
 
     useEffect(() => {
-        const subscription = accountService.user.subscribe(x => setUser(x));
-        //return subscription.unsubscribe;
+        accountService.user.subscribe(x => setUser(x));        
     }, []);
 
     return (

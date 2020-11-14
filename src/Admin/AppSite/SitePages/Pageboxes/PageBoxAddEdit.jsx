@@ -28,14 +28,17 @@ class PageBoxAddEdit extends React.Component {
                 sortId: 1,
                 boxType: 1,
                 isPublished: true
-            }            
+            },
+            loading: false            
          };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeNumber = this.handleChangeNumber.bind(this);
-         this.handleChangeBool = this.handleChangeBool.bind(this);
+        this.handleChangeBool = this.handleChangeBool.bind(this);
+    }
 
-        this.handleOpen();
+    componentDidMount() {
+        this.handleOpen()
     }
 
     handleChange(evt) {
@@ -86,12 +89,13 @@ class PageBoxAddEdit extends React.Component {
     }
 
     handleOpen = () => {                  
-
         if (this.props.appSiteId > 0 && this.props.sitePageId > 0 && this.props.pageBoxId > 0) {
+            this.setState({loading: true})
             appSiteService.getPageBoxById(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId)
                 .then(_pageBox => { 
                     this.setState({
-                        pageBox: _pageBox
+                        pageBox: _pageBox,
+                        loading: false
                     });      
                 });
         }         
@@ -177,7 +181,7 @@ class PageBoxAddEdit extends React.Component {
                     </Form.Text>
                 </Form.Group>                    
                 
-                {this.state.pageBox && this.state.pageBox.boxType && (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&                 
+                {this.state.pageBox && !this.state.loading && this.state.pageBox.boxType && (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&                 
                 <Form.Group>
                     <Form.Label>Descrizione del contenitore</Form.Label>
                     <Editor

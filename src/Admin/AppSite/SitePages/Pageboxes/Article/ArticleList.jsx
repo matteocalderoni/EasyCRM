@@ -49,7 +49,11 @@ class ArticleList extends React.Component{
                 
                 <ArticleAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} articleId={0} handleAddEdit={(appSiteId, sitePageId, pageBoxId) => this.handleAddEdit(appSiteId, sitePageId, pageBoxId)} />
                 <CategoryList />
-                
+                {!this.state.articles &&                
+                    <Col className="text-center">
+                        <span className="spinner-border spinner-border-lg align-center"></span>
+                    </Col>
+                }             
                 <Row>
                 {this.state.articles && this.state.articles.map(article =>                                    
                     <Col sm={parseInt(article.cardSize)} key={article.articleId}>
@@ -63,12 +67,12 @@ class ArticleList extends React.Component{
                                         <Image src={baseImageUrl+article.imageUrl} roundedCircle fluid />
                                     </Col>
                                     <Col sm={4}>
-                                    <p>{parse(article.description)}</p>
+                                    {parse(article.description)}
                                     </Col>
                                     <Col sm={4}>
-                                        <p>{parse(article.markdown)}</p>
+                                        {parse(article.markdown)}
                                         <hr />
-                                        <p>{parse(article.html)}</p>
+                                        {parse(article.html)}
                                     </Col>
                                 </Row>      
                                 <ArticleAddEdit appSiteId={article.appSiteId} sitePageId={article.sitePageId} pageBoxId={article.pageBoxId} articleId={article.articleId} handleAddEdit={(rId,sId,pId) => this.handleAddEdit(rId,sId,pId)} />
@@ -77,11 +81,7 @@ class ArticleList extends React.Component{
                         </Card>    
                     </Col>                                        
                 )}                    
-                {!this.state.articles &&                
-                    <Col className="text-center">
-                        <span className="spinner-border spinner-border-lg align-center"></span>
-                    </Col>
-                }             
+                
                 </Row>   
             </Container>
         );

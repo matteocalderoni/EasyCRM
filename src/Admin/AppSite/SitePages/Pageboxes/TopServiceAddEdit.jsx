@@ -28,7 +28,8 @@ class TopServiceAddEdit extends React.Component {
             description: '',
             cardSize: 4,
             isPublished: true,
-            sortId: 1
+            sortId: 1,
+            loading: false
          };        
 
         this.handleChange = this.handleChange.bind(this);
@@ -68,6 +69,7 @@ class TopServiceAddEdit extends React.Component {
 
     handleShow = () => {
         if (this.props.appSiteId > 0 && this.props.sitePageId > 0 && this.props.pageBoxId > 0 && this.props.topServiceId > 0) {
+            this.setState({loading: true})
             appSiteService.getTopServiceById(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId, this.props.topServiceId)
                 .then(topService => {                    
                     this.setState({
@@ -80,7 +82,8 @@ class TopServiceAddEdit extends React.Component {
                         description: topService['description'] || '',
                         cardSize: parseInt(topService['cardSize'] || 4),
                         isPublished: topService['isPublished'] || true,
-                        sortId: parseInt(topService['sortId'] || 1)
+                        sortId: parseInt(topService['sortId'] || 1),
+                        loading: false
                     });
                 });
         }         
@@ -170,18 +173,21 @@ class TopServiceAddEdit extends React.Component {
                     </Form.Group>                        
 
                     <div>
-                        <label>Descrizione</label>
-                        <Editor
-                            apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                            initialValue={this.state.description}
-                            init={{
-                            height: 500,
-                            menubar: false,
-                            plugins: baseEditorPlugins,
-                            toolbar: baseEditorToolbar
-                            }}
-                            onEditorChange={this.handleEditorChange}
-                        />                                            
+                        {this.props.topServiceId > 0 && !this.state.loading &&
+                        <>
+                            <label>Descrizione</label>
+                            <Editor
+                                apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                initialValue={this.state.description}
+                                init={{
+                                height: 500,
+                                menubar: false,
+                                plugins: baseEditorPlugins,
+                                toolbar: baseEditorToolbar
+                                }}
+                                onEditorChange={this.handleEditorChange}
+                            />
+                        </>}
                     </div>                                    
 
                     <Form.Group>
