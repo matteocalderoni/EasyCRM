@@ -24,7 +24,7 @@ function MainNav() {
                 <Nav className="navbar-nav">
                     <NavLink exact to="/" className="nav-item nav-link"><b>Overview</b></NavLink>
                     {/* <NavLink to="/profile" className="nav-item nav-link"><b>Profilo</b></NavLink> */}
-                    <NavLink to="/admin" className="nav-item nav-link"><b>Siti</b></NavLink>                    
+                    <NavLink to="/admin" className="nav-item nav-link"><b>Dashboard</b></NavLink>                    
                 </Nav>
                 {user &&
                     <Nav className="justify-content-end">                    

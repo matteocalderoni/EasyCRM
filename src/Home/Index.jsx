@@ -22,20 +22,24 @@ function Home() {
                             <Card.Title>Profilo utente</Card.Title>
                             <Card.Text>
                                 Gestione profilo personale: modifica email e/o password.
-                            </Card.Text>
-                            <Link to="/profile" variant="primary">Vai</Link>
+                            </Card.Text>                            
                         </Card.Body>
+                        <Card.Footer className="d-flex justify-content-end">
+                            <Link to="/profile" variant="primary">Vai</Link>
+                        </Card.Footer>                            
                     </Card>
                 </Col>
                 <Col>
                     <Card>
                         <Card.Body>
-                            <Card.Title>Gestione <b>Siti</b></Card.Title>
+                            <Card.Title>Dashboard</Card.Title>
                             <Card.Text>
-                                Gestione contenuti del sito: ristoranti, menù e blog.
-                            </Card.Text>
-                            <Link to="/admin" variant="primary">Vai</Link>
+                                Gestione siti e altre impostazioni.
+                            </Card.Text>                            
                         </Card.Body>
+                        <Card.Footer className="d-flex justify-content-end">
+                            <Link to="/admin" variant="primary">Vai</Link>
+                        </Card.Footer>
                     </Card>
                 </Col>
             </Row>
