@@ -150,7 +150,7 @@ class EmployeeAddEdit extends React.Component {
                     <Modal.Title>{this.state.employeeId > 0 ? 'Modifica ' : 'Nuovo '} Dipendente</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-
+                    
                     <div className="text-center">
                         <Image src={baseImageUrl+this.state.imageUrl} fluid />                    
                         <Uploader prefix={this.state.appSiteId} fileName={this.state.imageUrl} onFileNameChange={this.handleFileName} />      

@@ -1,6 +1,6 @@
 import React from 'react';
 import * as moment from 'moment'
-import { Container, Jumbotron, Card, Button, Row, Col } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Button, Row, Col, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../../_services';
 import { OpenTimeAddEdit } from './OpenTimeAddEdit';
 
@@ -19,19 +19,26 @@ class OpenTimeList extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            openTimes: null,
+            openTimes: [],
             appSiteId: this.props.appSiteId,
             sitePageId: this.props.sitePageId,
-            pageBoxId: this.props.pageBoxId
+            pageBoxId: this.props.pageBoxId,
+            loading: false
         }
+    }
 
-        this.getOpenTimes(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId);
+    componentDidMount() {
+        this.getOpenTimes(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId)
     }
 
     getOpenTimes(appSiteId, sitePageId, pageBoxId) {            
+        this.setState({ loading: true })
         appSiteService.getOpenTimesOfBox(appSiteId, sitePageId, pageBoxId)
-            .then((_openTimes) => {
-                this.setState({ openTimes: (_openTimes.totalCount > 0 ? _openTimes.result : []) });                                
+            .then((_openTimes) => {                
+                this.setState({ 
+                    openTimes: (_openTimes.totalCount > 0 ? _openTimes.result : []), 
+                    loading: false 
+                });                                
             })
             .catch(() => {});        
     }
@@ -55,6 +62,10 @@ class OpenTimeList extends React.Component{
                 </Jumbotron>
                 <OpenTimeAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} weekDay={0} handleAddEdit={this.handleAddEdit} />
                 <Row className="mart2" >
+                {this.state.loading &&               
+                <div className="text-center mart2">
+                    <ProgressBar animated now={100} />
+                </div>}
                 {this.state.openTimes && this.state.openTimes.map(openTime =>                
                     <Col sm={4} key={openTime.weekDay}>
                         <Card>                            

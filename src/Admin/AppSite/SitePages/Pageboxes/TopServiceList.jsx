@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Jumbotron, Card, Button, Row, Col } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Button, Row, Col, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../../_services';
 import { TopServiceAddEdit } from './TopServiceAddEdit';
 import parse from 'html-react-parser';
@@ -59,11 +59,9 @@ class TopServiceList extends React.Component{
                     Puoi scegliere la dimensione dei riquadri per creare layout differenti.</p>
                 </Jumbotron>
                 <TopServiceAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} topServiceId={0} handleAddEdit={this.handleAddEdit} />
-                {this.state.loading &&               
-                    <div className="text-center">
-                        <span className="spinner-border spinner-border-lg align-center"></span>
-                    </div>
-                }
+                {this.state.loading && <div className="text-center mart2">
+                    <ProgressBar animated now={100} />
+                </div>}
                 <Row className="mart2" >
                 {this.state.topServices && !this.state.loading && this.state.topServices.map(topService =>                
                     <Col sm={parseInt(topService.cardSize)} key={topService.topServiceId}>

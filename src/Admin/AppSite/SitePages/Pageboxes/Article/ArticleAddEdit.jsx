@@ -31,7 +31,8 @@ class ArticleAddEdit extends React.Component {
                 description: '',
                 cardSize: 12,
                 isPublished: true
-            }            
+            },
+            loading: false            
          };        
 
         this.handleChange = this.handleChange.bind(this);
@@ -121,10 +122,12 @@ class ArticleAddEdit extends React.Component {
         this.getCategories();
 
         if (this.props.appSiteId > 0 && this.props.sitePageId > 0 && this.props.pageBoxId > 0 && this.props.articleId > 0) {
+            this.setState({ loading: true })
             articleService.getArticleById(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId, this.props.articleId)
                 .then(_article => { 
                     this.setState({
-                        article: _article
+                        article: _article,
+                        loading: false
                     });                                     
                 });
         }         
@@ -153,7 +156,7 @@ class ArticleAddEdit extends React.Component {
                     alertService.success('Articolo aggiunto con successo', { keepAfterRouteChange: true });
                 }                
                 this.handleClose();
-                this.props.handleAddEdit(this.state.article.appSiteId, this.article.sitePageId, this.article.pageBoxId);                
+                this.props.handleAddEdit(this.state.article.appSiteId, this.state.article.sitePageId, this.state.article.pageBoxId);                
             })
             .catch(error => {
                 alertService.error(error);
@@ -220,7 +223,7 @@ class ArticleAddEdit extends React.Component {
                                                                         
                             <div>
                                 <label>Descrizione per fondo pagina</label>
-                                <Editor
+                                {!this.state.loading && <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                     initialValue={this.state.article.description}
                                     init={{
@@ -230,7 +233,7 @@ class ArticleAddEdit extends React.Component {
                                     toolbar: baseEditorToolbar
                                     }}
                                     onEditorChange={this.handleEditorChangeDescription}
-                                />                                            
+                                />}                                            
                             </div>
 
                             <Form.Group>
@@ -257,7 +260,7 @@ class ArticleAddEdit extends React.Component {
                         <Col sm={4}>
                             <div>
                                 <label>Paragrafo 1</label>
-                                <Editor
+                                {!this.state.loading && <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                     initialValue={this.state.article.markdown}
                                     init={{
@@ -267,12 +270,12 @@ class ArticleAddEdit extends React.Component {
                                     toolbar: baseEditorToolbar
                                     }}
                                     onEditorChange={this.handleEditorChangeMarkdown}
-                                />                                            
+                                />}                                            
                             </div>
 
                             <div>
                                 <label>Paragrafo 2</label>
-                                <Editor
+                                {!this.state.loading && <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                     initialValue={this.state.article.html}
                                     init={{
@@ -282,7 +285,7 @@ class ArticleAddEdit extends React.Component {
                                     toolbar: baseEditorToolbar
                                     }}
                                     onEditorChange={this.handleEditorChangeHtml}
-                                />                                            
+                                />}                                            
                             </div>
                         </Col>
                     </Row>                                    

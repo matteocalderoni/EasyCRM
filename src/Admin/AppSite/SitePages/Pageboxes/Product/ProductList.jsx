@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Jumbotron, Button, ListGroup, Row,Col,Image, Badge } from 'react-bootstrap';
+import { Container, Jumbotron, Button, ListGroup, Row,Col,Image, Badge, ProgressBar } from 'react-bootstrap';
 import { productService } from '../../../../../_services';
 import { ProductAddEdit } from './ProductAddEdit';
 import { ProductTypeList } from './ProductTypeList';
@@ -15,16 +15,18 @@ class ProductList extends React.Component{
             products: null,
             appSiteId: this.props.appSiteId,
             sitePageId: this.props.sitePageId,
-            pageBoxId: this.props.pageBoxId
+            pageBoxId: this.props.pageBoxId,
+            loading: false
         }
 
         this.getProducts(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId);
     }
 
     getProducts(appSiteId, sitePageId, pageBoxId) {            
+        this.setState({ loading: true })
         productService.getProductsOfBox(appSiteId, sitePageId, pageBoxId)
             .then((_products) => {
-                this.setState({ products: (_products.totalCount > 0 ? _products.result : []) });                                                                
+                this.setState({ products: (_products.totalCount > 0 ? _products.result : []), loading: false });                                                                
             })
             .catch(() => {});        
     }
@@ -50,6 +52,11 @@ class ProductList extends React.Component{
                 <ProductAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} productId={0} handleAddEdit={(appSiteId, sitePageId, pageBoxId) => this.handleAddEdit(appSiteId, sitePageId, pageBoxId)} />
                 <ProductTypeList appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId}  />
                 
+                {this.state.loading &&               
+                <div className="text-center mart2">
+                    <ProgressBar animated now={100} />
+                </div>}  
+
                 <ListGroup className="text-left mart2">                                    
                 {this.state.products && this.state.products.map(product =>                                    
                     <ListGroup.Item key={product.productId}>

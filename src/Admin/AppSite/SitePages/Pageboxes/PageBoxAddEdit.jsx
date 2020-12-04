@@ -1,7 +1,7 @@
 import React from 'react';
 import { appSiteService, alertService } from '../../../../_services';
 import { Uploader } from '../../../../_components'
-import { Form, Button, Card, Image } from 'react-bootstrap'
+import { Form, Button, Card, Image, ProgressBar } from 'react-bootstrap'
 import { BoxTypes } from '../../../../_helpers'
 import { Editor } from "@tinymce/tinymce-react";
 
@@ -143,75 +143,76 @@ class PageBoxAddEdit extends React.Component {
         return (            
             <Card>
                 <Card.Body>
-                <Form.Group>
-                    <Form.Label>Tipo di contenuto</Form.Label>
-                    <Form.Control as="select" disabled={this.state.pageBox.pageBoxId > 0} value={this.state.pageBox.boxType} name="boxType" onChange={this.handleChangeNumber}>
-                        <option value={0}>Seleziona un tipo</option>
-                        {BoxTypes && BoxTypes.map(boxType =>
-                            <option key={boxType.value} value={parseInt(boxType.value)}>{boxType.label}</option>
-                        )}   
-                    </Form.Control>
-                    <Form.Text className="text-muted">
-                        I tipi servono per impostare il formato e le proprietà del contenitore.
-                    </Form.Text>
-                </Form.Group>
+                    {this.state.loading && <div className="text-center mart2">
+                        <ProgressBar animated now={100} />
+                    </div>}
+                    <Form.Group>
+                        <Form.Label>Tipo di contenuto</Form.Label>
+                        <Form.Control as="select" disabled={this.state.pageBox.pageBoxId > 0} value={this.state.pageBox.boxType} name="boxType" onChange={this.handleChangeNumber}>
+                            <option value={0}>Seleziona un tipo</option>
+                            {BoxTypes && BoxTypes.map(boxType =>
+                                <option key={boxType.value} value={parseInt(boxType.value)}>{boxType.label}</option>
+                            )}   
+                        </Form.Control>
+                        <Form.Text className="text-muted">
+                            I tipi servono per impostare il formato e le proprietà del contenitore.
+                        </Form.Text>
+                    </Form.Group>
                         
-                {this.state.pageBox && this.state.pageBox.boxType && (this.state.pageBox.boxType === 8 || this.state.pageBox.boxType === 9) &&
-                <div className="text-center mart2">
-                    <Image src={baseImageUrl+this.state.pageBox.imageUrl} fluid />
-                    <Uploader prefix={this.state.pageBox.appSiteId} fileName={this.state.pageBox.imageUrl} onFileNameChange={this.handleFileName} />      
-                    <small>Utilizzare immagini con formato 640 X 640 px.</small>
-                </div>
-                }                            
+                    {this.state.pageBox && this.state.pageBox.boxType && (this.state.pageBox.boxType === 8 || this.state.pageBox.boxType === 9) &&
+                    <div className="text-center mart2">
+                        <Image src={baseImageUrl+this.state.pageBox.imageUrl} fluid />
+                        <Uploader prefix={this.state.pageBox.appSiteId} fileName={this.state.pageBox.imageUrl} onFileNameChange={this.handleFileName} />      
+                        <small>Utilizzare immagini con formato 640 X 640 px.</small>
+                    </div>}                            
 
-                <Form.Group>
-                    <Form.Label>Ordinamento</Form.Label>
-                    <input type="number" className="form-control" name="sortId" value={this.state.pageBox.sortId} onChange={this.handleChangeNumber}  />
-                    <Form.Text className="text-muted">
-                        Valore per ordinamento crescente dei contenitori nella pagina.
-                    </Form.Text>
-                </Form.Group>      
+                    <Form.Group>
+                        <Form.Label>Ordinamento</Form.Label>
+                        <input type="number" className="form-control" name="sortId" value={this.state.pageBox.sortId} onChange={this.handleChangeNumber}  />
+                        <Form.Text className="text-muted">
+                            Valore per ordinamento crescente dei contenitori nella pagina.
+                        </Form.Text>
+                    </Form.Group>      
 
                 
-                <Form.Group>
-                    <Form.Label>Titolo</Form.Label>
-                    <input type="text" className="form-control" name="title" value={this.state.pageBox.title} onChange={this.handleChange}  />
-                    <Form.Text className="text-muted">
-                        Titolo del contenuto (max 200 caratteri).
-                    </Form.Text>
-                </Form.Group>                    
+                    <Form.Group>
+                        <Form.Label>Titolo</Form.Label>
+                        <input type="text" className="form-control" name="title" value={this.state.pageBox.title} onChange={this.handleChange}  />
+                        <Form.Text className="text-muted">
+                            Titolo del contenuto (max 200 caratteri).
+                        </Form.Text>
+                    </Form.Group>                    
                 
-                {this.state.pageBox && !this.state.loading && this.state.pageBox.boxType && (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&                 
-                <Form.Group>
-                    <Form.Label>Descrizione del contenitore</Form.Label>
-                    <Editor
-                        apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                        initialValue={this.state.pageBox.description}
-                        init={{
-                        height: 500,
-                        menubar: false,
-                        plugins: baseEditorPlugins,
-                        toolbar: baseEditorToolbar
-                        }}
-                        onEditorChange={this.handleEditorChange}
-                    />
-                </Form.Group>                
-                }
+                    {this.state.pageBox && !this.state.loading && this.state.pageBox.boxType && (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&                 
+                    <Form.Group>
+                        <Form.Label>Descrizione del contenitore</Form.Label>
+                        <Editor
+                            apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                            initialValue={this.state.pageBox.description}
+                            init={{
+                            height: 500,
+                            menubar: false,
+                            plugins: baseEditorPlugins,
+                            toolbar: baseEditorToolbar
+                            }}
+                            onEditorChange={this.handleEditorChange}
+                        />
+                    </Form.Group>}
 
-                <Form.Group className="mart2">
-                    <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.pageBox.isPublished} onChange={this.handleChangeBool} />
-                    <Form.Text>
-                        Solo i contenuti pubblici vengono visualizzati nel sito. Puoi creare il contenitore e salvarlo come bozza per pubblicarlo al momento opportuno.
-                    </Form.Text>
-                </Form.Group>
+                    <Form.Group className="mart2">
+                        <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.pageBox.isPublished} onChange={this.handleChangeBool} />
+                        <Form.Text>
+                            Solo i contenuti pubblici vengono visualizzati nel sito. Puoi creare il contenitore e salvarlo come bozza per pubblicarlo al momento opportuno.
+                        </Form.Text>
+                    </Form.Group>
 
-            </Card.Body>
-            <Card.Footer>
-                <Button onClick={this.onSubmit} variant="success" className="mr-1">
-                    Salva le modifiche
-                </Button> 
-            </Card.Footer>
-        </Card>
+                </Card.Body>
+                <Card.Footer>
+                    <Button onClick={this.onSubmit} variant="success" className="mr-1">
+                        Salva le modifiche
+                    </Button> 
+                </Card.Footer>
+            </Card>
         );
     }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Card, Button, Row, Col, Breadcrumb } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Button, Row, Col, Breadcrumb, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 
@@ -46,14 +46,14 @@ function SitePageList ({ match }){
     
     return (
         <Container fluid>
-            <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>                
-                <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>                
-                <Breadcrumb.Item href="/admin/sites">Siti</Breadcrumb.Item>                
-                <Breadcrumb.Item active>
+            <ul className="breadcrumb">
+                <li className="breadcrumb-item"><Link to={`/`}>Home</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
+                <li className="breadcrumb-item active">
                     Sito {appSite && <b>{appSite.name}</b>}                
-                </Breadcrumb.Item>
-            </Breadcrumb>
+                </li>
+            </ul>
             <Jumbotron>
                 <h5>Gestione <b>Pagine del Sito</b></h5>
                 {appSite && <h1>{appSite.name}</h1>}                
@@ -63,11 +63,9 @@ function SitePageList ({ match }){
                 </p>
             </Jumbotron>
             <SitePageModal appSiteId={appSiteId} sitePageId={0} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
-            {loading &&               
-                <Col className="text-center">
-                    <span className="spinner-border spinner-border-lg align-center"></span>
-                </Col>
-            }
+            {loading && <Col className="text-center mart2">
+                <ProgressBar animated now={100} />
+            </Col>}
             <Row>
             {sitePages && sitePages.map(sitePage =>                                    
                 <Col sm={6} md={4} key={sitePage.sitePageId}>

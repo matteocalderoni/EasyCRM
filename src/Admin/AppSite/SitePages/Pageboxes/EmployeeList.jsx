@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Jumbotron, Card, Button, Image, Row, Col } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Button, Image, Row, Col, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../../_services';
 import { EmployeeAddEdit } from './EmployeeAddEdit';
 import parse from 'html-react-parser';
@@ -14,16 +14,18 @@ class EmployeeList extends React.Component{
             employees: null,
             appSiteId: this.props.appSiteId,
             sitePageId: this.props.sitePageId,
-            pageBoxId: this.props.pageBoxId
+            pageBoxId: this.props.pageBoxId,
+            loading: false
         }
 
         this.getEmployees(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId);
     }
 
-    getEmployees(appSiteId, sitePageId, pageBoxId) {            
+    getEmployees(appSiteId, sitePageId, pageBoxId) {     
+        this.setState({ loading: true })       
         appSiteService.getEmployeesOfBox(appSiteId, sitePageId, pageBoxId)
             .then((_employees) => {
-                this.setState({ employees: (_employees.totalCount > 0 ? _employees.result : []) });                                                                
+                this.setState({ employees: (_employees.totalCount > 0 ? _employees.result : []), loading: false });                                                                
             })
             .catch(() => {});        
     }
@@ -47,7 +49,11 @@ class EmployeeList extends React.Component{
                 </Jumbotron>
                 <EmployeeAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} employeeId={0} handleAddEdit={this.handleAddEdit} />
                 
-                <Row>                
+                <Row>        
+                {this.state.loading &&               
+                <div className="text-center mart2">
+                    <ProgressBar animated now={100} />
+                </div>}        
                 {this.state.employees && this.state.employees.map(employee =>                                    
                     <Col sm={parseInt(employee.cardSize)} key={employee.employeeId}>
                         <Card className="mart2 text-center">

@@ -24,3 +24,5 @@ code {
 .sub-navbar { margin-top: 60px; }
 
 .simple-map { padding-bottom: 5%;}
+
+.container-alert { position: fixed; bottom: 10%; z-index: 1050; text-align: center; }

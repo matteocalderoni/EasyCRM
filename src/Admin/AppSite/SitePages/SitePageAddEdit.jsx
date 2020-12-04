@@ -1,7 +1,7 @@
 import React from 'react';
 import { appSiteService, alertService } from '../../../_services';
 import { Uploader } from '../../../_components'
-import { Form, Button, Card } from 'react-bootstrap'
+import { Form, Button, Card, Image, Row, Col,ProgressBar } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -26,14 +26,17 @@ class SitePageAddEdit extends React.Component {
                 slideText: '',
                 sortId: 1,
                 isPublished: true
-            }                        
+            },
+            loading: false                         
          };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleChangeNumber = this.handleChangeNumber.bind(this);
-        this.handleChangeBool = this.handleChangeBool.bind(this);
+        this.handleChange = this.handleChange.bind(this)
+        this.handleChangeNumber = this.handleChangeNumber.bind(this)
+        this.handleChangeBool = this.handleChangeBool.bind(this)
+    }
 
-        this.handleOpen();
+    componentDidMount() {
+        this.handleOpen()
     }
 
     handleChange(evt) {
@@ -75,7 +78,6 @@ class SitePageAddEdit extends React.Component {
     }
 
     handleEditorChange = (content, editor) => {
-        //console.log('Content was updated:', content);
         this.setState({
             sitePage: {
                 ...this.state.sitePage,
@@ -85,11 +87,13 @@ class SitePageAddEdit extends React.Component {
     }
 
     handleOpen() {    
-        if (this.props.appSiteId > 0 && this.props.sitePageId > 0) {
+        if (this.props.sitePageId > 0) {
+            this.setState({loading: true})
             appSiteService.getSitePageById(this.props.appSiteId, this.props.sitePageId)
                 .then(_sitePage => {                    
                     this.setState({
-                        sitePage: _sitePage
+                        sitePage: _sitePage,
+                        loading: false
                     })                    
                 });
         }         
@@ -138,37 +142,43 @@ class SitePageAddEdit extends React.Component {
     render() {
         return (            
           <>
-            <Card>
-                {this.state.sitePage.sitePageId > 0 &&
-                    <Card.Img src={baseImageUrl+this.state.sitePage.imageUrl} />
-                }
-                <Card.Body>
-                    {this.state.sitePage.sitePageId > 0 &&
-                        <div>
-                            <Uploader prefix={this.state.sitePage.appSiteId} fileName={this.state.sitePage.imageUrl} onFileNameChange={this.handleFileName} />      
-                            <small>Questa immagine viene utilizzate come sfondo della pagina. Utilizzare un immagine con formato 1920 X 1080 px.</small>
-                        </div>
-                    }
+            <Card>                
+                <Card.Body>                    
+                    {this.state.loading && <div className="text-center mart2">
+                        <ProgressBar animated now={100} />
+                    </div>}
+                    <Row>
+                        <Col>
+                        {this.state.sitePage.sitePageId > 0 &&                    
+                            <div>
+                                <Image fluid src={baseImageUrl+this.state.sitePage.imageUrl} />
+                                <Uploader prefix={this.state.sitePage.appSiteId} fileName={this.state.sitePage.imageUrl} onFileNameChange={this.handleFileName} />      
+                                <small>Questa immagine viene utilizzate come sfondo della pagina. Utilizzare un immagine con formato 1920 X 1080 px.</small>
+                            </div>
+                        }
+                        </Col>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Valore per Ordinamento</Form.Label>
+                                <input type="number" className="form-control" name="sortId" value={this.state.sitePage.sortId} onChange={this.handleChangeNumber}  />
+                                <Form.Text className="text-muted">
+                                    Le pagine vengono visualizzate in ordine crescente.
+                                </Form.Text>
+                            </Form.Group>   
+
+                            <Form.Group>
+                                <Form.Label>Titolo della Pagina</Form.Label>
+                                <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} />
+                                <Form.Text className="text-muted">
+                                    Titolo della pagina (max 200 caratteri): visualizzato nel menù di navigazione in alto nella pagina.
+                                </Form.Text>
+                            </Form.Group>                                                        
+                        </Col>
+                    </Row>
                     
-                    <Form.Group>
-                        <Form.Label>Ordinamento</Form.Label>
-                        <input type="number" className="form-control" name="sortId" value={this.state.sitePage.sortId} onChange={this.handleChangeNumber}  />
-                        <Form.Text className="text-muted">
-                            Le pagine vengono visualizzate in ordine crescente.
-                        </Form.Text>
-                    </Form.Group>      
-
-                    <Form.Group>
-                        <Form.Label>Titolo</Form.Label>
-                        <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} />
-                        <Form.Text className="text-muted">
-                            Titolo della pagina (max 200 caratteri): visualizzato nel menù di navigazione in alto nella pagina.
-                        </Form.Text>
-                    </Form.Group>                                                     
-
-                    {this.state.sitePage.sitePageId > 0 &&
+                    {!this.state.loading && this.state.sitePage.sitePageId > 0 &&
                         <div>
-                            <label>Testo per slide</label>
+                            <label>Testo visualizzato nella Slide</label>
                             <Editor
                                 apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                 initialValue={this.state.sitePage.slideText}

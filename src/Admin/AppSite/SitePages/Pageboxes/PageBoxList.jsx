@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Card, Button, Breadcrumb } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Button, Breadcrumb, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../../_services';
 import { PageBoxModal } from './PageBoxModal';
 import { EmployeeList } from './EmployeeList';
@@ -61,17 +61,17 @@ function PageBoxList({ match }) {
     
     return (
         <Container fluid>
-            <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>                
-                <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>          
-                <Breadcrumb.Item href="/admin/sites">Siti</Breadcrumb.Item>                      
-                <Breadcrumb.Item href={'/admin/sites/sitepages/'+ appSiteId}>
-                    Pagine del sito {appSite && <b>{appSite.name}</b>}                  
-                </Breadcrumb.Item>                
-                <Breadcrumb.Item active>
+            <ul className="breadcrumb">
+                <li className="breadcrumb-item"><Link to={`/`}>Home</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>          
+                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Site</Link></li>                      
+                <li className="breadcrumb-item">
+                    <Link to={'/admin/sites/sitepages/'+ appSiteId}>Sito {appSite && <b>{appSite.name}</b>}</Link>                    
+                </li>                
+                <li className="breadcrumb-item active">
                     Pagina {sitePage && <b>{sitePage.title}</b>}
-                </Breadcrumb.Item>
-            </Breadcrumb>
+                </li>
+            </ul>
             <Jumbotron>
                 <h5>Gestione <b>Contenuti della pagina</b></h5>   
                 {sitePage && 
@@ -89,8 +89,8 @@ function PageBoxList({ match }) {
             </Jumbotron>
             <PageBoxModal appSiteId={appSiteId} sitePageId={pageId} pageBoxId={0} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId) } />
             {(!pageBoxes || loading) &&               
-                <div className="text-center">
-                    <span className="spinner-border spinner-border-lg align-center"></span>
+                <div className="text-center mart2">
+                    <ProgressBar animated now={100} />
                 </div>
             }
             {pageBoxes && pageBoxes.map(pageBox =>                                    

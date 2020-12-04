@@ -3,6 +3,7 @@ import { appSiteService, alertService } from '../../_services';
 import { Uploader } from '../../_components'
 import { Image, Row, Col, Form, Button, Jumbotron, Card, Container, Breadcrumb } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
+import { Link } from 'react-router-dom';
 
 const baseEditorPlugins = [
     'advlist autolink lists link image charmap print preview anchor',
@@ -30,21 +31,28 @@ class AddEdit extends React.Component {
                 phone: '',
                 email: '',
                 isDefault: false
-            }              
+            },
+            loading: false              
          };
 
-        if (this.props.match.params.appSiteId) {
-            appSiteService.getAppSiteById(this.props.match.params.appSiteId)
-                .then(_appSite => {     
-                    this.setState({
-                        appSite: _appSite
-                    });                                 
-                });
-        }
+        
          
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeNumber = this.handleChangeNumber.bind(this);
         this.handleChangeBool = this.handleChangeBool.bind(this);
+    }
+
+    componentDidMount() {
+        if (this.props.match.params.appSiteId) {
+            this.setState({ loading: true })
+            appSiteService.getAppSiteById(this.props.match.params.appSiteId)
+                .then(_appSite => {     
+                    this.setState({
+                        appSite: _appSite,
+                        loading: false
+                    });                                 
+                });
+        }
     }
 
     handleChange(evt) {
@@ -147,13 +155,13 @@ class AddEdit extends React.Component {
     render() {
         return (            
           <Container fluid>
-              <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>                
-                <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>          
-                <Breadcrumb.Item href="/admin/sites">Siti</Breadcrumb.Item>                                      
-                <Breadcrumb.Item active>Siteo {this.state.appSiteId}</Breadcrumb.Item>
-            </Breadcrumb>
-              <Jumbotron>
+              <ul className="breadcrumb">
+                <li className="breadcrumb-item"><Link to={`/`}>Home</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>          
+                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Siti</Link></li>                                      
+                <li className="breadcrumb-item active">Sito {this.state.appSite.name}</li>
+            </ul>
+              <Jumbotron className="">
                 <h1>Gestione dati del <b>Sito</b></h1>                
                 <Row>
                     <Col sm={2}>
@@ -227,7 +235,7 @@ class AddEdit extends React.Component {
 
                     <div>
                         <label>Testo per fondo pagina: 'Su di noi'</label>
-                        <Editor
+                        {!this.state.loading && <Editor
                             apiKey={process.env.REACT_APP_TINTMCE_KEY}
                             initialValue={this.state.appSite.description}
                             init={{
@@ -237,7 +245,7 @@ class AddEdit extends React.Component {
                             toolbar: baseEditorToolbar
                             }}
                             onEditorChange={this.handleEditorChange}
-                        />                                            
+                        />}                                            
                     </div>
                     
                     <Form.Group>

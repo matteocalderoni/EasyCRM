@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Image, Container,Breadcrumb, Row, Col, Button} from 'react-bootstrap';
+import { Jumbotron, Image, Container,ProgressBar, Row, Col, Button} from 'react-bootstrap';
 import { appSiteService, accountService } from '../../_services';
 import { Role } from '../../_helpers';
 import parse from 'html-react-parser';
@@ -36,11 +36,11 @@ function List({ match }) {
 
     return (
         <Container fluid>
-            <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>                
-                <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>                
-                <Breadcrumb.Item active>Siti</Breadcrumb.Item>
-            </Breadcrumb>
+            <ul className="breadcrumb">
+                <li className="breadcrumb-item"><Link to={`/`}>Home</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>                
+                <li className="breadcrumb-item active">Elenco Siti</li>
+            </ul>
             <Jumbotron>
                 <h1>Siti</h1>
                 <p>In questa sezione puoi visualizzare i tuoi siti.<br />
@@ -54,7 +54,14 @@ function List({ match }) {
             <Row>                    
                 <Col sm={2}><h3>Logo</h3></Col>
                 <Col sm={10}><h3>Nome del Sito</h3></Col>
-            </Row>                
+            </Row>       
+            {!appSites && loading &&
+                <Row>
+                    {loading && <Col className="text-center mart2">
+                        <ProgressBar animated now={100} />
+                    </Col>}
+                </Row>
+            }                         
             {appSites && appSites.map(appSite =>
                 <Row key={appSite.appSiteId}>
                     <Col sm={2}><Image src={baseImageUrl+appSite.companyLogo} fluid /></Col>
@@ -74,13 +81,7 @@ function List({ match }) {
                     </Col>
                 </Row>
             )}
-            {!appSites && loading &&
-                <Row>
-                    <Col colSpan="4" className="text-center">
-                        <span className="spinner-border spinner-border-lg align-center"></span>
-                    </Col>
-                </Row>
-            }                
+            
         </Container>
     );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { appSiteService, alertService } from '../../../../_services';
 import { Uploader } from '../../../../_components';
-import { Image, Form, Button, Modal } from 'react-bootstrap'
+import { Image, Form, Button, Modal, ProgressBar } from 'react-bootstrap'
 import { CardSizes } from '../../../../_helpers/cardSize';
 import { Editor } from "@tinymce/tinymce-react";
 
@@ -149,7 +149,9 @@ class TopServiceAddEdit extends React.Component {
                     <Modal.Title>{this.state.topServiceId > 0 ? 'Modifica il ' : 'Crea un nuovo '} Servizio</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    
+                    {this.state.loading && <div className="text-center mart2">
+                        <ProgressBar animated now={100} />
+                    </div>}
                     <div className="text-center">
                         <Image src={baseImageUrl+this.state.imageUrl} fluid />                    
                         <Uploader prefix={this.state.appSiteId} fileName={this.state.imageUrl} onFileNameChange={this.handleFileName} />      

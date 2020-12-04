@@ -31,17 +31,17 @@ function SitePageDetail({ match }) {
 
     return (
         <Container fluid>
-            <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>                
-                <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>          
-                <Breadcrumb.Item href="/admin/sites">Siti</Breadcrumb.Item>                      
-                <Breadcrumb.Item href={'/admin/sites/sitepages/'+ appSiteId}>
-                    Pagine del sito {appSite && <b>{appSite.name}</b>}         
-                </Breadcrumb.Item>                
-                <Breadcrumb.Item active>
+            <ul className="breadcrumb">
+            <li className="breadcrumb-item"><Link to={`/`}>Home</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
+                <li className="breadcrumb-item">
+                    <Link to={'/admin/sites/sitepages/'+ appSiteId}>Pagine del sito {appSite && <b>{appSite.name}</b>}</Link>                    
+                </li>                
+                <li className="breadcrumb-item active">
                     Pagina {sitePage && <b>{sitePage.title}</b>}
-                </Breadcrumb.Item>
-            </Breadcrumb>
+                </li>
+            </ul>
             <Jumbotron>
                 <h5>Gestione della pagina</h5>                
                 {sitePage && loading && 
