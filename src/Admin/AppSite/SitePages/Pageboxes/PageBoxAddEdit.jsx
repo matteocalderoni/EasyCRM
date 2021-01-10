@@ -4,6 +4,9 @@ import { Uploader } from '../../../../_components'
 import { Form, Button, Card, Image, ProgressBar } from 'react-bootstrap'
 import { BoxTypes } from '../../../../_helpers'
 import { Editor } from "@tinymce/tinymce-react";
+import { LanguageSelect } from '../../../../_components/LanguageSelect';
+import { LanguageEditor } from '../../../../_components/LanguageEditor';
+import { LanguageInput } from '../../../../_components/LanguageInput';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 const baseEditorPlugins = [
@@ -26,9 +29,10 @@ class PageBoxAddEdit extends React.Component {
                 title: '',
                 description: '',
                 sortId: 1,
-                boxType: 1,
+                boxType: 1,                
                 isPublished: true
             },
+            languageCode: '',
             loading: false            
          };
 
@@ -86,6 +90,12 @@ class PageBoxAddEdit extends React.Component {
                 description: content                 
             }          
         });
+    }
+
+    handleLanguageCode = (code) => {        
+        this.setState({ 
+            languageCode: code
+        });        
     }
 
     handleOpen = () => {                  
@@ -164,7 +174,9 @@ class PageBoxAddEdit extends React.Component {
                         <Image src={baseImageUrl+this.state.pageBox.imageUrl} fluid />
                         <Uploader prefix={this.state.pageBox.appSiteId} fileName={this.state.pageBox.imageUrl} onFileNameChange={this.handleFileName} />      
                         <small>Utilizzare immagini con formato 640 X 640 px.</small>
-                    </div>}                            
+                    </div>}         
+
+                    <LanguageSelect appSiteId={this.state.pageBox.appSiteId} onLanguageChange={this.handleLanguageCode} />                   
 
                     <Form.Group>
                         <Form.Label>Ordinamento</Form.Label>
@@ -173,31 +185,55 @@ class PageBoxAddEdit extends React.Component {
                             Valore per ordinamento crescente dei contenitori nella pagina.
                         </Form.Text>
                     </Form.Group>      
-
                 
+                    {this.state.languageCode == '' &&
                     <Form.Group>
                         <Form.Label>Titolo</Form.Label>
                         <input type="text" className="form-control" name="title" value={this.state.pageBox.title} onChange={this.handleChange}  />
                         <Form.Text className="text-muted">
                             Titolo del contenuto (max 200 caratteri).
                         </Form.Text>
-                    </Form.Group>                    
-                
-                    {this.state.pageBox && !this.state.loading && this.state.pageBox.boxType && (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&                 
-                    <Form.Group>
-                        <Form.Label>Descrizione del contenitore</Form.Label>
-                        <Editor
-                            apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                            initialValue={this.state.pageBox.description}
-                            init={{
-                            height: 500,
-                            menubar: false,
-                            plugins: baseEditorPlugins,
-                            toolbar: baseEditorToolbar
-                            }}
-                            onEditorChange={this.handleEditorChange}
-                        />
-                    </Form.Group>}
+                    </Form.Group>}                                       
+
+                    {this.state.languageCode !== '' &&
+                    <div>
+                        <LanguageInput 
+                            originalText={this.state.pageBox.title}
+                            appSiteId={this.state.pageBox.appSiteId} 
+                            code={this.state.languageCode}
+                            labelKey={`PAGEBOX_${this.state.pageBox.appSiteId}_${this.state.pageBox.sitePageId}_${this.state.pageBox.pageBoxId}-Title`}>
+                        </LanguageInput>
+                    </div>}  
+
+                    {this.state.pageBox && !this.state.loading && this.state.languageCode === '' && 
+                        (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&                 
+                    <div>
+                        <Form.Group>
+                            <Form.Label>Descrizione del contenitore</Form.Label>
+                            <Editor
+                                apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                initialValue={this.state.pageBox.description}
+                                init={{
+                                height: 500,
+                                menubar: false,
+                                plugins: baseEditorPlugins,
+                                toolbar: baseEditorToolbar
+                                }}
+                                onEditorChange={this.handleEditorChange}
+                            />
+                        </Form.Group>
+                    </div>}
+
+                    {this.state.languageCode && this.state.languageCode !== '' &&
+                        this.state.pageBox.boxType && (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&
+                    <div>
+                        <LanguageEditor 
+                            originalText={this.state.pageBox.description}
+                            appSiteId={this.state.pageBox.appSiteId} 
+                            code={this.state.languageCode}
+                            labelKey={`PAGEBOX_${this.state.pageBox.appSiteId}_${this.state.pageBox.sitePageId}_${this.state.pageBox.pageBoxId}-Description`}>                                    
+                        </LanguageEditor>
+                    </div>}                           
 
                     <Form.Group className="mart2">
                         <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.pageBox.isPublished} onChange={this.handleChangeBool} />

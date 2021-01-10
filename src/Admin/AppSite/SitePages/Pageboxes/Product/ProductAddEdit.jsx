@@ -3,6 +3,9 @@ import { productService, alertService } from '../../../../../_services';
 import { Uploader } from '../../../../../_components'
 import { Image, Form, Button, Modal } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
+import { LanguageSelect } from '../../../../../_components/LanguageSelect';
+import { LanguageEditor } from '../../../../../_components/LanguageEditor';
+import { LanguageInput } from '../../../../../_components/LanguageInput';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 const baseEditorPlugins = [
@@ -33,7 +36,9 @@ class ProductAddEdit extends React.Component {
                 price: 0,
                 discount: 0,
                 isPublished: true
-            }            
+            },
+            languageCode: '',
+            loading: false           
          };        
 
         this.handleChange = this.handleChange.bind(this);
@@ -87,6 +92,12 @@ class ProductAddEdit extends React.Component {
                 description: content                 
             }            
         });
+    }
+
+    handleLanguageCode = (code) => {        
+        this.setState({ 
+            languageCode: code
+        });        
     }
 
     getProductTypes() {
@@ -180,7 +191,9 @@ class ProductAddEdit extends React.Component {
                         <Image src={baseImageUrl+this.state.product.imageUrl} fluid />                    
                         <Uploader prefix={this.state.product.appSiteId} fileName={this.state.product.imageUrl} onFileNameChange={this.handleFileName} />      
                         <small>Utilizzare immagini con formato 640 X 640 px.</small>
-                    </div>                    
+                    </div>            
+
+                    <LanguageSelect appSiteId={this.state.product.appSiteId} onLanguageChange={this.handleLanguageCode} />                           
 
                     <Form.Group>
                         <Form.Label>Categoria prodotto</Form.Label>
@@ -200,14 +213,26 @@ class ProductAddEdit extends React.Component {
                         </Form.Text>
                     </Form.Group>   
 
+                    {this.state.languageCode == '' &&
                     <Form.Group>
                         <Form.Label>Titolo</Form.Label>
                         <input type="text" className="form-control" name="title" value={this.state.product.title} onChange={this.handleChange} maxLength={200} />
                         <Form.Text className="text-muted">
                             Ruolo svolto dal dipendente (max 200 caratteri).
                         </Form.Text>
-                    </Form.Group>                     
-                                    
+                    </Form.Group>}        
+
+                    {this.state.languageCode !== '' &&
+                    <div>
+                        <LanguageInput 
+                            originalText={this.state.product.title}
+                            appSiteId={this.state.product.appSiteId} 
+                            code={this.state.languageCode}
+                            labelKey={`PRODUCT_${this.state.product.appSiteId}_${this.state.product.sitePageId}_${this.state.product.pageBoxId}_${this.state.product.productId}-Title`}>
+                        </LanguageInput>
+                    </div>}               
+
+                    {this.state.product && !this.state.loading && this.state.languageCode === '' &&       
                     <div>
                         <label>Descrizione</label>
                         <Editor
@@ -221,7 +246,17 @@ class ProductAddEdit extends React.Component {
                             }}
                             onEditorChange={this.handleEditorChange}
                         />                                            
-                    </div>
+                    </div>}
+
+                    {this.state.languageCode && this.state.languageCode !== '' &&
+                    <div>
+                        <LanguageEditor 
+                            originalText={this.state.product.description}
+                            appSiteId={this.state.product.appSiteId} 
+                            code={this.state.languageCode}
+                            labelKey={`PRODUCT_${this.state.product.appSiteId}_${this.state.product.sitePageId}_${this.state.product.pageBoxId}_${this.state.product.productId}-Description`}>                                    
+                        </LanguageEditor>
+                    </div>}                           
 
                     <Form.Group>
                         <Form.Label>Prezzo</Form.Label>

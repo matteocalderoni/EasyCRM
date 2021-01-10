@@ -43,8 +43,9 @@ class ArticleList extends React.Component{
     render() {
         return (
             <Container>
-                <Jumbotron>
-                    <h2>Contenitore <b>Articoli</b></h2>
+                <Jumbotron className="small-jumbotron">
+                    <h3>Contenitore <b>Articoli</b></h3>
+                    <p>Il contenitore blog permette di creare articoli per mantenere vivo e dinamico il sito.</p>
                 </Jumbotron>
                 
                 <ArticleAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} articleId={0} handleAddEdit={(appSiteId, sitePageId, pageBoxId) => this.handleAddEdit(appSiteId, sitePageId, pageBoxId)} />

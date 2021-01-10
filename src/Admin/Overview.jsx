@@ -22,8 +22,10 @@ function Overview({ match }) {
                 {user.role === Role.Admin &&
                     <Col>
                         <Card className="mart1">
-                            <Card.Body>
+                            <Card.Header>
                                 <Card.Title>Gestione utenti</Card.Title>
+                            </Card.Header>
+                            <Card.Body>
                                 <Card.Text>
                                     Sezione con accesso consentito solo ad Admin: gestione utenti e relativi siti.
                                 </Card.Text>                                
@@ -36,8 +38,10 @@ function Overview({ match }) {
                 }
                 <Col>
                     <Card className="mart1">
-                        <Card.Body>
+                        <Card.Header>
                             <Card.Title>Gestione siti</Card.Title>
+                        </Card.Header>
+                        <Card.Body>
                             <Card.Text>
                                 Inizia subito a gestire il tuo sito e i suoi contenuti.
                                 Aggiungi testi per ottimizzare le ricerche, immagini sempre nuove e aggiorna i tuoi prodotti.

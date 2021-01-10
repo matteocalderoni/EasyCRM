@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Card, Button, Row, Col, Breadcrumb, ProgressBar } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Button, Row, Col, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 
@@ -69,12 +69,14 @@ function SitePageList ({ match }){
             <Row>
             {sitePages && sitePages.map(sitePage =>                                    
                 <Col sm={6} md={4} key={sitePage.sitePageId}>
-                    <Card className="mart2 text-center">
-                        <Card.Img variant="top" src={baseImageUrl+sitePage.imageUrl} />
-                        <Card.Body>                                
+                    <Card className="mart2 text-center" bg="dark" text="white">
+                        <Card.Header>
                             <Card.Title>
-                                ({sitePage.sortId}) {sitePage.title} 
+                                #{sitePage.sortId} {sitePage.title} 
                             </Card.Title>                                                        
+                        </Card.Header>
+                        <Card.Img variant="top" src={baseImageUrl+sitePage.imageUrl} />
+                        <Card.Body>                                                            
                             <Card.Text>                                
                                 {sitePage.description}
                             </Card.Text>                            

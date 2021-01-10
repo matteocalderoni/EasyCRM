@@ -22,7 +22,7 @@ function MainNav() {
                     <Image src="/assets/icon.png" className="brand-logo" />
                 </Navbar.Brand>
                 <Nav className="navbar-nav">
-                    <NavLink exact to="/" className="nav-item nav-link"><b>Overview</b></NavLink>
+                    <NavLink exact to="/" className="nav-item nav-link"><b>Home</b></NavLink>
                     {/* <NavLink to="/profile" className="nav-item nav-link"><b>Profilo</b></NavLink> */}
                     <NavLink to="/admin" className="nav-item nav-link"><b>Dashboard</b></NavLink>                    
                 </Nav>

@@ -17,7 +17,9 @@ class EmployeeList extends React.Component{
             pageBoxId: this.props.pageBoxId,
             loading: false
         }
-
+    }
+    
+    componentDidMount() {
         this.getEmployees(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId);
     }
 
@@ -44,8 +46,9 @@ class EmployeeList extends React.Component{
     render() {
         return (
             <Container fluid>
-                <Jumbotron>
-                    <h2>Contenitore <b>Dipendenti</b></h2>
+                <Jumbotron className="small-jumbotron">
+                    <h3>Contenitore <b>Dipendenti</b></h3>
+                    <p>Con questo contenitore puoi creare un elenco dei componenti della tua squadra.</p>
                 </Jumbotron>
                 <EmployeeAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} employeeId={0} handleAddEdit={this.handleAddEdit} />
                 
@@ -57,18 +60,18 @@ class EmployeeList extends React.Component{
                 {this.state.employees && this.state.employees.map(employee =>                                    
                     <Col sm={parseInt(employee.cardSize)} key={employee.employeeId}>
                         <Card className="mart2 text-center">
-                            <Card.Body>
-                                <Card.Title>
-                                    {employee.firstName} {employee.lastName}
-                                </Card.Title>                            
+                            <Card.Header>
+                                <Card.Title>{employee.firstName} {employee.lastName}</Card.Title>                            
+                            </Card.Header>
+                            <Card.Body>                                
                                 <Row className="justify-content-md-center">
                                     <Col sm={4}>
                                         <Image src={baseImageUrl+employee.imageUrl} roundedCircle fluid />
                                     </Col>
                                 </Row>                                                                
-                                <Card.Text>                                
+                                <div>                                
                                     {parse(employee.description)}
-                                </Card.Text>
+                                </div>
                                 <EmployeeAddEdit appSiteId={employee.appSiteId} sitePageId={employee.sitePageId} pageBoxId={employee.pageBoxId} employeeId={employee.employeeId} handleAddEdit={this.handleAddEdit} />
                                 <Button variant="danger" onClick={() => this.deleteEmployee(employee)}>elimina</Button>
                             </Card.Body>

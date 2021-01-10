@@ -4,6 +4,9 @@ import { Uploader } from '../../../../_components';
 import { Image, Form, Button, Modal, ProgressBar } from 'react-bootstrap'
 import { CardSizes } from '../../../../_helpers/cardSize';
 import { Editor } from "@tinymce/tinymce-react";
+import { LanguageSelect } from '../../../../_components/LanguageSelect';
+import { LanguageEditor } from '../../../../_components/LanguageEditor';
+import { LanguageInput } from '../../../../_components/LanguageInput';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 const baseEditorPlugins = [
@@ -29,6 +32,7 @@ class TopServiceAddEdit extends React.Component {
             cardSize: 4,
             isPublished: true,
             sortId: 1,
+            languageCode: '',
             loading: false
          };        
 
@@ -65,6 +69,12 @@ class TopServiceAddEdit extends React.Component {
 
     handleFileName = (fileName) => {        
         this.setState({ imageUrl: fileName });        
+    }
+
+    handleLanguageCode = (code) => {        
+        this.setState({ 
+            languageCode: code
+        });        
     }
 
     handleShow = () => {
@@ -158,6 +168,8 @@ class TopServiceAddEdit extends React.Component {
                         <small>Utilizzare immagini con formato 640 X 640 px.</small>
                     </div>
 
+                    <LanguageSelect appSiteId={this.state.appSiteId} onLanguageChange={this.handleLanguageCode} />
+
                     <Form.Group>
                         <Form.Label>Ordinamento</Form.Label>
                         <input type="number" className="form-control" name="sortId" value={this.state.sortId} onChange={this.handleChangeNumber}  />
@@ -166,16 +178,27 @@ class TopServiceAddEdit extends React.Component {
                         </Form.Text>
                     </Form.Group>   
                     
+                    {!this.state.loading && this.state.languageCode === '' && 
                     <Form.Group>
                         <Form.Label>Titolo</Form.Label>
                         <input type="text" className="form-control" name="title" value={this.state.title} onChange={this.handleChange} maxLength={200} />
                         <Form.Text className="text-muted">
                             Titolo del servizio (max 200 caratteri).
                         </Form.Text>
-                    </Form.Group>                        
+                    </Form.Group>}   
+
+                    {this.state.languageCode && this.state.languageCode !== '' &&
+                    <div>
+                        <LanguageInput 
+                            originalText={this.state.title}
+                            appSiteId={this.state.appSiteId} 
+                            code={this.state.languageCode}
+                            labelKey={`TOPSERVICE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.topServiceId}-Title`}>
+                        </LanguageInput>
+                    </div>}      
 
                     <div>
-                        {this.props.topServiceId > 0 && !this.state.loading &&
+                        {this.props.topServiceId > 0 && !this.state.loading && this.state.languageCode === '' &&
                         <>
                             <label>Descrizione</label>
                             <Editor
@@ -190,7 +213,17 @@ class TopServiceAddEdit extends React.Component {
                                 onEditorChange={this.handleEditorChange}
                             />
                         </>}
-                    </div>                                    
+                    </div>         
+
+                    {this.state.languageCode && this.state.languageCode !== '' &&
+                    <div>
+                        <LanguageEditor 
+                            originalText={this.state.description}
+                            appSiteId={this.state.appSiteId} 
+                            code={this.state.languageCode}
+                            labelKey={`TOPSERVICE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.topServiceId}-Description`}>                                    
+                        </LanguageEditor>
+                    </div>}                           
 
                     <Form.Group>
                         <Form.Label>Dimensione</Form.Label>

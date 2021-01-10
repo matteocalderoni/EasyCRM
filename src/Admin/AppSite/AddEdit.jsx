@@ -1,9 +1,11 @@
 import React from 'react';
-import { appSiteService, alertService } from '../../_services';
+import { appSiteService, alertService, languageService } from '../../_services';
 import { Uploader } from '../../_components'
 import { Image, Row, Col, Form, Button, Jumbotron, Card, Container, Breadcrumb } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { Link } from 'react-router-dom';
+import { LanguageSelect } from '../../_components/LanguageSelect';
+import { LanguageEditor } from '../../_components/LanguageEditor';
 
 const baseEditorPlugins = [
     'advlist autolink lists link image charmap print preview anchor',
@@ -32,22 +34,40 @@ class AddEdit extends React.Component {
                 email: '',
                 isDefault: false
             },
+            languages: [],
+            languageCode: '',
             loading: false              
          };
-
-        
-         
+ 
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeNumber = this.handleChangeNumber.bind(this);
         this.handleChangeBool = this.handleChangeBool.bind(this);
     }
 
     componentDidMount() {
+        this.getLanguages()
+        this.getSite()
+    }    
+
+    getLanguages() {
+        if (this.props.match.params.appSiteId) {
+            languageService.getlanguagesOfSite(this.props.match.params.appSiteId)
+                .then(_codes => {
+                    this.setState({
+                        ...this.state,
+                        languages: _codes
+                    })
+                })
+        }
+    }
+
+    getSite() {
         if (this.props.match.params.appSiteId) {
             this.setState({ loading: true })
             appSiteService.getAppSiteById(this.props.match.params.appSiteId)
                 .then(_appSite => {     
                     this.setState({
+                        ...this.state,
                         appSite: _appSite,
                         loading: false
                     });                                 
@@ -99,6 +119,12 @@ class AddEdit extends React.Component {
                 ...this.state.appSite,
                 companyLogo: fileName 
             }            
+        });        
+    }
+
+    handleLanguageCode = (code) => {        
+        this.setState({ 
+            languageCode: code
         });        
     }
     
@@ -162,7 +188,7 @@ class AddEdit extends React.Component {
                 <li className="breadcrumb-item active">Sito {this.state.appSite.name}</li>
             </ul>
               <Jumbotron className="">
-                <h1>Gestione dati del <b>Sito</b></h1>                
+                <h3>Gestione dati del <b>Sito</b></h3>                
                 <Row>
                     <Col sm={2}>
                         <Image src={baseImageUrl+this.state.appSite.companyLogo} fluid />                    
@@ -176,21 +202,23 @@ class AddEdit extends React.Component {
                             </Form.Text>
                         </Form.Group>
                     </Col>
-                </Row>              
-                <Row>
-                    <Col sm={8}>
-                        <Uploader prefix={this.state.appSite.appSiteId} fileName={this.state.appSite.companyLogo} onFileNameChange={this.handleFileName} />                                               
-                    </Col>
                     <Col className="text-right">
                         <Button onClick={this.onSubmit} variant="success">
                             Salva modifiche
                         </Button> 
                     </Col>
-                </Row>                
+                </Row>              
+                <div className="mart1">
+                    Carica il logo del tuo sito:
+                    <Uploader prefix={this.state.appSite.appSiteId} fileName={this.state.appSite.companyLogo} onFileNameChange={this.handleFileName} />                                               
+                </div>                
               </Jumbotron>
               
             <Card>
-                <Card.Header><h3><b>Riferimenti</b> del ristorante</h3></Card.Header>                            
+                <Card.Header>
+                    <h3><b>Riferimenti</b> del Sito</h3>
+                    <small>Queste informazioni vengono visualizzate in fondo alle pagine del sito.</small>
+                </Card.Header>                            
                 <Card.Body>
                         
                     <Form.Group>
@@ -200,42 +228,55 @@ class AddEdit extends React.Component {
                             Via, Corso, Piazza.
                         </Form.Text>
                     </Form.Group>
+                    
+                    <Row>
+                        <Col>                        
+                            <Form.Group>
+                                <Form.Label>Citta</Form.Label>
+                                <input type="text" className="form-control" name="city" value={this.state.appSite.city} onChange={this.handleChange} />
+                                <Form.Text className="text-muted">
+                                    Città o Paese.
+                                </Form.Text>
+                            </Form.Group>
+                        </Col>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>CAP</Form.Label>
+                                <input type="text" className="form-control" name="postalCode" value={this.state.appSite.postalCode} onChange={this.handleChange} />
+                                <Form.Text className="text-muted">
+                                    Codice postale.
+                                </Form.Text>
+                            </Form.Group>
+                        </Col>
+                    </Row>
 
-                    <Form.Group>
-                        <Form.Label>Citta</Form.Label>
-                        <input type="text" className="form-control" name="city" value={this.state.appSite.city} onChange={this.handleChange} />
-                        <Form.Text className="text-muted">
-                            Città o Paese.
-                        </Form.Text>
-                    </Form.Group>
-
-                    <Form.Group>
-                        <Form.Label>CAP</Form.Label>
-                        <input type="text" className="form-control" name="postalCode" value={this.state.appSite.postalCode} onChange={this.handleChange} />
-                        <Form.Text className="text-muted">
-                            Codice postale.
-                        </Form.Text>
-                    </Form.Group>
-
-                    <Form.Group>
-                        <Form.Label>Numero di telefono</Form.Label>
-                        <input type="text" className="form-control" name="phone" value={this.state.appSite.phone} onChange={this.handleChange} />
-                        <Form.Text className="text-muted">
-                            Telefono di riferimento per contatti.
-                        </Form.Text>
-                    </Form.Group>
-
-                    <Form.Group>
-                        <Form.Label>Indirizzo email</Form.Label>
-                        <input type="text" className="form-control" name="email" value={this.state.appSite.email} onChange={this.handleChange} />
-                        <Form.Text className="text-muted">
-                            Email di riferimento per contatti.
-                        </Form.Text>
-                    </Form.Group>
+                    
+                    <Row>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Numero di telefono</Form.Label>
+                                <input type="text" className="form-control" name="phone" value={this.state.appSite.phone} onChange={this.handleChange} />
+                                <Form.Text className="text-muted">
+                                    Telefono di riferimento per contatti.
+                                </Form.Text>
+                            </Form.Group>    
+                        </Col>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Indirizzo email</Form.Label>
+                                <input type="text" className="form-control" name="email" value={this.state.appSite.email} onChange={this.handleChange} />
+                                <Form.Text className="text-muted">
+                                    Email di riferimento per contatti. Utilizzata per contenitore di invio richieste.
+                                </Form.Text>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    
+                    <LanguageSelect appSiteId={this.state.appSite.appSiteId} onLanguageChange={this.handleLanguageCode} />      
 
                     <div>
                         <label>Testo per fondo pagina: 'Su di noi'</label>
-                        {!this.state.loading && <Editor
+                        {!this.state.loading && this.state.languageCode == '' && <Editor
                             apiKey={process.env.REACT_APP_TINTMCE_KEY}
                             initialValue={this.state.appSite.description}
                             init={{
@@ -247,22 +288,37 @@ class AddEdit extends React.Component {
                             onEditorChange={this.handleEditorChange}
                         />}                                            
                     </div>
-                    
-                    <Form.Group>
-                        <Form.Label>Latitudine</Form.Label>
-                        <input type="number" className="form-control" name="latitude" value={this.state.appSite.latitude} onChange={this.handleChangeNumber} />
-                        <Form.Text className="text-muted">
-                            Latitudine utilizzata per contenitore Mappa.
-                        </Form.Text>
-                    </Form.Group>
 
-                    <Form.Group>
-                        <Form.Label>Longitudine</Form.Label>
-                        <input type="number" className="form-control" name="longitude" value={this.state.appSite.longitude} onChange={this.handleChangeNumber} />
-                        <Form.Text className="text-muted">
-                            Longitudine utilizzata per contenitore Mappa.
-                        </Form.Text>
-                    </Form.Group>
+                    {this.state.languageCode && this.state.languageCode != '' &&
+                    <div>
+                        <LanguageEditor 
+                            originalText={this.state.appSite.description}
+                            appSiteId={this.state.appSite.appSiteId} 
+                            code={this.state.languageCode}
+                            labelKey={`APPSITE_${this.state.appSite.appSiteId}-Description`}>                                    
+                        </LanguageEditor>
+                    </div>}
+                    
+                    <Row>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Latitudine</Form.Label>
+                                <input type="number" className="form-control" name="latitude" value={this.state.appSite.latitude} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Latitudine utilizzata per contenitore Mappa.
+                                </Form.Text>
+                            </Form.Group>
+                        </Col>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Longitudine</Form.Label>
+                                <input type="number" className="form-control" name="longitude" value={this.state.appSite.longitude} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Longitudine utilizzata per contenitore Mappa.
+                                </Form.Text>
+                            </Form.Group>
+                        </Col>
+                    </Row>
                     
                     <Form.Group>
                         <Form.Check type="checkbox" label="Pubblico" name="isDefault" checked={this.state.appSite.isDefault} onChange={this.handleChangeBool} />

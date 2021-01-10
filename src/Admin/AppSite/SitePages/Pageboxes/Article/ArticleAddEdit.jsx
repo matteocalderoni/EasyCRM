@@ -5,6 +5,9 @@ import { CardSizes } from '../../../../../_helpers/cardSize';
 import { Image, Form, Button, Modal, Row, Col } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import './article.css';
+import { LanguageSelect } from '../../../../../_components/LanguageSelect';
+import { LanguageEditor } from '../../../../../_components/LanguageEditor';
+import { LanguageInput } from '../../../../../_components/LanguageInput';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 const baseEditorPlugins = [
@@ -32,7 +35,8 @@ class ArticleAddEdit extends React.Component {
                 cardSize: 12,
                 isPublished: true
             },
-            loading: false            
+            languageCode: '',
+            loading: false           
          };        
 
         this.handleChange = this.handleChange.bind(this);
@@ -104,6 +108,12 @@ class ArticleAddEdit extends React.Component {
                 ...this.state.article,
                 imageUrl: fileName
             }
+        });        
+    }
+
+    handleLanguageCode = (code) => {        
+        this.setState({ 
+            languageCode: code
         });        
     }
 
@@ -203,8 +213,10 @@ class ArticleAddEdit extends React.Component {
                         </Col>
                         <Col sm={4}>
 
+                            <LanguageSelect appSiteId={this.state.article.appSiteId} onLanguageChange={this.handleLanguageCode} />                           
+
                             <Form.Group>
-                                <Form.Label>Categoria prodotto</Form.Label>
+                                <Form.Label>Categoria articolo</Form.Label>
                                 <Form.Control as="select" value={this.state.article.categoryId} name="categoryId" onChange={this.handleChangeNumber}>
                                     <option value={0}>Seleziona una categoria</option>
                                     {this.state.categories && this.state.categories.map(category =>
@@ -213,17 +225,29 @@ class ArticleAddEdit extends React.Component {
                                 </Form.Control>
                             </Form.Group>
 
+                            {this.state.languageCode == '' &&
                             <Form.Group>
                                 <Form.Label>Titolo</Form.Label>
                                 <input type="text" className="form-control" name="title" value={this.state.article.title} onChange={this.handleChange}  />
                                 <Form.Text className="text-muted">
                                     Ruolo svolto dal dipendente.
                                 </Form.Text>
-                            </Form.Group>                     
-                                                                        
+                            </Form.Group>}    
+
+                            {this.state.languageCode !== '' &&
                             <div>
-                                <label>Descrizione per fondo pagina</label>
-                                {!this.state.loading && <Editor
+                                <LanguageInput 
+                                    originalText={this.state.article.title}
+                                    appSiteId={this.state.article.appSiteId} 
+                                    code={this.state.languageCode}
+                                    labelKey={`ARTICLE_${this.state.article.appSiteId}_${this.state.article.sitePageId}_${this.state.article.pageBoxId}_${this.state.article.articleId}-Title`}>
+                                </LanguageInput>
+                            </div>}                  
+
+                            {this.state.article && !this.state.loading && this.state.languageCode === '' &&                                         
+                            <div>
+                                <label>Descrizione</label>
+                                <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                     initialValue={this.state.article.description}
                                     init={{
@@ -233,8 +257,18 @@ class ArticleAddEdit extends React.Component {
                                     toolbar: baseEditorToolbar
                                     }}
                                     onEditorChange={this.handleEditorChangeDescription}
-                                />}                                            
-                            </div>
+                                />
+                            </div>}
+
+                            {this.state.languageCode && this.state.languageCode !== '' &&
+                            <div>
+                                <LanguageEditor 
+                                    originalText={this.state.article.description}
+                                    appSiteId={this.state.article.appSiteId} 
+                                    code={this.state.languageCode}
+                                    labelKey={`ARTICLE_${this.state.article.appSiteId}_${this.state.article.sitePageId}_${this.state.article.pageBoxId}_${this.state.article.articleId}-Description`}>                                    
+                                </LanguageEditor>
+                            </div>} 
 
                             <Form.Group>
                                 <Form.Label>Dimensione</Form.Label>
@@ -258,9 +292,10 @@ class ArticleAddEdit extends React.Component {
 
                         </Col>
                         <Col sm={4}>
+                            {this.state.article && !this.state.loading && this.state.languageCode === '' &&                                         
                             <div>
                                 <label>Paragrafo 1</label>
-                                {!this.state.loading && <Editor
+                                <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                     initialValue={this.state.article.markdown}
                                     init={{
@@ -270,12 +305,23 @@ class ArticleAddEdit extends React.Component {
                                     toolbar: baseEditorToolbar
                                     }}
                                     onEditorChange={this.handleEditorChangeMarkdown}
-                                />}                                            
-                            </div>
+                                />                                            
+                            </div>}
 
+                            {this.state.languageCode && this.state.languageCode !== '' &&
+                            <div>
+                                <LanguageEditor 
+                                    originalText={this.state.article.markdown}
+                                    appSiteId={this.state.article.appSiteId} 
+                                    code={this.state.languageCode}
+                                    labelKey={`ARTICLE_${this.state.article.appSiteId}_${this.state.article.sitePageId}_${this.state.article.pageBoxId}_${this.state.article.articleId}-Markdown`}>                                    
+                                </LanguageEditor>
+                            </div>} 
+
+                            {this.state.article && !this.state.loading && this.state.languageCode === '' &&                                         
                             <div>
                                 <label>Paragrafo 2</label>
-                                {!this.state.loading && <Editor
+                                <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                     initialValue={this.state.article.html}
                                     init={{
@@ -285,8 +331,18 @@ class ArticleAddEdit extends React.Component {
                                     toolbar: baseEditorToolbar
                                     }}
                                     onEditorChange={this.handleEditorChangeHtml}
-                                />}                                            
-                            </div>
+                                />                                            
+                            </div>}
+
+                            {this.state.languageCode && this.state.languageCode !== '' &&
+                            <div>
+                                <LanguageEditor 
+                                    originalText={this.state.article.html}
+                                    appSiteId={this.state.article.appSiteId} 
+                                    code={this.state.languageCode}
+                                    labelKey={`ARTICLE_${this.state.article.appSiteId}_${this.state.article.sitePageId}_${this.state.article.pageBoxId}_${this.state.article.articleId}-Html`}>                                    
+                                </LanguageEditor>
+                            </div>} 
                         </Col>
                     </Row>                                    
 

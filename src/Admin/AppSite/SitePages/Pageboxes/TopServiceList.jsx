@@ -53,8 +53,8 @@ class TopServiceList extends React.Component{
     render() {
         return (
             <Container fluid>
-                <Jumbotron>
-                    <h2>Contenitore <b>Servizi</b></h2>
+                <Jumbotron className="small-jumbotron">
+                    <h3>Contenitore <b>Servizi</b></h3>
                     <p>Con questo contenitore puoi creare un elenco di card con immagine e testo.<br />
                     Puoi scegliere la dimensione dei riquadri per creare layout differenti.</p>
                 </Jumbotron>

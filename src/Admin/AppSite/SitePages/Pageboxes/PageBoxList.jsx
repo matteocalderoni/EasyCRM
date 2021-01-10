@@ -64,7 +64,7 @@ function PageBoxList({ match }) {
             <ul className="breadcrumb">
                 <li className="breadcrumb-item"><Link to={`/`}>Home</Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>          
-                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Site</Link></li>                      
+                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                      
                 <li className="breadcrumb-item">
                     <Link to={'/admin/sites/sitepages/'+ appSiteId}>Sito {appSite && <b>{appSite.name}</b>}</Link>                    
                 </li>                
@@ -95,13 +95,14 @@ function PageBoxList({ match }) {
             }
             {pageBoxes && pageBoxes.map(pageBox =>                                    
                 <Card className="mart2 text-center" key={pageBox.pageBoxId}>
+                    <Card.Header>
+                        <Card.Title>#{pageBox.sortId} {pageBox.title}</Card.Title>       
+                    </Card.Header>
                     <Card.Body>
                         {pageBox.boxType && (parseInt(pageBox.boxType) === 8 || parseInt(pageBox.boxType) === 9) &&
                             <Card.Img variant="top" src={baseImageUrl+pageBox.imageUrl} />
                         }                        
-                        <Card.Title>
-                            ({pageBox.sortId}) {pageBox.title} 
-                        </Card.Title>       
+                        
                         {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9) &&                                                 
                         <div>{parse(pageBox.description)}</div>
                         }

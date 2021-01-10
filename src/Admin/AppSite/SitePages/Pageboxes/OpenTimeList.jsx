@@ -57,8 +57,9 @@ class OpenTimeList extends React.Component{
     render() {
         return (
             <Container fluid>
-                <Jumbotron>
-                    <h2>Contenitore <b>Giorni di servizio</b></h2>
+                <Jumbotron className="small-jumbotron">
+                    <h3>Contenitore <b>Giorni di servizio</b></h3>
+                    <p>Con questo contenitore puoi creare un elenco dei giorni di apertura con i relativi orari di inizio/pausa/ripresa/chiusura.</p>
                 </Jumbotron>
                 <OpenTimeAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} weekDay={0} handleAddEdit={this.handleAddEdit} />
                 <Row className="mart2" >

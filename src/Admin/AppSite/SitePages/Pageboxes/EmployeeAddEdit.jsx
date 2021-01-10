@@ -4,6 +4,9 @@ import { Uploader } from '../../../../_components'
 import { Image, Form, Button, Modal, Row, Col } from 'react-bootstrap'
 import { CardSizes } from '../../../../_helpers/cardSize';
 import { Editor } from "@tinymce/tinymce-react";
+import { LanguageSelect } from '../../../../_components/LanguageSelect';
+import { LanguageEditor } from '../../../../_components/LanguageEditor';
+import { LanguageInput } from '../../../../_components/LanguageInput';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 const baseEditorPlugins = [
@@ -31,6 +34,7 @@ class EmployeeAddEdit extends React.Component {
             description: '',
             cardSize: 4,
             isPublished: true,
+            languageCode: '',
             sortId: 1
          };
 
@@ -67,6 +71,12 @@ class EmployeeAddEdit extends React.Component {
 
     handleFileName = (fileName) => {        
         this.setState({ imageUrl: fileName });        
+    }
+
+    handleLanguageCode = (code) => {        
+        this.setState({ 
+            languageCode: code
+        });        
     }
 
     handleShow = () => {    
@@ -157,6 +167,8 @@ class EmployeeAddEdit extends React.Component {
                         <small>Utilizzare immagini con formato 640 X 640 px.</small>
                     </div>                    
 
+                    <LanguageSelect appSiteId={this.state.appSiteId} onLanguageChange={this.handleLanguageCode} />                          
+
                     <Form.Group>
                         <Form.Label>Ordinamento</Form.Label>
                         <input type="number" className="form-control" name="sortId" value={this.state.sortId} onChange={this.handleChangeNumber}  />
@@ -165,13 +177,24 @@ class EmployeeAddEdit extends React.Component {
                         </Form.Text>
                     </Form.Group>   
 
+                    {this.state.languageCode == '' &&
                     <Form.Group>
                         <Form.Label>Titolo</Form.Label>
                         <input type="text" className="form-control" name="title" value={this.state.title} onChange={this.handleChange} maxLength={200} />
                         <Form.Text className="text-muted">
                             Ruolo svolto dal dipendente (max 200 caratteri).
                         </Form.Text>
-                    </Form.Group>                    
+                    </Form.Group>}
+
+                    {this.state.languageCode !== '' &&
+                    <div>
+                        <LanguageInput 
+                            originalText={this.state.title}
+                            appSiteId={this.state.appSiteId} 
+                            code={this.state.languageCode}
+                            labelKey={`EMPLOYEE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.employeeId}-Title`}>
+                        </LanguageInput>
+                    </div>}                     
 
                     <Row>
                         <Col sm={6}>
@@ -192,11 +215,13 @@ class EmployeeAddEdit extends React.Component {
                                 </Form.Text>
                             </Form.Group>                    
                         </Col>
-                    </Row>                                 
+                    </Row>                           
 
+                    {!this.state.loading && this.state.languageCode === '' && 
                     <div>
                         <label>Descrizione</label>
                         <Editor
+                            apiKey={process.env.REACT_APP_TINTMCE_KEY}
                             initialValue={this.state.description}
                             init={{
                             height: 500,
@@ -206,8 +231,17 @@ class EmployeeAddEdit extends React.Component {
                             }}
                             onEditorChange={this.handleEditorChange}
                         />                
-                    </div>
+                    </div>}
                     
+                    {this.state.languageCode && this.state.languageCode !== '' &&
+                    <div>
+                        <LanguageEditor 
+                            originalText={this.state.description}
+                            appSiteId={this.state.appSiteId} 
+                            code={this.state.languageCode}
+                            labelKey={`EMPLOYEE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.employeeId}-Description`}>                                    
+                        </LanguageEditor>
+                    </div>}                           
 
                     <Form.Group>
                         <Form.Label>Dimensione</Form.Label>

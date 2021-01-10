@@ -3,6 +3,9 @@ import { appSiteService, alertService } from '../../../_services';
 import { Uploader } from '../../../_components'
 import { Form, Button, Card, Image, Row, Col,ProgressBar } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
+import { LanguageSelect } from '../../../_components/LanguageSelect';
+import { LanguageEditor } from '../../../_components/LanguageEditor';
+import { LanguageInput } from '../../../_components/LanguageInput';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 const baseEditorPlugins = [
@@ -27,6 +30,7 @@ class SitePageAddEdit extends React.Component {
                 sortId: 1,
                 isPublished: true
             },
+            languageCode: '',
             loading: false                         
          };
 
@@ -55,6 +59,12 @@ class SitePageAddEdit extends React.Component {
                 ...this.state.sitePage,
                 imageUrl: fileName
             }
+        });        
+    }
+
+    handleLanguageCode = (code) => {        
+        this.setState({ 
+            languageCode: code
         });        
     }
 
@@ -158,6 +168,8 @@ class SitePageAddEdit extends React.Component {
                         }
                         </Col>
                         <Col>
+                            <LanguageSelect appSiteId={this.state.sitePage.appSiteId} onLanguageChange={this.handleLanguageCode} />      
+
                             <Form.Group>
                                 <Form.Label>Valore per Ordinamento</Form.Label>
                                 <input type="number" className="form-control" name="sortId" value={this.state.sitePage.sortId} onChange={this.handleChangeNumber}  />
@@ -166,17 +178,28 @@ class SitePageAddEdit extends React.Component {
                                 </Form.Text>
                             </Form.Group>   
 
+                            {!this.state.loading && this.state.languageCode === '' && 
                             <Form.Group>
                                 <Form.Label>Titolo della Pagina</Form.Label>
                                 <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} />
                                 <Form.Text className="text-muted">
                                     Titolo della pagina (max 200 caratteri): visualizzato nel menù di navigazione in alto nella pagina.
                                 </Form.Text>
-                            </Form.Group>                                                        
+                            </Form.Group>}
+
+                            {this.state.languageCode && this.state.languageCode !== '' &&
+                            <div>
+                                <LanguageInput 
+                                    originalText={this.state.sitePage.title}
+                                    appSiteId={this.state.sitePage.appSiteId} 
+                                    code={this.state.languageCode}
+                                    labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-Title`}>
+                                </LanguageInput>
+                            </div>}                                                    
                         </Col>
-                    </Row>
+                    </Row>                    
                     
-                    {!this.state.loading && this.state.sitePage.sitePageId > 0 &&
+                    {!this.state.loading && this.state.sitePage.sitePageId > 0 && this.state.languageCode === '' &&
                         <div>
                             <label>Testo visualizzato nella Slide</label>
                             <Editor
@@ -193,6 +216,16 @@ class SitePageAddEdit extends React.Component {
                         </div>
                     }
 
+                    {this.state.languageCode && this.state.languageCode !== '' &&
+                    <div>
+                        <LanguageEditor 
+                            originalText={this.state.sitePage.slideText}
+                            appSiteId={this.state.sitePage.appSiteId} 
+                            code={this.state.languageCode}
+                            labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-SlideText`}>                                    
+                        </LanguageEditor>
+                    </div>}
+
                     <Form.Group className="mart2">
                         <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.sitePage.isPublished} onChange={this.handleChangeBool} />
                         <Form.Text>
@@ -203,7 +236,7 @@ class SitePageAddEdit extends React.Component {
                 </Card.Body>    
                 <Card.Footer>
                     <Button onClick={this.onSubmit} variant="success">
-                        Salva le modifiche
+                        Salva le modifiche Pagina 
                     </Button> 
                 </Card.Footer>
             </Card>                    

@@ -72,6 +72,7 @@ function List({ match }) {
                     <Col sm={4} style={{ whiteSpace: 'nowrap' }}>
                         <Link to={`${path}/edit/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">dettagli</Link>
                         <Link to={`${path}/sitepages/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">pagine</Link>
+                        <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">lingue</Link>
                         <Button onClick={() => deleteAppSite(appSite.appSiteId)} className="btn btn-sm btn-danger" disabled={appSite.isDeleting}>
                             {appSite.isDeleting 
                                 ? <span className="spinner-border spinner-border-sm"></span>
