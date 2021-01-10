@@ -21,23 +21,24 @@ function Overview({ match }) {
             <Row>
                 {user.role === Role.Admin &&
                     <Col>
-                        <Card className="mart1">
+                        <Card className="mart1" bg="info" text="white">
                             <Card.Header>
                                 <Card.Title>Gestione utenti</Card.Title>
                             </Card.Header>
                             <Card.Body>
                                 <Card.Text>
-                                    Sezione con accesso consentito solo ad Admin: gestione utenti e relativi siti.
+                                    Sezione con accesso consentito solo ad Admin: gestione utenti e relativi siti.<br />
+                                    Creazione nuovi utenti e modifica di quelli già registrati.
                                 </Card.Text>                                
                             </Card.Body>                        
-                            <Card.Footer className="d-flex justify-content-end">
-                                <Link to={`${path}/users`} variant="primary">Vai</Link>
+                            <Card.Footer className="d-flex justify-content-end">                                
+                                <Link to={`${path}/users`} className="btn btn-primary">Vai</Link>
                             </Card.Footer>
                         </Card>
                     </Col>
                 }
                 <Col>
-                    <Card className="mart1">
+                    <Card className="mart1" bg="info" text="white">
                         <Card.Header>
                             <Card.Title>Gestione siti</Card.Title>
                         </Card.Header>
@@ -48,7 +49,7 @@ function Overview({ match }) {
                             </Card.Text>                            
                         </Card.Body>   
                         <Card.Footer className="d-flex justify-content-end">
-                            <Link to={`${path}/sites`} variant="primary">Vai</Link>
+                            <Link to={`${path}/sites`} className="btn btn-primary">Vai</Link>
                         </Card.Footer>                     
                     </Card>
                 </Col>

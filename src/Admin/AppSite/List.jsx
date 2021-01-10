@@ -11,7 +11,7 @@ function List({ match }) {
     const { path } = match;
     const user = accountService.userValue;
     
-    const [appSites, setAppSites] = useState(null)    
+    const [appSites, setAppSites] = useState([])    
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -38,22 +38,25 @@ function List({ match }) {
         <Container fluid>
             <ul className="breadcrumb">
                 <li className="breadcrumb-item"><Link to={`/`}>Home</Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
                 <li className="breadcrumb-item active">Elenco Siti</li>
             </ul>
             <Jumbotron>
-                <h1>Siti</h1>
+                <h1>Gestione Siti</h1>
                 <p>In questa sezione puoi visualizzare i tuoi siti.<br />
                 Tramite la sezione 'Dettagli' puoi modificare le informazioni relative ai tuoi riferimenti.<br />
+                Tramite la sezione 'Lingue' puoi visualizzare, modificare e aggiungere le lingue del relativo sito.<br />
                 Tramite la sezione 'Pagine' puoi visualizzare, modificare e aggiungere le pagine del relativo sito.</p>
             </Jumbotron>
             
             {user.role === Role.Admin &&
                 <Link to={`${path}/add/0`} className="btn btn-sm btn-success mb-2">Crea un nuovo Sito</Link>
             }
-            <Row>                    
-                <Col sm={2}><h3>Logo</h3></Col>
-                <Col sm={10}><h3>Nome del Sito</h3></Col>
+            
+            <Row className="site-list-header">                    
+                <Col sm={2}>Logo</Col>
+                <Col sm={8}>Nome del Sito e descrizione</Col>
+                <Col sm={2} className="text-right">#{appSites.length}</Col>
             </Row>       
             {!appSites && loading &&
                 <Row>
@@ -63,13 +66,13 @@ function List({ match }) {
                 </Row>
             }                         
             {appSites && appSites.map(appSite =>
-                <Row key={appSite.appSiteId}>
-                    <Col sm={2}><Image src={baseImageUrl+appSite.companyLogo} fluid /></Col>
+                <Row key={appSite.appSiteId} className="site-list-item">
+                    <Col sm={2}><Image src={baseImageUrl+appSite.companyLogo} className="logo" fluid roundedCircle /></Col>
                     <Col sm={6}>
                         <b>{appSite.name}</b><br />
                         {parse(appSite.description)}
                     </Col>
-                    <Col sm={4} style={{ whiteSpace: 'nowrap' }}>
+                    <Col sm={4} style={{ whiteSpace: 'nowrap' }} className="mart2 text-right">
                         <Link to={`${path}/edit/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">dettagli</Link>
                         <Link to={`${path}/sitepages/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">pagine</Link>
                         <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">lingue</Link>

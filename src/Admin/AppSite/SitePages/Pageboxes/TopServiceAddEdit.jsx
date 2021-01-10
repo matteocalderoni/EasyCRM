@@ -152,8 +152,8 @@ class TopServiceAddEdit extends React.Component {
             <Modal
                 show={this.state.setShow}
                 onHide={this.handleClose}
-                backdrop="static"
-                size="lg"
+                backdrop="static"                
+                dialogClassName="modal-90w"
                 keyboard={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>{this.state.topServiceId > 0 ? 'Modifica il ' : 'Crea un nuovo '} Servizio</Modal.Title>

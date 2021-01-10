@@ -69,9 +69,9 @@ class OpenTimeList extends React.Component{
                 </div>}
                 {this.state.openTimes && this.state.openTimes.map(openTime =>                
                     <Col sm={4} key={openTime.weekDay}>
-                        <Card>                            
+                        <Card bg="secondary" text="white">                            
                             <Card.Header>
-                                {weekDays[openTime.weekDay - 1].label}
+                                <Card.Title>#{openTime.weekDay} {weekDays[openTime.weekDay - 1].label}</Card.Title>                                
                             </Card.Header>
                             <Card.Body>                                                                
                                 <Card.Text>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'; 
 import { languageService, alertService } from '../_services'
-import { Button,ProgressBar, Form } from 'react-bootstrap'
+import { Button,ProgressBar, Form,Card } from 'react-bootstrap'
 
 function LanguageInput(props) { 
   
@@ -40,29 +40,35 @@ function LanguageInput(props) {
   }
     
   return ( 
-    <div className="language-editor">     
+    <div>     
       {loading && <div className="text-center mart2">
         <h5>Caricamento etichetta...</h5>
         <ProgressBar animated now={100} />
       </div>}
-      <div>
+
+      <Card bg="primary" text="white">
+        <Card.Header>
+          <Card.Title>Testo per {props.code}</Card.Title>
+        </Card.Header>
+        <Card.Body>
           {!loading && 
-          <Form.Group>
-            <Form.Label>Testo per {props.code}</Form.Label>
-                <input type="text" className="form-control" name="title" value={labelValue} onChange={handleChange} maxLength={200} />                
-          </Form.Group>}                    
-      </div>
-      <div>
-          <b>Testo originale</b>
-          <div className="mart2">            
-            {props.originalText}
-          </div>
-      </div>
-      <div className="mart2">
-        <Button onClick={handleSubmit} variant="success">
-            Salva etichetta
-        </Button> 
-      </div>
+            <Form.Group>
+              <Form.Label></Form.Label>
+                  <input type="text" className="form-control" name="title" value={labelValue} onChange={handleChange} maxLength={200} />                
+            </Form.Group>}     
+            <div className="mart2">
+              <b>Testo originale</b>
+              <div className="mart2">            
+                {props.originalText}
+              </div>
+            </div>               
+        </Card.Body>
+        <Card.Footer>
+          <Button onClick={handleSubmit} variant="success">
+              Salva etichetta
+          </Button> 
+        </Card.Footer>
+      </Card>      
     </div> 
   );      
 } 

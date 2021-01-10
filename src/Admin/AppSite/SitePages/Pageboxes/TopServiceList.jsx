@@ -65,12 +65,14 @@ class TopServiceList extends React.Component{
                 <Row className="mart2" >
                 {this.state.topServices && !this.state.loading && this.state.topServices.map(topService =>                
                     <Col sm={parseInt(topService.cardSize)} key={topService.topServiceId}>
-                        <Card>
-                            <Card.Img variant="top" src={baseImageUrl+topService.imageUrl} />
-                            <Card.Body>                                
+                        <Card bg="secondary" text="white">
+                            <Card.Header>
                                 <Card.Title>
-                                    {topService.title}
+                                    #{topService.sortId} {topService.title}
                                 </Card.Title>
+                            </Card.Header>
+                            <Card.Img variant="top" src={baseImageUrl+topService.imageUrl} />
+                            <Card.Body>                                                                
                                 <div>
                                 {parse(topService.description)}
                                 </div>

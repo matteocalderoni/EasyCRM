@@ -180,7 +180,7 @@ class ProductAddEdit extends React.Component {
                 show={this.state.setShow}
                 onHide={this.handleClose}
                 backdrop="static"
-                size="lg"
+                dialogClassName="modal-90w"
                 keyboard={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>{this.state.product.productId > 0 ? 'Modifica ' : 'Nuovo '} Prodotto</Modal.Title>

@@ -59,9 +59,9 @@ class EmployeeList extends React.Component{
                 </div>}        
                 {this.state.employees && this.state.employees.map(employee =>                                    
                     <Col sm={parseInt(employee.cardSize)} key={employee.employeeId}>
-                        <Card className="mart2 text-center">
+                        <Card className="mart2 text-center" bg="secondary" text="white">
                             <Card.Header>
-                                <Card.Title>{employee.firstName} {employee.lastName}</Card.Title>                            
+                                <Card.Title>#{employee.sortId} {employee.firstName} {employee.lastName}</Card.Title>                            
                             </Card.Header>
                             <Card.Body>                                
                                 <Row className="justify-content-md-center">

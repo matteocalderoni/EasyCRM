@@ -18,7 +18,7 @@ code {
 .mart7 { margin-top: 7%; }
 .mart10 { margin-top: 10%; }
 
-.modal-90w { width: 90%; }
+.modal-90w { max-width: 90%; }
 
 .brand-logo { height: 40px; }
 .sub-navbar { margin-top: 60px; }
@@ -29,6 +29,9 @@ code {
 
 .container-alert { position: fixed; bottom: 10%; z-index: 1050; text-align: center; }
 
-.language-editor { background-color:rgb(243, 255, 241); padding: 5px; border-radius: 5px; margin: 3px 0 3px; border:1px solid #DDD; }
-
 .small-jumbotron {padding:24px 8px 24px 8px; }
+
+/* Site list */
+.site-list-header { border: 1px solid #777; background-color: #777; color: #FFF; font-size: 1.3em; }
+.site-list-item { border: 1px solid #777; }
+.site-list-item .logo { margin: 5px; }

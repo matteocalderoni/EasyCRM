@@ -40,7 +40,7 @@ class PageBoxModal extends React.Component {
             <Button variant="primary" className="mr-1" onClick={this.handleShow}>
                 {this.state.pageBox.pageBoxId > 0 ? 'Modifica il ' : 'Crea un nuovo '} Contenitore
             </Button>
-            <Modal show={this.state.setShow} size="lg" onHide={this.handleClose} backdrop="static" keyboard={false}>
+            <Modal show={this.state.setShow} dialogClassName="modal-90w" onHide={this.handleClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>{this.state.pageBox.pageBoxId > 0 ? 'Modifica il ' : 'Crea un nuovo '} Contenitore</Modal.Title>
                 </Modal.Header>

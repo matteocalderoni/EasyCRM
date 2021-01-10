@@ -154,7 +154,7 @@ class EmployeeAddEdit extends React.Component {
                 show={this.state.setShow}
                 onHide={this.handleClose}
                 backdrop="static"
-                size="lg"
+                dialogClassName="modal-90w"
                 keyboard={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>{this.state.employeeId > 0 ? 'Modifica ' : 'Nuovo '} Dipendente</Modal.Title>

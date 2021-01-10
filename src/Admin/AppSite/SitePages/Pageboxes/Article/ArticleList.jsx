@@ -58,7 +58,7 @@ class ArticleList extends React.Component{
                 <Row>
                 {this.state.articles && this.state.articles.map(article =>                                    
                     <Col sm={parseInt(article.cardSize)} key={article.articleId}>
-                        <Card className="mart2 text-center">
+                        <Card className="mart2 text-center" bg="secondary" text="white">
                             <Card.Body>                            
                                 <Card.Title>
                                     {article.title}

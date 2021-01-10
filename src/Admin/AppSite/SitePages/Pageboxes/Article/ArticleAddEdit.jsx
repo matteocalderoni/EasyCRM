@@ -198,7 +198,6 @@ class ArticleAddEdit extends React.Component {
             <Modal
                 show={this.state.setShow}
                 onHide={this.handleClose}                
-                size="lg"
                 dialogClassName="modal-90w"                
                 keyboard={false}>
                 <Modal.Header closeButton>
