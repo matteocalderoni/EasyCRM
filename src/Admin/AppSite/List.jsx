@@ -4,6 +4,11 @@ import { Jumbotron, Image, Container,ProgressBar, Row, Col, Button} from 'react-
 import { appSiteService, accountService } from '../../_services';
 import { Role } from '../../_helpers';
 import parse from 'html-react-parser';
+import { BsPencil,BsTrash } from 'react-icons/bs';
+import { IoDocumentsOutline } from 'react-icons/io5';
+import { FcHome } from 'react-icons/fc';
+import { IoMdAddCircle } from 'react-icons/io';
+import { FaLanguage} from 'react-icons/fa';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -37,21 +42,28 @@ function List({ match }) {
     return (
         <Container fluid>
             <ul className="breadcrumb">
-                <li className="breadcrumb-item"><Link to={`/`}>Home</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
                 <li className="breadcrumb-item active">Elenco Siti</li>
             </ul>
-            <Jumbotron>
-                <h1>Gestione Siti</h1>
-                <p>In questa sezione puoi visualizzare i tuoi siti.<br />
-                Tramite la sezione 'Dettagli' puoi modificare le informazioni relative ai tuoi riferimenti.<br />
-                Tramite la sezione 'Lingue' puoi visualizzare, modificare e aggiungere le lingue del relativo sito.<br />
-                Tramite la sezione 'Pagine' puoi visualizzare, modificare e aggiungere le pagine del relativo sito.</p>
+            <Jumbotron className="small-jumbotron">
+                <Row>
+                    <Col md={8}>
+                    <h1>Gestione Siti</h1>
+                    <p>In questa sezione puoi visualizzare i tuoi siti.<br />
+                    Tramite la sezione 'Dettagli' puoi modificare le informazioni relative ai tuoi riferimenti.<br />
+                    Tramite la sezione 'Lingue' puoi visualizzare, modificare e aggiungere le lingue del relativo sito.<br />
+                    Tramite la sezione 'Pagine' puoi visualizzare, modificare e aggiungere le pagine del relativo sito.</p>
+                    </Col>
+                    <Col md={4} className="text-right">
+                    {user.role === Role.Admin &&
+                        <Link to={`${path}/add/0`} className="btn btn-success mb-2">
+                            <IoMdAddCircle /> Crea un nuovo Sito
+                        </Link>
+                    }
+                    </Col>
+                </Row>                                
             </Jumbotron>
-            
-            {user.role === Role.Admin &&
-                <Link to={`${path}/add/0`} className="btn btn-sm btn-success mb-2">Crea un nuovo Sito</Link>
-            }
             
             <Row className="site-list-header">                    
                 <Col sm={2}>Logo</Col>
@@ -73,13 +85,19 @@ function List({ match }) {
                         {parse(appSite.description)}
                     </Col>
                     <Col sm={4} style={{ whiteSpace: 'nowrap' }} className="mart2 text-right">
-                        <Link to={`${path}/edit/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">dettagli</Link>
-                        <Link to={`${path}/sitepages/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">pagine</Link>
-                        <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} className="btn btn-sm btn-primary mr-1">lingue</Link>
-                        <Button onClick={() => deleteAppSite(appSite.appSiteId)} className="btn btn-sm btn-danger" disabled={appSite.isDeleting}>
+                        <Link to={`${path}/edit/${appSite.appSiteId}`} title="Modifica sito" className="btn btn-primary mr-1">
+                            <BsPencil />
+                        </Link>
+                        <Link to={`${path}/sitepages/${appSite.appSiteId}`} title="Pagine del sito" className="btn btn-primary mr-1">
+                            <IoDocumentsOutline />
+                        </Link>
+                        <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} title="Lingue del sito" className="btn btn-primary mr-1">
+                            <FaLanguage />
+                        </Link>
+                        <Button onClick={() => deleteAppSite(appSite.appSiteId)} title="Elimina sito" className="btn btn-danger" disabled={appSite.isDeleting}>
                             {appSite.isDeleting 
                                 ? <span className="spinner-border spinner-border-sm"></span>
-                                : <span>elimina</span>
+                                : <span><BsTrash /></span>
                             }
                         </Button>
                     </Col>

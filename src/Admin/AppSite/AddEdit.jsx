@@ -1,11 +1,13 @@
 import React from 'react';
 import { appSiteService, alertService, languageService } from '../../_services';
 import { Uploader } from '../../_components'
-import { Image, Row, Col, Form, Button, Jumbotron, Card, Container, Breadcrumb } from 'react-bootstrap'
+import { Image, Row, Col, Form, Button, Jumbotron, Card, Container, ProgressBar } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { Link } from 'react-router-dom';
 import { LanguageSelect } from '../../_components/LanguageSelect';
 import { LanguageEditor } from '../../_components/LanguageEditor';
+import { AiFillSave } from 'react-icons/ai';
+import { FcHome } from 'react-icons/fc';
 
 const baseEditorPlugins = [
     'advlist autolink lists link image charmap print preview anchor',
@@ -182,18 +184,26 @@ class AddEdit extends React.Component {
         return (            
           <Container fluid>
               <ul className="breadcrumb">
-                <li className="breadcrumb-item"><Link to={`/`}>Home</Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>          
-                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Siti</Link></li>                                      
-                <li className="breadcrumb-item active">Sito {this.state.appSite.name}</li>
+                <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>          
+                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                                      
+                <li className="breadcrumb-item active">Sito <b>{this.state.appSite.name}</b></li>
             </ul>
-              <Jumbotron className="">
+
+            {this.state.loading &&
+                <Row>
+                    <Col className="text-center mart2">
+                        <ProgressBar animated now={100} />
+                    </Col>
+                </Row>
+            }                         
+              <Jumbotron className="small-jumbotron">
                 <h3>Gestione dati del <b>Sito</b></h3>                
                 <Row>
                     <Col sm={2}>
                         <Image src={baseImageUrl+this.state.appSite.companyLogo} fluid />                    
                     </Col>
-                    <Col>
+                    <Col sm={6}>
                         <Form.Group>
                             <Form.Label>Nome del Sito</Form.Label>
                             <Form.Control type="text" size="lg" className="form-control" name="name" value={this.state.appSite.name} onChange={this.handleChange} maxLength={200} />
@@ -202,9 +212,9 @@ class AddEdit extends React.Component {
                             </Form.Text>
                         </Form.Group>
                     </Col>
-                    <Col className="text-right">
+                    <Col sm={4} className="text-right">
                         <Button onClick={this.onSubmit} variant="success">
-                            Salva modifiche
+                            <AiFillSave /> Salva modifiche
                         </Button> 
                     </Col>
                 </Row>              
@@ -213,7 +223,7 @@ class AddEdit extends React.Component {
                     <Uploader prefix={this.state.appSite.appSiteId} fileName={this.state.appSite.companyLogo} onFileNameChange={this.handleFileName} />                                               
                 </div>                
               </Jumbotron>
-              
+
             <Card>
                 <Card.Header>
                     <h3><b>Riferimenti</b> del Sito</h3>
@@ -336,7 +346,7 @@ class AddEdit extends React.Component {
                 </Card.Body>
                 <Card.Footer>
                     <Button onClick={this.onSubmit} variant="success">
-                        Salva modifiche
+                        <AiFillSave /> Salva modifiche
                     </Button> 
                 </Card.Footer>
             </Card>                    

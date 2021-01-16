@@ -1,7 +1,7 @@
 import React from 'react';
 import { appSiteService, alertService } from '../../../../_services';
 import { Uploader } from '../../../../_components';
-import { Image, Form, Button, Modal, ProgressBar } from 'react-bootstrap'
+import { Image, Form, Button, Modal, ProgressBar, Row,Col } from 'react-bootstrap'
 import { CardSizes } from '../../../../_helpers/cardSize';
 import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../../_components/LanguageSelect';
@@ -162,88 +162,96 @@ class TopServiceAddEdit extends React.Component {
                     {this.state.loading && <div className="text-center mart2">
                         <ProgressBar animated now={100} />
                     </div>}
-                    <div className="text-center">
-                        <Image src={baseImageUrl+this.state.imageUrl} fluid />                    
-                        <Uploader prefix={this.state.appSiteId} fileName={this.state.imageUrl} onFileNameChange={this.handleFileName} />      
-                        <small>Utilizzare immagini con formato 640 X 640 px.</small>
-                    </div>
+                    <Row>
+                        <Col md={4}>
+                            <div className="text-center">
+                                <Image src={baseImageUrl+this.state.imageUrl} fluid />                    
+                                <Uploader prefix={this.state.appSiteId} fileName={this.state.imageUrl} onFileNameChange={this.handleFileName} />      
+                                <small>Utilizzare immagini con formato 640 X 640 px.</small>
+                            </div>
+                        </Col>
+                        <Col md={8}>
+                            <LanguageSelect appSiteId={this.state.appSiteId} onLanguageChange={this.handleLanguageCode} />
 
-                    <LanguageSelect appSiteId={this.state.appSiteId} onLanguageChange={this.handleLanguageCode} />
+                            <Form.Group>
+                                <Form.Label>Ordinamento</Form.Label>
+                                <input type="number" className="form-control" name="sortId" value={this.state.sortId} onChange={this.handleChangeNumber}  />
+                                <Form.Text className="text-muted">
+                                    Valore per ordinamento crescente.
+                                </Form.Text>
+                            </Form.Group>   
 
-                    <Form.Group>
-                        <Form.Label>Ordinamento</Form.Label>
-                        <input type="number" className="form-control" name="sortId" value={this.state.sortId} onChange={this.handleChangeNumber}  />
-                        <Form.Text className="text-muted">
-                            Valore per ordinamento crescente.
-                        </Form.Text>
-                    </Form.Group>   
+                            {!this.state.loading && this.state.languageCode === '' && 
+                            <Form.Group>
+                                <Form.Label>Titolo</Form.Label>
+                                <input type="text" className="form-control" name="title" value={this.state.title} onChange={this.handleChange} maxLength={200} />
+                                <Form.Text className="text-muted">
+                                    Titolo del servizio (max 200 caratteri).
+                                </Form.Text>
+                            </Form.Group>}   
+
+                            {this.state.languageCode && this.state.languageCode !== '' &&
+                            <div>
+                                <LanguageInput 
+                                    originalText={this.state.title}
+                                    appSiteId={this.state.appSiteId} 
+                                    code={this.state.languageCode}
+                                    labelKey={`TOPSERVICE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.topServiceId}-Title`}>
+                                </LanguageInput>
+                            </div>}      
+
+                            <div>
+                                {this.props.topServiceId > 0 && !this.state.loading && this.state.languageCode === '' &&
+                                <>
+                                    <label>Descrizione</label>
+                                    <Editor
+                                        apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                        initialValue={this.state.description}
+                                        init={{
+                                        height: 500,
+                                        menubar: false,
+                                        plugins: baseEditorPlugins,
+                                        toolbar: baseEditorToolbar
+                                        }}
+                                        onEditorChange={this.handleEditorChange}
+                                    />
+                                </>}
+                            </div>         
+
+                            {this.state.languageCode && this.state.languageCode !== '' &&
+                            <div>
+                                <LanguageEditor 
+                                    originalText={this.state.description}
+                                    appSiteId={this.state.appSiteId} 
+                                    code={this.state.languageCode}
+                                    labelKey={`TOPSERVICE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.topServiceId}-Description`}>                                    
+                                </LanguageEditor>
+                            </div>}                           
+
+                            <Form.Group>
+                                <Form.Label>Dimensione</Form.Label>
+                                <Form.Control as="select" value={this.state.cardSize} name="cardSize" onChange={this.handleChangeNumber}>
+                                    <option value={0}>Seleziona una dimensione</option>
+                                    {CardSizes && CardSizes.map(cardSize =>
+                                        <option key={cardSize.value} value={parseInt(cardSize.value)}>{cardSize.label}</option>
+                                    )}   
+                                </Form.Control>
+                                <Form.Text className="text-muted">
+                                    I tipi servono per impostare il formato e le proprietà del contenitore.
+                                </Form.Text>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.isPublished} onChange={this.handleChangeBool} />
+                                <Form.Text>
+                                    Solo i contenuti pubblici vengono visualizzati nel sito.
+                                </Form.Text>
+                            </Form.Group>
+                        </Col>
+                    </Row>
                     
-                    {!this.state.loading && this.state.languageCode === '' && 
-                    <Form.Group>
-                        <Form.Label>Titolo</Form.Label>
-                        <input type="text" className="form-control" name="title" value={this.state.title} onChange={this.handleChange} maxLength={200} />
-                        <Form.Text className="text-muted">
-                            Titolo del servizio (max 200 caratteri).
-                        </Form.Text>
-                    </Form.Group>}   
 
-                    {this.state.languageCode && this.state.languageCode !== '' &&
-                    <div>
-                        <LanguageInput 
-                            originalText={this.state.title}
-                            appSiteId={this.state.appSiteId} 
-                            code={this.state.languageCode}
-                            labelKey={`TOPSERVICE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.topServiceId}-Title`}>
-                        </LanguageInput>
-                    </div>}      
-
-                    <div>
-                        {this.props.topServiceId > 0 && !this.state.loading && this.state.languageCode === '' &&
-                        <>
-                            <label>Descrizione</label>
-                            <Editor
-                                apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                initialValue={this.state.description}
-                                init={{
-                                height: 500,
-                                menubar: false,
-                                plugins: baseEditorPlugins,
-                                toolbar: baseEditorToolbar
-                                }}
-                                onEditorChange={this.handleEditorChange}
-                            />
-                        </>}
-                    </div>         
-
-                    {this.state.languageCode && this.state.languageCode !== '' &&
-                    <div>
-                        <LanguageEditor 
-                            originalText={this.state.description}
-                            appSiteId={this.state.appSiteId} 
-                            code={this.state.languageCode}
-                            labelKey={`TOPSERVICE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.topServiceId}-Description`}>                                    
-                        </LanguageEditor>
-                    </div>}                           
-
-                    <Form.Group>
-                        <Form.Label>Dimensione</Form.Label>
-                        <Form.Control as="select" value={this.state.cardSize} name="cardSize" onChange={this.handleChangeNumber}>
-                            <option value={0}>Seleziona una dimensione</option>
-                            {CardSizes && CardSizes.map(cardSize =>
-                                <option key={cardSize.value} value={parseInt(cardSize.value)}>{cardSize.label}</option>
-                            )}   
-                        </Form.Control>
-                        <Form.Text className="text-muted">
-                            I tipi servono per impostare il formato e le proprietà del contenitore.
-                        </Form.Text>
-                    </Form.Group>
-
-                    <Form.Group>
-                        <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.isPublished} onChange={this.handleChangeBool} />
-                        <Form.Text>
-                            Solo i contenuti pubblici vengono visualizzati nel sito.
-                        </Form.Text>
-                    </Form.Group>
+                    
 
                 </Modal.Body>
                 <Modal.Footer>

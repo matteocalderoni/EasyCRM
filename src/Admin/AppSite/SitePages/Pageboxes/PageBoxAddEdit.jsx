@@ -1,7 +1,7 @@
 import React from 'react';
 import { appSiteService, alertService } from '../../../../_services';
 import { Uploader } from '../../../../_components'
-import { Form, Button, Card, Image, ProgressBar } from 'react-bootstrap'
+import { Form, Button, Card, Image, ProgressBar,Row,Col } from 'react-bootstrap'
 import { BoxTypes } from '../../../../_helpers'
 import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../../_components/LanguageSelect';
@@ -177,34 +177,39 @@ class PageBoxAddEdit extends React.Component {
                     </div>}         
 
                     <LanguageSelect appSiteId={this.state.pageBox.appSiteId} onLanguageChange={this.handleLanguageCode} />                   
+                    
+                    <Row>
+                        <Col sm={4}>
+                            <Form.Group>
+                                <Form.Label>Ordinamento</Form.Label>
+                                <input type="number" className="form-control" name="sortId" value={this.state.pageBox.sortId} onChange={this.handleChangeNumber}  />
+                                <Form.Text className="text-muted">
+                                    Valore per ordinamento crescente dei contenitori nella pagina.
+                                </Form.Text>
+                            </Form.Group>      
+                        </Col>
+                        <Col sm={8}>
+                            {this.state.languageCode == '' &&
+                            <Form.Group>
+                                <Form.Label>Titolo</Form.Label>
+                                <input type="text" className="form-control" name="title" value={this.state.pageBox.title} onChange={this.handleChange}  />
+                                <Form.Text className="text-muted">
+                                    Titolo del contenuto (max 200 caratteri).
+                                </Form.Text>
+                            </Form.Group>}                                       
 
-                    <Form.Group>
-                        <Form.Label>Ordinamento</Form.Label>
-                        <input type="number" className="form-control" name="sortId" value={this.state.pageBox.sortId} onChange={this.handleChangeNumber}  />
-                        <Form.Text className="text-muted">
-                            Valore per ordinamento crescente dei contenitori nella pagina.
-                        </Form.Text>
-                    </Form.Group>      
-                
-                    {this.state.languageCode == '' &&
-                    <Form.Group>
-                        <Form.Label>Titolo</Form.Label>
-                        <input type="text" className="form-control" name="title" value={this.state.pageBox.title} onChange={this.handleChange}  />
-                        <Form.Text className="text-muted">
-                            Titolo del contenuto (max 200 caratteri).
-                        </Form.Text>
-                    </Form.Group>}                                       
-
-                    {this.state.languageCode !== '' &&
-                    <div>
-                        <LanguageInput 
-                            originalText={this.state.pageBox.title}
-                            appSiteId={this.state.pageBox.appSiteId} 
-                            code={this.state.languageCode}
-                            labelKey={`PAGEBOX_${this.state.pageBox.appSiteId}_${this.state.pageBox.sitePageId}_${this.state.pageBox.pageBoxId}-Title`}>
-                        </LanguageInput>
-                    </div>}  
-
+                            {this.state.languageCode !== '' &&
+                            <div>
+                                <LanguageInput 
+                                    originalText={this.state.pageBox.title}
+                                    appSiteId={this.state.pageBox.appSiteId} 
+                                    code={this.state.languageCode}
+                                    labelKey={`PAGEBOX_${this.state.pageBox.appSiteId}_${this.state.pageBox.sitePageId}_${this.state.pageBox.pageBoxId}-Title`}>
+                                </LanguageInput>
+                            </div>}  
+                        </Col>
+                    </Row>
+                    
                     {this.state.pageBox && !this.state.loading && this.state.languageCode === '' && 
                         (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&                 
                     <div>

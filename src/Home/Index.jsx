@@ -57,10 +57,13 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
-                            <b>Ver 1.1</b>: in questo rilascio è stato aggiunto il supporto multilingua. Con questa funzione è possibile gestire le traduzioni per visualizzare il sito in altre lingue.
+                            <b>Ver 1.1.1</b>: aggiunta icone e ottimizazione layout di elenchi e moduli.
                         </li>
                         <li className="list-group-item">
-                            <b>Ver 1.0</b>: prima versione ufficiale.
+                            <b>Ver 1.1.0</b>: in questo rilascio è stato aggiunto il supporto multilingua. Con questa funzione è possibile gestire le traduzioni per visualizzare il sito in altre lingue.
+                        </li>
+                        <li className="list-group-item">
+                            <b>Ver 1.0.0</b>: prima versione ufficiale.
                         </li>
                     </ul>
                 </Card.Body>

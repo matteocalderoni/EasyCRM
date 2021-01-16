@@ -6,6 +6,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../_components/LanguageInput';
+import { FaSave } from 'react-icons/fa';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 const baseEditorPlugins = [
@@ -163,7 +164,7 @@ class SitePageAddEdit extends React.Component {
                             <div>
                                 <Image fluid src={baseImageUrl+this.state.sitePage.imageUrl} />
                                 <Uploader prefix={this.state.sitePage.appSiteId} fileName={this.state.sitePage.imageUrl} onFileNameChange={this.handleFileName} />      
-                                <small>Questa immagine viene utilizzate come sfondo della pagina. Utilizzare un immagine con formato 1920 X 1080 px.</small>
+                                <small>Questa immagine viene utilizzate come sfondo della pagina: su desktop rimane fissa, su mobile scorre. E' consigliato utilizzare un immagine con formato 1920 X 1080 px.</small>
                             </div>
                         }
                         </Col>
@@ -236,7 +237,7 @@ class SitePageAddEdit extends React.Component {
                 </Card.Body>    
                 <Card.Footer>
                     <Button onClick={this.onSubmit} variant="success">
-                        Salva le modifiche Pagina 
+                        <FaSave /> Salva le modifiche Pagina 
                     </Button> 
                 </Card.Footer>
             </Card>                    
