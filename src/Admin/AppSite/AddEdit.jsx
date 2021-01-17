@@ -8,6 +8,9 @@ import { LanguageSelect } from '../../_components/LanguageSelect';
 import { LanguageEditor } from '../../_components/LanguageEditor';
 import { AiFillSave } from 'react-icons/ai';
 import { FcHome } from 'react-icons/fc';
+import { IoDocumentsOutline } from 'react-icons/io5';
+import { FaLanguage } from 'react-icons/fa';
+import { BsTrash } from 'react-icons/bs';
 
 const baseEditorPlugins = [
     'advlist autolink lists link image charmap print preview anchor',
@@ -213,9 +216,21 @@ class AddEdit extends React.Component {
                         </Form.Group>
                     </Col>
                     <Col sm={4} className="text-right">
-                        <Button onClick={this.onSubmit} variant="success">
-                            <AiFillSave /> Salva modifiche
-                        </Button> 
+                        <div>
+                            <Button onClick={this.onSubmit} variant="success">
+                                <AiFillSave /> Salva modifiche
+                            </Button> 
+                        </div>
+                        <div className="mart2">
+                            <Link to={`/admin/sites/sitepages/${this.state.appSite.appSiteId}`} title="Pagine del sito" className="btn btn-primary mr-1">
+                                <IoDocumentsOutline /> Contenitori
+                            </Link>
+                        </div>
+                        <div className="mart2">
+                            <Link to={`/admin/sites/sitelanguages/${this.state.appSite.appSiteId}`} title="Lingue del sito" className="btn btn-primary mr-1">
+                                <FaLanguage /> Lingue
+                            </Link>
+                        </div>
                     </Col>
                 </Row>              
                 <div className="mart1">

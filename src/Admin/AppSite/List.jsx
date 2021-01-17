@@ -23,7 +23,8 @@ function List({ match }) {
         setLoading(true)
         appSiteService.getAppSites('',0,0).then((x) => { 
             setLoading(false)
-            setAppSites(x.result)}
+            if (x.totalCount > 0)
+                setAppSites(x.result)}
         );
     }, []);
 

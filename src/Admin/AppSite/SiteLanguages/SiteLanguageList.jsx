@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Jumbotron, Card, Button, Row, Col, ProgressBar } from 'react-bootstrap';
 import { languageService, appSiteService } from '../../../_services';
 import { SiteLanguageModal } from './SiteLanguageModal';
+import { FcHome } from 'react-icons/fc';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -46,15 +47,29 @@ function SiteLanguageList ({ match }){
     
     return (
         <Container fluid>
-            <Jumbotron>
-                <h5>Gestione <b>Lingue del Sito</b></h5>
-                {appSite && <h1>{appSite.name}</h1>}                
-                <p>
-                    Tramite questa sezione si configurano le pagine del sito relative al ristorante.<br />
-                    Utilizzare immagini ottimizzate per un caricamento rapido.
-                </p>
-            </Jumbotron>
-            <SiteLanguageModal appSiteId={appSiteId} code={''} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
+            <ul className="breadcrumb">
+                <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
+                <li className="breadcrumb-item active">
+                    Lingue del Sito {appSite && <b>{appSite.name}</b>}                
+                </li>
+            </ul>
+            <Jumbotron className="small-jumbotron">
+                <Row>
+                    <Col sm={8}>
+                        <h5>Gestione <b>Lingue del Sito</b></h5>
+                        {appSite && <h1>{appSite.name}</h1>}                
+                        <p>
+                            Tramite questa sezione si configurano le pagine del sito relative al ristorante.<br />
+                            Utilizzare immagini ottimizzate per un caricamento rapido.
+                        </p>
+                    </Col>
+                    <Col sm={4} className="text-right">
+                        <SiteLanguageModal appSiteId={appSiteId} code={''} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
+                    </Col>
+                </Row>                
+            </Jumbotron>            
             {loading && <Col className="text-center mart2">
                 <ProgressBar animated now={100} />
             </Col>}

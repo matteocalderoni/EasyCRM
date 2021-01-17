@@ -57,7 +57,7 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
-                            <b>Ver 1.1.1</b>: aggiunta icone e ottimizazione layout di elenchi e moduli.
+                            <b>Ver 1.1.1</b>: aggiunta icone e ottimizazione layout di elenchi e moduli, aggiunta 5 decimali per salvataggio coordinate google maps.
                         </li>
                         <li className="list-group-item">
                             <b>Ver 1.1.0</b>: in questo rilascio è stato aggiunto il supporto multilingua. Con questa funzione è possibile gestire le traduzioni per visualizzare il sito in altre lingue.
