@@ -109,7 +109,7 @@ function PageBoxList({ match }) {
             }
             <Accordion defaultActiveKey="0">
             {pageBoxes && pageBoxes.map(pageBox =>                                    
-                <Card className="mart2 text-center" key={pageBox.pageBoxId}>
+                <Card className="mart2" key={pageBox.pageBoxId}>
                     <Card.Header>
                         <Row>
                             <Col sm={6} className="text-left">

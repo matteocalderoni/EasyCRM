@@ -148,7 +148,7 @@ class AddEdit extends React.Component {
                 if (result.hasErrors) {
                     alertService.success('Problemi durante il salvataggio. Modifica i valori e riprova.', { keepAfterRouteChange: true });
                 } else {
-                    alertService.success('Ristorante creato con successo', { keepAfterRouteChange: true });
+                    alertService.success('Sito creato con successo', { keepAfterRouteChange: true });
                 }                
             })
             .catch(error => {
@@ -173,7 +173,7 @@ class AddEdit extends React.Component {
     setDefaultAppSite = () => {        
         appSiteService.setDefaultAppSite(this.state.appSite.appSiteId)
             .then(() => {
-                alertService.success('Ristorante impostato come default con successo', { keepAfterRouteChange: true });
+                alertService.success('Sito impostato come default con successo', { keepAfterRouteChange: true });
                 this.setState({
                     appSite:{
                         ...this.state.appSite,
@@ -348,14 +348,14 @@ class AddEdit extends React.Component {
                     <Form.Group>
                         <Form.Check type="checkbox" label="Pubblico" name="isDefault" checked={this.state.appSite.isDefault} onChange={this.handleChangeBool} />
                         <Form.Text>
-                            Il ristorante di default viene utilizzato per i contenuti del sito.
+                            Il Sito di default viene utilizzato per i contenuti del sito.
                         </Form.Text>
                     </Form.Group>
 
                     {/* {this.state.appSite && this.state.appSite.appSiteId > 0 && !this.state.appSite.isDefault &&
                     <div>
                         <Button onClick={this.setDefaultAppSite} variant="success">
-                            Imposta come Ristorante di Default
+                            Imposta come Sito di Default
                         </Button> 
                     </div>} */}                                    
                 </Card.Body>

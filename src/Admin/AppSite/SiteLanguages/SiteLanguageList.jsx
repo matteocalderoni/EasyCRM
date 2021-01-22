@@ -61,7 +61,7 @@ function SiteLanguageList ({ match }){
                         <h5>Gestione <b>Lingue del Sito</b></h5>
                         {appSite && <h1>{appSite.name}</h1>}                
                         <p>
-                            Tramite questa sezione si configurano le pagine del sito relative al ristorante.<br />
+                            Tramite questa sezione si configurano le pagine del sito relative al sito.<br />
                             Utilizzare immagini ottimizzate per un caricamento rapido.
                         </p>
                     </Col>

@@ -64,7 +64,7 @@ function SitePageList ({ match }){
                         <h5>Gestione <b>Pagine del Sito</b></h5>
                         {appSite && <h1>{appSite.name}</h1>}                
                         <p>
-                            Tramite questa sezione si configurano le pagine del sito relative al ristorante.<br />
+                            Tramite questa sezione si configurano le pagine del sito relative al sito. Attenzione la prima pagina dopo la creazione non può essere eliminata.<br />
                             Utilizzare immagini ottimizzate per un caricamento rapido.
                         </p>
                     </Col>
@@ -100,9 +100,10 @@ function SitePageList ({ match }){
                             <Link title="Gestione contenuti della pagina" to={`pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="btn btn-primary mr-1">
                                 <FaBoxes />
                             </Link>
+                            {sitePage.sitePageId > 1 &&
                             <Button title="Elimina Pagina" variant="danger" onClick={() => deleteSitePage(sitePage)}>
                                 <BsTrash />
-                            </Button>
+                            </Button>}
                         </Card.Body>
                     </Card>                                            
                 </Col>                    

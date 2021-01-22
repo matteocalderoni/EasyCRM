@@ -80,7 +80,7 @@ function List({ match }) {
             }                         
             {appSites && appSites.map(appSite =>
                 <Row key={appSite.appSiteId} className="site-list-item">
-                    <Col sm={2}><Image src={baseImageUrl+appSite.companyLogo} className="logo" fluid roundedCircle /></Col>
+                    <Col sm={2}><Image src={baseImageUrl+appSite.companyLogo} className="logo" fluid /></Col>
                     <Col sm={6}>
                         <b>{appSite.name}</b><br />
                         {parse(appSite.description)}
