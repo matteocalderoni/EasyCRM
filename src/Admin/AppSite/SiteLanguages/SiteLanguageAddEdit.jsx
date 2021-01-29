@@ -3,14 +3,9 @@ import { languageService, appSiteService, alertService } from '../../../_service
 import { Uploader } from '../../../_components'
 import { Form, Button, Card, Image, Row, Col,ProgressBar } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
+import {menuSettings,pluginsSettings,toolbarSettings } from '../../../_helpers/tinySettings';
 
-const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
-const baseEditorPlugins = [
-    'advlist autolink lists link image charmap print preview anchor',
-    'searchreplace visualblocks code fullscreen',
-    'insertdatetime media table paste code help wordcount'
-];
-const baseEditorToolbar = 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help';
+ const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class SiteLanguageAddEdit extends React.Component {
 
@@ -172,9 +167,9 @@ class SiteLanguageAddEdit extends React.Component {
                                 initialValue={this.state.siteLanguage.description}
                                 init={{
                                 height: 500,
-                                menubar: false,
-                                plugins: baseEditorPlugins,
-                                toolbar: baseEditorToolbar
+                                menubar: menuSettings,
+                                plugins: pluginsSettings,
+                                toolbar: toolbarSettings
                                 }}
                                 onEditorChange={this.handleEditorChange}
                             />

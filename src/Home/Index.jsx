@@ -57,13 +57,16 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
-                            <b>Ver 1.1.1</b>: aggiunta icone e ottimizazione layout di elenchi e moduli, aggiunta 5 decimali per salvataggio coordinate google maps.
+                            <b>Ver 1.1.2 (Gennaio 2021)</b>: modifica del componente per la formattazione dei testi. Aggiunta di numerose funzionalità: colore del testo, font, dimensione, tabelle e molte altre.
                         </li>
                         <li className="list-group-item">
-                            <b>Ver 1.1.0</b>: in questo rilascio è stato aggiunto il supporto multilingua. Con questa funzione è possibile gestire le traduzioni per visualizzare il sito in altre lingue.
+                            <b>Ver 1.1.1(Gennaio 2021)</b>: aggiunta icone e ottimizazione layout di elenchi e moduli, aggiunta 5 decimali per salvataggio coordinate google maps.
                         </li>
                         <li className="list-group-item">
-                            <b>Ver 1.0.0</b>: prima versione ufficiale.
+                            <b>Ver 1.1.0 (Dicembre 2020)</b>: in questo rilascio è stato aggiunto il supporto multilingua. Con questa funzione è possibile gestire le traduzioni per visualizzare il sito in altre lingue.
+                        </li>
+                        <li className="list-group-item">
+                            <b>Ver 1.0.0 (Novembre 2020)</b>: prima versione ufficiale.
                         </li>
                     </ul>
                 </Card.Body>

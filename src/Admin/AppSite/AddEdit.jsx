@@ -11,13 +11,7 @@ import { FcHome } from 'react-icons/fc';
 import { IoDocumentsOutline } from 'react-icons/io5';
 import { FaLanguage } from 'react-icons/fa';
 import { BsTrash } from 'react-icons/bs';
-
-const baseEditorPlugins = [
-    'advlist autolink lists link image charmap print preview anchor',
-    'searchreplace visualblocks code fullscreen',
-    'insertdatetime media table paste code help wordcount'
-];
-const baseEditorToolbar = 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help';
+import {menuSettings,pluginsSettings,toolbarSettings } from '../../_helpers/tinySettings';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -306,9 +300,9 @@ class AddEdit extends React.Component {
                             initialValue={this.state.appSite.description}
                             init={{
                             height: 500,
-                            menubar: false,
-                            plugins: baseEditorPlugins,
-                            toolbar: baseEditorToolbar
+                            menubar: menuSettings,  
+                            plugins: pluginsSettings, 
+                            toolbar: toolbarSettings, 
                             }}
                             onEditorChange={this.handleEditorChange}
                         />}                                            
