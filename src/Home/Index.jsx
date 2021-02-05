@@ -57,6 +57,9 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b>Ver 1.1.3 (Febbraio 2021)</b>: 4 nuove dimensioni per alineare le card (servizi top, dipendenti, ecc).
+                        </li>
+                        <li className="list-group-item">
                             <b>Ver 1.1.2 (Gennaio 2021)</b>: modifica del componente per la formattazione dei testi. Aggiunta di numerose funzionalità: colore del testo, font, dimensione, tabelle e molte altre.
                         </li>
                         <li className="list-group-item">

@@ -4,6 +4,7 @@ import { SitePageAddEdit } from './SitePageAddEdit';
 import { Jumbotron, Container, Row,Col } from 'react-bootstrap'
 import { appSiteService } from '../../../_services';
 import { FaBoxes } from 'react-icons/fa';
+import { FcHome } from 'react-icons/fc';
 
 function SitePageDetail({ match }) {
     const { appSiteId, pageId } = match.params;  
@@ -33,7 +34,7 @@ function SitePageDetail({ match }) {
     return (
         <Container fluid>
             <ul className="breadcrumb">
-            <li className="breadcrumb-item"><Link to={`/`}>Home</Link></li>                
+            <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
                 <li className="breadcrumb-item">

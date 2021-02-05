@@ -68,12 +68,12 @@ class ArticleList extends React.Component{
                                         <Image src={baseImageUrl+article.imageUrl} roundedCircle fluid />
                                     </Col>
                                     <Col sm={4}>
-                                    {parse(article.description)}
+                                    {article.description && parse(article.description)}
                                     </Col>
-                                    <Col sm={4}>
-                                        {parse(article.markdown)}
+                                    <Col sm={4}>                                        
+                                        {article.markdown && parse(article.markdown)}
                                         <hr />
-                                        {parse(article.html)}
+                                        {article.html && parse(article.html)}
                                     </Col>
                                 </Row>      
                                 <ArticleAddEdit appSiteId={article.appSiteId} sitePageId={article.sitePageId} pageBoxId={article.pageBoxId} articleId={article.articleId} handleAddEdit={(rId,sId,pId) => this.handleAddEdit(rId,sId,pId)} />

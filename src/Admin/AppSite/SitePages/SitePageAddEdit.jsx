@@ -91,6 +91,15 @@ class SitePageAddEdit extends React.Component {
         });
     }
 
+    handleTitleEditorChange = (content, editor) => {
+        this.setState({
+            sitePage: {
+                ...this.state.sitePage,
+                title: content                 
+            }          
+        });
+    }
+
     handleOpen() {    
         if (this.props.sitePageId > 0) {
             this.setState({loading: true})
@@ -177,6 +186,21 @@ class SitePageAddEdit extends React.Component {
                             <Form.Group>
                                 <Form.Label>Titolo della Pagina</Form.Label>
                                 <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} />
+
+                                {/* <Editor
+                                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                    initialValue={this.state.sitePage.title}                                
+                                    inline="true"
+                                    init={{
+                                        height: 500,                                        
+                                        menubar: menuSettings,
+                                        plugins: pluginsSettings,
+                                        toolbar: toolbarSettings
+                                    }}
+                                    onEditorChange={this.handleTitleEditorChange}
+                                    >
+                                </Editor> */}
+
                                 <Form.Text className="text-muted">
                                     Titolo della pagina (max 200 caratteri): visualizzato nel menù di navigazione in alto nella pagina.
                                 </Form.Text>
@@ -199,12 +223,12 @@ class SitePageAddEdit extends React.Component {
                             <label>Testo visualizzato nella Slide</label>
                             <Editor
                                 apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                initialValue={this.state.sitePage.slideText}
+                                initialValue={this.state.sitePage.slideText}                                
                                 init={{
-                                height: 500,
-                                menubar: menuSettings,
-                                plugins: pluginsSettings,
-                                toolbar: toolbarSettings
+                                    height: 500,
+                                    menubar: menuSettings,
+                                    plugins: pluginsSettings,
+                                    toolbar: toolbarSettings
                                 }}
                                 onEditorChange={this.handleEditorChange}
                             />

@@ -139,7 +139,7 @@ class SiteLanguageAddEdit extends React.Component {
                         <ProgressBar animated now={100} />
                     </div>}
                     <Row>
-                        <Col>
+                        <Col md={4}>
                         {this.state.siteLanguage.code != '' &&                    
                             <div>
                                 <Image fluid src={baseImageUrl+this.state.siteLanguage.imageUrl} />
@@ -148,7 +148,7 @@ class SiteLanguageAddEdit extends React.Component {
                             </div>
                         }
                         </Col>
-                        <Col>
+                        <Col md={8}>
                             <Form.Group>
                                 <Form.Label>Codice della Lingua</Form.Label>
                                 <input type="text" className="form-control" name="code" value={this.state.siteLanguage.code} onChange={this.handleChange} maxLength={200} />
