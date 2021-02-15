@@ -41,8 +41,8 @@ function getAppSites(search,page,count) {
     return fetchWrapper.post(`${baseUrl}/SearchAppSites`, { search, page, count });
 }
 
-function getPagesOfAppSite(appSiteId) {
-    return fetchWrapper.post(`${baseUrl}/SearchPagesOfAppSite/${appSiteId}`, { search: '', page: 0, count: 0});
+function getPagesOfAppSite(appSiteId, parentPageId) {
+    return fetchWrapper.post(`${baseUrl}/SearchPagesOfAppSite/${appSiteId}`, { search: '', page: 0, count: 0, parentPageId: parentPageId });
 }
 
 function getBoxesOfPage(appSiteId, pageId) {

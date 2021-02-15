@@ -1,7 +1,7 @@
 import React from 'react';
 import { appSiteService, alertService, languageService } from '../../_services';
 import { Uploader } from '../../_components'
-import { Image, Row, Col, Form, Button, Jumbotron, Card, Container, ProgressBar } from 'react-bootstrap'
+import { Image, Row, Col, Form, Button, Jumbotron, Card, Container, ProgressBar,Navbar } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { Link } from 'react-router-dom';
 import { LanguageSelect } from '../../_components/LanguageSelect';
@@ -216,13 +216,13 @@ class AddEdit extends React.Component {
                             </Button> 
                         </div>
                         <div className="mart2">
-                            <Link to={`/admin/sites/sitepages/${this.state.appSite.appSiteId}`} title="Pagine del sito" className="btn btn-primary mr-1">
-                                <IoDocumentsOutline /> Contenitori
+                            <Link to={`/admin/sites/sitepages/${this.state.appSite.appSiteId}`} title="Pagine del sito" className="btn btn-secondary mr-1">
+                                <IoDocumentsOutline /> Pagine del sito
                             </Link>
                         </div>
                         <div className="mart2">
-                            <Link to={`/admin/sites/sitelanguages/${this.state.appSite.appSiteId}`} title="Lingue del sito" className="btn btn-primary mr-1">
-                                <FaLanguage /> Lingue
+                            <Link to={`/admin/sites/sitelanguages/${this.state.appSite.appSiteId}`} title="Lingue del sito" className="btn btn-secondary mr-1">
+                                <FaLanguage /> Modifica Lingue
                             </Link>
                         </div>
                     </Col>
@@ -353,12 +353,12 @@ class AddEdit extends React.Component {
                         </Button> 
                     </div>} */}                                    
                 </Card.Body>
-                <Card.Footer>
-                    <Button onClick={this.onSubmit} variant="success">
-                        <AiFillSave /> Salva modifiche
-                    </Button> 
-                </Card.Footer>
-            </Card>                    
+            </Card>          
+            <Navbar fixed="bottom" variant="dark" bg="dark">
+                <Button onClick={this.onSubmit} variant="success">
+                    <AiFillSave /> Salva modifiche
+                </Button> 
+            </Navbar>          
           </Container>
           
         );

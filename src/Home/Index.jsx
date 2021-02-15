@@ -57,6 +57,9 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b>Ver 1.2.1 (Febbraio 2021)</b>: gestione dimensioni dei contenitori e colore di background. Gestione sotto-pagine per estendere il numero di pagine.
+                        </li>
+                        <li className="list-group-item">
                             <b>Ver 1.1.3 (Febbraio 2021)</b>: 4 nuove dimensioni per alineare le card (servizi top, dipendenti, ecc).
                         </li>
                         <li className="list-group-item">

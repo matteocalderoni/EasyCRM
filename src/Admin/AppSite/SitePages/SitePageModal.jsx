@@ -11,7 +11,8 @@ class SitePageModal extends React.Component {
             setShow: false,
             sitePage: {
                 appSiteId: props.appSiteId,                                
-                sitePageId: props.sitePageId
+                sitePageId: props.sitePageId,
+                parentPageId: props.parentPageId > 0 ? parseInt(props.parentPageId) : undefined
             }
          };
     }
@@ -37,15 +38,15 @@ class SitePageModal extends React.Component {
         return (            
           <>
             <Button variant="primary" className="mr-1" onClick={this.handleShow}>
-                {this.state.sitePage.sitePageId > 0 ? 'Modifica la pagina' : 'Crea una nuova pagina'}
+                {(this.state.sitePage.sitePageId > 0 ? 'Modifica la ' : 'Crea una nuova ') + (this.state.sitePage.parentPageId > 0 ? 'Sotto-Pagina' : 'Pagina')}
             </Button>
             <Modal show={this.state.setShow} size="lg" onHide={this.handleClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{this.state.sitePage.sitePageId > 0 ? 'Modifica la pagina' : 'Crea una nuova pagina'}</Modal.Title>
+                    <Modal.Title>{(this.state.sitePage.sitePageId > 0 ? 'Modifica la ' : 'Crea una nuova ') + (this.state.sitePage.parentPageId > 0 ? 'Sotto-Pagina' : 'Pagina')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {this.state.setShow &&
-                        <SitePageAddEdit appSiteId={this.state.sitePage.appSiteId} sitePageId={this.state.sitePage.sitePageId} handleSaved={this.handleSaved} />
+                        <SitePageAddEdit appSiteId={this.state.sitePage.appSiteId} sitePageId={this.state.sitePage.sitePageId} parentPageId={this.state.sitePage.parentPageId} handleSaved={this.handleSaved} />
                     }                    
                 </Modal.Body>
                 <Modal.Footer>

@@ -2,12 +2,13 @@ import React from 'react';
 import { appSiteService, alertService } from '../../../../_services';
 import { Uploader } from '../../../../_components'
 import { Form, Button, Card, Image, ProgressBar,Row,Col } from 'react-bootstrap'
-import { BoxTypes } from '../../../../_helpers'
+import { BoxTypes,CardSizes } from '../../../../_helpers'
 import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../_components/LanguageInput';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../../_helpers/tinySettings';
+import { CompactPicker } from 'react-color';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -23,8 +24,10 @@ class PageBoxAddEdit extends React.Component {
                 imageUrl: 'logo.png',
                 title: '',
                 description: '',
+                cardSize: 12,
                 sortId: 1,
-                boxType: 1,                
+                boxType: 1, 
+                boxColor: '#CCCCCC',               
                 isPublished: true
             },
             languageCode: '',
@@ -86,6 +89,16 @@ class PageBoxAddEdit extends React.Component {
             }          
         });
     }
+
+    handleColorChange = (color) => {
+        this.setState({
+            pageBox: {
+                ...this.state.pageBox,
+                boxColor: color.hex                 
+            }          
+        });
+        //this.setState({ background: color.hex });
+    };
 
     handleLanguageCode = (code) => {        
         this.setState({ 
@@ -233,8 +246,36 @@ class PageBoxAddEdit extends React.Component {
                             code={this.state.languageCode}
                             labelKey={`PAGEBOX_${this.state.pageBox.appSiteId}_${this.state.pageBox.sitePageId}_${this.state.pageBox.pageBoxId}-Description`}>                                    
                         </LanguageEditor>
-                    </div>}                           
+                    </div>}              
 
+                    <Row>
+                        <Col sm={6}>
+                            <Form.Group>
+                                <Form.Label>Dimensione</Form.Label>
+                                <Form.Control as="select" value={this.state.pageBox.cardSize} name="cardSize" onChange={this.handleChangeNumber}>
+                                    <option value={0}>Seleziona una dimensione</option>
+                                    {CardSizes && CardSizes.map(cardSize =>
+                                        <option key={cardSize.value} value={parseInt(cardSize.value)}>{cardSize.label}</option>
+                                    )}   
+                                </Form.Control>
+                                <Form.Text className="text-muted">
+                                    I tipi servono per impostare la dimensionw del contenitore.
+                                </Form.Text>
+                            </Form.Group>      
+                        </Col>
+                        <Col sm={6}>
+                            {this.state.pageBox && !this.state.loading && <Form.Group>
+                                <CompactPicker
+                                    color={ this.state.pageBox.boxColor }
+                                    onChangeComplete={ this.handleColorChange }
+                                />
+                                <Form.Text className="text-muted">
+                                    Colore di sfondo per i contenitori di testo.
+                                </Form.Text>
+                            </Form.Group>}
+                        </Col>
+                    </Row>
+                    
                     <Form.Group className="mart2">
                         <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.pageBox.isPublished} onChange={this.handleChangeBool} />
                         <Form.Text>

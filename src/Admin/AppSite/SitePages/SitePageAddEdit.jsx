@@ -1,7 +1,7 @@
 import React from 'react';
 import { appSiteService, alertService } from '../../../_services';
 import { Uploader } from '../../../_components'
-import { Form, Button, Card, Image, Row, Col,ProgressBar } from 'react-bootstrap'
+import { Form, Button, Card, Image, Row, Col,ProgressBar,Navbar } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../_components/LanguageEditor';
@@ -16,8 +16,9 @@ class SitePageAddEdit extends React.Component {
         super(props);
         this.state = {   
             sitePage: {
-                appSiteId: this.props.appSiteId,         
+                appSiteId: this.props.appSiteId,                         
                 sitePageId: this.props.sitePageId,
+                parentPageId: this.props.parentPageId,
                 imageUrl: 'logo.png',
                 title: '',
                 description: '',
@@ -26,7 +27,9 @@ class SitePageAddEdit extends React.Component {
                 isPublished: true
             },
             languageCode: '',
-            loading: false                         
+            sitePages: [],
+            loading: false,
+            loadingPages: true                         
          };
 
         this.handleChange = this.handleChange.bind(this)
@@ -36,6 +39,19 @@ class SitePageAddEdit extends React.Component {
 
     componentDidMount() {
         this.handleOpen()
+
+        appSiteService.getPagesOfAppSite(this.props.appSiteId,-1).then((x) => { 
+            if (x.totalCount > 0) {
+                // Filter current page
+                this.setState({                
+                    sitePages: x.result.filter((i) => i.sitePageId != this.state.sitePage.sitePageId),
+                    loadingPages: false
+                })
+            } else {
+                // Empty
+                this.setState({sitePages: [], loadingPages: false})
+            }
+        });
     }
 
     handleChange(evt) {
@@ -162,17 +178,30 @@ class SitePageAddEdit extends React.Component {
                         <ProgressBar animated now={100} />
                     </div>}
                     <Row>
-                        <Col>
                         {this.state.sitePage.sitePageId > 0 &&                    
+                        <Col>
                             <div>
                                 <Image fluid src={baseImageUrl+this.state.sitePage.imageUrl} />
                                 <Uploader prefix={this.state.sitePage.appSiteId} fileName={this.state.sitePage.imageUrl} onFileNameChange={this.handleFileName} />      
                                 <small>Questa immagine viene utilizzate come sfondo della pagina: su desktop rimane fissa, su mobile scorre. E' consigliato utilizzare un immagine con formato 1920 X 1080 px.</small>
                             </div>
-                        }
                         </Col>
+                        }
                         <Col>
                             <LanguageSelect appSiteId={this.state.sitePage.appSiteId} onLanguageChange={this.handleLanguageCode} />      
+
+                            {this.state.sitePage && this.state.sitePages && !this.state.loadingPages && <Form.Group>
+                                <Form.Label>Sotto pagina di (non selezionare per pagine principali):</Form.Label>
+                                <Form.Control as="select" value={this.state.sitePage.parentPageId} name="parentPageId" onChange={this.handleChangeNumber}>
+                                    <option value={undefined}>Radice</option>
+                                    {this.state.sitePages && this.state.sitePages.map(parentPage =>
+                                        <option key={parentPage.sitePageId} value={parseInt(parentPage.sitePageId)}>{parentPage.title}</option>
+                                    )}   
+                                </Form.Control>
+                                <Form.Text className="text-muted">
+                                    Utilizzare le sottopagine per creare dei gruppi nel menù di navigazione ed estendere i contenuti del sito.
+                                </Form.Text>
+                            </Form.Group>}
 
                             <Form.Group>
                                 <Form.Label>Valore per Ordinamento</Form.Label>
@@ -253,12 +282,12 @@ class SitePageAddEdit extends React.Component {
                     </Form.Group>
 
                 </Card.Body>    
-                <Card.Footer>
-                    <Button onClick={this.onSubmit} variant="success">
-                        <FaSave /> Salva le modifiche Pagina 
-                    </Button> 
-                </Card.Footer>
             </Card>                    
+            <Navbar fixed="bottom" variant="dark" bg="dark">
+                <Button onClick={this.onSubmit} variant="success">
+                    <FaSave /> Salva
+                </Button> 
+            </Navbar>                
           </>          
         );
     }

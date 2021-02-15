@@ -83,7 +83,7 @@ function List({ match }) {
                     <Col sm={2}><Image src={baseImageUrl+appSite.companyLogo} className="logo" fluid /></Col>
                     <Col sm={6}>
                         <b>{appSite.name}</b><br />
-                        {parse(appSite.description)}
+                        {appSite.description && parse(appSite.description)}
                     </Col>
                     <Col sm={4} style={{ whiteSpace: 'nowrap' }} className="mart2 text-right">
                         <Link to={`${path}/edit/${appSite.appSiteId}`} title="Modifica sito" className="btn btn-primary mr-1">

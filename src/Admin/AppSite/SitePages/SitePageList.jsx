@@ -5,32 +5,24 @@ import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 import { FcHome } from 'react-icons/fc';
 import { BsPencil,BsTrash } from 'react-icons/bs';
-import { FaBoxes } from 'react-icons/fa';
+import { FaBoxes, FaLanguage } from 'react-icons/fa';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
-function SitePageList ({ match }){
-    const { path } = match;
-    const appSiteId = parseInt(match.params.appSiteId);
-    const [appSite, setAppSite] = useState(null)
+function SitePageList (props){
+    //const { path } = match;
+    const appSiteId = parseInt(props.appSiteId)
+    const parentPageId = parseInt(props.parentPageId)
     const [sitePages, setSitePages] = useState(null)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setLoading(true)
-        appSiteService.getPagesOfAppSite(appSiteId).then((x) => { 
-            setLoading(false)
-            setSitePages(x.result)}
-        );
-    }, [appSiteId]);    
-    
-    useEffect(() => {
-        setLoading(true)
-        appSiteService.getAppSiteById(appSiteId).then((x) => { 
-            setLoading(false)
-            setAppSite(x)
-        });
-    }, [appSiteId]);    
+        getSitePages()
+        // appSiteService.getPagesOfAppSite(appSiteId,0).then((x) => { 
+        //     setLoading(false)
+        //     setSitePages(x.result)}
+        // );
+    }, [appSiteId,props.isChanged]);     
     
     function deleteSitePage(sitePage) {
         setLoading(true)
@@ -39,44 +31,22 @@ function SitePageList ({ match }){
             return x;
         }));
         appSiteService.deleteSitePage(appSiteId, sitePage.sitePageId).then(() => {
-            setLoading(false)
-            appSiteService.getPagesOfAppSite(appSiteId).then(x => setSitePages(x.result || []));
-        });        
+            //setLoading(false)
+            //appSiteService.getPagesOfAppSite(appSiteId,0).then(x => setSitePages(x.result));
+            getSitePages()
+        });                
     }
 
-    function handleAddEdit(appSiteId) {
-        appSiteService.getPagesOfAppSite(appSiteId).then(x => setSitePages(x.result));
+    function getSitePages() {
+        setLoading(true)
+        appSiteService.getPagesOfAppSite(appSiteId,parentPageId).then((x) => { 
+            setLoading(false)
+            setSitePages(x.result)
+        });
     }
     
     return (
         <Container fluid>
-            <ul className="breadcrumb">
-                <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
-                <li className="breadcrumb-item active">
-                    Pagine del Sito {appSite && <b>{appSite.name}</b>}                
-                </li>
-            </ul>
-            <Jumbotron className="small-jumbotron">
-                <Row>
-                    <Col md={8}>
-                        <h5>Gestione <b>Pagine del Sito</b></h5>
-                        {appSite && <h1>{appSite.name}</h1>}                
-                        <p>
-                            Tramite questa sezione si configurano le pagine del sito relative al sito. Attenzione la prima pagina dopo la creazione non può essere eliminata.<br />
-                            Utilizzare immagini ottimizzate per un caricamento rapido.
-                        </p>
-                    </Col>
-                    <Col md={4} className="text-right">
-                        <div className="mart2">
-                            <SitePageModal appSiteId={appSiteId} sitePageId={0} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
-                        </div>
-                    </Col>
-                </Row>
-                
-            </Jumbotron>
-            
             {loading && <Col className="text-center mart2">
                 <ProgressBar animated now={100} />
             </Col>}
@@ -94,10 +64,10 @@ function SitePageList ({ match }){
                             <Card.Text>                                
                                 {sitePage.description}
                             </Card.Text>                            
-                            <Link title="Modifica" to={`edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="btn btn-primary mr-1">
+                            <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="btn btn-primary mr-1">
                                 <BsPencil />
                             </Link>
-                            <Link title="Gestione contenuti della pagina" to={`pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="btn btn-primary mr-1">
+                            <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="btn btn-primary mr-1">
                                 <FaBoxes />
                             </Link>
                             {sitePage.sitePageId > 1 &&
@@ -108,7 +78,8 @@ function SitePageList ({ match }){
                     </Card>                                            
                 </Col>                    
             )}                                                
-            </Row>                
+            </Row>    
+          
         </Container>
     );
 

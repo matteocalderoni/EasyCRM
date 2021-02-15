@@ -12,6 +12,7 @@ import { SimpleMap } from '../../../../_components';
 import parse from 'html-react-parser';
 import { BsPencil,BsTrash,BsFillEyeFill} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
+import { FaLanguage } from 'react-icons/fa';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -88,10 +89,16 @@ function PageBoxList({ match }) {
                         {sitePage && 
                         <>                 
                             <div>                                
-                                <Link className="btn btn-primary" to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`}>
+                                <Link className="btn btn-secondary" to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`}>
                                     <BsPencil /> modifica la pagina
                                 </Link>
+                                
                             </div>                                                               
+                            <div className="mart2">
+                                <Link className="btn btn-secondary" to={`/admin/sites/sitelanguages/edit/${appSiteId}`}>
+                                    <FaLanguage /> modifica lingue
+                                </Link>
+                            </div>
                             <div className="mart2">
                                 <PageBoxModal appSiteId={appSiteId} sitePageId={pageId} pageBoxId={0} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId) } />
                             </div>
