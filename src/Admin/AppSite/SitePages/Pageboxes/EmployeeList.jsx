@@ -70,7 +70,7 @@ class EmployeeList extends React.Component{
                                     </Col>
                                 </Row>                                                                
                                 <div>                                
-                                    {parse(employee.description)}
+                                    {employee.description && parse(employee.description)}
                                 </div>
                                 <EmployeeAddEdit appSiteId={employee.appSiteId} sitePageId={employee.sitePageId} pageBoxId={employee.pageBoxId} employeeId={employee.employeeId} handleAddEdit={this.handleAddEdit} />
                                 <Button variant="danger" onClick={() => this.deleteEmployee(employee)}>elimina</Button>

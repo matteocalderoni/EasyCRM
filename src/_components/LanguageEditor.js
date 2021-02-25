@@ -71,7 +71,7 @@ function LanguageEditor(props) {
             <div className="mart2">
               <b>Testo originale</b>
               <div>            
-                {parse(props.originalText)}
+                {props.originalText && parse(props.originalText)}
               </div>
             </div>
         </Card.Body>

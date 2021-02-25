@@ -67,7 +67,7 @@ class ProductList extends React.Component{
                             </Col>
                             <Col sm={6}>
                                 <h3>({product.sortId}) {product.title} {product.code}</h3>
-                                {parse(product.description)}
+                                {product.description && parse(product.description)}
                             </Col>
                             <Col sm={2}>
                                 <h3><Badge variant="success">{product.price} €</Badge></h3>                                

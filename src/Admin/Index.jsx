@@ -18,7 +18,7 @@ function Admin({ match }) {
 
     return (
         <div className="p-4">
-            <div className="container-fluid">
+            <div className="container-fluid mb-5">
                 <Switch>
                     <Route exact path={path} component={Overview} />                    
                     <PrivateRoute path={`${path}/users`} roles={[Role.Admin]} component={Users} />

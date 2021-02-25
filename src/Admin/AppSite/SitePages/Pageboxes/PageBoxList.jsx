@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Card, Button, Breadcrumb, ProgressBar, Row, Col, Accordion } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Button, Breadcrumb, ProgressBar, Row, Col, Accordion, Navbar, Nav } from 'react-bootstrap';
 import { appSiteService } from '../../../../_services';
 import { PageBoxModal } from './PageBoxModal';
 import { EmployeeList } from './EmployeeList';
@@ -13,6 +13,7 @@ import parse from 'html-react-parser';
 import { BsPencil,BsTrash,BsFillEyeFill} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
 import { FaLanguage } from 'react-icons/fa';
+import { BoxTypes,CardSizes } from '../../../../_helpers'
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -69,67 +70,47 @@ function PageBoxList({ match }) {
                 <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>          
                 <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                      
                 <li className="breadcrumb-item">
-                    <Link to={'/admin/sites/sitepages/'+ appSiteId}>Sito {appSite && <b>{appSite.name}</b>}</Link>                    
+                    <Link to={'/admin/sites/sitepages/'+ appSiteId}>Pagine del Sito {appSite && <b>{appSite.name}</b>}</Link>                    
                 </li>                
                 <li className="breadcrumb-item active">
-                    Pagina {sitePage && <b>{sitePage.title}</b>}
+                    Contenitori della Pagina {sitePage && <b>{sitePage.title}</b>}
                 </li>
             </ul>
             <Jumbotron className="small-jumbotron">
-                <Row>
-                    <Col sm={6}>
-                        <h5>Gestione <b>Contenuti della pagina</b></h5>   
-                        {sitePage && <h1>{sitePage.title}</h1>}
-                        <p>
-                            Tramite questa sezione si configurano i contenuti della pagina.
-                            Utilizzare immagini ottimizzate per un caricamento rapido.
-                        </p>
-                    </Col>
-                    <Col sm={6} className="text-right">
-                        {sitePage && 
-                        <>                 
-                            <div>                                
-                                <Link className="btn btn-secondary" to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`}>
-                                    <BsPencil /> modifica la pagina
-                                </Link>
-                                
-                            </div>                                                               
-                            <div className="mart2">
-                                <Link className="btn btn-secondary" to={`/admin/sites/sitelanguages/edit/${appSiteId}`}>
-                                    <FaLanguage /> modifica lingue
-                                </Link>
-                            </div>
-                            <div className="mart2">
-                                <PageBoxModal appSiteId={appSiteId} sitePageId={pageId} pageBoxId={0} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId) } />
-                            </div>
-                        </>
-                        }
-                    </Col>
-                </Row>
-                
+                <small>Gestione <b>Contenuti della pagina</b></small>   
+                {sitePage && <h1>{sitePage.title}</h1>}
+                <p className="text-muted">
+                    Tramite questa sezione si configurano i contenuti della pagina.
+                    Utilizzare immagini ottimizzate per un caricamento rapido.
+                </p>
             </Jumbotron>
             
             {(!pageBoxes || loading) &&               
-                <div className="text-center mart2">
+                <div className="text-center mt-1">
                     <ProgressBar animated now={100} />
                 </div>
             }
-            <Accordion defaultActiveKey="0">
+            <Accordion className="mart2" defaultActiveKey="0">
+            <Row>
             {pageBoxes && pageBoxes.map(pageBox =>                                    
-                <Card className="mart2" key={pageBox.pageBoxId}>
+            <Col sm={parseInt(pageBox.cardSize)}  key={pageBox.pageBoxId}>
+                <Card style={{backgroundColor: pageBox.boxColor}}>
                     <Card.Header>
                         <Row>
-                            <Col sm={6} className="text-left">
-                                <Card.Title>#{pageBox.sortId} <b>{pageBox.title}</b></Card.Title>       
+                            <Col sm={4}>
+                            {BoxTypes && BoxTypes[pageBox.boxType - 1].label}   
                             </Col>
-                            <Col sm={6} className="text-right">
-                                <PageBoxModal appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId)} />
-                                <Accordion.Toggle className="btn btn-default" as={Button} variant="link" eventKey={pageBox.pageBoxId}>
+                            <Col sm={8}>
+                                <Card.Title>{pageBox.sortId}° <b>{pageBox.title}</b></Card.Title>       
+                            </Col>
+                            <Col sm={12} className="text-right mt-1">
+                                <PageBoxModal appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} sortId={pageBox.sortId} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId)} />                                
+                                <Accordion.Toggle title="Anteprima" className="ml-1" variant="primary" as={Button} eventKey={pageBox.pageBoxId}>
                                     <BsFillEyeFill />
                                 </Accordion.Toggle>
-                                <Button title="Elimina contenitore" variant="danger" onClick={() => deletePageBox(pageBox)}>
+                                <Button title="Elimina contenitore" className="ml-5" variant="danger" onClick={() => deletePageBox(pageBox)}>
                                     <BsTrash />
-                                </Button>
+                                </Button>                                
                             </Col>
                         </Row>                        
                     </Card.Header>
@@ -139,7 +120,7 @@ function PageBoxList({ match }) {
                             <Card.Img variant="top" src={baseImageUrl+pageBox.imageUrl} />
                         }                                                
                         {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9) &&                                                 
-                        <div>{parse(pageBox.description)}</div>
+                        <div>{pageBox.description && parse(pageBox.description)}</div>
                         }
                         {pageBox.boxType && parseInt(pageBox.boxType) === 2 &&
                             <TopServiceList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
@@ -162,8 +143,23 @@ function PageBoxList({ match }) {
                         </Card.Body>                     
                     </Accordion.Collapse>
                 </Card>                                            
+            </Col>
             )}                              
-            </Accordion>  
+            </Row>
+            </Accordion> 
+            <Navbar fixed="bottom" variant="dark" bg="dark">
+                <Nav className="mr-auto">
+                    <Link className="btn btn-secondary" to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`} title="Modifica la pagina">
+                        <BsPencil /> Modifica Pagina
+                    </Link>
+                    <Link className="btn btn-secondary ml-1" to={`/admin/sites/sitelanguages/edit/${appSiteId}`} title="Gestione lingue del sito">
+                        <FaLanguage /> Lingue
+                    </Link>
+                </Nav>
+                <Nav className="mr-left">
+                    <PageBoxModal appSiteId={appSiteId} sitePageId={pageId} pageBoxId={0} sortId={1} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId) } />
+                </Nav>
+            </Navbar> 
         </Container>
     );
 

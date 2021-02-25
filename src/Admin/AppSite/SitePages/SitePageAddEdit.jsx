@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { appSiteService, alertService } from '../../../_services';
 import { Uploader } from '../../../_components'
-import { Form, Button, Card, Image, Row, Col,ProgressBar,Navbar } from 'react-bootstrap'
+import { Form, Button, Card, Image, Row, Col,ProgressBar,Navbar, Nav } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../_components/LanguageInput';
-import { FaSave } from 'react-icons/fa';
+import { FaSave, FaLanguage, FaBoxes} from 'react-icons/fa';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../_helpers/tinySettings';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -167,7 +168,7 @@ class SitePageAddEdit extends React.Component {
             .catch(error => {
                 alertService.error(error);
             });
-    }
+    }     
 
     render() {
         return (            
@@ -187,8 +188,7 @@ class SitePageAddEdit extends React.Component {
                             </div>
                         </Col>
                         }
-                        <Col>
-                            <LanguageSelect appSiteId={this.state.sitePage.appSiteId} onLanguageChange={this.handleLanguageCode} />      
+                        <Col>                            
 
                             {this.state.sitePage && this.state.sitePages && !this.state.loadingPages && <Form.Group>
                                 <Form.Label>Sotto pagina di (non selezionare per pagine principali):</Form.Label>
@@ -284,9 +284,20 @@ class SitePageAddEdit extends React.Component {
                 </Card.Body>    
             </Card>                    
             <Navbar fixed="bottom" variant="dark" bg="dark">
-                <Button onClick={this.onSubmit} variant="success">
-                    <FaSave /> Salva
-                </Button> 
+                <Nav className="mr-auto">
+                    <Button onClick={this.onSubmit} variant="success">
+                        <FaSave /> Salva
+                    </Button> 
+                    {this.state.sitePage.sitePageId > 0 && <Link title="Vai a gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${this.state.sitePage.appSiteId}/${this.state.sitePage.sitePageId}`} className="btn btn-secondary ml-1">
+                        <FaBoxes /> Contenitori
+                    </Link>}
+                    {this.state.sitePage.sitePageId > 0 && <Link className="btn btn-secondary ml-1" to={`/admin/sites/edit/${this.state.sitePage.appSiteId}`}>
+                        <FaLanguage /> modifica sito
+                    </Link>}
+                </Nav>
+                <Form inline>
+                    <LanguageSelect appSiteId={this.state.sitePage.appSiteId} onLanguageChange={this.handleLanguageCode} />      
+                </Form>
             </Navbar>                
           </>          
         );

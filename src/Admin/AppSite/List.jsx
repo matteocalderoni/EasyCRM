@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Image, Container,ProgressBar, Row, Col, Button} from 'react-bootstrap';
+import { Jumbotron, Image, Container,ProgressBar, Row, Col, Button, Navbar, Nav} from 'react-bootstrap';
 import { appSiteService, accountService } from '../../_services';
 import { Role } from '../../_helpers';
 import parse from 'html-react-parser';
@@ -48,22 +48,11 @@ function List({ match }) {
                 <li className="breadcrumb-item active">Elenco Siti</li>
             </ul>
             <Jumbotron className="small-jumbotron">
-                <Row>
-                    <Col md={8}>
-                    <h1>Gestione Siti</h1>
-                    <p>In questa sezione puoi visualizzare i tuoi siti.<br />
-                    Tramite la sezione 'Dettagli' puoi modificare le informazioni relative ai tuoi riferimenti.<br />
-                    Tramite la sezione 'Lingue' puoi visualizzare, modificare e aggiungere le lingue del relativo sito.<br />
-                    Tramite la sezione 'Pagine' puoi visualizzare, modificare e aggiungere le pagine del relativo sito.</p>
-                    </Col>
-                    <Col md={4} className="text-right">
-                    {user.role === Role.Admin &&
-                        <Link to={`${path}/add/0`} className="btn btn-success mb-2">
-                            <IoMdAddCircle /> Crea un nuovo Sito
-                        </Link>
-                    }
-                    </Col>
-                </Row>                                
+                <h1>Gestione Siti</h1>
+                <p className="text-muted">In questa sezione puoi visualizzare i tuoi siti.<br />
+                Tramite la sezione 'Dettagli' puoi modificare le informazioni relative ai tuoi riferimenti.<br />
+                Tramite la sezione 'Lingue' puoi visualizzare, modificare e aggiungere le lingue del relativo sito.<br />
+                Tramite la sezione 'Pagine' puoi visualizzare, modificare e aggiungere le pagine del relativo sito.</p>
             </Jumbotron>
             
             <Row className="site-list-header">                    
@@ -104,7 +93,13 @@ function List({ match }) {
                     </Col>
                 </Row>
             )}
-            
+            {user.role === Role.Admin && <Navbar fixed="bottom" variant="dark" bg="dark">
+                <Nav className="mr-auto">
+                    <Link to={`${path}/add/0`} className="btn btn-success">
+                        <IoMdAddCircle /> Crea un nuovo Sito
+                    </Link>
+                </Nav>              
+            </Navbar>}
         </Container>
     );
 }

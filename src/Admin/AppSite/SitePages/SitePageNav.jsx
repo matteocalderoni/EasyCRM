@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Row, Col } from 'react-bootstrap';
+import { Container, Jumbotron, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 import { FcHome } from 'react-icons/fc';
@@ -43,36 +43,29 @@ function SitePageNav ({ match }){
                 </li>
             </ul>
             <Jumbotron className="small-jumbotron">
-                <Row>
-                    <Col md={8}>
-                        <h5>Gestione <b>Pagine del Sito</b></h5>
-                        {appSite && <h1>{appSite.name}</h1>}                
-                        <p>
-                            Tramite questa sezione si configurano le pagine del sito relative al sito. Attenzione la prima pagina dopo la creazione non può essere eliminata.<br />
-                            Utilizzare immagini ottimizzate per un caricamento rapido.
-                        </p>
-                    </Col>
-                    <Col md={4} className="text-right">
-                        <div className="mart2">
-                            <Link className="btn btn-secondary" to={`/admin/sites/edit/${appSiteId}`}>
-                                <FaLanguage /> modifica sito
-                            </Link>
-                        </div>
-                        <div className="mart2">
-                            <Link className="btn btn-secondary" to={`/admin/sites/sitelanguages/edit/${appSiteId}`}>
-                                <FaLanguage /> modifica lingue
-                            </Link>
-                        </div>                        
-                        <div className="mart2">
-                            <SitePageModal appSiteId={appSiteId} sitePageId={0} parentPageId={0} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
-                        </div>
-                    </Col>
-                </Row>
-                
+                <small>Gestione <b>Pagine del Sito</b></small>
+                {appSite && <h1>{appSite.name}</h1>}                
+                <p className="text-muted">
+                    Tramite questa sezione si configurano le pagine del sito relative al sito. Attenzione la prima pagina dopo la creazione non può essere eliminata.<br />
+                    Utilizzare immagini ottimizzate per un caricamento rapido.
+                </p>
             </Jumbotron>
             
             <SitePageList appSiteId={appSiteId} parentPageId={0} isChanged={isChanged}></SitePageList>
 
+            <Navbar fixed="bottom" variant="dark" bg="dark">
+                <Nav className="mr-auto">
+                    <Link className="btn btn-secondary" to={`/admin/sites/edit/${appSiteId}`}>
+                        <FaLanguage /> modifica sito
+                    </Link>
+                    <Link className="btn btn-secondary ml-1" to={`/admin/sites/sitelanguages/edit/${appSiteId}`}>
+                        <FaLanguage /> lingue
+                    </Link>
+                </Nav>     
+                <Nav className="mr-left">
+                    <SitePageModal appSiteId={appSiteId} sitePageId={0} parentPageId={0} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
+                </Nav>         
+            </Navbar>
         </Container>
     );
 

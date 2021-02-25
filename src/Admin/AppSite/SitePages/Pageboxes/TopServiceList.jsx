@@ -53,9 +53,8 @@ class TopServiceList extends React.Component{
     render() {
         return (
             <Container fluid>
-                <Jumbotron className="small-jumbotron">
-                    <h3>Contenitore <b>Servizi</b></h3>
-                    <p>Con questo contenitore puoi creare un elenco di card con immagine e testo.<br />
+                <Jumbotron className="small-jumbotron">                    
+                    <p className="text-muted">Con questo contenitore puoi creare un elenco di card con immagine e testo.<br />
                     Puoi scegliere la dimensione dei riquadri per creare layout differenti.</p>
                 </Jumbotron>
                 <TopServiceAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} topServiceId={0} handleAddEdit={this.handleAddEdit} />
@@ -74,7 +73,7 @@ class TopServiceList extends React.Component{
                             <Card.Img variant="top" src={baseImageUrl+topService.imageUrl} />
                             <Card.Body>                                                                
                                 <div>
-                                {parse(topService.description)}
+                                {topService.description && parse(topService.description)}
                                 </div>
                                 <TopServiceAddEdit appSiteId={topService.appSiteId} sitePageId={topService.sitePageId} pageBoxId={topService.pageBoxId} topServiceId={topService.topServiceId} handleAddEdit={this.handleAddEdit} />
                                 <Button variant="danger" onClick={() => this.deleteTopService(topService)}>elimina</Button>

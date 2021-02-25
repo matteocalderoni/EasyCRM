@@ -37,8 +37,8 @@ class SitePageModal extends React.Component {
     render() {
         return (            
           <>
-            <Button variant="primary" className="mr-1" onClick={this.handleShow}>
-                {(this.state.sitePage.sitePageId > 0 ? 'Modifica la ' : 'Crea una nuova ') + (this.state.sitePage.parentPageId > 0 ? 'Sotto-Pagina' : 'Pagina')}
+            <Button variant="primary" className="mr-1" onClick={this.handleShow}>                
+                {(this.state.sitePage.sitePageId > 0 ? 'Modifica ' : 'Aggiungi ') + (this.state.sitePage.parentPageId > 0 ? 'Sotto-Pagina' : 'Pagina')}
             </Button>
             <Modal show={this.state.setShow} size="lg" onHide={this.handleClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>

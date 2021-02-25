@@ -1,7 +1,7 @@
 import React from 'react';
 import { appSiteService, alertService, languageService } from '../../_services';
 import { Uploader } from '../../_components'
-import { Image, Row, Col, Form, Button, Jumbotron, Card, Container, ProgressBar,Navbar } from 'react-bootstrap'
+import { Image, Row, Col, Form, Button, Jumbotron, Card, Container, ProgressBar,Navbar, Nav } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { Link } from 'react-router-dom';
 import { LanguageSelect } from '../../_components/LanguageSelect';
@@ -189,18 +189,18 @@ class AddEdit extends React.Component {
 
             {this.state.loading &&
                 <Row>
-                    <Col className="text-center mart2">
+                    <Col className="text-center mt-2">
                         <ProgressBar animated now={100} />
                     </Col>
                 </Row>
             }                         
               <Jumbotron className="small-jumbotron">
-                <h3>Gestione dati del <b>Sito</b></h3>                
+                <small>Gestione dati del <b>Sito</b></small>                
                 <Row>
                     <Col sm={2}>
                         <Image src={baseImageUrl+this.state.appSite.companyLogo} fluid />                    
                     </Col>
-                    <Col sm={6}>
+                    <Col sm={10}>
                         <Form.Group>
                             <Form.Label>Nome del Sito</Form.Label>
                             <Form.Control type="text" size="lg" className="form-control" name="name" value={this.state.appSite.name} onChange={this.handleChange} maxLength={200} />
@@ -208,24 +208,7 @@ class AddEdit extends React.Component {
                                 Ragione sociale della tua attività (max 200 caratteri).
                             </Form.Text>
                         </Form.Group>
-                    </Col>
-                    <Col sm={4} className="text-right">
-                        <div>
-                            <Button onClick={this.onSubmit} variant="success">
-                                <AiFillSave /> Salva modifiche
-                            </Button> 
-                        </div>
-                        <div className="mart2">
-                            <Link to={`/admin/sites/sitepages/${this.state.appSite.appSiteId}`} title="Pagine del sito" className="btn btn-secondary mr-1">
-                                <IoDocumentsOutline /> Pagine del sito
-                            </Link>
-                        </div>
-                        <div className="mart2">
-                            <Link to={`/admin/sites/sitelanguages/${this.state.appSite.appSiteId}`} title="Lingue del sito" className="btn btn-secondary mr-1">
-                                <FaLanguage /> Modifica Lingue
-                            </Link>
-                        </div>
-                    </Col>
+                    </Col>                    
                 </Row>              
                 <div className="mart1">
                     Carica il logo del tuo sito:
@@ -241,7 +224,7 @@ class AddEdit extends React.Component {
                 <Card.Body>
                         
                     <Form.Group>
-                        <Form.Label>Indirizzo del locale</Form.Label>
+                        <Form.Label>Indirizzo attività</Form.Label>
                         <input type="text" className="form-control" name="address" value={this.state.appSite.address} onChange={this.handleChange} />
                         <Form.Text className="text-muted">
                             Via, Corso, Piazza.
@@ -289,9 +272,7 @@ class AddEdit extends React.Component {
                                 </Form.Text>
                             </Form.Group>
                         </Col>
-                    </Row>
-                    
-                    <LanguageSelect appSiteId={this.state.appSite.appSiteId} onLanguageChange={this.handleLanguageCode} />      
+                    </Row>                                    
 
                     <div>
                         <label>Testo per fondo pagina: 'Su di noi'</label>
@@ -306,17 +287,7 @@ class AddEdit extends React.Component {
                             }}
                             onEditorChange={this.handleEditorChange}
                         />}                                            
-                    </div>
-
-                    {this.state.languageCode && this.state.languageCode != '' &&
-                    <div>
-                        <LanguageEditor 
-                            originalText={this.state.appSite.description}
-                            appSiteId={this.state.appSite.appSiteId} 
-                            code={this.state.languageCode}
-                            labelKey={`APPSITE_${this.state.appSite.appSiteId}-Description`}>                                    
-                        </LanguageEditor>
-                    </div>}
+                    </div>                    
                     
                     <Row>
                         <Col>
@@ -355,9 +326,20 @@ class AddEdit extends React.Component {
                 </Card.Body>
             </Card>          
             <Navbar fixed="bottom" variant="dark" bg="dark">
-                <Button onClick={this.onSubmit} variant="success">
-                    <AiFillSave /> Salva modifiche
-                </Button> 
+                <Nav className="mr-auto">
+                    <Button onClick={this.onSubmit} variant="success">
+                        <AiFillSave /> Salva
+                    </Button> 
+                    <Link to={`/admin/sites/sitepages/${this.state.appSite.appSiteId}`} title="Pagine del sito" className="btn btn-secondary ml-1">
+                        <IoDocumentsOutline /> Pagine
+                    </Link>
+                    <Link to={`/admin/sites/sitelanguages/${this.state.appSite.appSiteId}`} title="Lingue del sito" className="btn btn-secondary ml-1">
+                        <FaLanguage /> Lingue
+                    </Link>
+                </Nav>
+                <Form inline>
+                    <LanguageSelect appSiteId={this.state.appSite.appSiteId} onLanguageChange={this.handleLanguageCode} className="ml-1" />      
+                </Form>                
             </Navbar>          
           </Container>
           

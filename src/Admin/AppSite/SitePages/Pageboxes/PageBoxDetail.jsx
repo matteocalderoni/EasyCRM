@@ -11,7 +11,7 @@ function PageBoxDetail({ match }) {
                 <h1>Gestione del contenuto</h1>
                 <p>Modifica dettagli</p>                    
             </Jumbotron>
-            <PageBoxAddEdit appSiteId={appSiteId} sitePageId={pageId} pageBoxId={boxId} />            
+            <PageBoxAddEdit appSiteId={appSiteId} sitePageId={pageId} pageBoxId={boxId} sortId={1} />            
         </>
     );
 }

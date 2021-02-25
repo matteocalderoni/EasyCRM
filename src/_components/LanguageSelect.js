@@ -33,17 +33,14 @@ class LanguageSelect extends Component {
          
     render() {      
       return ( 
-        <div> 
-            <Form.Group>
-                <Form.Label>Seleziona la lingua per le modifiche</Form.Label>
-                <Form.Control as="select" value={this.state.code} name="code" onChange={this.handleChange}>
-                    <option value={''}>Default</option>
-                    {this.state.languages && this.state.languages.map(lang =>
-                        <option key={lang.code} value={lang.code}>{lang.code}</option>
-                    )}   
-                </Form.Control>                
-            </Form.Group>
-        </div> 
+        <Form.Group>
+            <Form.Control as="select" value={this.state.code} name="code" onChange={this.handleChange}>
+                <option value={''}>Lingua predefinita</option>
+                {this.state.languages && this.state.languages.map(lang =>
+                    <option key={lang.code} value={lang.code}>{lang.code}</option>
+                )}   
+            </Form.Control>                
+        </Form.Group>
       ); 
     } 
   } 

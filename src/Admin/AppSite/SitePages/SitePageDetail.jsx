@@ -60,37 +60,16 @@ function SitePageDetail({ match }) {
                 </li>
             </ul>
             <Jumbotron className="small-jumbotron">
-                <Row>
-                    <Col sm={8}>
-                    <h5>Gestione della pagina</h5>                
-                    {sitePage && !loading && <h1>{sitePage.title}</h1>}
-                    <p>Modifica dettagli relativi alla pagine: modifica immagine di sfondo, il titolo per il menù di navigazione e il testo per la slide.</p>                    
-                    </Col>
-                    <Col sm={4} className="text-right">
-                    {sitePage && !loading && 
-                    <>                        
-                        <Link title="Vai a gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${appSiteId}/${pageId}`} className="btn btn-secondary">
-                            <FaBoxes /> Contenitori della pagina
-                        </Link>
-                    </>}
-                    <div className="mart2">
-                        <Link title="Modifica sito" to={`/admin/sites/edit/${appSiteId}`} className="btn btn-secondary">
-                            <FaPencilAlt /> modifica sito
-                        </Link>
-                    </div>
-                    {pageId > 0 &&<div className="mart2">
-                        <SitePageModal appSiteId={appSiteId} sitePageId={0} parentPageId={pageId} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
-                    </div>}
-                    </Col>
-                </Row>                
-                
+                <small>Gestione della pagina</small>                
+                {sitePage && !loading && <h1>{sitePage.title}</h1>}
+                <p className="text-muted">Modifica dettagli relativi alla pagine: modifica immagine di sfondo, il titolo per il menù di navigazione e il testo per la slide.</p>                    
             </Jumbotron>
 
             <Tabs id="user-tabs">
-                <Tab eventKey="info" title="Informazioni generali">
+                <Tab eventKey="info" title="Informazioni generali" className="mt-2">
                     {!loading &&<SitePageAddEdit appSiteId={appSiteId} sitePageId={pageId}></SitePageAddEdit>}
                 </Tab>
-                {pageId > 0 && <Tab eventKey="pages" title="Sotto Pagine">
+                {pageId > 0 && <Tab eventKey="pages" title="Gestione Sotto Pagine" className="mt-2">
                     <SitePageList appSiteId={appSiteId} parentPageId={pageId} isChanged={isChanged}></SitePageList>
                 </Tab>}
             </Tabs>

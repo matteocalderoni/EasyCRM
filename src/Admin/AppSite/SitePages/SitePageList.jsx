@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Card, Button, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Button, Row, Col, ProgressBar, Navbar, Nav } from 'react-bootstrap';
 import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 import { FcHome } from 'react-icons/fc';
@@ -78,8 +78,13 @@ function SitePageList (props){
                     </Card>                                            
                 </Col>                    
             )}                                                
-            </Row>    
-          
+            </Row>                
+            {parentPageId > 0 &&
+            <Navbar fixed="bottom" variant="dark" bg="dark">
+                <Nav className="mr-right">
+                    <SitePageModal appSiteId={appSiteId} sitePageId={0} parentPageId={parentPageId} handleAddEdit={(appSiteId) => getSitePages()} />
+                </Nav>
+            </Navbar>}
         </Container>
     );
 

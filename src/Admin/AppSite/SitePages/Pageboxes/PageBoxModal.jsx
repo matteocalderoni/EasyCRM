@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap'
+import { BsPlus,BsPencil } from 'react-icons/bs';
 
 import { PageBoxAddEdit } from './PageBoxAddEdit'; 
 
@@ -12,7 +13,8 @@ class PageBoxModal extends React.Component {
             pageBox: {
                 appSiteId: props.appSiteId,                
                 sitePageId: props.sitePageId,
-                pageBoxId: props.pageBoxId                
+                pageBoxId: props.pageBoxId,
+                sortId: props.sortId
             }
          };
     }
@@ -37,8 +39,9 @@ class PageBoxModal extends React.Component {
     render() {
         return (            
           <>
-            <Button variant="primary" className="mr-1" onClick={this.handleShow}>
-                {this.state.pageBox.pageBoxId > 0 ? 'Modifica il ' : 'Crea un nuovo '} Contenitore
+            <Button variant="primary" onClick={this.handleShow}>
+                {this.state.pageBox.pageBoxId > 0 && <BsPencil title="Modifica il contenitore" />} 
+                {this.state.pageBox.pageBoxId == 0 && <BsPlus title="Aggiungi un nuovo contenitore" />}                
             </Button>
             <Modal show={this.state.setShow} dialogClassName="modal-90w" onHide={this.handleClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
@@ -46,7 +49,7 @@ class PageBoxModal extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                     {this.state.setShow &&
-                        <PageBoxAddEdit appSiteId={this.state.pageBox.appSiteId} sitePageId={this.state.pageBox.sitePageId} pageBoxId={this.state.pageBox.pageBoxId} handleSaved={this.handleSaved} />
+                        <PageBoxAddEdit appSiteId={this.state.pageBox.appSiteId} sitePageId={this.state.pageBox.sitePageId} pageBoxId={this.state.pageBox.pageBoxId} sortId={this.state.pageBox.sortId} handleSaved={this.handleSaved} />
                     }                    
                 </Modal.Body>
                 <Modal.Footer>
