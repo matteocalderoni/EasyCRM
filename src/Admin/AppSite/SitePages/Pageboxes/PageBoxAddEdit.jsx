@@ -27,7 +27,10 @@ class PageBoxAddEdit extends React.Component {
                 cardSize: 12,
                 sortId: 1,
                 boxType: 1, 
-                boxColor: '#CCCCCC',               
+                boxColor: '#CCCCCC',   
+                boxEmail: '',
+                boxLatitude: 0,            
+                boxLongitude: 0,
                 isPublished: true
             },
             languageCode: '',
@@ -275,6 +278,37 @@ class PageBoxAddEdit extends React.Component {
                             </Form.Group>}
                         </Col>
                     </Row>
+
+                    {this.state.pageBox.boxType === 10 && 
+                    <Form.Group>
+                        <Form.Label>Email di recapito</Form.Label>
+                        <input type="text" className="form-control" name="boxEmail" value={this.state.pageBox.boxEmail} onChange={this.handleChange}  />
+                        <Form.Text className="text-muted">
+                            Indicare un indirizzo email valido a cui recapitare le richieste inviate da questo contenitore  (lasciare vuoto per utilizzare valore di sito).
+                        </Form.Text>
+                    </Form.Group>} 
+
+                    {this.state.pageBox.boxType === 7 && 
+                    <Row>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Latitudine</Form.Label>
+                                <input type="number" className="form-control" name="boxLatitude" value={this.state.pageBox.boxLatitude} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Latitudine utilizzata per contenitore Mappa (lasciare a 0 per utilizzare valore di sito).
+                                </Form.Text>
+                            </Form.Group>
+                        </Col>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Longitudine</Form.Label>
+                                <input type="number" className="form-control" name="boxLongitude" value={this.state.pageBox.boxLongitude} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Longitudine utilizzata per contenitore Mappa (lasciare a 0 per utilizzare valore di sito).
+                                </Form.Text>
+                            </Form.Group>
+                        </Col>
+                    </Row>}                    
                     
                     <Form.Group className="mart2">
                         <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.pageBox.isPublished} onChange={this.handleChangeBool} />
