@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap'
 import { BsPlus,BsPencil } from 'react-icons/bs';
-
 import { PageBoxAddEdit } from './PageBoxAddEdit'; 
 
 class PageBoxModal extends React.Component {

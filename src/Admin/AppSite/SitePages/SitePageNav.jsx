@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Row, Col, Navbar, Nav } from 'react-bootstrap';
+import { Container, Jumbotron, Navbar, Nav } from 'react-bootstrap';
 import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 import { FcHome } from 'react-icons/fc';
 import { FaLanguage } from 'react-icons/fa';
 import { SitePageList } from './SitePageList';
 
-const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
+//const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function SitePageNav ({ match }){
-    const { path } = match;
+    //const { path } = match;
     const appSiteId = parseInt(match.params.appSiteId);
     const [appSite, setAppSite] = useState(null)
     const [loading, setLoading] = useState(false)   

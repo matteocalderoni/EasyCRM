@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-
 import { PageBoxList } from './PageBoxList';
 import { PageBoxDetail } from './PageBoxDetail';
 

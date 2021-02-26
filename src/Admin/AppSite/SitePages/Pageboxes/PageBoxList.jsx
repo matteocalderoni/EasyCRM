@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Card, Button, Breadcrumb, ProgressBar, Row, Col, Accordion, Navbar, Nav } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Button, ProgressBar, Row, Col, Accordion, Navbar, Nav } from 'react-bootstrap';
 import { appSiteService } from '../../../../_services';
 import { PageBoxModal } from './PageBoxModal';
 import { EmployeeList } from './EmployeeList';
@@ -10,10 +10,11 @@ import { ProductList } from './Product';
 import { ArticleList } from './Article';
 import { SimpleMap } from '../../../../_components';
 import parse from 'html-react-parser';
-import { BsPencil,BsTrash,BsFillEyeFill} from 'react-icons/bs';
+import { BsPencil,BsFillEyeFill} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
 import { FaLanguage } from 'react-icons/fa';
-import { BoxTypes,CardSizes } from '../../../../_helpers'
+import { BoxTypes } from '../../../../_helpers'
+import { DeleteConfirmation } from '../../../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -47,17 +48,16 @@ function PageBoxList({ match }) {
             setLoading(false)
             setSitePage(x)
         });
-    }, [appSiteId, pageId]);  
+    }, [appSiteId, pageId]);   
 
-    
-    function deletePageBox(pageBox) {
+    const deleteBox = (pageBox) => {
         setLoading(true)
         appSiteService.deletePageBox(pageBox.appSiteId, pageBox.sitePageId, pageBox.pageBoxId)
             .then(() => {
                 setLoading(false)
                 appSiteService.getBoxesOfPage(appSiteId, pageId).then(x => setPageBoxes(x.result));
             });
-    }
+    } 
 
     function handleAddEdit(appSiteId, sitePageId) {
         appSiteService.getBoxesOfPage(appSiteId, sitePageId).then(x => setPageBoxes(x.result));
@@ -108,9 +108,7 @@ function PageBoxList({ match }) {
                                 <Accordion.Toggle title="Anteprima" className="ml-1" variant="primary" as={Button} eventKey={pageBox.pageBoxId}>
                                     <BsFillEyeFill />
                                 </Accordion.Toggle>
-                                <Button title="Elimina contenitore" className="ml-5" variant="danger" onClick={() => deletePageBox(pageBox)}>
-                                    <BsTrash />
-                                </Button>                                
+                                <DeleteConfirmation onConfirm={() => deleteBox(pageBox)} />
                             </Col>
                         </Row>                        
                     </Card.Header>

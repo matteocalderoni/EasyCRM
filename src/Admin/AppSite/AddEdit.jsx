@@ -5,12 +5,10 @@ import { Image, Row, Col, Form, Button, Jumbotron, Card, Container, ProgressBar,
 import { Editor } from "@tinymce/tinymce-react";
 import { Link } from 'react-router-dom';
 import { LanguageSelect } from '../../_components/LanguageSelect';
-import { LanguageEditor } from '../../_components/LanguageEditor';
 import { AiFillSave } from 'react-icons/ai';
 import { FcHome } from 'react-icons/fc';
 import { IoDocumentsOutline } from 'react-icons/io5';
 import { FaLanguage } from 'react-icons/fa';
-import { BsTrash } from 'react-icons/bs';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../_helpers/tinySettings';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Image, Container,ProgressBar, Row, Col, Button, Navbar, Nav} from 'react-bootstrap';
+import { Jumbotron, Image, Container,ProgressBar, Row, Col, Navbar, Nav} from 'react-bootstrap';
 import { appSiteService, accountService } from '../../_services';
 import { Role } from '../../_helpers';
 import parse from 'html-react-parser';
-import { BsPencil,BsTrash } from 'react-icons/bs';
+import { BsPencil } from 'react-icons/bs';
 import { IoDocumentsOutline } from 'react-icons/io5';
 import { FcHome } from 'react-icons/fc';
 import { IoMdAddCircle } from 'react-icons/io';
 import { FaLanguage} from 'react-icons/fa';
+import { DeleteConfirmation } from '../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -84,12 +85,13 @@ function List({ match }) {
                         <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} title="Lingue del sito" className="btn btn-primary mr-1">
                             <FaLanguage />
                         </Link>
-                        <Button onClick={() => deleteAppSite(appSite.appSiteId)} title="Elimina sito" className="btn btn-danger" disabled={appSite.isDeleting}>
+                        <DeleteConfirmation onConfirm={() => deleteAppSite(appSite.appSiteId)} />
+                        {/* <Button onClick={() => deleteAppSite(appSite.appSiteId)} title="Elimina sito" className="btn btn-danger" disabled={appSite.isDeleting}>
                             {appSite.isDeleting 
                                 ? <span className="spinner-border spinner-border-sm"></span>
                                 : <span><BsTrash /></span>
                             }
-                        </Button>
+                        </Button> */}
                     </Col>
                 </Row>
             )}

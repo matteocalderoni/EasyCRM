@@ -1,8 +1,9 @@
 import React from 'react';
-import { Container, Jumbotron, Card, Button, Image, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Image, Row, Col, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../../_services';
 import { EmployeeAddEdit } from './EmployeeAddEdit';
 import parse from 'html-react-parser';
+import { DeleteConfirmation } from '../../../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_API_URL}/`;
 
@@ -73,7 +74,8 @@ class EmployeeList extends React.Component{
                                     {employee.description && parse(employee.description)}
                                 </div>
                                 <EmployeeAddEdit appSiteId={employee.appSiteId} sitePageId={employee.sitePageId} pageBoxId={employee.pageBoxId} employeeId={employee.employeeId} handleAddEdit={this.handleAddEdit} />
-                                <Button variant="danger" onClick={() => this.deleteEmployee(employee)}>elimina</Button>
+                                {/* <Button variant="danger" onClick={() => this.deleteEmployee(employee)}>elimina</Button> */}
+                                <DeleteConfirmation onConfirm={() => this.deleteEmployee(employee)} />
                             </Card.Body>
                         </Card>   
                     </Col>                                         

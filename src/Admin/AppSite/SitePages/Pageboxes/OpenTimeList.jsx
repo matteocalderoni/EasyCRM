@@ -1,8 +1,9 @@
 import React from 'react';
 import * as moment from 'moment'
-import { Container, Jumbotron, Card, Button, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Row, Col, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../../_services';
 import { OpenTimeAddEdit } from './OpenTimeAddEdit';
+import { DeleteConfirmation } from '../../../../_components/DeleteConfirmation';
 
 const weekDays = [
     { value: 1, label: 'Lunedì'},
@@ -79,7 +80,8 @@ class OpenTimeList extends React.Component{
                                 <b>Cena</b>: {moment(openTime.resumeTime).format('HH:mm')} - {moment(openTime.endTime).format('HH:mm')}
                                 </Card.Text>
                                 <OpenTimeAddEdit appSiteId={openTime.appSiteId} weekDay={openTime.weekDay} handleAddEdit={this.handleAddEdit} />
-                                <Button variant="danger" onClick={() => this.deleteOpenTime(openTime)}>elimina</Button>
+                                {/* <Button variant="danger" onClick={() => this.deleteOpenTime(openTime)}>elimina</Button> */}
+                                <DeleteConfirmation onConfirm={() => this.deleteOpenTime(openTime)} />
                             </Card.Body>
                         </Card>                        
                     </Col>                                

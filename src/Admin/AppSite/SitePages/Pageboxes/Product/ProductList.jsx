@@ -1,9 +1,10 @@
 import React from 'react';
-import { Container, Jumbotron, Button, ListGroup, Row,Col,Image, Badge, ProgressBar } from 'react-bootstrap';
+import { Container, Jumbotron, ListGroup, Row,Col,Image, Badge, ProgressBar } from 'react-bootstrap';
 import { productService } from '../../../../../_services';
 import { ProductAddEdit } from './ProductAddEdit';
 import { ProductTypeList } from './ProductTypeList';
 import parse from 'html-react-parser';
+import { DeleteConfirmation } from '../../../../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -74,7 +75,8 @@ class ProductList extends React.Component{
                             </Col>
                             <Col sm={2}>
                                 <ProductAddEdit appSiteId={product.appSiteId} sitePageId={product.sitePageId} pageBoxId={product.pageBoxId} productId={product.productId} handleAddEdit={(rId,sId,pId) => this.handleAddEdit(rId,sId,pId)} />
-                                <Button variant="danger" onClick={() => this.deleteProduct(product)}>elimina</Button>
+                                {/* <Button variant="danger" onClick={() => this.deleteProduct(product)}>elimina</Button> */}
+                                <DeleteConfirmation onConfirm={() => this.deleteProduct(product)} />
                             </Col>
                         </Row>
                     </ListGroup.Item>

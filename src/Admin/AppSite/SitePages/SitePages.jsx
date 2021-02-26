@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-
 import { SitePageNav } from './SitePageNav';
 import { SitePageDetail } from './SitePageDetail';
 import { PageBoxes } from './Pageboxes'

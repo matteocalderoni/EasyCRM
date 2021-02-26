@@ -4,6 +4,7 @@ import { Container, Jumbotron, Card, Button, Row, Col, ProgressBar } from 'react
 import { languageService, appSiteService } from '../../../_services';
 import { SiteLanguageModal } from './SiteLanguageModal';
 import { FcHome } from 'react-icons/fc';
+import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -86,7 +87,8 @@ function SiteLanguageList ({ match }){
                                 {siteLanguage.description}
                             </Card.Text>                            
                             <Link to={`edit/${siteLanguage.appSiteId}/${siteLanguage.code}`} className="btn btn-primary mr-1">dettagli</Link>
-                            <Button variant="danger" onClick={() => deleteSiteLanguage(siteLanguage)}>elimina</Button>
+                            {/* <Button variant="danger" onClick={() => deleteSiteLanguage(siteLanguage)}>elimina</Button> */}
+                            <DeleteConfirmation onConfirm={() => deleteSiteLanguage(siteLanguage)} />
                         </Card.Body>
                     </Card>                                            
                 </Col>                    

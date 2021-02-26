@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Jumbotron } from 'react-bootstrap';
 import { accountService } from '../../_services';
+import { DeleteConfirmation } from '../../_components/DeleteConfirmation';
 
 function List({ match }) {
     const { path } = match;
@@ -46,12 +47,13 @@ function List({ match }) {
                             <td>{user.role}</td>
                             <td style={{ whiteSpace: 'nowrap' }}>
                                 <Link to={`${path}/edit/${user.id}`} className="btn btn-sm btn-primary mr-1">Modifica</Link>
-                                <button onClick={() => deleteUser(user.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={user.isDeleting}>
+                                {/* <button onClick={() => deleteUser(user.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={user.isDeleting}>
                                     {user.isDeleting 
                                         ? <span className="spinner-border spinner-border-sm"></span>
                                         : <span>Elimina</span>
                                     }
-                                </button>
+                                </button> */}
+                                <DeleteConfirmation onConfirm={() => deleteUser(user.id)} />
                             </td>
                         </tr>
                     )}

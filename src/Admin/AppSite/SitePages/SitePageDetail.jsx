@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SitePageAddEdit } from './SitePageAddEdit';
-import { SitePageModal } from './SitePageModal';
-import { Jumbotron, Container, Row,Col, Tabs, Tab } from 'react-bootstrap'
+import { Jumbotron, Container, Tabs, Tab } from 'react-bootstrap'
 import { appSiteService } from '../../../_services';
-import { FaBoxes, FaPencilAlt } from 'react-icons/fa';
 import { FcHome } from 'react-icons/fc';
 import { SitePageList } from './SitePageList';
 

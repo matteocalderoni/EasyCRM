@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Card, Button, Row, Col, ProgressBar, Navbar, Nav } from 'react-bootstrap';
+import { Container, Card, Row, Col, ProgressBar, Navbar, Nav } from 'react-bootstrap';
 import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
-import { FcHome } from 'react-icons/fc';
-import { BsPencil,BsTrash } from 'react-icons/bs';
-import { FaBoxes, FaLanguage } from 'react-icons/fa';
+import { BsPencil} from 'react-icons/bs';
+import { FaBoxes} from 'react-icons/fa';
+import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -70,10 +70,12 @@ function SitePageList (props){
                             <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="btn btn-primary mr-1">
                                 <FaBoxes />
                             </Link>
-                            {sitePage.sitePageId > 1 &&
+                            {/* {sitePage.sitePageId > 1 &&
                             <Button title="Elimina Pagina" variant="danger" onClick={() => deleteSitePage(sitePage)}>
                                 <BsTrash />
-                            </Button>}
+                            </Button>} */}
+                            {sitePage.sitePageId > 1 &&
+                            <DeleteConfirmation onConfirm={() => deleteSitePage(sitePage)} />}
                         </Card.Body>
                     </Card>                                            
                 </Col>                    

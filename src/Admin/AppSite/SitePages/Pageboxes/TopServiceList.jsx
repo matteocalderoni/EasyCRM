@@ -1,8 +1,9 @@
 import React from 'react';
-import { Container, Jumbotron, Card, Button, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Row, Col, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../../_services';
 import { TopServiceAddEdit } from './TopServiceAddEdit';
 import parse from 'html-react-parser';
+import { DeleteConfirmation } from '../../../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -76,7 +77,8 @@ class TopServiceList extends React.Component{
                                 {topService.description && parse(topService.description)}
                                 </div>
                                 <TopServiceAddEdit appSiteId={topService.appSiteId} sitePageId={topService.sitePageId} pageBoxId={topService.pageBoxId} topServiceId={topService.topServiceId} handleAddEdit={this.handleAddEdit} />
-                                <Button variant="danger" onClick={() => this.deleteTopService(topService)}>elimina</Button>
+                                {/* <Button variant="danger" onClick={() => this.deleteTopService(topService)}>elimina</Button> */}
+                                <DeleteConfirmation onConfirm={() => this.deleteTopService(topService)} />
                             </Card.Body>
                         </Card>                        
                     </Col>                                

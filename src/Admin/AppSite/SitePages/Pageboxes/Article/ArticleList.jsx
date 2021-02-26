@@ -1,9 +1,10 @@
 import React from 'react';
-import { Container, Jumbotron, Card, Button, Row, Col, Image } from 'react-bootstrap';
+import { Container, Jumbotron, Card, Row, Col, Image } from 'react-bootstrap';
 import { articleService } from '../../../../../_services';
 import { ArticleAddEdit } from './ArticleAddEdit';
 import { CategoryList } from './CategoryList';
 import parse from 'html-react-parser';
+import { DeleteConfirmation } from '../../../../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -77,7 +78,8 @@ class ArticleList extends React.Component{
                                     </Col>
                                 </Row>      
                                 <ArticleAddEdit appSiteId={article.appSiteId} sitePageId={article.sitePageId} pageBoxId={article.pageBoxId} articleId={article.articleId} handleAddEdit={(rId,sId,pId) => this.handleAddEdit(rId,sId,pId)} />
-                                <Button variant="danger" onClick={() => this.deleteArticle(article)}>elimina</Button>
+                                {/* <Button variant="danger" onClick={() => this.deleteArticle(article)}>elimina</Button> */}
+                                <DeleteConfirmation onConfirm={() => this.deleteArticle(article)} />
                             </Card.Body>
                         </Card>    
                     </Col>                                        
