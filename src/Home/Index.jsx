@@ -57,6 +57,9 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b>Ver 1.2.4.8 (Marzo 2021)</b>: aggiunta gestione privacy policy e cookie in rispetto delle norme relative alla GDPR. Nei dati del sito è presente una nuova voce per selezionare la pagina corrispondente (per non visualizzare la pagina nel menù principale non pubblicare la pagina). 
+                        </li>
+                        <li className="list-group-item">
                             <b>Ver 1.2.3.7 (Febbraio 2021)</b>: aggiunta la conferma per azioni di Elimina. 
                         </li>
                         <li className="list-group-item">

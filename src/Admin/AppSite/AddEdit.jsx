@@ -33,7 +33,9 @@ class AddEdit extends React.Component {
             },
             languages: [],
             languageCode: '',
-            loading: false              
+            sitePages: [],
+            loading: false,
+            loadingPages: true                                       
          };
  
         this.handleChange = this.handleChange.bind(this);
@@ -44,6 +46,18 @@ class AddEdit extends React.Component {
     componentDidMount() {
         this.getLanguages()
         this.getSite()
+
+        appSiteService.getPagesOfAppSite(this.props.match.params.appSiteId,-1).then((x) => { 
+            if (x.totalCount > 0) {                
+                this.setState({                
+                    sitePages: x.result,
+                    loadingPages: false
+                })
+            } else {
+                // Empty
+                this.setState({sitePages: [], loadingPages: false})
+            }
+        });
     }    
 
     getLanguages() {
@@ -307,6 +321,19 @@ class AddEdit extends React.Component {
                             </Form.Group>
                         </Col>
                     </Row>
+
+                    {this.state.appSite && this.state.sitePages && !this.state.loadingPages && <Form.Group>
+                        <Form.Label>Pagina per la privacy policy:</Form.Label>
+                        <Form.Control as="select" value={this.state.appSite.privacyPageId} name="privacyPageId" onChange={this.handleChangeNumber}>
+                            <option value={0}>Non disponibile</option>
+                            {this.state.sitePages && this.state.sitePages.map(privacyPage =>
+                                <option key={privacyPage.sitePageId} value={parseInt(privacyPage.sitePageId)}>{privacyPage.title}</option>
+                            )}   
+                        </Form.Control>
+                        <Form.Text className="text-muted">
+                            Selezionare tra le pagine disponibile quella da utilizzare per la privacy policy (normative GDPR).
+                        </Form.Text>
+                    </Form.Group>}
                     
                     <Form.Group>
                         <Form.Check type="checkbox" label="Pubblico" name="isDefault" checked={this.state.appSite.isDefault} onChange={this.handleChangeBool} />
