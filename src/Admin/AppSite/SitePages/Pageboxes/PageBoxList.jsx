@@ -14,7 +14,8 @@ import { BsPencil,BsFillEyeFill} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
 import { FaLanguage } from 'react-icons/fa';
 import { BoxTypes } from '../../../../_helpers'
-import { DeleteConfirmation } from '../../../../_components/DeleteConfirmation';
+import { DeleteConfirmation,FacebookFeed } from '../../../../_components';
+
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -137,6 +138,9 @@ function PageBoxList({ match }) {
                         }    
                         {pageBox.boxType && parseInt(pageBox.boxType) === 7 &&
                             <SimpleMap appSiteId={pageBox.appSiteId} />                                                
+                        }   
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 11 &&
+                            <FacebookFeed feedUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />
                         }   
                         </Card.Body>                     
                     </Accordion.Collapse>

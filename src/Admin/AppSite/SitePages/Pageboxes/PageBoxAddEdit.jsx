@@ -287,6 +287,15 @@ class PageBoxAddEdit extends React.Component {
                             </Form.Text>
                         </Form.Group>} 
 
+                        {this.state.pageBox.boxType === 11 && 
+                        <Form.Group>
+                            <Form.Label>Indirizzo della pagina Facebook</Form.Label>
+                            <input type="text" className="form-control" name="boxEmail" value={this.state.pageBox.boxEmail} onChange={this.handleChange}  />
+                            <Form.Text className="text-muted">
+                                Indicare url della pagina facebook da visualizzare (esempio https://www.facebook.com/xxxxxxx).
+                            </Form.Text>
+                        </Form.Group>} 
+
                         {this.state.pageBox.boxType === 7 && 
                         <Row>
                             <Col>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Jumbotron, Row, Col,Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
 import { accountService } from '../_services';
 
 function Home() {
@@ -16,7 +15,7 @@ function Home() {
                 Ti permette di creare rapidamente delle <b>nuove PAGINE</b> e con i <b>CONTENITORI</b> disponibili puoi rapidamente aggiungere testo, immagini e molto altro.</small>                
             </Jumbotron>            
             <Row>
-                <Col>
+                <Col sm={12} md={6}>
                     <Card>
                         <Card.Header>
                             <Card.Title>Profilo utente</Card.Title>
@@ -32,7 +31,7 @@ function Home() {
                         </Card.Footer>                            
                     </Card>
                 </Col>
-                <Col>
+                <Col sm={12} md={6}>
                     <Card>
                         <Card.Header>
                             <Card.Title>Dashboard</Card.Title>
@@ -49,13 +48,18 @@ function Home() {
                         </Card.Footer>
                     </Card>
                 </Col>
+                
             </Row>
+
             <Card className="mart2">
                 <Card.Header>
                     Note sui rilasci: tutti gli aggiornamenti vengono documentati in questa sezione.
                 </Card.Header>
                 <Card.Body>
                     <ul className="list-group">
+                        <li className="list-group-item">
+                            <b>Ver 1.2.5.9 (Marzo 2021)</b>: aggiunta contenitore per la visualizzazione del Feed di una pagina Facebook. 
+                        </li>
                         <li className="list-group-item">
                             <b>Ver 1.2.4.8 (Marzo 2021)</b>: aggiunta gestione privacy policy e cookie in rispetto delle norme relative alla GDPR. Nei dati del sito è presente una nuova voce per selezionare la pagina corrispondente (per non visualizzare la pagina nel menù principale non pubblicare la pagina). 
                         </li>

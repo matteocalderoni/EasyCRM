@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SiteLanguageAddEdit } from './SiteLanguageAddEdit';
-import { Jumbotron, Container, Breadcrumb } from 'react-bootstrap'
+import { Jumbotron, Container,ProgressBar } from 'react-bootstrap'
 import { appSiteService, languageService } from '../../../_services';
 
 function SiteLanguageDetail({ match }) {
@@ -46,6 +46,9 @@ function SiteLanguageDetail({ match }) {
                 <h5>Gestione della lingua</h5>                                
                 <p>Modifica dettagli relativi alle lingue: modifica immagine bandiera e il titolo per il menù di navigazione.</p>                    
             </Jumbotron>
+            {loading && <div className="text-center mart2">
+                <ProgressBar animated now={100} />
+            </div>}
             <SiteLanguageAddEdit appSiteId={appSiteId} code={code} />
         </Container>
     );

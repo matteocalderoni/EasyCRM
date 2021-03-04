@@ -11,7 +11,7 @@ function LanguageInput(props) {
       setLoading(true)
       languageService.getSiteLabelById(props.appSiteId,props.code,props.labelKey)
         .then(_siteLabel => {
-          if (_siteLabel && _siteLabel.labelValue != '') {
+          if (_siteLabel && _siteLabel.labelValue !== '') {
             setLabelValue(_siteLabel.labelValue)          
           }
           setLoading(false)

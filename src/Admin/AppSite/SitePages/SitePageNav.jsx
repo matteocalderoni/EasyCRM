@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Navbar, Nav } from 'react-bootstrap';
+import { Container, Jumbotron, Navbar, Nav, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 import { FcHome } from 'react-icons/fc';
@@ -50,6 +50,11 @@ function SitePageNav ({ match }){
                     Utilizzare immagini ottimizzate per un caricamento rapido.
                 </p>
             </Jumbotron>
+
+            {loading && <div className="text-center mart2">
+                <h5>Caricamento etichetta...</h5>
+                <ProgressBar animated now={100} />
+            </div>}
             
             <SitePageList appSiteId={appSiteId} parentPageId={0} isChanged={isChanged}></SitePageList>
 
