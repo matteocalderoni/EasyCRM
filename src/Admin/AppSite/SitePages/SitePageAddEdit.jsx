@@ -211,7 +211,7 @@ class SitePageAddEdit extends React.Component {
                                 </Form.Text>
                             </Form.Group>   
 
-                            {!this.state.loading && this.state.languageCode === '' && 
+                            {!this.state.loading && this.state.languageCode == '' && 
                             <Form.Group>
                                 <Form.Label>Titolo della Pagina</Form.Label>
                                 <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} />
@@ -247,7 +247,7 @@ class SitePageAddEdit extends React.Component {
                         </Col>
                     </Row>                    
                     
-                    {!this.state.loading && this.state.sitePage.sitePageId > 0 && this.state.languageCode === '' &&
+                    {!this.state.loading && this.state.sitePage.sitePageId > 0 && this.state.languageCode == '' &&
                         <div>
                             <label>Testo visualizzato nella Slide</label>
                             <Editor
