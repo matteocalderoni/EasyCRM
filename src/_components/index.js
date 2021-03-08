@@ -1,6 +1,8 @@
 export * from './Alert';
 export * from './DeleteConfirmation';
 export * from './FacebookFeed';
+export * from './InstagramFeed';
+export * from './InstagramMedia';
 export * from './LanguageEditor';
 export * from './LanguageInput';
 export * from './LanguageSelect';
@@ -8,3 +10,4 @@ export * from './MainNav';
 export * from './PrivateRoute';
 export * from './SimpleMap';
 export * from './Uploader';
+export * from './YoutubeVideo';

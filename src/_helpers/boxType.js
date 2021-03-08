@@ -9,5 +9,7 @@ export const BoxTypes = [
     { label: 'Immagine', value: 8 },
     { label: 'Testo e Immagine', value: 9 },
     { label: 'Modulo Contattaci', value: 10 },
-    { label: 'Facebook Feed (Sezione Notizie)', value: 11 }    
+    { label: 'Facebook Feed (Sezione Notizie)', value: 11 },
+    { label: 'Instagram Feed (Bacheca)', value: 12 },
+    { label: 'Video Youtube', value: 13 }    
 ]

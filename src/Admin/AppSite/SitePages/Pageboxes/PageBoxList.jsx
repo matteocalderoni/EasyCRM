@@ -14,7 +14,7 @@ import { BsPencil,BsFillEyeFill} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
 import { FaLanguage } from 'react-icons/fa';
 import { BoxTypes } from '../../../../_helpers'
-import { DeleteConfirmation,FacebookFeed } from '../../../../_components';
+import { DeleteConfirmation,FacebookFeed,InstagramFeed,YoutubeVideo } from '../../../../_components';
 
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -141,6 +141,12 @@ function PageBoxList({ match }) {
                         }   
                         {pageBox.boxType && parseInt(pageBox.boxType) === 11 &&
                             <FacebookFeed feedUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />
+                        }   
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 12 &&
+                            <InstagramFeed userName={pageBox.boxEmail} className="Feed" classNameLoading="Loading" limit="8" />
+                        }   
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 13 &&
+                            <YoutubeVideo videoUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />
                         }   
                         </Card.Body>                     
                     </Accordion.Collapse>

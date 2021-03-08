@@ -57,6 +57,9 @@ function Home() {
                 </Card.Header>
                 <Card.Body>
                     <ul className="list-group">
+                    <li className="list-group-item">
+                            <b>Ver 1.2.6.10 (Marzo 2021)</b>: aggiunta contenitore per la visualizzazione dei video Youtube. 
+                        </li>
                         <li className="list-group-item">
                             <b>Ver 1.2.5.9 (Marzo 2021)</b>: aggiunta contenitore per la visualizzazione del Feed di una pagina Facebook. 
                         </li>

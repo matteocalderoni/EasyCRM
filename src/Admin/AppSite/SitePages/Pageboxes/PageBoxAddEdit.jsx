@@ -296,6 +296,24 @@ class PageBoxAddEdit extends React.Component {
                             </Form.Text>
                         </Form.Group>} 
 
+                        {this.state.pageBox.boxType === 12 && 
+                        <Form.Group>
+                            <Form.Label>Nome utente della pagina Instagram</Form.Label>
+                            <input type="text" className="form-control" name="boxEmail" value={this.state.pageBox.boxEmail} onChange={this.handleChange}  />
+                            <Form.Text className="text-muted">
+                                Indicare nome utente della pagina instagram da visualizzare (esempio xxxxxxx).
+                            </Form.Text>
+                        </Form.Group>} 
+
+                        {this.state.pageBox.boxType === 13 && 
+                        <Form.Group>
+                            <Form.Label>Video Youtube</Form.Label>
+                            <input type="text" className="form-control" name="boxEmail" value={this.state.pageBox.boxEmail} onChange={this.handleChange}  />
+                            <Form.Text className="text-muted">
+                                Indicare url della pagina facebook da visualizzare (esempio https://www.youtube.com/watch?v=xxxxxxx).
+                            </Form.Text>
+                        </Form.Group>} 
+
                         {this.state.pageBox.boxType === 7 && 
                         <Row>
                             <Col>

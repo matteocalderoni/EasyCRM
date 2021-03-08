@@ -9,6 +9,10 @@ https://codesandbox.io/s/infinite-multi-level-menu-react-js-89fmj?file=/src/inde
 https://www.npmjs.com/package/react-facebook
 npm i react-facebook
 
+### Video Youtube Components
+https://coderrocketfuel.com/article/embed-a-youtube-video-in-a-react-webpage
+npm install react-player --save
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ## Available Scripts
