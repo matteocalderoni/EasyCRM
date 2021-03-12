@@ -6,6 +6,7 @@ import { SitePageModal } from './SitePageModal';
 import { BsPencil} from 'react-icons/bs';
 import { FaBoxes} from 'react-icons/fa';
 import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
+import parse from 'html-react-parser';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -56,13 +57,13 @@ function SitePageList (props){
                     <Card className="mart2 text-center" bg="dark" text="white">
                         <Card.Header>
                             <Card.Title>
-                                #{sitePage.sortId} {sitePage.title} 
+                                #{sitePage.sortId} {sitePage.title && parse(sitePage.title)} 
                             </Card.Title>                                                        
                         </Card.Header>
                         <Card.Img variant="top" src={baseImageUrl+sitePage.imageUrl} />
                         <Card.Body>                                                            
                             <Card.Text>                                
-                                {sitePage.description}
+                                {sitePage.description && parse(sitePage.description)}
                             </Card.Text>                            
                             <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="btn btn-primary mr-1">
                                 <BsPencil />

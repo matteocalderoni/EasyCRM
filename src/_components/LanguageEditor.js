@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'; 
 import { languageService, alertService } from '../_services'
 import { Editor } from "@tinymce/tinymce-react";
-import { Button,ProgressBar, Row, Col, Card } from 'react-bootstrap'
+import { Button,ProgressBar, Col, Form, Navbar,Nav } from 'react-bootstrap'
 import parse from 'html-react-parser';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../_helpers/tinySettings';
 
@@ -48,39 +48,37 @@ function LanguageEditor(props) {
           <ProgressBar animated now={100} />
       </Col>}
 
-      <Card bg="primary" text="white">
-        <Card.Header>
-          <Card.Title>
-            Testo per {props.code}
-          </Card.Title>
-        </Card.Header>
-        <Card.Body>
-          {!loading &&           
+      <Form.Group>
+        <Form.Label>Testo per lingua <b>{props.code}</b> (digitare il testo tradotto)</Form.Label>
+        {!loading &&           
             <Editor
                 apiKey={process.env.REACT_APP_TINTMCE_KEY}
                 initialValue={labelValue}
+                inline={props.inline ? props.inline : false}
                 init={{
                     height: 500,
                     menubar: menuSettings, // 'file edit view insert format tools table tc help',
                     plugins: pluginsSettings, // baseEditorPlugins,
                     toolbar: toolbarSettings, // fullEditorToolbar
                 }}
-                onEditorChange={(content, editor) => { handleEditorChange(content, editor) }}
+                onEditorChange={(content, editor) => { handleEditorChange(content, editor) }}                
             />}
-
+          <Form.Text className="text-muted">
             <div className="mart2">
               <b>Testo originale</b>
               <div>            
                 {props.originalText && parse(props.originalText)}
               </div>
             </div>
-        </Card.Body>
-        <Card.Footer>
+          </Form.Text>
+      </Form.Group>
+      <Navbar variant="dark" bg="dark">
+        <Nav className="mr-auto">
           <Button onClick={handleSubmit} variant="success">
-                Salva etichetta
-            </Button> 
-        </Card.Footer>
-      </Card>      
+              Salva etichetta
+          </Button> 
+        </Nav>
+      </Navbar>      
     </div> 
   );      
 } 

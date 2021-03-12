@@ -3,11 +3,8 @@ import { appSiteService, alertService } from '../../../../_services';
 import { Uploader } from '../../../../_components'
 import { Form, Button, Card, Image, ProgressBar,Row,Col,Navbar,Nav } from 'react-bootstrap'
 import { BoxTypes,CardSizes } from '../../../../_helpers'
-import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../../_components/LanguageEditor';
-import { LanguageInput } from '../../../../_components/LanguageInput';
-import {menuSettings,pluginsSettings,toolbarSettings } from '../../../../_helpers/tinySettings';
 import { CompactPicker } from 'react-color';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -109,6 +106,15 @@ class PageBoxAddEdit extends React.Component {
         });        
     }
 
+    handleTitleEditorChange = (content, editor) => {
+        this.setState({
+            pageBox: {
+                ...this.state.pageBox,
+                title: content                 
+            }          
+        });
+    }
+
     handleOpen = () => {                  
         if (this.props.appSiteId > 0 && this.props.sitePageId > 0 && this.props.pageBoxId > 0) {
             this.setState({loading: true})
@@ -189,67 +195,38 @@ class PageBoxAddEdit extends React.Component {
                         </div>}                                 
                         
                         <Row>
-                            <Col sm={4}>
+                            <Col sm={6}>
                                 <Form.Group>
                                     <Form.Label>Ordinamento</Form.Label>
                                     <input type="number" className="form-control" name="sortId" value={this.state.pageBox.sortId} onChange={this.handleChangeNumber}  />
                                     <Form.Text className="text-muted">
-                                        Valore per ordinamento crescente dei contenitori nella pagina.
+                                        Valore per ordinamento crescente dei contenitori nella pagina. E' consigliato utilizzare valori con step di 10 (10,10,30,ecc) per avere la possibilità di inserire pagine intermedie in futuro.
                                     </Form.Text>
                                 </Form.Group>      
                             </Col>
-                            <Col sm={8}>
-                                {this.state.languageCode == '' &&
+                            <Col sm={6}>
+                                {!this.state.loading && this.state.languageCode == '' &&
                                 <Form.Group>
-                                    <Form.Label>Titolo</Form.Label>
+                                    <Form.Label>Titolo</Form.Label>                                    
                                     <input type="text" className="form-control" name="title" value={this.state.pageBox.title} onChange={this.handleChange}  />
                                     <Form.Text className="text-muted">
-                                        Titolo del contenuto (max 200 caratteri).
+                                            Titolo del contenuto. Attenzione possono comparire caratteri speciali relativi alla formattazione del testo, in tal caso utilizzare anteprima di contenitori per le modifiche.
                                     </Form.Text>
                                 </Form.Group>}                                       
 
                                 {this.state.languageCode !== '' &&
                                 <div>
-                                    <LanguageInput 
+                                    <LanguageEditor 
                                         originalText={this.state.pageBox.title}
                                         appSiteId={this.state.pageBox.appSiteId} 
                                         code={this.state.languageCode}
+                                        inline={true}
                                         labelKey={`PAGEBOX_${this.state.pageBox.appSiteId}_${this.state.pageBox.sitePageId}_${this.state.pageBox.pageBoxId}-Title`}>
-                                    </LanguageInput>
+                                    </LanguageEditor>
                                 </div>}  
                             </Col>
                         </Row>
-                        
-                        {this.state.pageBox && !this.state.loading && this.state.languageCode === '' && 
-                            (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&                 
-                        <div>
-                            <Form.Group>
-                                <Form.Label>Descrizione del contenitore</Form.Label>
-                                <Editor
-                                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                    initialValue={this.state.pageBox.description}
-                                    init={{
-                                    height: 500,
-                                    menubar: menuSettings,
-                                    plugins: pluginsSettings,
-                                    toolbar: toolbarSettings
-                                    }}
-                                    onEditorChange={this.handleEditorChange}
-                                />
-                            </Form.Group>
-                        </div>}
-
-                        {this.state.languageCode && this.state.languageCode !== '' &&
-                            this.state.pageBox.boxType && (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&
-                        <div>
-                            <LanguageEditor 
-                                originalText={this.state.pageBox.description}
-                                appSiteId={this.state.pageBox.appSiteId} 
-                                code={this.state.languageCode}
-                                labelKey={`PAGEBOX_${this.state.pageBox.appSiteId}_${this.state.pageBox.sitePageId}_${this.state.pageBox.pageBoxId}-Description`}>                                    
-                            </LanguageEditor>
-                        </div>}              
-
+                                                
                         <Row>
                             <Col sm={6}>
                                 <Form.Group>
@@ -272,7 +249,7 @@ class PageBoxAddEdit extends React.Component {
                                         onChangeComplete={ this.handleColorChange }
                                     />
                                     <Form.Text className="text-muted">
-                                        Colore di sfondo per i contenitori di testo.
+                                        Colore di sfondo per i contenitori di testo. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
                                     </Form.Text>
                                 </Form.Group>}
                             </Col>
@@ -283,7 +260,7 @@ class PageBoxAddEdit extends React.Component {
                             <Form.Label>Email di recapito</Form.Label>
                             <input type="text" className="form-control" name="boxEmail" value={this.state.pageBox.boxEmail} onChange={this.handleChange}  />
                             <Form.Text className="text-muted">
-                                Indicare un indirizzo email valido a cui recapitare le richieste inviate da questo contenitore  (lasciare vuoto per utilizzare valore di sito).
+                                Indicare un indirizzo email valido a cui recapitare le richieste inviate da questo contenitore (lasciare vuoto per utilizzare la mail principale inserita nei riferimenti del sito).
                             </Form.Text>
                         </Form.Group>} 
 
@@ -292,7 +269,7 @@ class PageBoxAddEdit extends React.Component {
                             <Form.Label>Indirizzo della pagina Facebook</Form.Label>
                             <input type="text" className="form-control" name="boxEmail" value={this.state.pageBox.boxEmail} onChange={this.handleChange}  />
                             <Form.Text className="text-muted">
-                                Indicare url della pagina facebook da visualizzare (esempio https://www.facebook.com/xxxxxxx).
+                                Indicare url della pagina facebook da visualizzare (esempio https://www.facebook.com/xxxxxxx). Indirizzo deve essere completo. 
                             </Form.Text>
                         </Form.Group>} 
 
@@ -301,7 +278,7 @@ class PageBoxAddEdit extends React.Component {
                             <Form.Label>Nome utente della pagina Instagram</Form.Label>
                             <input type="text" className="form-control" name="boxEmail" value={this.state.pageBox.boxEmail} onChange={this.handleChange}  />
                             <Form.Text className="text-muted">
-                                Indicare nome utente della pagina instagram da visualizzare (esempio xxxxxxx).
+                                Indicare nome utente della pagina instagram da visualizzare (esempio xxxxxxx). Il nome utente è contenuto nell'indirizzo della pagina profilo del relativo utente (esempio: https://www.instagram.com/nomeutente).
                             </Form.Text>
                         </Form.Group>} 
 
@@ -310,7 +287,7 @@ class PageBoxAddEdit extends React.Component {
                             <Form.Label>Video Youtube</Form.Label>
                             <input type="text" className="form-control" name="boxEmail" value={this.state.pageBox.boxEmail} onChange={this.handleChange}  />
                             <Form.Text className="text-muted">
-                                Indicare url della pagina facebook da visualizzare (esempio https://www.youtube.com/watch?v=xxxxxxx).
+                                Indicare url della pagina facebook da visualizzare (esempio https://www.youtube.com/watch?v=xxxxxxx). Indirizzo della pagina deve essere completo.
                             </Form.Text>
                         </Form.Group>} 
 
@@ -321,7 +298,7 @@ class PageBoxAddEdit extends React.Component {
                                     <Form.Label>Latitudine</Form.Label>
                                     <input type="number" className="form-control" name="boxLatitude" value={this.state.pageBox.boxLatitude} onChange={this.handleChangeNumber} />
                                     <Form.Text className="text-muted">
-                                        Latitudine utilizzata per contenitore Mappa (lasciare a 0 per utilizzare valore di sito).
+                                        Latitudine utilizzata per contenitore Mappa (lasciare a 0 per utilizzare valore di sito). Per ottenere le coordinate di un luogo è possibile utilizzare il sito https://www.mapcoordinates.net/it.
                                     </Form.Text>
                                 </Form.Group>
                             </Col>
@@ -330,7 +307,7 @@ class PageBoxAddEdit extends React.Component {
                                     <Form.Label>Longitudine</Form.Label>
                                     <input type="number" className="form-control" name="boxLongitude" value={this.state.pageBox.boxLongitude} onChange={this.handleChangeNumber} />
                                     <Form.Text className="text-muted">
-                                        Longitudine utilizzata per contenitore Mappa (lasciare a 0 per utilizzare valore di sito).
+                                        Longitudine utilizzata per contenitore Mappa (lasciare a 0 per utilizzare valore di sito).  Per ottenere le coordinate di un luogo è possibile utilizzare il sito https://www.mapcoordinates.net/it.
                                     </Form.Text>
                                 </Form.Group>
                             </Col>

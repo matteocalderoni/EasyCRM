@@ -5,6 +5,7 @@ import { Jumbotron, Container, Tabs, Tab } from 'react-bootstrap'
 import { appSiteService } from '../../../_services';
 import { FcHome } from 'react-icons/fc';
 import { SitePageList } from './SitePageList';
+import parse from 'html-react-parser';
 
 function SitePageDetail({ match }) {
     const { appSiteId, pageId } = match.params;  
@@ -53,13 +54,13 @@ function SitePageDetail({ match }) {
                 <li className="breadcrumb-item">
                     <Link to={'/admin/sites/sitepages/'+ appSiteId}>Pagine del sito {appSite && <b>{appSite.name}</b>}</Link>                    
                 </li>                
-                <li className="breadcrumb-item active">
-                    Pagina {sitePage && <b>{sitePage.title}</b>}
-                </li>
+                {/* <li className="breadcrumb-item active">
+                    Pagina {sitePage && sitePage.title && parse(sitePage.title)}
+                </li> */}
             </ul>
             <Jumbotron className="small-jumbotron">
                 <small>Gestione della pagina</small>                
-                {sitePage && !loading && <h1>{sitePage.title}</h1>}
+                {sitePage && !loading && sitePage.title && parse(sitePage.title)}
                 <p className="text-muted">Modifica dettagli relativi alla pagine: modifica immagine di sfondo, il titolo per il menù di navigazione e il testo per la slide.</p>                    
             </Jumbotron>
 

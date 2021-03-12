@@ -20,6 +20,15 @@ code {
 
 .modal-90w { max-width: 90%; }
 
+.fixed-background { 
+  background-color: #000;
+  background: top right no-repeat; 
+  background-repeat: no-repeat;
+  background-attachment:fixed; 
+  background-size: cover;
+  min-height: 500px; 
+}
+
 .brand-logo { height: 40px; }
 .sub-navbar { margin-top: 60px; }
 
@@ -36,6 +45,12 @@ code {
 .site-list-item { border: 1px solid #777; }
 .site-list-item .logo { margin: 5px; }
 
+.page-boxes { padding: 5px; }
+.page-boxes .page-box { margin-bottom: 15px; }
+
 .fb-page { width: 100%; text-align: center;  }
 
 .youtube-video {width: 100%; text-align: center; margin-left: auto; margin-right: auto; }
+
+.editor-inline { border:1px solid #888; border-radius: 5px; padding-top: 7px; }
+.editor-inline:hover { background-color: #EEE; }

@@ -6,9 +6,9 @@ import { Form, Button, Card, Image, Row, Col,ProgressBar,Navbar, Nav } from 'rea
 import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../_components/LanguageEditor';
-import { LanguageInput } from '../../../_components/LanguageInput';
 import { FaSave, FaLanguage, FaBoxes} from 'react-icons/fa';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../_helpers/tinySettings';
+import parse from 'html-react-parser';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 class SitePageAddEdit extends React.Component {
@@ -174,28 +174,25 @@ class SitePageAddEdit extends React.Component {
         return (            
           <>
             <Card>                
-                <Card.Body>                    
+                <Card.Body className="home container-fluid">                    
                     {this.state.loading && <div className="text-center mart2">
                         <ProgressBar animated now={100} />
                     </div>}
-                    <Row>
+                    <div>
                         {this.state.sitePage.sitePageId > 0 &&                    
-                        <Col>
-                            <div>
-                                <Image fluid src={baseImageUrl+this.state.sitePage.imageUrl} />
-                                <Uploader prefix={this.state.sitePage.appSiteId} fileName={this.state.sitePage.imageUrl} onFileNameChange={this.handleFileName} />      
-                                <small>Questa immagine viene utilizzate come sfondo della pagina: su desktop rimane fissa, su mobile scorre. E' consigliato utilizzare un immagine con formato 1920 X 1080 px.</small>
-                            </div>
-                        </Col>
-                        }
-                        <Col>                            
+                        <div>
+                            <Image fluid src={baseImageUrl+this.state.sitePage.imageUrl} />
+                            <Uploader prefix={this.state.sitePage.appSiteId} fileName={this.state.sitePage.imageUrl} onFileNameChange={this.handleFileName} />      
+                            <small>Questa immagine viene utilizzate come sfondo della pagina: su desktop rimane fissa, su mobile scorre. E' consigliato utilizzare un immagine con formato 1920 X 1080 px.</small>
+                        </div>}
+                        <div>                            
 
                             {this.state.sitePage && this.state.sitePages && !this.state.loadingPages && <Form.Group>
                                 <Form.Label>Sotto pagina di (non selezionare per pagine principali):</Form.Label>
                                 <Form.Control as="select" value={this.state.sitePage.parentPageId} name="parentPageId" onChange={this.handleChangeNumber}>
                                     <option value={undefined}>Radice</option>
                                     {this.state.sitePages && this.state.sitePages.map(parentPage =>
-                                        <option key={parentPage.sitePageId} value={parseInt(parentPage.sitePageId)}>{parentPage.title}</option>
+                                        <option key={parentPage.sitePageId} value={parseInt(parentPage.sitePageId)}>{parse(parentPage.title)}</option>
                                     )}   
                                 </Form.Control>
                                 <Form.Text className="text-muted">
@@ -214,21 +211,22 @@ class SitePageAddEdit extends React.Component {
                             {!this.state.loading && this.state.languageCode == '' && 
                             <Form.Group>
                                 <Form.Label>Titolo della Pagina</Form.Label>
-                                <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} />
-
-                                {/* <Editor
-                                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                    initialValue={this.state.sitePage.title}                                
-                                    inline="true"
-                                    init={{
-                                        height: 500,                                        
-                                        menubar: menuSettings,
-                                        plugins: pluginsSettings,
-                                        toolbar: toolbarSettings
-                                    }}
-                                    onEditorChange={this.handleTitleEditorChange}
-                                    >
-                                </Editor> */}
+                                {/* <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} /> */}
+                                <div className="editor-inline">
+                                    <Editor
+                                        apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                        initialValue={this.state.sitePage.title}                                
+                                        inline={true}
+                                        init={{
+                                            height: 500,                                        
+                                            menubar: menuSettings,
+                                            plugins: pluginsSettings,
+                                            toolbar: toolbarSettings
+                                        }}
+                                        onEditorChange={this.handleTitleEditorChange}
+                                        >
+                                    </Editor> 
+                                </div>
 
                                 <Form.Text className="text-muted">
                                     Titolo della pagina (max 200 caratteri): visualizzato nel menù di navigazione in alto nella pagina.
@@ -237,30 +235,34 @@ class SitePageAddEdit extends React.Component {
 
                             {this.state.languageCode && this.state.languageCode !== '' &&
                             <div>
-                                <LanguageInput 
+                                <LanguageEditor 
                                     originalText={this.state.sitePage.title}
                                     appSiteId={this.state.sitePage.appSiteId} 
                                     code={this.state.languageCode}
-                                    labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-Title`}>
-                                </LanguageInput>
+                                    inline={true}
+                                    labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-Title`}>                                    
+                                </LanguageEditor>                                
                             </div>}                                                    
-                        </Col>
-                    </Row>                    
+                        </div>
+                    </div>                    
                     
                     {!this.state.loading && this.state.sitePage.sitePageId > 0 && this.state.languageCode == '' &&
                         <div>
                             <label>Testo visualizzato nella Slide</label>
-                            <Editor
-                                apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                initialValue={this.state.sitePage.slideText}                                
-                                init={{
-                                    height: 500,
-                                    menubar: menuSettings,
-                                    plugins: pluginsSettings,
-                                    toolbar: toolbarSettings
-                                }}
-                                onEditorChange={this.handleEditorChange}
-                            />
+                            <div className="editor-inline">
+                                <Editor
+                                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                    initialValue={this.state.sitePage.slideText}      
+                                    inline={true}                          
+                                    init={{
+                                        height: 500,
+                                        menubar: menuSettings,
+                                        plugins: pluginsSettings,
+                                        toolbar: toolbarSettings
+                                    }}
+                                    onEditorChange={this.handleEditorChange}
+                                />
+                            </div>
                         </div>
                     }
 
@@ -270,6 +272,7 @@ class SitePageAddEdit extends React.Component {
                             originalText={this.state.sitePage.slideText}
                             appSiteId={this.state.sitePage.appSiteId} 
                             code={this.state.languageCode}
+                            inline={true}
                             labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-SlideText`}>                                    
                         </LanguageEditor>
                     </div>}
@@ -296,7 +299,8 @@ class SitePageAddEdit extends React.Component {
                     </Link>}
                 </Nav>
                 <Form inline>
-                    <LanguageSelect appSiteId={this.state.sitePage.appSiteId} onLanguageChange={this.handleLanguageCode} />      
+                    {!this.state.loading &&
+                    <LanguageSelect appSiteId={this.state.sitePage.appSiteId} onLanguageChange={this.handleLanguageCode} />}
                 </Form>
             </Navbar>                
           </>          

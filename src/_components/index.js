@@ -1,4 +1,5 @@
 export * from './Alert';
+export * from './BoxTextEditor';
 export * from './DeleteConfirmation';
 export * from './FacebookFeed';
 export * from './InstagramFeed';

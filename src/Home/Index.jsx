@@ -57,7 +57,14 @@ function Home() {
                 </Card.Header>
                 <Card.Body>
                     <ul className="list-group">
-                    <li className="list-group-item">
+                        <li className="list-group-item">
+                            <b>Ver 1.3.1.11 (Marzo 2021)</b>: in questo rilascio ci sono numerosi aggiornamenti:<br /> 
+                            - modifica di titoli relativi a pagine e contenitori testo: possibilità di formattare il testo relativo a <b>Titolo di pagina</b> e <b>Titolo di Contenitori Testo</b>;<br />
+                            - visualizzare anteprima di contenitori e sfondo della pagina in elenco contenitori;<br />
+                            - modifica dei testi direttamente da anteprima di contenitore testo;<br />
+                            - aggiunta feed di instagram con le ultime 8 foto pubblicate (in fase di sviluppo);
+                        </li>
+                        <li className="list-group-item">
                             <b>Ver 1.2.6.10 (Marzo 2021)</b>: aggiunta contenitore per la visualizzazione dei video Youtube. 
                         </li>
                         <li className="list-group-item">
