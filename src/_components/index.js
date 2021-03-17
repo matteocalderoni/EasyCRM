@@ -8,6 +8,7 @@ export * from './LanguageEditor';
 export * from './LanguageInput';
 export * from './LanguageSelect';
 export * from './MainNav';
+export * from './PositionSelect';
 export * from './PrivateRoute';
 export * from './SimpleMap';
 export * from './Uploader';

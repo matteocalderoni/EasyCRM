@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { appSiteService, alertService } from '../../../_services';
-import { Uploader } from '../../../_components'
+import { Uploader,LanguageSelect,LanguageEditor,PositionSelect } from '../../../_components'
 import { Form, Button, Card, Image, Row, Col,ProgressBar,Navbar, Nav } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
-import { LanguageSelect } from '../../../_components/LanguageSelect';
-import { LanguageEditor } from '../../../_components/LanguageEditor';
 import { FaSave, FaLanguage, FaBoxes} from 'react-icons/fa';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../_helpers/tinySettings';
 import parse from 'html-react-parser';
@@ -25,7 +23,8 @@ class SitePageAddEdit extends React.Component {
                 description: '',
                 slideText: '',
                 sortId: 1,
-                isPublished: true
+                isPublished: true,
+                logoPosition: 1
             },
             languageCode: '',
             sitePages: [],
@@ -77,6 +76,15 @@ class SitePageAddEdit extends React.Component {
     handleLanguageCode = (code) => {        
         this.setState({ 
             languageCode: code
+        });        
+    }
+
+    handleLogoPosition = (position) => {        
+        this.setState({ 
+            sitePage: {
+                ...this.state.sitePage,
+                logoPosition: position                
+            }          
         });        
     }
 
@@ -206,7 +214,10 @@ class SitePageAddEdit extends React.Component {
                                 <Form.Text className="text-muted">
                                     Le pagine vengono visualizzate in ordine crescente.
                                 </Form.Text>
-                            </Form.Group>   
+                            </Form.Group> 
+
+                            {!this.state.loading &&
+                            <PositionSelect position={this.state.sitePage.logoPosition} onPositionChange={this.handleLogoPosition} label={'Posizione del logo'} />}  
 
                             {!this.state.loading && this.state.languageCode == '' && 
                             <Form.Group>

@@ -58,6 +58,9 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b>Ver 1.2.7.11 (Marzo 2021)</b>: posizione del logo per le varie pagine. Possibilità di selezionare la posizione del logo per le singole pagine (al posto del valore fisso in cima alla pagina). Inoltre è possibile nascondere il logo. 
+                        </li>
+                        <li className="list-group-item">
                             <b>Ver 1.3.1.11 (Marzo 2021)</b>: in questo rilascio ci sono numerosi aggiornamenti:<br /> 
                             - modifica di titoli relativi a pagine e contenitori testo: possibilità di formattare il testo relativo a <b>Titolo di pagina</b> e <b>Titolo di Contenitori Testo</b>;<br />
                             - visualizzare anteprima di contenitori e sfondo della pagina in elenco contenitori;<br />
