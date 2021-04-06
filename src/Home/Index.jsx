@@ -58,6 +58,9 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b>Ver 1.2.8.12 (Aprile 2021)</b>: aggiunti 2 nuovi campi per la gestione dei titoli delle pagine. Titolo per identificare la pagina (usato per selezione) e titolo per menù separato da titolo di slide. 
+                        </li>
+                        <li className="list-group-item">
                             <b>Ver 1.2.7.11 (Marzo 2021)</b>: posizione del logo per le varie pagine. Possibilità di selezionare la posizione del logo per le singole pagine (al posto del valore fisso in cima alla pagina). Inoltre è possibile nascondere il logo. 
                         </li>
                         <li className="list-group-item">

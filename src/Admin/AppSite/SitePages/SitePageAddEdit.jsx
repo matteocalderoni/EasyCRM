@@ -20,6 +20,8 @@ class SitePageAddEdit extends React.Component {
                 parentPageId: this.props.parentPageId,
                 imageUrl: 'logo.png',
                 title: '',
+                titleUrl: '',
+                titleNav: '',
                 description: '',
                 slideText: '',
                 sortId: 1,
@@ -116,6 +118,15 @@ class SitePageAddEdit extends React.Component {
         });
     }
 
+    handleTitleNavEditorChange = (content, editor) => {
+        this.setState({
+            sitePage: {
+                ...this.state.sitePage,
+                titleNav: content                 
+            }          
+        });
+    }
+
     handleTitleEditorChange = (content, editor) => {
         this.setState({
             sitePage: {
@@ -200,7 +211,7 @@ class SitePageAddEdit extends React.Component {
                                 <Form.Control as="select" value={this.state.sitePage.parentPageId} name="parentPageId" onChange={this.handleChangeNumber}>
                                     <option value={undefined}>Radice</option>
                                     {this.state.sitePages && this.state.sitePages.map(parentPage =>
-                                        <option key={parentPage.sitePageId} value={parseInt(parentPage.sitePageId)}>{parse(parentPage.title)}</option>
+                                        <option key={parentPage.sitePageId} value={parseInt(parentPage.sitePageId)}>{parentPage.titleUrl}</option>
                                     )}   
                                 </Form.Control>
                                 <Form.Text className="text-muted">
@@ -215,6 +226,49 @@ class SitePageAddEdit extends React.Component {
                                     Le pagine vengono visualizzate in ordine crescente.
                                 </Form.Text>
                             </Form.Group> 
+
+                            <Form.Group>
+                                <Form.Label><b>Titolo</b> della pagina (no formattazione)</Form.Label>
+                                <input type="text" className="form-control" name="titleUrl" value={this.state.sitePage.titleUrl} onChange={this.handleChange} maxLength={200} />
+                                <Form.Text className="text-muted">
+                                    Titolo della pagina per selezione: non visualizzato nel sito, utilizzato solo per identificare la pagina (ad esempio in selezione sottopagine).
+                                </Form.Text>
+                            </Form.Group>
+
+                            {!this.state.loading && this.state.languageCode == '' && 
+                            <Form.Group>
+                                <Form.Label>Titolo per Navigazione</Form.Label>                                
+                                <div className="editor-inline">
+                                    <Editor
+                                        apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                        initialValue={this.state.sitePage.titleNav}                                
+                                        inline={true}
+                                        init={{
+                                            height: 500,                                        
+                                            menubar: menuSettings,
+                                            plugins: pluginsSettings,
+                                            toolbar: toolbarSettings
+                                        }}
+                                        onEditorChange={this.handleTitleNavEditorChange}
+                                        >
+                                    </Editor> 
+                                </div>
+
+                                <Form.Text className="text-muted">
+                                    Titolo della pagina per menù di navigazione: visualizzato nel menù di navigazione in alto nella pagina.
+                                </Form.Text>
+                            </Form.Group>}
+
+                            {this.state.languageCode && this.state.languageCode !== '' &&
+                            <div>
+                                <LanguageEditor 
+                                    originalText={this.state.sitePage.titleNav}
+                                    appSiteId={this.state.sitePage.appSiteId} 
+                                    code={this.state.languageCode}
+                                    inline={true}
+                                    labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-TitleNav`}>                                    
+                                </LanguageEditor>                                
+                            </div>}       
 
                             {!this.state.loading &&
                             <PositionSelect position={this.state.sitePage.logoPosition} onPositionChange={this.handleLogoPosition} label={'Posizione del logo'} />}  
@@ -240,7 +294,7 @@ class SitePageAddEdit extends React.Component {
                                 </div>
 
                                 <Form.Text className="text-muted">
-                                    Titolo della pagina (max 200 caratteri): visualizzato nel menù di navigazione in alto nella pagina.
+                                    Titolo della pagina: visualizzato sopra testo slide, posizionato in base a logo.
                                 </Form.Text>
                             </Form.Group>}
 
