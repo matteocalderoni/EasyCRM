@@ -275,7 +275,7 @@ class SitePageAddEdit extends React.Component {
 
                             {!this.state.loading && this.state.languageCode == '' && 
                             <Form.Group>
-                                <Form.Label>Titolo della Pagina</Form.Label>
+                                <Form.Label>Titolo della Slide</Form.Label>
                                 {/* <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} /> */}
                                 <div className="editor-inline">
                                     <Editor
@@ -294,7 +294,7 @@ class SitePageAddEdit extends React.Component {
                                 </div>
 
                                 <Form.Text className="text-muted">
-                                    Titolo della pagina: visualizzato sopra testo slide, posizionato in base a logo.
+                                    Titolo della Slide: visualizzato sopra testo slide, posizionato in base a logo.
                                 </Form.Text>
                             </Form.Group>}
 
