@@ -47,41 +47,51 @@ function SitePageList (props){
     }
     
     return (
-        <Container fluid>
-            {loading && <Col className="text-center mart2">
-                <ProgressBar animated now={100} />
-            </Col>}
-            <Row>
+        <Container fluid>            
+            <div className="mt-4">
             {sitePages && sitePages.map(sitePage =>                                    
-                <Col sm={6} md={4} key={sitePage.sitePageId}>
-                    <Card className="mart2 text-center" bg="dark" text="white">
-                        <Card.Header>
-                            <Card.Title>
-                                #{sitePage.sortId} {sitePage.title && parse(sitePage.title)} 
+                <div className="block m-2" key={sitePage.sitePageId}>
+                    <Card style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} text="white">
+                        <Card.Header className="md:container md:mx-auto text-center bg-blue-500">
+                            <Card.Title className="md:flex">
+                                <div className="flex-none">
+                                    # {sitePage.sortId} 
+                                </div>                                
+                                <div className="flex-grow">
+                                    {sitePage.titleUrl}
+                                </div>
                             </Card.Title>                                                        
-                        </Card.Header>
-                        <Card.Img variant="top" src={baseImageUrl+sitePage.imageUrl} />
-                        <Card.Body>                                                            
+                        </Card.Header>                        
+                        <Card.Body>           
+                            <div>
+                                {sitePage.title && parse(sitePage.title)}
+                            </div>                                       
                             <Card.Text>                                
-                                {sitePage.description && parse(sitePage.description)}
+                                {sitePage.slideText && parse(sitePage.slideText)}
                             </Card.Text>                            
-                            <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="btn btn-primary mr-1">
-                                <BsPencil />
+                            <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-md bg-blue-200 mt-2 p-1 text-blue-900">
+                                <BsPencil /> modifica pagina
                             </Link>
-                            <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="btn btn-primary mr-1">
-                                <FaBoxes />
+                            <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
+                                <FaBoxes /> gestione contenuti
                             </Link>
+                            {sitePage.sitePageId == 1 && 
+                            <div className="rounded border mt-2">
+                                <p>La pagina iniziale non può essere eliminata.</p>
+                            </div>}
                             {/* {sitePage.sitePageId > 1 &&
                             <Button title="Elimina Pagina" variant="danger" onClick={() => deleteSitePage(sitePage)}>
                                 <BsTrash />
                             </Button>} */}
                             {sitePage.sitePageId > 1 &&
-                            <DeleteConfirmation onConfirm={() => deleteSitePage(sitePage)} />}
+                            <div className="mt-2 rounded block bg-red-500">
+                                <DeleteConfirmation onConfirm={() => deleteSitePage(sitePage)} />
+                            </div>}
                         </Card.Body>
                     </Card>                                            
-                </Col>                    
+                </div>                    
             )}                                                
-            </Row>                
+            </div>                
             {parentPageId > 0 &&
             <Navbar fixed="bottom" variant="dark" bg="dark">
                 <Nav className="mr-right">

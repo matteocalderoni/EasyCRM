@@ -35,7 +35,7 @@ class LanguageSelect extends Component {
       return ( 
         <Form.Group>
             <Form.Control as="select" value={this.state.code} name="code" onChange={this.handleChange}>
-                <option value={''}>Lingua predefinita</option>
+                <option value={''}>Predefinita</option>
                 {this.state.languages && this.state.languages.map(lang =>
                     <option key={lang.code} value={lang.code}>{lang.code}</option>
                 )}   

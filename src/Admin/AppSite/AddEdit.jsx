@@ -1,7 +1,7 @@
 import React from 'react';
 import { appSiteService, alertService, languageService } from '../../_services';
 import { Uploader } from '../../_components'
-import { Image, Row, Col, Form, Button, Jumbotron, Card, Container, ProgressBar,Navbar, Nav } from 'react-bootstrap'
+import { Image, Row, Col, Form, Button, Card, Container, ProgressBar,Navbar, Nav } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { Link } from 'react-router-dom';
 import { LanguageSelect } from '../../_components/LanguageSelect';
@@ -191,7 +191,7 @@ class AddEdit extends React.Component {
 
     render() {
         return (            
-          <Container fluid>
+          <Container fluid className="pb-4">
               <ul className="breadcrumb">
                 <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>          
@@ -200,36 +200,41 @@ class AddEdit extends React.Component {
             </ul>
 
             {this.state.loading &&
-                <Row>
-                    <Col className="text-center mt-2">
+                <Row className="mb-4">
+                    <Col className="text-center rounded bg-blue-400 text-white mt-2 p-2">
+                        Caricamento dei contenuti in corso... Attende prego...
                         <ProgressBar animated now={100} />
                     </Col>
                 </Row>
             }                         
-              <Jumbotron className="small-jumbotron">
-                <small>Gestione dati del <b>Sito</b></small>                
+              <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">                        
                 <Row>
-                    <Col sm={2}>
-                        <Image src={baseImageUrl+this.state.appSite.companyLogo} fluid />                    
+                    <Col sm={4}>
+                        <Image src={baseImageUrl+this.state.appSite.companyLogo} className="rounded border" fluid />                    
+                        <div className="mt-1">
+                            Carica il logo del tuo sito:
+                            <Uploader prefix={this.state.appSite.appSiteId} fileName={this.state.appSite.companyLogo} onFileNameChange={this.handleFileName} />                                               
+                        </div>                
                     </Col>
-                    <Col sm={10}>
+                    <Col sm={8}>
                         <Form.Group>
-                            <Form.Label>Nome del Sito</Form.Label>
+                            <Form.Label>Nome del tuo Sito</Form.Label>
                             <Form.Control type="text" size="lg" className="form-control" name="name" value={this.state.appSite.name} onChange={this.handleChange} maxLength={200} />
                             <Form.Text className="text-muted">
-                                Ragione sociale della tua attività (max 200 caratteri).
+                                Indicare il nome del tuo sito per identificarlo in elenco.
+                            </Form.Text>
+
+                            <Form.Text className="text-muted mt-4">
+                                Il logo viene utilizzato in diverse posizioni: utilizzare un immagine con una buona qualità.
                             </Form.Text>
                         </Form.Group>
                     </Col>                    
                 </Row>              
-                <div className="mart1">
-                    Carica il logo del tuo sito:
-                    <Uploader prefix={this.state.appSite.appSiteId} fileName={this.state.appSite.companyLogo} onFileNameChange={this.handleFileName} />                                               
-                </div>                
-              </Jumbotron>
+                
+              </div>
 
-            <Card>
-                <Card.Header>
+            <Card className="shadow rounded-xl mt-4 bg-gray-100">
+                <Card.Header className="bg-blue-200">
                     <h3><b>Riferimenti</b> del Sito</h3>
                     <small>Queste informazioni vengono visualizzate in fondo alle pagine del sito.</small>
                 </Card.Header>                            
@@ -287,7 +292,7 @@ class AddEdit extends React.Component {
                     </Row>                                    
 
                     <div>
-                        <label>Testo per fondo pagina: 'Su di noi'</label>
+                        <label><b>'Su di noi'</b>: la tua mission o il motto aziendale...</label>
                         {!this.state.loading && this.state.languageCode == '' && <Editor
                             apiKey={process.env.REACT_APP_TINTMCE_KEY}
                             initialValue={this.state.appSite.description}
@@ -298,16 +303,19 @@ class AddEdit extends React.Component {
                             toolbar: toolbarSettings, 
                             }}
                             onEditorChange={this.handleEditorChange}
-                        />}                                            
+                        />}       
+                        <Form.Text className="text-muted">
+                            Questo testo è molto importante perchè viene riportato su tutte le pagine del sito. Utilizzare parole utili per la visibilità nei motori di ricerca.
+                        </Form.Text>                                     
                     </div>                    
                     
-                    <Row>
+                    <Row className="mt-2">
                         <Col>
                             <Form.Group>
                                 <Form.Label>Latitudine</Form.Label>
                                 <input type="number" className="form-control" name="latitude" value={this.state.appSite.latitude} onChange={this.handleChangeNumber} />
                                 <Form.Text className="text-muted">
-                                    Latitudine utilizzata per contenitore Mappa.
+                                    Latitudine predefinita utilizzata per contenitore Mappa.
                                 </Form.Text>
                             </Form.Group>
                         </Col>
@@ -316,7 +324,7 @@ class AddEdit extends React.Component {
                                 <Form.Label>Longitudine</Form.Label>
                                 <input type="number" className="form-control" name="longitude" value={this.state.appSite.longitude} onChange={this.handleChangeNumber} />
                                 <Form.Text className="text-muted">
-                                    Longitudine utilizzata per contenitore Mappa.
+                                    Longitudine predefinita utilizzata per contenitore Mappa.
                                 </Form.Text>
                             </Form.Group>
                         </Col>
@@ -350,20 +358,20 @@ class AddEdit extends React.Component {
                     </div>} */}                                    
                 </Card.Body>
             </Card>          
-            <Navbar fixed="bottom" variant="dark" bg="dark">
-                <Nav className="mr-auto">
-                    <Button onClick={this.onSubmit} variant="success">
+            <Navbar fixed="bottom" className="flex bg-blue-900">
+                <Nav className="flex space-x-3 text-sm font-medium mr-auto">
+                    <Button onClick={this.onSubmit} className="w-1/2 flex items-center justify-center rounded-md bg-green-500">
                         <AiFillSave /> Salva
                     </Button> 
-                    <Link to={`/admin/sites/sitepages/${this.state.appSite.appSiteId}`} title="Pagine del sito" className="btn btn-secondary ml-1">
+                    <Link to={`/admin/sites/sitepages/${this.state.appSite.appSiteId}`} title="Pagine del sito" className="w-1/2 flex items-center justify-center rounded-md bg-blue-200 p-1 text-blue-900">
                         <IoDocumentsOutline /> Pagine
                     </Link>
-                    <Link to={`/admin/sites/sitelanguages/${this.state.appSite.appSiteId}`} title="Lingue del sito" className="btn btn-secondary ml-1">
+                    <Link to={`/admin/sites/sitelanguages/${this.state.appSite.appSiteId}`} title="Lingue del sito" className="w-1/2 flex items-center justify-center rounded-md bg-blue-200 p-1 text-blue-900">
                         <FaLanguage /> Lingue
                     </Link>
                 </Nav>
-                <Form inline>
-                    <LanguageSelect appSiteId={this.state.appSite.appSiteId} onLanguageChange={this.handleLanguageCode} className="ml-1" />      
+                <Form inline className="flex items-center justify-center">
+                    <LanguageSelect appSiteId={this.state.appSite.appSiteId} onLanguageChange={this.handleLanguageCode} />      
                 </Form>                
             </Navbar>          
           </Container>

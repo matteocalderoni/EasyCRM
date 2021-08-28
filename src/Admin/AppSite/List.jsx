@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Image, Container,ProgressBar, Row, Col, Navbar, Nav} from 'react-bootstrap';
+import { Image, Container,ProgressBar, Row, Col, Navbar, Nav} from 'react-bootstrap';
 import { appSiteService, accountService } from '../../_services';
 import { Role } from '../../_helpers';
 import parse from 'html-react-parser';
@@ -48,56 +48,66 @@ function List({ match }) {
                 <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
                 <li className="breadcrumb-item active">Elenco Siti</li>
             </ul>
-            <Jumbotron className="small-jumbotron">
-                <h1>Gestione Siti</h1>
-                <p className="text-muted">In questa sezione puoi visualizzare i tuoi siti.<br />
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+                <h1 className="text-blue-900 font-bold">Gestione Siti</h1>
+                <p className="text-muted">In questa sezione puoi consultare i tuoi siti: per ogni sito puoi modificare immagini e testi. Per creare un nuovo sito clicca sul bottone in basso (se non visualizzi il bottone non disponi dei permessi necessari).<br />
                 Tramite la sezione 'Dettagli' puoi modificare le informazioni relative ai tuoi riferimenti.<br />
                 Tramite la sezione 'Lingue' puoi visualizzare, modificare e aggiungere le lingue del relativo sito.<br />
                 Tramite la sezione 'Pagine' puoi visualizzare, modificare e aggiungere le pagine del relativo sito.</p>
-            </Jumbotron>
+            </div>
             
-            <Row className="site-list-header">                    
-                <Col sm={2}>Logo</Col>
-                <Col sm={8}>Nome del Sito e descrizione</Col>
-                <Col sm={2} className="text-right">#{appSites.length}</Col>
-            </Row>       
+            <div className="shadow rounded-xl mt-4 p-4">
+                <Row className="bg-blue-400 rounded-top p-2">                    
+                    <Col sm={2} className="text-white text-bold">Logo</Col>
+                    <Col sm={8} className="text-white text-bold">Nome del Sito e descrizione</Col>
+                    <Col sm={2} className="text-white text-bold text-right">#{appSites.length}</Col>
+                </Row>       
+
             {!appSites && loading &&
                 <Row>
-                    {loading && <Col className="text-center mart2">
+                    {loading && 
+                    <Col className="text-center rounded bg-blue-400 text-white mt-2 p-2">
+                        <h5 className="text-white text-bold-xl">Caricamento in corso... Attendere prego...</h5>
                         <ProgressBar animated now={100} />
                     </Col>}
                 </Row>
             }                         
             {appSites && appSites.map(appSite =>
-                <Row key={appSite.appSiteId} className="site-list-item">
-                    <Col sm={2}><Image src={baseImageUrl+appSite.companyLogo} className="logo" fluid /></Col>
+                <Row key={appSite.appSiteId} className="site-list-item bg-blue-50 p-2">
+                    <Col sm={2}>
+                        <Image src={baseImageUrl+appSite.companyLogo} className="logo rounded border" fluid />
+                    </Col>
                     <Col sm={6}>
                         <b>{appSite.name}</b><br />
-                        {appSite.description && parse(appSite.description)}
+                        <p className="text-grey">{appSite.description && parse(appSite.description)}</p>
                     </Col>
-                    <Col sm={4} style={{ whiteSpace: 'nowrap' }} className="mart2 text-right">
-                        <Link to={`${path}/edit/${appSite.appSiteId}`} title="Modifica sito" className="btn btn-primary mr-1">
-                            <BsPencil />
+                    <Col sm={4} className="mart2 text-center">
+                        <Link to={`${path}/edit/${appSite.appSiteId}`} title="Modifica sito" className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
+                            <BsPencil /> Modifica informazioni generali
                         </Link>
-                        <Link to={`${path}/sitepages/${appSite.appSiteId}`} title="Pagine del sito" className="btn btn-primary mr-1">
-                            <IoDocumentsOutline />
+                        <Link to={`${path}/sitepages/${appSite.appSiteId}`} title="Pagine del sito" className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
+                            <IoDocumentsOutline /> Gestione pagine
                         </Link>
-                        <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} title="Lingue del sito" className="btn btn-primary mr-1">
-                            <FaLanguage />
+                        <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} title="Lingue del sito" className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
+                            <FaLanguage /> Gestione lingue
                         </Link>
-                        <DeleteConfirmation onConfirm={() => deleteAppSite(appSite.appSiteId)} />
-                        {/* <Button onClick={() => deleteAppSite(appSite.appSiteId)} title="Elimina sito" className="btn btn-danger" disabled={appSite.isDeleting}>
-                            {appSite.isDeleting 
-                                ? <span className="spinner-border spinner-border-sm"></span>
-                                : <span><BsTrash /></span>
-                            }
-                        </Button> */}
+                        <div className="mt-2 rounded block bg-red-500">
+                            <DeleteConfirmation onConfirm={() => deleteAppSite(appSite.appSiteId)} />
+                            {/* <Button onClick={() => deleteAppSite(appSite.appSiteId)} title="Elimina sito" className="btn btn-danger" disabled={appSite.isDeleting}>
+                                {appSite.isDeleting 
+                                    ? <span className="spinner-border spinner-border-sm"></span>
+                                    : <span><BsTrash /></span>
+                                }
+                            </Button> */}
+                        </div>
                     </Col>
                 </Row>
             )}
-            {user.role === Role.Admin && <Navbar fixed="bottom" variant="dark" bg="dark">
-                <Nav className="mr-auto">
-                    <Link to={`${path}/add/0`} className="btn btn-success">
+            </div>
+            {user.role === Role.Admin && 
+            <Navbar fixed="bottom" className="flex bg-blue-800">
+                <Nav className="flex space-x-3 text-sm font-medium mr-auto">
+                    <Link to={`${path}/add/0`} className="flex items-center justify-center rounded-md bg-green-200 p-1 text-green-900">
                         <IoMdAddCircle /> Crea un nuovo Sito
                     </Link>
                 </Nav>              

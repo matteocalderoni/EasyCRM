@@ -10,19 +10,21 @@ function Details({ match }) {
 
     return (
         <div>
-            <Jumbotron>
-                <h1>Profilo personale</h1>
+            <div className="shadow rounded-xl mt-16 bg-gray-100 p-8">
+                <h1 className="font-bold text-green-900">Profilo personale</h1>
                 <p>Gestione dei dati di utente collegato.</p>
-            </Jumbotron>
+            </div>
 
-            <Card>
+            <Card className="shadow m-2">
                 <Card.Body>
                     <Card.Title>Profilo</Card.Title>
                     <Card.Text>
                         <strong>Nome: </strong> {user.title} {user.firstName} {user.lastName}<br />
                         <strong>Email: </strong> {user.email}
                     </Card.Text>
-                    <Link to={`${path}/update`}>Modifica profilo</Link>
+                    <div className="mt-5">
+                        <Link to={`${path}/update`} className="text-white bg-blue-900 p-2 rounded">Modifica profilo</Link>
+                    </div>
                 </Card.Body>
             </Card>
         </div>

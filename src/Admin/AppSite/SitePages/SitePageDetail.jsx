@@ -46,7 +46,7 @@ function SitePageDetail({ match }) {
     }
 
     return (
-        <Container fluid>
+        <Container fluid className="pb-8">
             <ul className="breadcrumb">
             <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>                
@@ -58,14 +58,14 @@ function SitePageDetail({ match }) {
                     Pagina {sitePage && sitePage.title && parse(sitePage.title)}
                 </li> */}
             </ul>
-            <Jumbotron className="small-jumbotron">
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
                 <small>Gestione della pagina</small>                
                 {sitePage && !loading && sitePage.title && parse(sitePage.title)}
                 <p className="text-muted">Modifica dettagli relativi alla pagine: modifica immagine di sfondo, il titolo per il menù di navigazione e il testo per la slide.</p>                    
-            </Jumbotron>
+            </div>
 
-            <Tabs id="user-tabs">
-                <Tab eventKey="info" title="Informazioni generali" className="mt-2">
+            <Tabs id="user-tabs" className="mt-4">
+                <Tab eventKey="info" title="Informazioni generali">
                     {!loading &&<SitePageAddEdit appSiteId={appSiteId} sitePageId={pageId}></SitePageAddEdit>}
                 </Tab>
                 {pageId > 0 && <Tab eventKey="pages" title="Gestione Sotto Pagine" className="mt-2">

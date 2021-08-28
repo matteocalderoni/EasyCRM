@@ -42,28 +42,29 @@ function SitePageNav ({ match }){
                     Pagine del Sito {appSite && <b>{appSite.name}</b>}                
                 </li>
             </ul>
-            <Jumbotron className="small-jumbotron">
-                <small>Gestione <b>Pagine del Sito</b></small>
-                {appSite && <h1>{appSite.name}</h1>}                
-                <p className="text-muted">
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+                <p className="mb-2">Gestione <b>Pagine del Sito</b></p>
+                {appSite && <h1 className="text-blue-900 text-xl">{appSite.name}</h1>}                
+                <p className="mt-2 text-muted">
                     Tramite questa sezione si configurano le pagine del sito relative al sito. Attenzione la prima pagina dopo la creazione non può essere eliminata.<br />
                     Utilizzare immagini ottimizzate per un caricamento rapido.
                 </p>
-            </Jumbotron>
+            </div>
 
-            {loading && <div className="text-center mart2">
-                <h5>Caricamento etichetta...</h5>
+            {loading && 
+            <div className="text-center rounded bg-blue-400 text-white mt-2 p-2">
+                <h5 className="text-white text-bold-xl">Caricamento in corso... Attendere prego...</h5>
                 <ProgressBar animated now={100} />
             </div>}
             
             <SitePageList appSiteId={appSiteId} parentPageId={0} isChanged={isChanged}></SitePageList>
 
-            <Navbar fixed="bottom" variant="dark" bg="dark">
-                <Nav className="mr-auto">
-                    <Link className="btn btn-secondary" to={`/admin/sites/edit/${appSiteId}`}>
+            <Navbar fixed="bottom" className="bg-blue-800">
+                <Nav className="flex space-x-3 text-sm font-medium mr-auto">
+                    <Link className="flex items-center justify-center rounded-md bg-blue-200 p-1 text-blue-900" to={`/admin/sites/edit/${appSiteId}`}>
                         <FaLanguage /> modifica sito
                     </Link>
-                    <Link className="btn btn-secondary ml-1" to={`/admin/sites/sitelanguages/edit/${appSiteId}`}>
+                    <Link className="flex items-center justify-center rounded-md bg-blue-200 p-1 text-blue-900" to={`/admin/sites/sitelanguages/edit/${appSiteId}`}>
                         <FaLanguage /> lingue
                     </Link>
                 </Nav>     

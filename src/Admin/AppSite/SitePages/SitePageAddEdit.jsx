@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { appSiteService, alertService } from '../../../_services';
 import { Uploader,LanguageSelect,LanguageEditor,PositionSelect } from '../../../_components'
-import { Form, Button, Card, Image, Row, Col,ProgressBar,Navbar, Nav } from 'react-bootstrap'
+import { Form, Button, Card, Image, ProgressBar,Navbar, Nav } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { FaSave, FaLanguage, FaBoxes} from 'react-icons/fa';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../_helpers/tinySettings';
@@ -199,13 +199,12 @@ class SitePageAddEdit extends React.Component {
                     </div>}
                     <div>
                         {this.state.sitePage.sitePageId > 0 &&                    
-                        <div>
-                            <Image fluid src={baseImageUrl+this.state.sitePage.imageUrl} />
+                        <div className="flex-col content-center">
+                            <Image className="border rounded" src={baseImageUrl+this.state.sitePage.imageUrl} />
                             <Uploader prefix={this.state.sitePage.appSiteId} fileName={this.state.sitePage.imageUrl} onFileNameChange={this.handleFileName} />      
                             <small>Questa immagine viene utilizzate come sfondo della pagina: su desktop rimane fissa, su mobile scorre. E' consigliato utilizzare un immagine con formato 1920 X 1080 px.</small>
                         </div>}
                         <div>                            
-
                             {this.state.sitePage && this.state.sitePages && !this.state.loadingPages && <Form.Group>
                                 <Form.Label>Sotto pagina di (non selezionare per pagine principali):</Form.Label>
                                 <Form.Control as="select" value={this.state.sitePage.parentPageId} name="parentPageId" onChange={this.handleChangeNumber}>
@@ -272,6 +271,9 @@ class SitePageAddEdit extends React.Component {
 
                             {!this.state.loading &&
                             <PositionSelect position={this.state.sitePage.logoPosition} onPositionChange={this.handleLogoPosition} label={'Posizione del logo'} />}  
+                            <Form.Text className="text-muted">
+                                Posizione del logo nel contenitore
+                            </Form.Text>
 
                             {!this.state.loading && this.state.languageCode == '' && 
                             <Form.Group>
@@ -351,15 +353,15 @@ class SitePageAddEdit extends React.Component {
 
                 </Card.Body>    
             </Card>                    
-            <Navbar fixed="bottom" variant="dark" bg="dark">
-                <Nav className="mr-auto">
-                    <Button onClick={this.onSubmit} variant="success">
+            <Navbar fixed="bottom" className="flex bg-blue-800">
+                <Nav className="flex space-x-3 text-sm font-medium mr-auto">
+                    <Button onClick={this.onSubmit} className="w-1/2 flex items-center justify-center rounded-md bg-green-500">
                         <FaSave /> Salva
                     </Button> 
-                    {this.state.sitePage.sitePageId > 0 && <Link title="Vai a gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${this.state.sitePage.appSiteId}/${this.state.sitePage.sitePageId}`} className="btn btn-secondary ml-1">
+                    {this.state.sitePage.sitePageId > 0 && <Link title="Vai a gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${this.state.sitePage.appSiteId}/${this.state.sitePage.sitePageId}`} className="flex items-center justify-center rounded-md bg-green-200 p-1 text-green-900">
                         <FaBoxes /> Contenitori
                     </Link>}
-                    {this.state.sitePage.sitePageId > 0 && <Link className="btn btn-secondary ml-1" to={`/admin/sites/edit/${this.state.sitePage.appSiteId}`}>
+                    {this.state.sitePage.sitePageId > 0 && <Link className="flex items-center justify-center rounded-md bg-green-200 p-1 text-green-900" to={`/admin/sites/edit/${this.state.sitePage.appSiteId}`}>
                         <FaLanguage /> modifica sito
                     </Link>}
                 </Nav>

@@ -77,19 +77,18 @@ function PageBoxList({ match }) {
                     Contenitori della Pagina {sitePage && sitePage.title && parse(sitePage.title)}
                 </li> */}
             </ul>
-            <Jumbotron className="small-jumbotron">
+            <div className="shadow rounded-top mt-2 bg-gray-100 p-8">
                 <small>Gestione <b>Contenuti della pagina</b></small>   
                 {sitePage && <h1>{sitePage.title && parse(sitePage.title)}</h1>}
-                <p className="text-muted">
+                <p className="text-muted text-sm">
                     Tramite questa sezione è possibile gestire i contenitori della pagina. Si possono creare, modificare o eliminare diverse tipologie di contenitori.<br />
-                    Sotto viene visualizzata un anteprima dei contenitori aggiunti (anche quelli non pubblici).<br />
-                    Cliccare su <BsFillEyeFill /> per visualizzare il contenitore e modificare i testi (valido per contenitori di testo).<br />                    
+                    Sotto viene visualizzata un anteprima dei contenitori aggiunti (anche quelli non pubblici).<br />                    
                     Utilizzare immagini ottimizzate per un caricamento rapido.
                 </p>
-            </Jumbotron>
+            </div>
             
             {sitePage && 
-            <div style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} className="fixed-background page-boxes">
+            <div style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} className="fixed-background page-boxes rounded-bottom mb-4">
                 {(!pageBoxes || loading) &&               
                     <div className="text-center mt-1">
                         <ProgressBar animated now={100} />

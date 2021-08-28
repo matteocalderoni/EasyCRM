@@ -17,19 +17,19 @@ function MainNav() {
 
     return (
         <>
-            <Navbar fixed="top" className="navbar navbar-expand navbar-dark bg-dark">
+            <Navbar fixed="top" className="navbar navbar-expand navbar-dark bg-blue-800 flex justify-end">
                 <Navbar.Brand to="/">
                     <Image src="/assets/icon.png" className="brand-logo" />
                 </Navbar.Brand>
-                <Nav className="navbar-nav">
+                <Nav className="flex-grow">
                     <NavLink exact to="/" className="nav-item nav-link"><b>Home</b></NavLink>
                     {/* <NavLink to="/profile" className="nav-item nav-link"><b>Profilo</b></NavLink> */}
                     <NavLink to="/admin" className="nav-item nav-link"><b>Dashboard</b></NavLink>                    
                 </Nav>
                 {user &&
-                    <Nav className="justify-content-end">                    
+                    <Nav className="flex justify-end">                    
                         <NavLink to="/profile" className="nav-item nav-link">
-                            Benvenuto <b>{user.firstName}</b>
+                            Benvenuto <b className="text-blue">{user.firstName}</b>
                         </NavLink>
                         <Button onClick={accountService.logout}>Esci</Button>
                     </Nav>
@@ -50,17 +50,15 @@ function AdminNav({ match }) {
     }, []);
 
     return (
-        <>
-            <Navbar className="sub-navbar">
-                <Nav bg="light" className="mr-auto">
-                    <NavLink to={`${path}/`} className="nav-item nav-link">Dashboard</NavLink>        
-                    {user.role === Role.Admin &&
-                        <NavLink to={`${path}/users`} className="nav-item nav-link">Gestione Utenti</NavLink>
-                    }
-                    <NavLink to={`${path}/sites`} className="nav-item nav-link">Gestione Siti</NavLink>        
-                </Nav>
-            </Navbar>
-        </>        
+        <Navbar className="bg-grey-500">
+            <Nav bg="light" className="mr-auto">
+                <NavLink to={`${path}/`} className="nav-item nav-link">Dashboard</NavLink>        
+                {user.role === Role.Admin &&
+                    <NavLink to={`${path}/users`} className="nav-item nav-link">Gestione Utenti</NavLink>
+                }
+                <NavLink to={`${path}/sites`} className="nav-item nav-link">Gestione Siti</NavLink>        
+            </Nav>
+        </Navbar>        
     );
 }
 

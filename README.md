@@ -3,6 +3,9 @@
 Sito per la gestione di EasyCRM tramite interfaccia web.
 Sviluppato con React. 
 
+## Tailwind 
+https://tailwindcss.com/docs/guides/create-react-app
+
 # Multilevel menu !!!!!!!
 https://codesandbox.io/s/infinite-multi-level-menu-react-js-89fmj?file=/src/index.js
 ### Facebook Components

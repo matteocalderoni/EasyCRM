@@ -14,15 +14,15 @@ function Overview({ match }) {
 
     return (
         <Container fluid>
-            <Jumbotron>
-                <h1>Dashboard</h1>
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+                <h1 className="font-bold text-green-900">Dashboard</h1>
                 <p>La piattaforma ti consente di creare un sito web e gestire i suoi contenuti in modo semplice e dinamico.</p>
-            </Jumbotron> 
-            <Row>
+            </div> 
+            <div className="md:flex items-stretch mt-8">
                 {user.role === Role.Admin &&
-                    <Col>
-                        <Card className="mart1" bg="danger" text="white">
-                            <Card.Header>
+                    <div className="m-2 self-auto">
+                        <Card className="shadow">
+                            <Card.Header className="bg-red-50">
                                 <Card.Title>Gestione utenti</Card.Title>
                             </Card.Header>
                             <Card.Body>
@@ -31,15 +31,15 @@ function Overview({ match }) {
                                     Creazione nuovi utenti e modifica di quelli già registrati.
                                 </Card.Text>                                
                             </Card.Body>                        
-                            <Card.Footer className="d-flex justify-content-end">                                
-                                <Link to={`${path}/users`} className="btn btn-primary">Vai</Link>
+                            <Card.Footer className="d-flex justify-content-end bg-red-100">                                
+                                <Link to={`${path}/users`} className="text-white bg-blue-900 p-2 rounded">Vai</Link>
                             </Card.Footer>
                         </Card>
-                    </Col>
+                    </div>
                 }
-                <Col>
-                    <Card className="mart1">
-                        <Card.Header>
+                <div className="m-2 self-auto">
+                    <Card className="shadow">
+                        <Card.Header className="bg-blue-50">
                             <Card.Title>Gestione siti</Card.Title>
                         </Card.Header>
                         <Card.Body>
@@ -48,12 +48,12 @@ function Overview({ match }) {
                                 Aggiungi testi per ottimizzare le ricerche, immagini sempre nuove e aggiorna i tuoi prodotti.
                             </Card.Text>                            
                         </Card.Body>   
-                        <Card.Footer className="d-flex justify-content-end">
-                            <Link to={`${path}/sites`} className="btn btn-primary">Vai</Link>
+                        <Card.Footer className="d-flex justify-content-end bg-blue-100">
+                            <Link to={`${path}/sites`} className="text-white bg-blue-900 p-2 rounded">Vai</Link>
                         </Card.Footer>                     
                     </Card>
-                </Col>
-            </Row>            
+                </div>
+            </div>            
         </Container>
     );
 }
