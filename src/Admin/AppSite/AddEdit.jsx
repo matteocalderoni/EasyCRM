@@ -207,8 +207,11 @@ class AddEdit extends React.Component {
                     </Col>
                 </Row>
             }                         
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+                <p>Le informazioni principali del sito vengono utilizzate in tutte le pagine. Il logo viene inserito nel menù di navigazione e i riferimenti nel fondo pagina.</p>
+            </div>
               <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">                        
-                <Row>
+                <Row className="mt-2">
                     <Col sm={4}>
                         <Image src={baseImageUrl+this.state.appSite.companyLogo} className="rounded border" fluid />                    
                         <div className="mt-1">
@@ -221,11 +224,12 @@ class AddEdit extends React.Component {
                             <Form.Label>Nome del tuo Sito</Form.Label>
                             <Form.Control type="text" size="lg" className="form-control" name="name" value={this.state.appSite.name} onChange={this.handleChange} maxLength={200} />
                             <Form.Text className="text-muted">
-                                Indicare il nome del tuo sito per identificarlo in elenco.
+                                Indicare il nome del tuo sito per ricercarlo in elenco siti.
                             </Form.Text>
 
                             <Form.Text className="text-muted mt-4">
                                 Il logo viene utilizzato in diverse posizioni: utilizzare un immagine con una buona qualità.
+                                Viene aggiunto nel menù di navigazione e può essere visualizzato nella slide di apertura delle varie pagine. 
                             </Form.Text>
                         </Form.Group>
                     </Col>                    
@@ -339,16 +343,16 @@ class AddEdit extends React.Component {
                             )}   
                         </Form.Control>
                         <Form.Text className="text-muted">
-                            Selezionare tra le pagine disponibile quella da utilizzare per la privacy policy (normative GDPR).
+                            Selezionare tra le pagine disponibile quella da utilizzare per la privacy policy (normative GDPR). Creare una pagina PRIVACY con tutti i riferimenti su utilizzo dei dati di utenti (per ulteriori dettagli contattare Amministratore di sito).
                         </Form.Text>
                     </Form.Group>}
                     
-                    <Form.Group>
+                    {/* <Form.Group>
                         <Form.Check type="checkbox" label="Pubblico" name="isDefault" checked={this.state.appSite.isDefault} onChange={this.handleChangeBool} />
                         <Form.Text>
                             Il Sito di default viene utilizzato per i contenuti del sito.
                         </Form.Text>
-                    </Form.Group>
+                    </Form.Group> */}
 
                     {/* {this.state.appSite && this.state.appSite.appSiteId > 0 && !this.state.appSite.isDefault &&
                     <div>

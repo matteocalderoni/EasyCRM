@@ -57,6 +57,9 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.3.1.15 (Settembre 2021)</b>: piccole correzioni a layout e miglioramento dei commenti per compilazione dei moduli. 
+                        </li>
+                        <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.3.1.14 (Agosto 2021)</b>: Nuova veste grafica per area di gestione. Versione molto più moderna e colorata. In arrivo anche la versione per il sito pubblico. 
                         </li>
                         <li className="list-group-item">

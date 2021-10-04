@@ -32,13 +32,13 @@ function Login({ history, location }) {
     }
 
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} className="border rounded">
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} className="border rounded-xl">
             {({ errors, touched, isSubmitting }) => (
                 <Form>
                     <div className="bg-blue-500">
                         <div className="card-header font-sans">
-                            <h1 className="text-white text-bold-xl text-xl">EasyCRM</h1>
-                            <p className="text-black-100">Accedi ad area riservata</p>
+                            <h1 className="text-white font-bold text-xl">EasyCRM</h1>
+                            <p className="text-white">Accedi ad area riservata</p>
                         </div>
                     </div>
                     <div className="card-body">

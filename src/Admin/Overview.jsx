@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Jumbotron, Row, Col, Card } from 'react-bootstrap';
+import { Container, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Role } from '../_helpers';
 import { accountService } from '../_services';

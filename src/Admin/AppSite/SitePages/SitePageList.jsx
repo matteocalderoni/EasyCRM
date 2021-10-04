@@ -50,7 +50,7 @@ function SitePageList (props){
         <Container fluid>            
             <div className="mt-4">
             {sitePages && sitePages.map(sitePage =>                                    
-                <div className="block m-2" key={sitePage.sitePageId}>
+                <div className="block mt-2" key={sitePage.sitePageId}>
                     <Card style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} text="white">
                         <Card.Header className="md:container md:mx-auto text-center bg-blue-500">
                             <Card.Title className="md:flex">

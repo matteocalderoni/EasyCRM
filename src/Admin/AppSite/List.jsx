@@ -79,7 +79,7 @@ function List({ match }) {
                     </Col>
                     <Col sm={6}>
                         <b>{appSite.name}</b><br />
-                        <p className="text-grey">{appSite.description && parse(appSite.description)}</p>
+                        {/* <p className="text-grey">{appSite.description && parse(appSite.description)}</p> */}
                     </Col>
                     <Col sm={4} className="mart2 text-center">
                         <Link to={`${path}/edit/${appSite.appSiteId}`} title="Modifica sito" className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
