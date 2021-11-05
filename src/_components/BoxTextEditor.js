@@ -1,6 +1,6 @@
 import React from 'react';
 import { appSiteService, alertService } from '../_services';
-import { Form, Button, Card, Image, ProgressBar,Navbar,Nav } from 'react-bootstrap'
+import { Form, Button, ProgressBar,Navbar,Nav } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from './LanguageSelect';
 import { LanguageEditor } from './LanguageEditor';

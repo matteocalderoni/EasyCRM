@@ -19,7 +19,9 @@ class ProductList extends React.Component{
             pageBoxId: this.props.pageBoxId,
             loading: false
         }
-
+    }
+    
+    componentDidMount() {        
         this.getProducts(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId);
     }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 import { accountService } from '../_services';
 

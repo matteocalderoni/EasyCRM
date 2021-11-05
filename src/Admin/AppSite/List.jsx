@@ -8,7 +8,7 @@ import { BsPencil } from 'react-icons/bs';
 import { IoDocumentsOutline } from 'react-icons/io5';
 import { FcHome } from 'react-icons/fc';
 import { IoMdAddCircle } from 'react-icons/io';
-import { FaLanguage} from 'react-icons/fa';
+import { FaRoad, FaLanguage} from 'react-icons/fa';
 import { DeleteConfirmation } from '../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -64,13 +64,10 @@ function List({ match }) {
                 </Row>       
 
             {!appSites && loading &&
-                <Row>
-                    {loading && 
-                    <Col className="text-center rounded bg-blue-400 text-white mt-2 p-2">
-                        <h5 className="text-white text-bold-xl">Caricamento in corso... Attendere prego...</h5>
-                        <ProgressBar animated now={100} />
-                    </Col>}
-                </Row>
+                <div className="text-center rounded bg-blue-400 text-white mt-2 p-2">
+                    <h5 className="text-white text-bold-xl">Caricamento in corso... Attendere prego...</h5>
+                    <ProgressBar animated now={100} />
+                </div>                
             }                         
             {appSites && appSites.map(appSite =>
                 <Row key={appSite.appSiteId} className="site-list-item bg-blue-50 p-2">
@@ -90,6 +87,9 @@ function List({ match }) {
                         </Link>
                         <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} title="Lingue del sito" className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
                             <FaLanguage /> Gestione lingue
+                        </Link>
+                        <Link to={`${path}/sitesurveys/${appSite.appSiteId}`} title="Percorsi del sito" className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
+                            <FaRoad /> Gestione percorsi
                         </Link>
                         <div className="mt-2 rounded block bg-red-500">
                             <DeleteConfirmation onConfirm={() => deleteAppSite(appSite.appSiteId)} />

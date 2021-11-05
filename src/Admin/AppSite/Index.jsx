@@ -5,6 +5,7 @@ import { List } from './List';
 import { AddEdit } from './AddEdit';
 import { SitePages } from './SitePages';
 import { SiteLanguages } from './SiteLanguages';
+import { SiteSurveys } from './SiteSurvey'
 
 function AppSites({ match }) {
     const { path } = match;
@@ -16,6 +17,7 @@ function AppSites({ match }) {
             <Route path={`${path}/edit/:appSiteId`} component={AddEdit} />
             <Route path={`${path}/sitepages`} component={SitePages} />
             <Route path={`${path}/sitelanguages`} component={SiteLanguages} />
+            <Route path={`${path}/sitesurveys`} component={SiteSurveys} />
         </Switch>
     );
 }

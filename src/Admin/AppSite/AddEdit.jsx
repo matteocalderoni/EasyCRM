@@ -8,7 +8,7 @@ import { LanguageSelect } from '../../_components/LanguageSelect';
 import { AiFillSave } from 'react-icons/ai';
 import { FcHome } from 'react-icons/fc';
 import { IoDocumentsOutline } from 'react-icons/io5';
-import { FaLanguage } from 'react-icons/fa';
+import { FaRoad, FaLanguage } from 'react-icons/fa';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../_helpers/tinySettings';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -362,16 +362,20 @@ class AddEdit extends React.Component {
                     </div>} */}                                    
                 </Card.Body>
             </Card>          
-            <Navbar fixed="bottom" className="flex bg-blue-900">
-                <Nav className="flex space-x-3 text-sm font-medium mr-auto">
+            <Navbar fixed="bottom" className="flex bg-blue-800">
+                <Nav className="flex space-x-2 text-sm font-medium mr-auto">
                     <Button onClick={this.onSubmit} className="w-1/2 flex items-center justify-center rounded-md bg-green-500">
-                        <AiFillSave /> Salva
+                        <AiFillSave /> Salva Modifiche
                     </Button> 
-                    <Link to={`/admin/sites/sitepages/${this.state.appSite.appSiteId}`} title="Pagine del sito" className="w-1/2 flex items-center justify-center rounded-md bg-blue-200 p-1 text-blue-900">
-                        <IoDocumentsOutline /> Pagine
+                    <Link to={`/admin/sites/sitepages/${this.state.appSite.appSiteId}`} title="Pagine del sito" 
+                        className="w-1/2 flex items-center justify-center rounded-md bg-blue-200 p-1 text-blue-900">
+                        <IoDocumentsOutline className="mr-2" /> Gestione Pagine
                     </Link>
                     <Link to={`/admin/sites/sitelanguages/${this.state.appSite.appSiteId}`} title="Lingue del sito" className="w-1/2 flex items-center justify-center rounded-md bg-blue-200 p-1 text-blue-900">
-                        <FaLanguage /> Lingue
+                        <FaLanguage className="mr-2" /> Gestione Lingue
+                    </Link>
+                    <Link to={`/admin/sites/sitelanguages/${this.state.appSite.appSiteId}`} title="Lingue del sito" className="w-1/2 flex items-center justify-center rounded-md bg-blue-200 p-1 text-blue-900">
+                        <FaRoad className="mr-2" /> Gestione Percorsi
                     </Link>
                 </Nav>
                 <Form inline className="flex items-center justify-center">

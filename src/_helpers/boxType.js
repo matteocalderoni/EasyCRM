@@ -11,5 +11,6 @@ export const BoxTypes = [
     { label: 'Modulo Contattaci', value: 10 },
     { label: 'Facebook Feed (Sezione Notizie)', value: 11 },
     { label: 'Instagram Feed (Bacheca)', value: 12 },
-    { label: 'Video Youtube', value: 13 }    
+    { label: 'Video Youtube', value: 13 },
+    { label: 'Percorso', value: 14 },    
 ]

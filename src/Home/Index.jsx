@@ -57,6 +57,16 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.4.0.17-preview (Novembre 2021)</b>: Gestione <b>Percorsi</b>: tramite questa nuova funzione è possibile creare dei percorsi guidati per gli utenti che visitano il sito.
+                            Ad esempio è possibile presentare un prodotto creando una serie di schede interattive per visualizzare le varie opzioni.
+                            Oppure creare un modulo composto da varie domade divise in passaggi.
+                            Tutto questo è integrato in un pratico contenitore quindi è possibile inserire i percorsi nella varie pagine proprio come già si fa per le altre tipologie di contenuti. 
+                            Questo rilascio è una <b>preview</b> quindi per ora il contenitore Percorsi è disponibile solo nella sezione di amministrazione, a breve il rilascio per il sito pubblico con la relativa area di gestione delle varie rispote ottenute dagli utenti.
+                        </li>
+                        <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.3.1.16 (Ottobre 2021)</b>: revisione completa layout pagina di modifica 'Dettagli Pagina': anteprima della slide per una migliore compilazione e disposizione ottimizzata dei campi. 
+                        </li>
+                        <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.3.1.15 (Settembre 2021)</b>: piccole correzioni a layout e miglioramento dei commenti per compilazione dei moduli. 
                         </li>
                         <li className="list-group-item">
@@ -88,7 +98,7 @@ function Home() {
                             <b className="text-blue-800">Ver 1.2.3.7 (Febbraio 2021)</b>: aggiunta la conferma per azioni di Elimina. 
                         </li>
                         <li className="list-group-item">
-                            <b>Ver 1.2.2.6 (Febbraio 2021)</b>: gestione recapiti per contenitore Contattaci e gestione coordinare (latitudine e longitudine) in contenitore Mappa.
+                            <b className="text-blue-800">Ver 1.2.2.6 (Febbraio 2021)</b>: gestione recapiti per contenitore Contattaci e gestione coordinare (latitudine e longitudine) in contenitore Mappa.
                             Numerosi miglioramenti a livello di layout: aggiunta barre di navigazione in fondo a pagine per ottimizzare gli spazi e la gestione da mobile.
                         </li>
                         <li className="list-group-item">

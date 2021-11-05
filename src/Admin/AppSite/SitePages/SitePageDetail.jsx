@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SitePageAddEdit } from './SitePageAddEdit';
-import { Jumbotron, Container, Tabs, Tab } from 'react-bootstrap'
+import { Container, Tabs, Tab } from 'react-bootstrap'
 import { appSiteService } from '../../../_services';
 import { FcHome } from 'react-icons/fc';
 import { SitePageList } from './SitePageList';
@@ -51,25 +51,32 @@ function SitePageDetail({ match }) {
             <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito <b>{appSite && appSite.name}</b></Link></li>                
                 <li className="breadcrumb-item">
-                    <Link to={'/admin/sites/sitepages/'+ appSiteId}>Pagine del sito {appSite && <b>{appSite.name}</b>}</Link>                    
+                    <Link to={'/admin/sites/sitepages/'+ appSiteId}>Pagine del Sito {appSite && <b>{appSite.name}</b>}</Link>                    
                 </li>                
-                {/* <li className="breadcrumb-item active">
-                    Pagina {sitePage && sitePage.title && parse(sitePage.title)}
-                </li> */}
+                <li className="breadcrumb-item active">
+                    Pagina {sitePage && sitePage.title && parse(sitePage.titleUrl)}
+                </li>
             </ul>
             <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
                 <small>Gestione della pagina</small>                
-                {sitePage && !loading && sitePage.title && parse(sitePage.title)}
+                <div>
+                    <h1 className="text-xl">{sitePage && !loading && sitePage.title && parse(sitePage.titleUrl)}</h1>
+                </div>
                 <p className="text-muted">Modifica dettagli relativi alla pagine: modifica immagine di sfondo, il titolo per il menù di navigazione e il testo per la slide.</p>                    
             </div>
 
             <Tabs id="user-tabs" className="mt-4">
                 <Tab eventKey="info" title="Informazioni generali">
-                    {!loading &&<SitePageAddEdit appSiteId={appSiteId} sitePageId={pageId}></SitePageAddEdit>}
+                    <div className="p-2 bg-white border-l border-r border-bottom shadow">
+                        {!loading &&<SitePageAddEdit appSiteId={appSiteId} sitePageId={pageId}></SitePageAddEdit>}
+                    </div>
                 </Tab>
-                {pageId > 0 && <Tab eventKey="pages" title="Gestione Sotto Pagine" className="mt-2">
-                    <SitePageList appSiteId={appSiteId} parentPageId={pageId} isChanged={isChanged}></SitePageList>
+                {pageId > 0 && <Tab eventKey="pages" title="Gestione Sotto Pagine">
+                    <div className="p-2 bg-white border-l border-r border-bottom shadow">
+                        <SitePageList appSiteId={appSiteId} parentPageId={pageId} isChanged={isChanged}></SitePageList>
+                    </div>
                 </Tab>}
             </Tabs>
             

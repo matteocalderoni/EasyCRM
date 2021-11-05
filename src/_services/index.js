@@ -4,3 +4,4 @@ export * from './appsite.service';
 export * from './product.service';
 export * from './alert.service';
 export * from './language.service';
+export * from './survey.service';

@@ -6,6 +6,8 @@ import { BoxTypes,CardSizes } from '../../../../_helpers'
 import { LanguageSelect } from '../../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../../_components/LanguageEditor';
 import { CompactPicker } from 'react-color';
+import { FaSave} from 'react-icons/fa';
+import { SiteSurveySelect } from '../../../../_components/SiteSurveySelect';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -100,6 +102,16 @@ class PageBoxAddEdit extends React.Component {
         //this.setState({ background: color.hex });
     };
 
+    handleSiteSurveyChange = (siteSurveyId) => {
+        this.setState({
+            pageBox: {
+                ...this.state.pageBox,
+                siteSurveyId: siteSurveyId                 
+            }          
+        });
+        //this.setState({ background: color.hex });
+    };
+
     handleLanguageCode = (code) => {        
         this.setState({ 
             languageCode: code
@@ -188,10 +200,12 @@ class PageBoxAddEdit extends React.Component {
                         </Form.Group>
                             
                         {this.state.pageBox && this.state.pageBox.boxType && (this.state.pageBox.boxType === 8 || this.state.pageBox.boxType === 9) &&
-                        <div className="text-center mart2">
-                            <Image src={baseImageUrl+this.state.pageBox.imageUrl} fluid />
-                            <Uploader prefix={this.state.pageBox.appSiteId} fileName={this.state.pageBox.imageUrl} onFileNameChange={this.handleFileName} />      
-                            <small>Utilizzare immagini con formato 640 X 640 px.</small>
+                        <div className="flex space-x-2 text-center mart2">
+                            <Image className="w-32" src={baseImageUrl+this.state.pageBox.imageUrl} fluid />
+                            <div>
+                                <Uploader prefix={this.state.pageBox.appSiteId} fileName={this.state.pageBox.imageUrl} onFileNameChange={this.handleFileName} />      
+                                <small>Utilizzare immagini con formato 640 X 640 px.</small>
+                            </div>
                         </div>}                                 
                         
                         <Row>
@@ -311,6 +325,19 @@ class PageBoxAddEdit extends React.Component {
                                     </Form.Text>
                                 </Form.Group>
                             </Col>
+                        </Row>}    
+
+                        {this.state.pageBox.boxType === 14 && 
+                        <Row>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Label>Percorso del contenitore</Form.Label>
+                                    <SiteSurveySelect name="siteSurveyId" appSiteId={this.state.pageBox.appSiteId} siteSurveyId={this.state.pageBox.siteSurveyId} onChange={this.handleSiteSurveyChange} />
+                                    <Form.Text className="text-muted">
+                                        Seleziona il percorso da inserire nel contenitore.
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>                            
                         </Row>}                    
                         
                         <Form.Group className="mart2">
@@ -324,8 +351,8 @@ class PageBoxAddEdit extends React.Component {
                 </Card>
                 <Navbar fixed="bottom" variant="dark" bg="dark">
                     <Nav className="mr-auto">
-                        <Button onClick={this.onSubmit} variant="success" className="mr-1">
-                            Salva le modifiche
+                        <Button onClick={this.onSubmit}  className="w-1/2 flex items-center justify-center rounded-md bg-green-500">
+                            <FaSave /> Salva modifiche
                         </Button>                         
                     </Nav>
                     <Form inline>

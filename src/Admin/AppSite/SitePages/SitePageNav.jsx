@@ -38,8 +38,9 @@ function SitePageNav ({ match }){
                 <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito <b>{appSite && appSite.name}</b></Link></li>                
                 <li className="breadcrumb-item active">
-                    Pagine del Sito {appSite && <b>{appSite.name}</b>}                
+                    Pagine del Sito <b>{appSite && appSite.name}</b>                
                 </li>
             </ul>
             <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
@@ -64,7 +65,7 @@ function SitePageNav ({ match }){
                     <Link className="flex items-center justify-center rounded-md bg-blue-200 p-1 text-blue-900" to={`/admin/sites/edit/${appSiteId}`}>
                         <FaLanguage /> modifica sito
                     </Link>
-                    <Link className="flex items-center justify-center rounded-md bg-blue-200 p-1 text-blue-900" to={`/admin/sites/sitelanguages/edit/${appSiteId}`}>
+                    <Link className="flex items-center justify-center rounded-md bg-blue-200 p-1 text-blue-900" to={`/admin/sites/sitelanguages/${appSiteId}`}>
                         <FaLanguage /> lingue
                     </Link>
                 </Nav>     

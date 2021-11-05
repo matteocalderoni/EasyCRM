@@ -19,7 +19,6 @@ class PositionSelect extends Component {
     }    
     
     handleChange = (evt) => {
-        const value = evt.target.value;
         this.setState({
             selectedPosition: +evt.target.value 
         })        

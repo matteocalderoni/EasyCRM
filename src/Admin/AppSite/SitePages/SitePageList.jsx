@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, Row, Col, ProgressBar, Navbar, Nav } from 'react-bootstrap';
+import { Container, Card, Navbar, Nav } from 'react-bootstrap';
 import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 import { BsPencil} from 'react-icons/bs';
@@ -19,10 +19,6 @@ function SitePageList (props){
 
     useEffect(() => {
         getSitePages()
-        // appSiteService.getPagesOfAppSite(appSiteId,0).then((x) => { 
-        //     setLoading(false)
-        //     setSitePages(x.result)}
-        // );
     }, [appSiteId,props.isChanged]);     
     
     function deleteSitePage(sitePage) {
@@ -31,9 +27,7 @@ function SitePageList (props){
             if (x.appSiteId === appSiteId && x.sitePageId === sitePage.sitePageId) { x.isDeleting = true; }
             return x;
         }));
-        appSiteService.deleteSitePage(appSiteId, sitePage.sitePageId).then(() => {
-            //setLoading(false)
-            //appSiteService.getPagesOfAppSite(appSiteId,0).then(x => setSitePages(x.result));
+        appSiteService.deleteSitePage(appSiteId, sitePage.sitePageId).then(() => {            
             getSitePages()
         });                
     }
@@ -52,7 +46,7 @@ function SitePageList (props){
             {sitePages && sitePages.map(sitePage =>                                    
                 <div className="block mt-2" key={sitePage.sitePageId}>
                     <Card style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} text="white">
-                        <Card.Header className="md:container md:mx-auto text-center bg-blue-500">
+                        <Card.Header className="text-center bg-blue-500">
                             <Card.Title className="md:flex">
                                 <div className="flex-none">
                                     # {sitePage.sortId} 
@@ -62,30 +56,26 @@ function SitePageList (props){
                                 </div>
                             </Card.Title>                                                        
                         </Card.Header>                        
-                        <Card.Body>           
-                            <div>
+                        <Card.Body className="mx-full">           
+                            {/* <div>
                                 {sitePage.title && parse(sitePage.title)}
                             </div>                                       
                             <Card.Text>                                
                                 {sitePage.slideText && parse(sitePage.slideText)}
-                            </Card.Text>                            
+                            </Card.Text>                             */}
                             <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-md bg-blue-200 mt-2 p-1 text-blue-900">
-                                <BsPencil /> modifica pagina
+                                <BsPencil className="mr-2" /> modifica pagina
                             </Link>
                             <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
-                                <FaBoxes /> gestione contenuti
+                                <FaBoxes className="mr-2" /> gestione contenuti
                             </Link>
-                            {sitePage.sitePageId == 1 && 
+                            {sitePage.sitePageId === 1 && 
                             <div className="rounded border mt-2">
-                                <p>La pagina iniziale non può essere eliminata.</p>
-                            </div>}
-                            {/* {sitePage.sitePageId > 1 &&
-                            <Button title="Elimina Pagina" variant="danger" onClick={() => deleteSitePage(sitePage)}>
-                                <BsTrash />
-                            </Button>} */}
+                                <p className="text-red-400">La pagina iniziale non può essere eliminata.</p>
+                            </div>}                            
                             {sitePage.sitePageId > 1 &&
                             <div className="mt-2 rounded block bg-red-500">
-                                <DeleteConfirmation onConfirm={() => deleteSitePage(sitePage)} />
+                                <DeleteConfirmation onConfirm={() => deleteSitePage(sitePage)} /> Elimina
                             </div>}
                         </Card.Body>
                     </Card>                                            

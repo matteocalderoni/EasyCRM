@@ -1,6 +1,5 @@
 import { fetchWrapper } from '../_helpers';
 import React,{Component} from 'react'; 
-import { Label } from 'react-bootstrap';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 

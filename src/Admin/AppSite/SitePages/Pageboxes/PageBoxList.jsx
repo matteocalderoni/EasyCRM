@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Card, Button, ProgressBar, Row, Col, Accordion, Navbar, Nav } from 'react-bootstrap';
+import { Container, Card, Button, ProgressBar, Row, Col, Accordion, Navbar, Nav } from 'react-bootstrap';
 import { appSiteService } from '../../../../_services';
 import { PageBoxModal } from './PageBoxModal';
 import { EmployeeList } from './EmployeeList';
@@ -12,9 +12,10 @@ import { BoxTextEditor, SimpleMap } from '../../../../_components';
 import parse from 'html-react-parser';
 import { BsPencil,BsFillEyeFill} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
-import { FaLanguage } from 'react-icons/fa';
+import { FaLanguage, FaRoad } from 'react-icons/fa';
 import { BoxTypes } from '../../../../_helpers'
 import { DeleteConfirmation,FacebookFeed,InstagramFeed,YoutubeVideo } from '../../../../_components';
+import { SiteSurveyBox } from '../../SiteSurvey/SiteSurveyBox/SiteSurveyBox';
 
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -70,16 +71,18 @@ function PageBoxList({ match }) {
                 <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>          
                 <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                      
+                <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito <b>{appSite && appSite.name}</b></Link></li>                
                 <li className="breadcrumb-item">
                     <Link to={'/admin/sites/sitepages/'+ appSiteId}>Pagine del Sito {appSite && <b>{appSite.name}</b>}</Link>                    
                 </li>                
-                {/* <li className="breadcrumb-item active">
-                    Contenitori della Pagina {sitePage && sitePage.title && parse(sitePage.title)}
-                </li> */}
+                <li className="breadcrumb-item"><Link to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`}>Pagina <b>{sitePage && sitePage.title && parse(sitePage.titleUrl)}</b></Link></li>                
+                <li className="breadcrumb-item active">
+                    Contenitori della Pagina <b>{sitePage && sitePage.title && parse(sitePage.titleUrl)}</b>
+                </li>
             </ul>
             <div className="shadow rounded-top mt-2 bg-gray-100 p-8">
                 <small>Gestione <b>Contenuti della pagina</b></small>   
-                {sitePage && <h1>{sitePage.title && parse(sitePage.title)}</h1>}
+                {sitePage && <h1 className="text-xl">{sitePage.title && parse(sitePage.titleUrl)}</h1>}
                 <p className="text-muted text-sm">
                     Tramite questa sezione è possibile gestire i contenitori della pagina. Si possono creare, modificare o eliminare diverse tipologie di contenitori.<br />
                     Sotto viene visualizzata un anteprima dei contenitori aggiunti (anche quelli non pubblici).<br />                    
@@ -105,7 +108,7 @@ function PageBoxList({ match }) {
                                     {BoxTypes && BoxTypes[pageBox.boxType - 1].label}<br />
                                     <Card.Title>{pageBox.sortId}° <b>{pageBox.title && parse(pageBox.title)}</b></Card.Title>     
                                 </Col>
-                                <Col md={4} className="text-right mt-1">
+                                <Col md={4} className="text-right mt-1">                                    
                                     <PageBoxModal appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} sortId={pageBox.sortId} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId)} />                                
                                     <Accordion.Toggle title="Anteprima" className="ml-1" variant="primary" as={Button} eventKey={pageBox.pageBoxId}>
                                         <BsFillEyeFill />
@@ -149,6 +152,9 @@ function PageBoxList({ match }) {
                             {pageBox.boxType && parseInt(pageBox.boxType) === 13 &&
                                 <YoutubeVideo videoUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />
                             }   
+                            {pageBox.boxType && parseInt(pageBox.boxType) === 14 &&
+                                <SiteSurveyBox appSiteId={pageBox.appSiteId} siteSurveyId={pageBox.siteSurveyId} />
+                            }   
                             </Card.Body>                     
                         </Accordion.Collapse>
                     </Card>                                            
@@ -158,13 +164,16 @@ function PageBoxList({ match }) {
                 </Accordion> 
             </div>}
 
-            <Navbar fixed="bottom" variant="dark" bg="dark">
+            <Navbar fixed="bottom" className="flex bg-blue-800">
                 <Nav className="mr-auto">
-                    <Link className="btn btn-secondary" to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`} title="Modifica la pagina">
-                        <BsPencil /> Modifica Pagina
+                    <Link className="w-1/2 flex items-center justify-center rounded-md  bg-blue-400 text-white p-2 ml-5" to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`} title="Modifica la pagina">
+                        <BsPencil className="mr-2" /> Modifica Pagina
                     </Link>
-                    <Link className="btn btn-secondary ml-1" to={`/admin/sites/sitelanguages/edit/${appSiteId}`} title="Gestione lingue del sito">
-                        <FaLanguage /> Lingue
+                    <Link className="w-1/2 flex items-center justify-center rounded-md  bg-blue-400 text-white p-2 ml-2" to={`/admin/sites/sitelanguages/${appSiteId}`} title="Gestione lingue del sito">
+                        <FaLanguage className="mr-2" /> Lingue
+                    </Link>
+                    <Link className="w-1/2 flex items-center justify-center rounded-md  bg-blue-400 text-white p-2 ml-2" to={`/admin/sites/sitesurveys/${appSiteId}`} title="Gestione percorsi del sito">
+                        <FaRoad className="mr-2" /> percorsi
                     </Link>
                 </Nav>
                 <Nav className="mr-left">

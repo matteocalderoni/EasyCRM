@@ -23,7 +23,6 @@ class LanguageSelect extends Component {
     }
 
     handleChange = (evt) => {
-        const value = evt.target.value;
         this.setState({
             code: evt.target.value 
         })        

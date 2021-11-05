@@ -34,6 +34,7 @@ code {
 }
 
 .brand-logo { height: 40px; }
+.slide-logo { max-width: 50%; margin-left: auto; margin-right: auto; }
 
 .simple-map { padding-bottom: 5%;}
 
