@@ -58,6 +58,9 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.4.0.19-preview (Novembre 2021)</b>: aggiunta di nuovi font per i testi (Montserrat).
+                        </li>
+                        <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.4.0.18-preview (Novembre 2021)</b>: aggiunta dell'upload immagini nei contenitori di testo. Da adesso è possibile inserire delle immagini direttamente nei paragrafi di testo.
                             Tramite editor di testo selezionare icona <HiOutlinePhotograph className="inline text-xl" /> e tramite opzione <b>upload</b> è possibile caricare un immagine all'interno del paragrafo.
                         </li>
