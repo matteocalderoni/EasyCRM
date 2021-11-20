@@ -5,6 +5,10 @@ import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from './LanguageSelect';
 import { LanguageEditor } from './LanguageEditor';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../_helpers/tinySettings';
+import { fetchWrapper } from '../_helpers';
+
+const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class BoxTextEditor extends React.Component {
 
@@ -40,6 +44,17 @@ class BoxTextEditor extends React.Component {
             languageCode: code
         });        
     }
+
+    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
+        const fileName = (this.props.prefix + '/' || '') + new Date().getTime() + '.jpeg';
+
+        // Request made to the backend api 
+        // Send formData object 
+        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
+            .then((result) => {
+                success(`${baseImageUrl}${result.fileName}`);                
+            });         
+    };                  
     
     updatePageBox = () => {
         appSiteService.updatePageBox({ pageBox: this.state.pageBox })
@@ -76,7 +91,8 @@ class BoxTextEditor extends React.Component {
                                         height: 500,                                        
                                         menubar: menuSettings,
                                         plugins: pluginsSettings,
-                                        toolbar: toolbarSettings
+                                        toolbar: toolbarSettings,
+                                        images_upload_handler: this.tiny_image_upload_handler
                                     }}
                                     onEditorChange={this.handleTitleEditorChange}
                                     >
@@ -112,7 +128,8 @@ class BoxTextEditor extends React.Component {
                                         height: 500,
                                         menubar: menuSettings,
                                         plugins: pluginsSettings,
-                                        toolbar: toolbarSettings
+                                        toolbar: toolbarSettings,
+                                        images_upload_handler: this.tiny_image_upload_handler
                                     }}
                                     onEditorChange={this.handleEditorChange}
                                 />

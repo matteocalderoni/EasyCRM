@@ -6,7 +6,9 @@ import { Form, Button, Card, ProgressBar,Navbar, Nav, Image, Row, Col } from 're
 import { Editor } from "@tinymce/tinymce-react";
 import { FaSave, FaLanguage, FaBoxes} from 'react-icons/fa';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../_helpers/tinySettings';
+import { fetchWrapper } from '../../../_helpers/fetch-wrapper';
 
+const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 class SitePageAddEdit extends React.Component {
 
@@ -162,6 +164,17 @@ class SitePageAddEdit extends React.Component {
         }
     }
 
+    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
+        const fileName = (this.state.sitePage.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
+    
+        // Request made to the backend api 
+        // Send formData object 
+        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
+            .then((result) => {
+                success(`${baseImageUrl}${result.fileName}`);                
+            });         
+      };                  
+
     createSitePage() {
         appSiteService.createSitePage({ sitePage: this.state.sitePage })
             .then(result => {
@@ -256,7 +269,8 @@ class SitePageAddEdit extends React.Component {
                                             height: 500,                                        
                                             menubar: menuSettings,
                                             plugins: pluginsSettings,
-                                            toolbar: toolbarSettings
+                                            toolbar: toolbarSettings,
+                                            images_upload_handler: this.tiny_image_upload_handler
                                         }}
                                         onEditorChange={this.handleTitleNavEditorChange}
                                         >
@@ -309,7 +323,8 @@ class SitePageAddEdit extends React.Component {
                                         height: 500,                                        
                                         menubar: menuSettings,
                                         plugins: pluginsSettings,
-                                        toolbar: toolbarSettings
+                                        toolbar: toolbarSettings,
+                                        images_upload_handler: this.tiny_image_upload_handler
                                     }}
                                     onEditorChange={this.handleTitleEditorChange}
                                     >
@@ -344,7 +359,8 @@ class SitePageAddEdit extends React.Component {
                                             height: 500,
                                             menubar: menuSettings,
                                             plugins: pluginsSettings,
-                                            toolbar: toolbarSettings
+                                            toolbar: toolbarSettings,
+                                            images_upload_handler: this.tiny_image_upload_handler
                                         }}
                                         onEditorChange={this.handleEditorChange}
                                     />
@@ -383,7 +399,7 @@ class SitePageAddEdit extends React.Component {
             </Card>                    
             <Navbar fixed="bottom" className="flex bg-blue-800">
                 <Nav className="flex space-x-3 text-sm font-medium mr-auto">
-                    <Button onClick={this.onSubmit} className="w-1/2 flex items-center justify-center rounded-md bg-green-500">
+                    <Button onClick={() => this.onSubmit()} className="w-1/2 flex items-center justify-center rounded-md bg-green-500">
                         <FaSave className="mr-2" /> Salva
                     </Button> 
                     {this.state.sitePage.sitePageId > 0 && 
@@ -399,7 +415,7 @@ class SitePageAddEdit extends React.Component {
                 </Nav>
                 <Form inline>
                     {!this.state.loading &&
-                    <LanguageSelect appSiteId={this.state.sitePage.appSiteId} onLanguageChange={this.handleLanguageCode} />}
+                    <LanguageSelect appSiteId={this.state.sitePage.appSiteId} onLanguageChange={(code) => this.handleLanguageCode(code)} />}
                 </Form>
             </Navbar>                
           </>          

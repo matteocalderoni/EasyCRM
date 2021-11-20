@@ -4,6 +4,10 @@ import { Editor } from "@tinymce/tinymce-react";
 import { Button,ProgressBar, Col, Form, Navbar,Nav } from 'react-bootstrap'
 import parse from 'html-react-parser';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../_helpers/tinySettings';
+import { fetchWrapper } from '../_helpers';
+
+const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function LanguageEditor(props) { 
   
@@ -24,6 +28,17 @@ function LanguageEditor(props) {
   const handleEditorChange = (content, editor) => {
       setLabelValue(content)
   }    
+
+  const tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
+    const fileName = (props.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
+
+    // Request made to the backend api 
+    // Send formData object 
+    fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
+        .then((result) => {
+            success(`${baseImageUrl}${result.fileName}`);                
+        });         
+  };                  
   
   const handleSubmit = () => {
     if (labelValue != '') {
@@ -60,6 +75,7 @@ function LanguageEditor(props) {
                     menubar: menuSettings, // 'file edit view insert format tools table tc help',
                     plugins: pluginsSettings, // baseEditorPlugins,
                     toolbar: toolbarSettings, // fullEditorToolbar
+                    images_upload_handler: tiny_image_upload_handler
                 }}
                 onEditorChange={(content, editor) => { handleEditorChange(content, editor) }}                
             />}

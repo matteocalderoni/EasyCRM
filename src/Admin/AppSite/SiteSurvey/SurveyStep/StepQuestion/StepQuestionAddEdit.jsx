@@ -5,6 +5,10 @@ import { QuestionStyleSelect } from '../../../../../_components/QuestionStyleSe
 import { CompactPicker } from 'react-color';
 import { Editor } from "@tinymce/tinymce-react";
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../../../_helpers/tinySettings';
+import { fetchWrapper } from '../../../../../_helpers/fetch-wrapper';
+
+const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class StepQuestionAddEdit extends React.Component {
 
@@ -128,6 +132,17 @@ class StepQuestionAddEdit extends React.Component {
         }
     }
 
+    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
+        const fileName = (this.state.stepQuestion.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
+    
+        // Request made to the backend api 
+        // Send formData object 
+        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
+            .then((result) => {
+                success(`${baseImageUrl}${result.fileName}`);                
+            });         
+      };                  
+
     createStepQuestion() {
         surveyService.createStepQuestion({ stepQuestion: this.state.stepQuestion })
             .then(result => {
@@ -188,7 +203,8 @@ class StepQuestionAddEdit extends React.Component {
                                             height: 500,
                                             menubar: menuSettings,
                                             plugins: pluginsSettings,
-                                            toolbar: toolbarSettings
+                                            toolbar: toolbarSettings,
+                                            images_upload_handler: this.tiny_image_upload_handler
                                         }}
                                         onEditorChange={this.handleEditorChange}
                                     />
@@ -251,7 +267,8 @@ class StepQuestionAddEdit extends React.Component {
                                             height: 500,
                                             menubar: menuSettings,
                                             plugins: pluginsSettings,
-                                            toolbar: toolbarSettings
+                                            toolbar: toolbarSettings,
+                                            images_upload_handler: this.tiny_image_upload_handler
                                         }}
                                         onEditorChange={this.handleNoteEditorChange}
                                     />

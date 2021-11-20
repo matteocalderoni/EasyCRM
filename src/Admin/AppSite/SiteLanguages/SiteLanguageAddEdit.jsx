@@ -1,11 +1,13 @@
 import React from 'react';
-import { languageService, appSiteService, alertService } from '../../../_services';
+import { languageService, alertService } from '../../../_services';
 import { Uploader } from '../../../_components'
 import { Form, Button, Card, Image, Row, Col,ProgressBar } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../_helpers/tinySettings';
+import { fetchWrapper } from '../../../_helpers/fetch-wrapper';
 
- const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
+const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class SiteLanguageAddEdit extends React.Component {
 
@@ -89,6 +91,17 @@ class SiteLanguageAddEdit extends React.Component {
                 });
         }         
     }
+
+    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
+        const fileName = (this.props.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
+
+        // Request made to the backend api 
+        // Send formData object 
+        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
+            .then((result) => {
+                success(`${baseImageUrl}${result.fileName}`);                
+            });         
+    };                  
     
     onSubmit = () => {
         if (this.props.appSiteId > 0 && this.props.code != '') {
@@ -166,10 +179,11 @@ class SiteLanguageAddEdit extends React.Component {
                                 apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                 initialValue={this.state.siteLanguage.description}
                                 init={{
-                                height: 500,
-                                menubar: menuSettings,
-                                plugins: pluginsSettings,
-                                toolbar: toolbarSettings
+                                    height: 500,
+                                    menubar: menuSettings,
+                                    plugins: pluginsSettings,
+                                    toolbar: toolbarSettings,
+                                    images_upload_handler: this.tiny_image_upload_handler
                                 }}
                                 onEditorChange={this.handleEditorChange}
                             />

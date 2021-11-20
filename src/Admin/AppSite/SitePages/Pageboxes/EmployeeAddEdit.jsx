@@ -8,7 +8,9 @@ import { LanguageSelect } from '../../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../_components/LanguageInput';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../../_helpers/tinySettings';
+import { fetchWrapper } from '../../../../_helpers/fetch-wrapper';
 
+const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class EmployeeAddEdit extends React.Component {
@@ -113,6 +115,17 @@ class EmployeeAddEdit extends React.Component {
             this.createEmployee();            
         }
     }
+
+    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
+        const fileName = (this.state.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
+
+        // Request made to the backend api 
+        // Send formData object 
+        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
+            .then((result) => {
+                success(`${baseImageUrl}${result.fileName}`);                
+            });         
+    };
 
     createEmployee() {
         appSiteService.createEmployee({ employee: this.state })
@@ -221,7 +234,8 @@ class EmployeeAddEdit extends React.Component {
                             height: 500,
                             menubar: menuSettings,
                             plugins: pluginsSettings,
-                            toolbar: toolbarSettings
+                            toolbar: toolbarSettings,
+                            images_upload_handler: this.tiny_image_upload_handler
                             }}
                             onEditorChange={this.handleEditorChange}
                         />                

@@ -5,6 +5,10 @@ import { Form, Button, Card, ProgressBar } from 'react-bootstrap';
 import { CompactPicker } from 'react-color';
 import { Editor } from "@tinymce/tinymce-react";
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../../_helpers/tinySettings';
+import { fetchWrapper } from '../../../../_helpers/fetch-wrapper';
+
+const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class SurveyStepAddEdit extends React.Component {
 
@@ -102,6 +106,17 @@ class SurveyStepAddEdit extends React.Component {
         }
     }
 
+    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
+        const fileName = (this.state.surveyStep.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
+    
+        // Request made to the backend api 
+        // Send formData object 
+        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
+            .then((result) => {
+                success(`${baseImageUrl}${result.fileName}`);                
+            });         
+      };                  
+
     createSurveyStep() {
         surveyService.createSurveyStep({ surveyStep: this.state.surveyStep })
             .then(result => {
@@ -163,7 +178,8 @@ class SurveyStepAddEdit extends React.Component {
                                             height: 500,
                                             menubar: menuSettings,
                                             plugins: pluginsSettings,
-                                            toolbar: toolbarSettings
+                                            toolbar: toolbarSettings,
+                                            images_upload_handler: this.tiny_image_upload_handler
                                         }}
                                         onEditorChange={this.handleEditorChange}
                                     />

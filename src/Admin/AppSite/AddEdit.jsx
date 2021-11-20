@@ -10,7 +10,9 @@ import { FcHome } from 'react-icons/fc';
 import { IoDocumentsOutline } from 'react-icons/io5';
 import { FaRoad, FaLanguage } from 'react-icons/fa';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../_helpers/tinySettings';
+import { fetchWrapper } from '../../_helpers/fetch-wrapper';
 
+const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class AddEdit extends React.Component {
@@ -147,6 +149,17 @@ class AddEdit extends React.Component {
             this.createAppSite();            
         }
     }
+
+    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
+        const fileName = (this.state.appSite.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
+    
+        // Request made to the backend api 
+        // Send formData object 
+        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
+            .then((result) => {
+                success(`${baseImageUrl}${result.fileName}`);                
+            });         
+      };                  
 
     createAppSite() {
         appSiteService.createAppSite({ appSite: this.state.appSite })
@@ -301,10 +314,11 @@ class AddEdit extends React.Component {
                             apiKey={process.env.REACT_APP_TINTMCE_KEY}
                             initialValue={this.state.appSite.description}
                             init={{
-                            height: 500,
-                            menubar: menuSettings,  
-                            plugins: pluginsSettings, 
-                            toolbar: toolbarSettings, 
+                                height: 500,
+                                menubar: menuSettings,  
+                                plugins: pluginsSettings, 
+                                toolbar: toolbarSettings, 
+                                images_upload_handler: this.tiny_image_upload_handler
                             }}
                             onEditorChange={this.handleEditorChange}
                         />}       

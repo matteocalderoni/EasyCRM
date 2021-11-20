@@ -5,6 +5,10 @@ import { AnswerTypeSelect } from '../../../../../../_components/AnswerTypeSelect
 import { CompactPicker } from 'react-color';
 import { Editor } from "@tinymce/tinymce-react";
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../../../../_helpers/tinySettings';
+import { fetchWrapper } from '../../../../../../_helpers/fetch-wrapper';
+
+const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class QuestionAnswerAddEdit extends React.Component {
 
@@ -119,6 +123,17 @@ class QuestionAnswerAddEdit extends React.Component {
         }
     }
 
+    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
+        const fileName = (this.state.questionAnswer.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
+    
+        // Request made to the backend api 
+        // Send formData object 
+        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
+            .then((result) => {
+                success(`${baseImageUrl}${result.fileName}`);                
+            });         
+      };                  
+
     createQuestionAnswer() {
         surveyService.createQuestionAnswer({ questionAnswer: this.state.questionAnswer })
             .then(result => {
@@ -187,7 +202,8 @@ class QuestionAnswerAddEdit extends React.Component {
                                             height: 500,
                                             menubar: menuSettings,
                                             plugins: pluginsSettings,
-                                            toolbar: toolbarSettings
+                                            toolbar: toolbarSettings,
+                                            images_upload_handler: this.tiny_image_upload_handler
                                         }}
                                         onEditorChange={this.handleEditorChange}
                                     />

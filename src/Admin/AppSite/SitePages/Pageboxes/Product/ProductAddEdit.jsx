@@ -7,8 +7,11 @@ import { LanguageSelect } from '../../../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../../_components/LanguageInput';
 import {menuSettings,pluginsSettings,toolbarSettings } from '../../../../../_helpers/tinySettings';
+import { fetchWrapper } from '../../../../../_helpers/fetch-wrapper';
 
+const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
+
 class ProductAddEdit extends React.Component {
 
     constructor(props) {
@@ -132,6 +135,17 @@ class ProductAddEdit extends React.Component {
         }
     }
 
+    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
+        const fileName = (this.props.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
+
+        // Request made to the backend api 
+        // Send formData object 
+        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
+            .then((result) => {
+                success(`${baseImageUrl}${result.fileName}`);                
+            });         
+    };
+
     createProduct() {
         productService.createProduct({ product: this.state.product })
             .then(result => {
@@ -236,7 +250,8 @@ class ProductAddEdit extends React.Component {
                             height: 500,
                             menubar: menuSettings,
                             plugins: pluginsSettings,
-                            toolbar: toolbarSettings
+                            toolbar: toolbarSettings,
+                            images_upload_handler: this.tiny_image_upload_handler
                             }}
                             onEditorChange={this.handleEditorChange}
                         />                                            

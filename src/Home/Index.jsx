@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Card } from 'react-bootstrap';
+import { HiOutlinePhotograph } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import { accountService } from '../_services';
 
@@ -40,7 +41,7 @@ function Home() {
                             <Card.Text>
                                 Gestione siti e altre impostazioni.
                                 In questa sezione trovi le funzioni principali per la gestione dei tuoi siti: 
-                                aggiungere testi, immagini, lingue d    ifferenti, mappe e molto altro.                                
+                                aggiungere testi, immagini, lingue differenti, mappe e molto altro.                                
                             </Card.Text>                            
                         </Card.Body>
                         <Card.Footer className="d-flex justify-content-end bg-blue-100">
@@ -56,6 +57,10 @@ function Home() {
                 </Card.Header>
                 <Card.Body>
                     <ul className="list-group">
+                        <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.4.0.18-preview (Novembre 2021)</b>: aggiunta dell'upload immagini nei contenitori di testo. Da adesso è possibile inserire delle immagini direttamente nei paragrafi di testo.
+                            Tramite editor di testo selezionare icona <HiOutlinePhotograph className="inline text-xl" /> e tramite opzione <b>upload</b> è possibile caricare un immagine all'interno del paragrafo.
+                        </li>
                         <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.4.0.17-preview (Novembre 2021)</b>: Gestione <b>Percorsi</b>: tramite questa nuova funzione è possibile creare dei percorsi guidati per gli utenti che visitano il sito.
                             Ad esempio è possibile presentare un prodotto creando una serie di schede interattive per visualizzare le varie opzioni.

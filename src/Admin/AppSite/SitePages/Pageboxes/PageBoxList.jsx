@@ -123,7 +123,7 @@ function PageBoxList({ match }) {
                                 <Card.Img variant="top" src={baseImageUrl+pageBox.imageUrl} />
                             }                                                
                             {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9) &&                                                                        
-                                <BoxTextEditor pageBox={pageBox} handleSaved={handleAddEdit}></BoxTextEditor>
+                                <BoxTextEditor prefix={pageBox.appSiteId} pageBox={pageBox} handleSaved={handleAddEdit}></BoxTextEditor>
                             }
                             {pageBox.boxType && parseInt(pageBox.boxType) === 2 &&
                                 <TopServiceList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
