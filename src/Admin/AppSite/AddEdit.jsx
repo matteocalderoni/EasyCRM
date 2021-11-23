@@ -9,7 +9,7 @@ import { AiFillSave } from 'react-icons/ai';
 import { FcHome } from 'react-icons/fc';
 import { IoDocumentsOutline } from 'react-icons/io5';
 import { FaRoad, FaLanguage } from 'react-icons/fa';
-import {menuSettings,pluginsSettings,toolbarSettings } from '../../_helpers/tinySettings';
+import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../_helpers/tinySettings';
 import { fetchWrapper } from '../../_helpers/fetch-wrapper';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
@@ -317,7 +317,9 @@ class AddEdit extends React.Component {
                                 height: 500,
                                 menubar: menuSettings,  
                                 plugins: pluginsSettings, 
-                                toolbar: toolbarSettings, 
+                                toolbar: toolbarSettings,
+                                font_formats: fontSettings,
+                                content_style: styleSettings, 
                                 images_upload_handler: this.tiny_image_upload_handler
                             }}
                             onEditorChange={this.handleEditorChange}
@@ -353,7 +355,7 @@ class AddEdit extends React.Component {
                         <Form.Control as="select" value={this.state.appSite.privacyPageId} name="privacyPageId" onChange={this.handleChangeNumber}>
                             <option value={0}>Non disponibile</option>
                             {this.state.sitePages && this.state.sitePages.map(privacyPage =>
-                                <option key={privacyPage.sitePageId} value={parseInt(privacyPage.sitePageId)}>{privacyPage.title}</option>
+                                <option key={privacyPage.sitePageId} value={parseInt(privacyPage.sitePageId)}>{privacyPage.titleUrl}</option>
                             )}   
                         </Form.Control>
                         <Form.Text className="text-muted">

@@ -7,7 +7,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../_components/LanguageInput';
-import {menuSettings,pluginsSettings,toolbarSettings } from '../../../../_helpers/tinySettings';
+import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../../_helpers/fetch-wrapper';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
@@ -231,11 +231,13 @@ class EmployeeAddEdit extends React.Component {
                             apiKey={process.env.REACT_APP_TINTMCE_KEY}
                             initialValue={this.state.description}
                             init={{
-                            height: 500,
-                            menubar: menuSettings,
-                            plugins: pluginsSettings,
-                            toolbar: toolbarSettings,
-                            images_upload_handler: this.tiny_image_upload_handler
+                                height: 500,
+                                menubar: menuSettings,
+                                plugins: pluginsSettings,
+                                toolbar: toolbarSettings,
+                                font_formats: fontSettings,
+                                content_style: styleSettings,
+                                images_upload_handler: this.tiny_image_upload_handler
                             }}
                             onEditorChange={this.handleEditorChange}
                         />                

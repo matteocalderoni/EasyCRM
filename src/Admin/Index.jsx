@@ -16,15 +16,14 @@ function Admin({ match }) {
     // }, []);
 
     return (
-        <div className="p-4">
-            <div className="container-fluid mb-5">
-                <Switch>
-                    <Route exact path={path} component={Overview} />                    
-                    <PrivateRoute path={`${path}/users`} roles={[Role.Admin]} component={Users} />
-                    <PrivateRoute path={`${path}/sites`} component={AppSites} />
-                </Switch>
-            </div>
-        </div>
+        <div className="mt-4 mb-5 pb-5">
+            <Switch>
+                <Route exact path={path} component={Overview} />                    
+                <PrivateRoute path={`${path}/users`} roles={[Role.Admin]} component={Users} />
+                <PrivateRoute path={`${path}/sites`} component={AppSites} />
+            </Switch>
+            <hr className="mt-5" />
+        </div>        
     );
 }
 

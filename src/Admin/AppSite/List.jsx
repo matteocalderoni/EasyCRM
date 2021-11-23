@@ -49,17 +49,18 @@ function List({ match }) {
                 <li className="breadcrumb-item active">Elenco Siti</li>
             </ul>
             <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
-                <h1 className="text-blue-900 font-bold">Gestione Siti</h1>
+                <h1 className="text-xl text-blue-900 font-bold">Gestione Siti</h1>
                 <p className="text-muted">In questa sezione puoi consultare i tuoi siti: per ogni sito puoi modificare immagini e testi. Per creare un nuovo sito clicca sul bottone in basso (se non visualizzi il bottone non disponi dei permessi necessari).<br />
                 Tramite la sezione 'Dettagli' puoi modificare le informazioni relative ai tuoi riferimenti.<br />
                 Tramite la sezione 'Lingue' puoi visualizzare, modificare e aggiungere le lingue del relativo sito.<br />
-                Tramite la sezione 'Pagine' puoi visualizzare, modificare e aggiungere le pagine del relativo sito.</p>
+                Tramite la sezione 'Pagine' puoi visualizzare, modificare e aggiungere le pagine del relativo sito.<br />
+                Tramite la sezione 'Percorsi' puoi visualizzare, modificare e aggiungere i percorsi da inserire nelle pagine.</p>
             </div>
             
             <div className="shadow rounded-xl mt-4 p-4">
                 <Row className="bg-blue-400 rounded-top p-2">                    
                     <Col sm={2} className="text-white text-bold">Logo</Col>
-                    <Col sm={8} className="text-white text-bold">Nome del Sito e descrizione</Col>
+                    <Col sm={8} className="text-white text-bold">Nome del Sito</Col>
                     <Col sm={2} className="text-white text-bold text-right">#{appSites.length}</Col>
                 </Row>       
 
@@ -106,9 +107,9 @@ function List({ match }) {
             </div>
             {user.role === Role.Admin && 
             <Navbar fixed="bottom" className="flex bg-blue-800">
-                <Nav className="flex space-x-3 text-sm font-medium mr-auto">
-                    <Link to={`${path}/add/0`} className="flex items-center justify-center rounded-md bg-green-200 p-1 text-green-900">
-                        <IoMdAddCircle /> Crea un nuovo Sito
+                <Nav className="flex space-x-2 text-sm font-medium mr-auto">
+                    <Link to={`${path}/add/0`} className="w-1/2 flex p-2 items-center justify-center rounded-md bg-green-500">
+                        <IoMdAddCircle className="mr-2 text-xl" /> Crea Sito
                     </Link>
                 </Nav>              
             </Navbar>}

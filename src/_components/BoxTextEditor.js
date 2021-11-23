@@ -4,7 +4,7 @@ import { Form, Button, ProgressBar,Navbar,Nav } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from './LanguageSelect';
 import { LanguageEditor } from './LanguageEditor';
-import {menuSettings,pluginsSettings,toolbarSettings } from '../_helpers/tinySettings';
+import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../_helpers/tinySettings';
 import { fetchWrapper } from '../_helpers';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
@@ -92,8 +92,8 @@ class BoxTextEditor extends React.Component {
                                         menubar: menuSettings,
                                         plugins: pluginsSettings,
                                         toolbar: toolbarSettings,
-                                        font_formats: "Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Montserrat=montserrat; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
-                                        content_style: "@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');",
+                                        font_formats: fontSettings,
+                                        content_style: styleSettings,
                                         images_upload_handler: this.tiny_image_upload_handler
                                     }}
                                     onEditorChange={this.handleTitleEditorChange}
@@ -131,8 +131,8 @@ class BoxTextEditor extends React.Component {
                                         menubar: menuSettings,
                                         plugins: pluginsSettings,
                                         toolbar: toolbarSettings,
-                                        font_formats: "Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Montserrat=montserrat; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
-                                        content_style: "@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');",
+                                        font_formats: fontSettings,
+                                        content_style: styleSettings,
                                         images_upload_handler: this.tiny_image_upload_handler
                                     }}
                                     onEditorChange={this.handleEditorChange}

@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Arvo&family=Comforter+Brush&family=Concert+One&family=Estonia&family=Exo+2:wght@200&family=Karla:wght@200&family=Lora&family=Montserrat:wght@200&family=Rakkas&family=Roboto:wght@300&family=Yatra+One&display=swap");
 
 body {
   margin: 0;

@@ -3,7 +3,7 @@ import { languageService, alertService } from '../../../_services';
 import { Uploader } from '../../../_components'
 import { Form, Button, Card, Image, Row, Col,ProgressBar } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
-import {menuSettings,pluginsSettings,toolbarSettings } from '../../../_helpers/tinySettings';
+import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../_helpers/fetch-wrapper';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
@@ -183,6 +183,8 @@ class SiteLanguageAddEdit extends React.Component {
                                     menubar: menuSettings,
                                     plugins: pluginsSettings,
                                     toolbar: toolbarSettings,
+                                    font_formats: fontSettings,
+                                    content_style: styleSettings, 
                                     images_upload_handler: this.tiny_image_upload_handler
                                 }}
                                 onEditorChange={this.handleEditorChange}

@@ -28,14 +28,16 @@ class PositionSelect extends Component {
          
     render() {      
       return ( 
-        <Form.Group>
+        <>
+        {this.state.selectedPosition && <Form.Group>
             <Form.Control as="select" value={this.state.selectedPosition} name="selectedPosition" onChange={this.handleChange}>
               <Form.Label>{this.state.label}</Form.Label>
                 {this.state.positions && this.state.positions.map(pos =>
                     <option key={pos.value} value={pos.value}>{pos.label}</option>
                 )}   
             </Form.Control>                
-        </Form.Group>
+        </Form.Group>}
+        </>
       ); 
     } 
   } 

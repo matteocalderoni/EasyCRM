@@ -16,7 +16,7 @@ function Home() {
                 Ti permette di creare rapidamente delle <b>nuove PAGINE</b> e con i <b>CONTENITORI</b> disponibili puoi rapidamente aggiungere testo, immagini e molto altro.</small>                
             </div>            
             <div className="md:flex mt-8">
-                <div className="m-2">
+                <div className="md:m-2">
                     <Card className="shadow">
                         <Card.Header className="bg-blue-50">
                             <Card.Title className="text-blue-900">Profilo utente</Card.Title>
@@ -32,7 +32,7 @@ function Home() {
                         </Card.Footer>                            
                     </Card>
                 </div>
-                <div className="m-2">
+                <div className="md:m-2 mt-2">
                     <Card className="flex shadow">
                         <Card.Header className="bg-blue-50">
                             <Card.Title className="text-blue-900">Dashboard</Card.Title>
@@ -51,14 +51,16 @@ function Home() {
                 </div>                
             </div>
 
-            <Card className="mart2">
+            <Card className="mt-2">
                 <Card.Header className="text-blue-800">
                     Note sui rilasci: tutti gli aggiornamenti vengono documentati in questa sezione.
                 </Card.Header>
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
-                            <b className="text-blue-800">Ver 1.4.0.19-preview (Novembre 2021)</b>: aggiunta di nuovi font per i testi (Montserrat).
+                            <b className="text-blue-800">Ver 1.4.0.19-preview (Novembre 2021)</b>: aggiunta di <b>12 nuovi font</b> per i testi (Abril Fatface, Arvo, Concert One, Karla, Lora, Montserrat, Rakkas, Roboto, Yatra One, Exo 2, Comforter Brush, Estonia).
+                            Aggiunto colore di sfondo per la pagina: tramite questa opzione è possibile selezionare un colore di sfondo per la pagina. 
+                            Aggiunto colore per la barra di navigazione: colore diverso per ogni pagina.
                         </li>
                         <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.4.0.18-preview (Novembre 2021)</b>: aggiunta dell'upload immagini nei contenitori di testo. Da adesso è possibile inserire delle immagini direttamente nei paragrafi di testo.

@@ -3,7 +3,7 @@ import { languageService, alertService } from '../_services'
 import { Editor } from "@tinymce/tinymce-react";
 import { Button,ProgressBar, Col, Form, Navbar,Nav } from 'react-bootstrap'
 import parse from 'html-react-parser';
-import {menuSettings,pluginsSettings,toolbarSettings } from '../_helpers/tinySettings';
+import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../_helpers/tinySettings';
 import { fetchWrapper } from '../_helpers';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
@@ -75,6 +75,8 @@ function LanguageEditor(props) {
                     menubar: menuSettings, // 'file edit view insert format tools table tc help',
                     plugins: pluginsSettings, // baseEditorPlugins,
                     toolbar: toolbarSettings, // fullEditorToolbar
+                    font_formats: fontSettings,
+                    content_style: styleSettings,
                     images_upload_handler: tiny_image_upload_handler
                 }}
                 onEditorChange={(content, editor) => { handleEditorChange(content, editor) }}                
