@@ -13,7 +13,7 @@ function DeleteConfirmation({ onConfirm }) {
 
     return (
         <>
-            <Button title="Elimina" variant="danger" className="ml-1" onClick={() => setIsOpen(true)}>
+            <Button title="Elimina" variant="danger" className="rounded-full ml-1" onClick={() => setIsOpen(true)}>
                 <BsTrash />
             </Button> 
             <Modal show={isOpen} backdrop="static" keyboard={false}>

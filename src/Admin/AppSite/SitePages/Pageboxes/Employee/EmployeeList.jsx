@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Jumbotron, Card, Image, Row, Col, ProgressBar } from 'react-bootstrap';
-import { appSiteService } from '../../../../_services';
+import { appSiteService } from '../../../../../_services';
 import { EmployeeAddEdit } from './EmployeeAddEdit';
 import parse from 'html-react-parser';
-import { DeleteConfirmation } from '../../../../_components/DeleteConfirmation';
+import { DeleteConfirmation } from '../../../../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_API_URL}/`;
 

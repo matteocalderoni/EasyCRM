@@ -1,7 +1,8 @@
 import React from 'react';
 import { surveyService, alertService } from '../../../_services';
 import { Form, Button, Card, ProgressBar } from 'react-bootstrap'
-import { CompactPicker } from 'react-color';
+import { CompactPicker, SliderPicker } from 'react-color';
+import { SurveyTypeSelect } from '../../../_components/SurveyTypeSelect';
 
 class SiteSurveyAddEdit extends React.Component {
 
@@ -39,7 +40,7 @@ class SiteSurveyAddEdit extends React.Component {
     }
     
     handleChangeNumber(evt) {
-        const value = parseInt(evt.target.value);
+        const value = parseFloat(evt.target.value);
         this.setState({
             siteSurvey: {
                 ...this.state.siteSurvey,
@@ -53,6 +54,15 @@ class SiteSurveyAddEdit extends React.Component {
             siteSurvey: {
                 ...this.state.siteSurvey,
                 [evt.target.name]: evt.target.checked                 
+            }          
+        });
+    }
+
+    handleSurveyTypeChange(_surveyTypeId) {
+        this.setState({
+            siteSurvey: {
+                ...this.state.siteSurvey,
+                surveyTypeId: _surveyTypeId                 
             }          
         });
     }
@@ -138,6 +148,14 @@ class SiteSurveyAddEdit extends React.Component {
                         <ProgressBar animated now={100} />
                     </div>}
                     <Form onSubmit={this.onSubmit}>
+                    {!this.state.loading &&
+                        <Form.Group className="md:ml-2">
+                            <Form.Label className="text-xl">Tipo di <b>Percorso</b></Form.Label>
+                            <SurveyTypeSelect pageType={this.state.siteSurvey.surveyType} onSurveyTypeChange={(surveyType) => this.handleSurveyTypeChange(+surveyType)} label={'Tipo di percorso'} />
+                            <Form.Text className="text-muted">
+                                Ci sono diversi tipi di pagina: default è per le pagine disponibili nel menù di navigazione, privacy per informativa e landing per pagine di 'approdo' (tramite collegamento).
+                            </Form.Text>
+                        </Form.Group>}
                         <Form.Group>
                             <Form.Label>Nome Percorso</Form.Label>
                             <input type="text" className="form-control focus:ring-2 focus:ring-blue-600" name="siteSurveyName" value={this.state.siteSurvey.siteSurveyName} onChange={this.handleChange} maxLength={200} />
@@ -154,18 +172,32 @@ class SiteSurveyAddEdit extends React.Component {
                             </Form.Text>
                         </Form.Group> 
                         {this.state.siteSurvey && !this.state.loading && 
-                        <Form.Group>
-                            <CompactPicker
-                                color={ this.state.siteSurvey.boxColor }
-                                onChangeComplete={ this.handleColorChange }
-                            />
+                        <Form.Group className="flex flex-col">
+                            <Form.Label className="text-xl">Colore di <b>Sfondo</b></Form.Label>
+                            <div className="flex flex-col md:flex-row ml-2 mt-2">
+                                <div className="flex-none m-2 mt-0">
+                                    <CompactPicker                                        
+                                        color={ this.state.siteSurvey.boxColor }
+                                        onChangeComplete={ this.handleColorChange } />
+                                </div>                                
+                                <div className="flex-grow m-2">
+                                    <SliderPicker
+                                        color={ this.state.siteSurvey.boxColor }
+                                        onChangeComplete={ this.handleColorChange } />
+                                </div>
+                            </div>
                             <Form.Text className="text-muted">
                                 Colore di sfondo per i contenitori di testo. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
                             </Form.Text>
                         </Form.Group>}    
                         <Form.Group>
                             <Form.Label>Prezzo Percorso</Form.Label>
-                            <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="price" value={this.state.siteSurvey.price} onChange={this.handleChangeNumber} />
+                            <input 
+                                type="number" 
+                                inputMode="decimal"
+                                className="form-control focus:ring-2 focus:ring-blue-600" 
+                                name="price" 
+                                value={this.state.siteSurvey.price} onChange={this.handleChangeNumber} />
                             <Form.Text className="text-muted">
                                 Assegnare un prezzo valido per tutto il percorso. 
                             </Form.Text>

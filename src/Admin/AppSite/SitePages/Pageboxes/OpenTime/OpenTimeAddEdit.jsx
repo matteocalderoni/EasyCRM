@@ -2,9 +2,9 @@ import React from 'react';
 import { TimePicker } from 'antd';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import * as moment from 'moment'
-import { appSiteService, alertService } from '../../../../_services';
+import { appSiteService, alertService } from '../../../../../_services';
 import { Form, Button, Modal } from 'react-bootstrap'
-import { CardSizes } from '../../../../_helpers/cardSize';
+import { CardSizes } from '../../../../../_helpers/cardSize';
 
 const weekDays = [
     { value: 1, label: 'Lunedì'},

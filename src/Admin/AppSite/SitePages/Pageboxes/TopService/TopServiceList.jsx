@@ -1,9 +1,9 @@
 import React from 'react';
-import { Container, Jumbotron, Card, Row, Col, ProgressBar } from 'react-bootstrap';
-import { appSiteService } from '../../../../_services';
+import { Container, Card, Row, Col, ProgressBar } from 'react-bootstrap';
+import { appSiteService } from '../../../../../_services';
 import { TopServiceAddEdit } from './TopServiceAddEdit';
 import parse from 'html-react-parser';
-import { DeleteConfirmation } from '../../../../_components/DeleteConfirmation';
+import { DeleteConfirmation } from '../../../../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -54,10 +54,10 @@ class TopServiceList extends React.Component{
     render() {
         return (
             <Container fluid>
-                <Jumbotron className="small-jumbotron">                    
-                    <p className="text-muted">Con questo contenitore puoi creare un elenco di card con immagine e testo.<br />
+                <div className="border">                    
+                    <p className="text-muted">Con questo contenitore puoi creare un elenco di card con immagine e testo.
                     Puoi scegliere la dimensione dei riquadri per creare layout differenti.</p>
-                </Jumbotron>
+                </div>
                 <TopServiceAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} topServiceId={0} handleAddEdit={this.handleAddEdit} />
                 {this.state.loading && <div className="text-center mart2">
                     <ProgressBar animated now={100} />

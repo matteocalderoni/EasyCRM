@@ -46,7 +46,7 @@ function SitePageList (props){
             {sitePages && sitePages.map(sitePage =>                                    
                 <div className="block mt-2" key={sitePage.sitePageId}>
                     <Card style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} text="white">
-                        <Card.Header className="text-center bg-blue-500">
+                        <Card.Header className="bg-blue-500">
                             <Card.Title className="md:flex">
                                 <div className="flex-none">
                                     # {sitePage.sortId} 
@@ -63,10 +63,10 @@ function SitePageList (props){
                             <Card.Text>                                
                                 {sitePage.slideText && parse(sitePage.slideText)}
                             </Card.Text>                             */}
-                            <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-md bg-blue-200 mt-2 p-1 text-blue-900">
+                            <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-full bg-blue-200 mt-2 p-1 text-blue-900">
                                 <BsPencil className="mr-2" /> modifica pagina
                             </Link>
-                            <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
+                            <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
                                 <FaBoxes className="mr-2" /> gestione contenuti
                             </Link>
                             {sitePage.sitePageId === 1 && 
@@ -74,7 +74,7 @@ function SitePageList (props){
                                 <p className="text-red-400">La pagina iniziale non può essere eliminata.</p>
                             </div>}                            
                             {sitePage.sitePageId > 1 &&
-                            <div className="mt-2 rounded block bg-red-500">
+                            <div className="mt-2 rounded-full block bg-red-500">
                                 <DeleteConfirmation onConfirm={() => deleteSitePage(sitePage)} /> Elimina
                             </div>}
                         </Card.Body>

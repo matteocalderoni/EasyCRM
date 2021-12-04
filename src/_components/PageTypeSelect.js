@@ -29,7 +29,6 @@ class PageTypeSelect extends Component {
         <>
         <Form.Group>
             <Form.Control as="select" value={this.state.selectedPageType} name="selectedPageType" onChange={this.handleChange}>
-              <Form.Label>{this.state.label}</Form.Label>
                 {this.state.pageTypes && this.state.pageTypes.map(pageType =>
                     <option key={pageType.value} value={pageType.value}>{pageType.label}</option>
                 )}   

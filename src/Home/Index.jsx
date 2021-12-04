@@ -57,6 +57,17 @@ function Home() {
                 </Card.Header>
                 <Card.Body>
                     <ul className="list-group">
+                    <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.4.0.20-preview (Dicembre 2021)</b>: 
+                            <ul className="list-disc ml-3">
+                                <li>aggiunta selezione posizione della barra di navigazione (fisso sopra o sotto, o scorrevole con la pagina).</li>
+                                <li>nuovo layout per la gestione dei contenitori nella pagina: adesso è possibile espandere tutti i contenitori in anteprima</li>
+                                <li>aggiunto il tipo pagina: tramite questa funzione si possono creare pagine <b>Landing</b> (di approdo) per collegare i contenitori e creare percorsi di navigazione personalizzati</li>                            
+                                <li>aggiunta immagine di sfondo per i contenitori</li>   
+                                <li>aggiunta contenitore <b>Slideshow</b>: presenta le immagini con una comoda slideshow</li>
+                                <li>preview: avanzamento dei lavori sui percorsi. Nota: aggiunta immagine per le risposte e risposta con upload file.</li>                         
+                            </ul>                            
+                        </li>
                         <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.4.0.19-preview (Novembre 2021)</b>: aggiunta di <b>12 nuovi font</b> per i testi (Abril Fatface, Arvo, Concert One, Karla, Lora, Montserrat, Rakkas, Roboto, Yatra One, Exo 2, Comforter Brush, Estonia).
                             Aggiunto colore di sfondo per la pagina: tramite questa opzione è possibile selezionare un colore di sfondo per la pagina. 

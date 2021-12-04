@@ -38,7 +38,7 @@ class PageBoxModal extends React.Component {
     render() {
         return (            
           <>
-            <Button variant="primary" onClick={this.handleShow}>
+            <Button className="bg-blue-500 text-white rounded-full" onClick={this.handleShow}>
                 {this.state.pageBox.pageBoxId > 0 && <BsPencil title="Modifica il contenitore" />} 
                 {this.state.pageBox.pageBoxId == 0 && <BsPlus title="Aggiungi un nuovo contenitore" />}                
             </Button>

@@ -5,9 +5,10 @@ import { Form, Button, Card, Image, ProgressBar,Row,Col,Navbar,Nav } from 'react
 import { BoxTypes,CardSizes } from '../../../../_helpers'
 import { LanguageSelect } from '../../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../../_components/LanguageEditor';
-import { CompactPicker } from 'react-color';
+import { CompactPicker,SliderPicker } from 'react-color';
 import { FaSave} from 'react-icons/fa';
 import { SiteSurveySelect } from '../../../../_components/SiteSurveySelect';
+import parse from 'html-react-parser';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -33,7 +34,9 @@ class PageBoxAddEdit extends React.Component {
                 isPublished: true
             },
             languageCode: '',
-            loading: false            
+            sitePages: [],
+            loading: false,
+            loadingPages: true                         
          };
 
         this.handleChange = this.handleChange.bind(this);
@@ -42,6 +45,17 @@ class PageBoxAddEdit extends React.Component {
     }
 
     componentDidMount() {
+        // get sub pages 
+        appSiteService.getPagesOfAppSite(this.props.appSiteId,-1).then((x) => { 
+            if (x.totalCount > 0) {
+                // Filter current page
+                this.setState({                
+                    sitePages: x.result,
+                    loadingPages: false
+                })
+            } else this.setState({sitePages: [], loadingPages: false})            
+        });
+
         this.handleOpen()
     }
 
@@ -111,6 +125,15 @@ class PageBoxAddEdit extends React.Component {
         });
         //this.setState({ background: color.hex });
     };
+
+    handleFieldReset = (field) => {
+        this.setState({
+            pageBox: {
+                ...this.state.pageBox,
+                [field]: ''                 
+            }          
+        });
+    }
 
     handleLanguageCode = (code) => {        
         this.setState({ 
@@ -198,20 +221,52 @@ class PageBoxAddEdit extends React.Component {
                                 I tipi servono per impostare il formato e le proprietà del contenitore.
                             </Form.Text>
                         </Form.Group>
-                            
-                        {this.state.pageBox && this.state.pageBox.boxType && (this.state.pageBox.boxType === 8 || this.state.pageBox.boxType === 9) &&
-                        <div className="flex space-x-2 text-center mart2">
-                            <Image className="w-32" src={baseImageUrl+this.state.pageBox.imageUrl} fluid />
-                            <div>
-                                <Uploader prefix={this.state.pageBox.appSiteId} fileName={this.state.pageBox.imageUrl} onFileNameChange={this.handleFileName} />      
-                                <small>Utilizzare immagini con formato 640 X 640 px.</small>
-                            </div>
-                        </div>}                                 
+                        <div className="flex space-x-4 mt-2">
+                            {this.state.pageBox && this.state.pageBox.boxType &&
+                            <div className="flex-1">
+                                <div className="flex flex-col">
+                                    <Form.Label className="font-bold">Seleziona immagine {(this.state.pageBox.boxType !== 8 && this.state.pageBox.boxType !== 9) ? 'di Sfondo' : ''}</Form.Label>
+                                    {this.state.pageBox.imageUrl && 
+                                    <Image className="w-32" src={baseImageUrl+this.state.pageBox.imageUrl} fluid />}
+                                    {this.state.pageBox.imageUrl !== '' &&
+                                    <Button onClick={() => this.handleFieldReset('imageUrl')} className="mt-2 bg-red-400">
+                                        Rimuovi immagine
+                                    </Button>}
+                                </div>
+                                {this.state.pageBox.imageUrl === '' &&
+                                <div>                                    
+                                    <Uploader prefix={this.state.pageBox.appSiteId} fileName={this.state.pageBox.imageUrl} onFileNameChange={this.handleFileName} />      
+                                    <small>Utilizzare immagini con formato 640 X 640 px.</small>
+                                </div>}
+                            </div>}                                 
+
+                            {this.state.pageBox && !this.state.loading && 
+                            <Form.Group className="flex-1 flex flex-col"> 
+                                <Form.Label className="font-bold">Seleziona colore di Sfondo</Form.Label>
+                                <div className="flex-none m-2 mt-0">
+                                    <CompactPicker                                        
+                                        color={ this.state.pageBox.boxColor }
+                                        onChangeComplete={ (color) => this.handleColorChange(color) } />
+                                </div>                                
+                                <div className="flex-grow m-2">
+                                    <SliderPicker
+                                        color={ this.state.pageBox.boxColor }
+                                        onChangeComplete={ (color) => this.handleColorChange(color) } />
+                                </div>                                                                        
+                                {this.state.pageBox.boxColor !== '' &&
+                                <Button onClick={() => this.handleFieldReset('boxColor')} className="mt-2 bg-red-400">
+                                    Rimuovi colore
+                                </Button>}
+                                <Form.Text className="text-muted">
+                                    Colore di sfondo per i contenitori di testo. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
+                                </Form.Text>
+                            </Form.Group>}
+                        </div>
                         
                         <Row>
                             <Col sm={6}>
                                 <Form.Group>
-                                    <Form.Label>Ordinamento</Form.Label>
+                                    <Form.Label className="font-bold">Ordinamento</Form.Label>
                                     <input type="number" className="form-control" name="sortId" value={this.state.pageBox.sortId} onChange={this.handleChangeNumber}  />
                                     <Form.Text className="text-muted">
                                         Valore per ordinamento crescente dei contenitori nella pagina. E' consigliato utilizzare valori con step di 10 (10,10,30,ecc) per avere la possibilità di inserire pagine intermedie in futuro.
@@ -221,10 +276,15 @@ class PageBoxAddEdit extends React.Component {
                             <Col sm={6}>
                                 {!this.state.loading && this.state.languageCode == '' &&
                                 <Form.Group>
-                                    <Form.Label>Titolo</Form.Label>                                    
-                                    <input type="text" className="form-control" name="title" value={this.state.pageBox.title} onChange={this.handleChange}  />
+                                    <Form.Label className="font-bold">Titolo</Form.Label>                                    
+                                    {this.state.pageBox.pageBoxId > 0 && this.state.pageBox.boxType === 1 &&
+                                    <div className="ring-2 rounded-lg p-1">
+                                        {parse(this.state.pageBox.title)}
+                                    </div>}
+                                    {(this.state.pageBox.pageBoxId < 1 || this.state.pageBox.boxType !== 1) && 
+                                    <input type="text" className="form-control" name="title" value={this.state.pageBox.title} onChange={this.handleChange}  />}
                                     <Form.Text className="text-muted">
-                                            Titolo del contenuto. Attenzione possono comparire caratteri speciali relativi alla formattazione del testo, in tal caso utilizzare anteprima di contenitori per le modifiche.
+                                            Titolo del contenuto. Attenzione una volta creato il contenitore testo le modifiche al titolo sono valide solo da anteprima.
                                     </Form.Text>
                                 </Form.Group>}                                       
 
@@ -241,33 +301,34 @@ class PageBoxAddEdit extends React.Component {
                             </Col>
                         </Row>
                                                 
-                        <Row>
-                            <Col sm={6}>
-                                <Form.Group>
-                                    <Form.Label>Dimensione</Form.Label>
-                                    <Form.Control as="select" value={this.state.pageBox.cardSize} name="cardSize" onChange={this.handleChangeNumber}>
-                                        <option value={0}>Seleziona una dimensione</option>
-                                        {CardSizes && CardSizes.map(cardSize =>
-                                            <option key={cardSize.value} value={parseInt(cardSize.value)}>{cardSize.label}</option>
-                                        )}   
-                                    </Form.Control>
-                                    <Form.Text className="text-muted">
-                                        I tipi servono per impostare la dimensionw del contenitore.
-                                    </Form.Text>
-                                </Form.Group>      
-                            </Col>
-                            <Col sm={6}>
-                                {this.state.pageBox && !this.state.loading && <Form.Group>
-                                    <CompactPicker
-                                        color={ this.state.pageBox.boxColor }
-                                        onChangeComplete={ this.handleColorChange }
-                                    />
-                                    <Form.Text className="text-muted">
-                                        Colore di sfondo per i contenitori di testo. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
-                                    </Form.Text>
-                                </Form.Group>}
-                            </Col>
-                        </Row>
+                        <Form.Group>
+                            <Form.Label>Dimensione</Form.Label>
+                            <Form.Control as="select" value={this.state.pageBox.cardSize} name="cardSize" onChange={this.handleChangeNumber}>
+                                <option value={0}>Seleziona una dimensione</option>
+                                {CardSizes && CardSizes.map(cardSize =>
+                                    <option key={cardSize.value} value={parseInt(cardSize.value)}>{cardSize.label}</option>
+                                )}   
+                            </Form.Control>
+                            <Form.Text className="text-muted">
+                                I tipi servono per impostare la dimensionw del contenitore.
+                            </Form.Text>
+                        </Form.Group>      
+                        
+                        {this.state.pageBox && this.state.sitePages && !this.state.loadingPages && 
+                        <Form.Group>
+                            <Form.Label className="text-xl">Landing Page (pagina di approdo):</Form.Label>
+                            <Form.Control as="select" value={this.state.pageBox.landingPageId} name="landingPageId" onChange={this.handleChangeNumber}>
+                                <option value={undefined}>Nessun collegamento</option>
+                                {this.state.sitePages && this.state.sitePages.map(landingPage =>
+                                    <option key={landingPage.sitePageId} value={parseInt(landingPage.sitePageId)}>{landingPage.titleUrl}</option>
+                                )}   
+                            </Form.Control>
+                            <Form.Text className="text-muted">
+                                Utilizzare la funzione 'LandingPage' per trasformare il contenitore in un collegamento a una pagina di approdo (sono valide tutte le pagine, non solo le landing page).
+                                Selezionare il valore 'Nessun collegamento' per non attivare il collegamento. 
+                                Se viene selezionata una pagina il contenitore puntera alla pagina selezionata (viene aggiunto un bottone sul fondo del contenitore): è possibile annidare vari collegamenti creando percorsi all'interno delle pagine del sito basate sulle preferenze di utente.
+                            </Form.Text>
+                        </Form.Group>}
 
                         {this.state.pageBox.boxType === 10 && 
                         <Form.Group>
@@ -351,8 +412,8 @@ class PageBoxAddEdit extends React.Component {
                 </Card>
                 <Navbar fixed="bottom" variant="dark" bg="dark">
                     <Nav className="mr-auto">
-                        <Button onClick={this.onSubmit}  className="w-1/2 flex items-center justify-center rounded-md bg-green-500">
-                            <FaSave /> Salva modifiche
+                        <Button onClick={this.onSubmit}  className="flex items-center justify-center rounded-full bg-green-500">
+                            <FaSave className="mr-2" /> Salva
                         </Button>                         
                     </Nav>
                     <Form inline>

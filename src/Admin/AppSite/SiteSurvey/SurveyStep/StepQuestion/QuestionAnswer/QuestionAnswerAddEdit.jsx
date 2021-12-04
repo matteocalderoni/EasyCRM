@@ -1,8 +1,9 @@
 import React from 'react';
 import { surveyService, alertService } from '../../../../../../_services';
-import { Form, Button, Card, ProgressBar } from 'react-bootstrap'
+import { Form, Button, Card, ProgressBar, Image } from 'react-bootstrap'
+import { Uploader } from '../../../../../../_components';
 import { AnswerTypeSelect } from '../../../../../../_components/AnswerTypeSelect'
-import { CompactPicker } from 'react-color';
+import { CompactPicker,SliderPicker } from 'react-color';
 import { Editor } from "@tinymce/tinymce-react";
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../../../../_helpers/fetch-wrapper';
@@ -56,7 +57,7 @@ class QuestionAnswerAddEdit extends React.Component {
     }
     
     handleChangeNumber(evt) {
-        const value = parseInt(evt.target.value);
+        const value = parseFloat(evt.target.value);
         this.setState({
             questionAnswer: {
                 ...this.state.questionAnswer,
@@ -102,6 +103,15 @@ class QuestionAnswerAddEdit extends React.Component {
         });
     }
 
+    handleFieldReset = (field) => {
+        this.setState({
+            questionAnswer: {
+                ...this.state.questionAnswer,
+                [field]: ''                 
+            }          
+        });
+    }
+
     handleOpen() {    
         if (this.props.questionAnswerId > 0) {
             this.setState({loading: true})
@@ -121,6 +131,24 @@ class QuestionAnswerAddEdit extends React.Component {
         } else {
             this.createQuestionAnswer();            
         }
+    }
+
+    handleFileName = (fileName) => {        
+        this.setState({ 
+            questionAnswer: {
+                ...this.state.questionAnswer,
+                imageUrl: fileName
+            }
+        });        
+    }
+
+    handleFieldRemove = (field) => {
+        this.setState({
+            sitePage: {
+                ...this.state.sitePage,
+                [field]: ''                 
+            }          
+        });
     }
 
     tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
@@ -186,7 +214,9 @@ class QuestionAnswerAddEdit extends React.Component {
                             <Form.Label>Tipo Risposta</Form.Label>
                             <AnswerTypeSelect value={this.state.questionAnswer.answerType} onChange={(value) => this.handleChangeAnswerType(value)} />
                             <Form.Text className="text-muted">
-                                Una risposta di testo propone una scelta, una di numero un valore compreso nell'intervallo selezionato.
+                                {this.state.questionAnswer.answerType === 1 && <p>Una risposta di <b>testo</b> propone una scelta</p>}
+                                {this.state.questionAnswer.answerType === 2 && <p>Una risposta di tipo <b>numero</b> permette di inserire un valore compreso nell'intervallo selezionato</p>}
+                                {this.state.questionAnswer.answerType === 3 && <p>Una risposta di tipo <b>upload</b> permette di inviare un file.</p>}
                             </Form.Text>
                         </Form.Group>    
                         {!this.state.loading && this.state.languageCode == '' &&
@@ -250,19 +280,39 @@ class QuestionAnswerAddEdit extends React.Component {
                                 Note visualizzate nel fondo dello risposta: utilizzare per aiutare nella scelta di utente.
                             </Form.Text>
                         </Form.Group>    
+                        {this.state.questionAnswer && 
+                        <div className="flex flex-col space-x-2 mart2">
+                            <Form.Label className="font-bold">Immagine</Form.Label>
+                            {this.state.questionAnswer.imageUrl &&
+                            <Image className="w-32" src={baseImageUrl+this.state.questionAnswer.imageUrl} fluid />}
+                            <Uploader prefix={this.state.questionAnswer.appSiteId} fileName={this.state.questionAnswer.imageUrl} onFileNameChange={this.handleFileName} />      
+                            <small>Utilizzare immagini ottimizzate per un caricamento rapido.</small>
+                            <Button onClick={() => this.handleFieldRemove('imageUrl')} className="mt-2 bg-red-400">
+                                    Rimuovi immagine
+                            </Button>        
+                        </div>}                                 
                         {this.state.questionAnswer && !this.state.loading && 
-                        <Form.Group>
-                            <CompactPicker
-                                color={ this.state.questionAnswer.boxColor }
-                                onChangeComplete={ this.handleColorChange }
-                            />
+                        <Form.Group className="flex flex-col mt-2">
+                            <Form.Label className="font-bold">Colore di Sfondo</Form.Label>
+                            <div className="flex flex-col md:flex:row">                            
+                                <div className="flex-none m-2 mt-0">
+                                    <CompactPicker                                        
+                                        color={ this.state.questionAnswer.boxColor }
+                                        onChangeComplete={ (color) => this.handleColorChange(color) } />
+                                </div>                                
+                                <div className="flex-grow m-2">
+                                    <SliderPicker
+                                        color={ this.state.questionAnswer.boxColor }
+                                        onChangeComplete={ (color) => this.handleColorChange(color) } />
+                                </div>                                                                                                    
+                            </div>                            
                             <Form.Text className="text-muted">
                                 Colore di sfondo per i contenitori di testo. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
                             </Form.Text>
                         </Form.Group>}    
                         <Form.Group>
                             <Form.Label>Prezzo Risposta</Form.Label>
-                            <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="price" value={this.state.questionAnswer.price} onChange={this.handleChangeNumber} />
+                            <input type="number" inputMode="decimal" className="form-control focus:ring-2 focus:ring-blue-600" name="price" value={this.state.questionAnswer.price} onChange={this.handleChangeNumber} />
                             <Form.Text className="text-muted">
                                 Assegnare un prezzo valido per la risposta: : se utente risponde/seleziona la risposta viene aggiunto il valore al totale finale del percorso. . 
                             </Form.Text>

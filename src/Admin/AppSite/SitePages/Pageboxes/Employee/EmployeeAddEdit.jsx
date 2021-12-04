@@ -1,14 +1,14 @@
 import React from 'react';
-import { appSiteService, alertService } from '../../../../_services';
-import { Uploader } from '../../../../_components'
+import { appSiteService, alertService } from '../../../../../_services';
+import { Uploader } from '../../../../../_components'
 import { Image, Form, Button, Modal, Row, Col } from 'react-bootstrap'
-import { CardSizes } from '../../../../_helpers/cardSize';
+import { CardSizes } from '../../../../../_helpers/cardSize';
 import { Editor } from "@tinymce/tinymce-react";
-import { LanguageSelect } from '../../../../_components/LanguageSelect';
-import { LanguageEditor } from '../../../../_components/LanguageEditor';
-import { LanguageInput } from '../../../../_components/LanguageInput';
-import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../_helpers/tinySettings';
-import { fetchWrapper } from '../../../../_helpers/fetch-wrapper';
+import { LanguageSelect } from '../../../../../_components/LanguageSelect';
+import { LanguageEditor } from '../../../../../_components/LanguageEditor';
+import { LanguageInput } from '../../../../../_components/LanguageInput';
+import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../_helpers/tinySettings';
+import { fetchWrapper } from '../../../../../_helpers/fetch-wrapper';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;

@@ -7,6 +7,7 @@ class QuestionStyleSelect extends Component {
       super(props);
       this.state = {         
         questionStyles: [
+          {label: 'Seleziona', value: 0},
           {label: 'Elenco', value: 1},
           {label: 'Bottone', value: 2}
         ],
@@ -26,9 +27,8 @@ class QuestionStyleSelect extends Component {
          
     render() {      
       return ( 
-        <Form.Group>
+        <Form.Group>            
             <Form.Control as="select" value={this.state.selectedQuestionStyle} name="selectedQuestionStyle" onChange={this.handleChange}>
-              <Form.Label>{this.state.label}</Form.Label>
                 {this.state.questionStyles && this.state.questionStyles.map(questionStyle =>
                     <option key={questionStyle.value} value={questionStyle.value}>{questionStyle.label}</option>
                 )}   

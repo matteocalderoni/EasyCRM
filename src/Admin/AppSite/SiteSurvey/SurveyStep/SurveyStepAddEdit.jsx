@@ -2,7 +2,7 @@ import React from 'react';
 import { surveyService, alertService } from '../../../../_services';
 import { LanguageEditor } from '../../../../_components'
 import { Form, Button, Card, ProgressBar } from 'react-bootstrap';
-import { CompactPicker } from 'react-color';
+import { CompactPicker,SliderPicker } from 'react-color';
 import { Editor } from "@tinymce/tinymce-react";
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../../_helpers/fetch-wrapper';
@@ -48,7 +48,7 @@ class SurveyStepAddEdit extends React.Component {
     }
     
     handleChangeNumber(evt) {
-        const value = parseInt(evt.target.value);
+        const value = parseFloat(evt.target.value);
         this.setState({
             surveyStep: {
                 ...this.state.surveyStep,
@@ -209,17 +209,30 @@ class SurveyStepAddEdit extends React.Component {
                         </Form.Group>                 */}
                         {this.state.surveyStep && !this.state.loading && 
                         <Form.Group>
-                            <CompactPicker
-                                color={ this.state.surveyStep.boxColor }
-                                onChangeComplete={ this.handleColorChange }
-                            />
+                            <div className="flex flex-col md:flex:row">                            
+                                <div className="flex-none m-2 mt-0">
+                                    <CompactPicker                                        
+                                        color={ this.state.surveyStep.boxColor }
+                                        onChangeComplete={ (color) => this.handleColorChange(color) } />
+                                </div>                                
+                                <div className="flex-grow m-2">
+                                    <SliderPicker
+                                        color={ this.state.surveyStep.boxColor }
+                                        onChangeComplete={ (color) => this.handleColorChange(color) } />
+                                </div>                                                                                                    
+                            </div>
                             <Form.Text className="text-muted">
                                 Colore di sfondo per i contenitori di testo. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
                             </Form.Text>
                         </Form.Group>}    
                         <Form.Group>
                             <Form.Label>Prezzo Step</Form.Label>
-                            <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="price" value={this.state.surveyStep.price} onChange={this.handleChangeNumber} />
+                            <input 
+                                type="number" 
+                                inputMode="decimal"
+                                className="form-control focus:ring-2 focus:ring-blue-600" 
+                                name="price" 
+                                value={this.state.surveyStep.price} onChange={this.handleChangeNumber} />
                             <Form.Text className="text-muted">
                                 Assegnare un prezzo valido per lo Step. 
                             </Form.Text>

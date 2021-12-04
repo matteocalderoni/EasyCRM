@@ -4,8 +4,12 @@ module.exports = {
   theme: {
     extend: {},
   },
-  variants: {
-    extend: {},
+  variants: {    
+    extend: {
+      backgroundColor: ['checked', 'hover', 'focus'],
+      borderColor: ['checked', 'hover', 'focus'],
+      textColor: ['responsive', 'hover', 'focus', 'group-hover']
+    },
   },
   plugins: [],
 }

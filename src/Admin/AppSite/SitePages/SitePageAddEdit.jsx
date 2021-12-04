@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { appSiteService, alertService } from '../../../_services';
 import { Uploader,LanguageSelect,LanguageEditor,PositionSelect } from '../../../_components'
 import { Form, Button, Card, ProgressBar,Navbar, Nav, Image, Row, Col } from 'react-bootstrap'
-import { CompactPicker } from 'react-color';
+import { CompactPicker,SliderPicker } from 'react-color';
 import { Editor } from "@tinymce/tinymce-react";
 import { FaSave, FaLanguage, FaBoxes} from 'react-icons/fa';
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../_helpers/fetch-wrapper';
 import { PageTypeSelect } from '../../../_components/PageTypeSelect';
+import { NavPositionSelect } from '../../../_components/NavPositionSelect';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -91,6 +92,15 @@ class SitePageAddEdit extends React.Component {
             sitePage: {
                 ...this.state.sitePage,
                 logoPosition: position                
+            }          
+        });        
+    }
+
+    handleNavPosition = (position) => {
+        this.setState({ 
+            sitePage: {
+                ...this.state.sitePage,
+                navPosition: position                
             }          
         });        
     }
@@ -239,10 +249,58 @@ class SitePageAddEdit extends React.Component {
                         <ProgressBar animated now={100} />
                     </div>}
                     <div>
-                        {this.state.sitePage.sitePageId > 0 &&                    
-                        <div className="md:flex p-2 border rounded content-center">
-                            <div>
-                                <label className="text-xl">Immagine di <b>Sfondo</b>:</label>                                
+                        <div className="flex flex-col md:flex-row p-2 border rounded content-center">
+                            <div className="flex-1 p-1">
+                                {this.state.sitePage && this.state.sitePages && !this.state.loadingPages && 
+                                <Form.Group className="flex-1">
+                                    <Form.Label className="text-xl">Sotto Pagina di:</Form.Label>
+                                    <Form.Control as="select" value={this.state.sitePage.parentPageId} name="parentPageId" onChange={this.handleChangeNumber}>
+                                        <option value={undefined}>Radice</option>
+                                        {this.state.sitePages && this.state.sitePages.map(parentPage =>
+                                            <option key={parentPage.sitePageId} value={parseInt(parentPage.sitePageId)}>{parentPage.titleUrl}</option>
+                                        )}   
+                                    </Form.Control>
+                                    <Form.Text className="text-muted">
+                                        Utilizzare la funzione 'Sotto-Pagine' per creare dei gruppi nel menù di navigazione ed estendere i contenuti del sito.
+                                        Selezionare il valore 'radice' per impostare la pagina nel primo livello del menù (sempre visible). 
+                                        Non ci sono limiti ai sotto livelli che è possibile creare (Radice, livello 1, livello 2, livello N)
+                                    </Form.Text>
+                                </Form.Group>}
+
+                                {!this.state.loading &&
+                                <Form.Group className="flex-1 md:ml-2">
+                                    <Form.Label className="text-xl"><b>Tipo</b> di Pagina</Form.Label>
+                                    <PageTypeSelect pageType={this.state.sitePage.pageType} onPageTypeChange={(pageType) => this.handlePageTypeChange(+pageType)} label={'Tipo di pagina'} />
+                                    <Form.Text className="text-muted">
+                                        Ci sono diversi tipi di pagina: <b>default</b> è per le pagine disponibili nel menù di navigazione, <b>privacy</b> per 'informativa utilizzo dati'  e <b>landing</b> per pagine di 'approdo' (tramite collegamento).
+                                    </Form.Text>
+                                </Form.Group>}
+                            </div>
+
+                            <div className="flex-1 p-1">
+                                <Form.Group className="flex-1">
+                                    <Form.Label className="text-xl">Ordinamento</Form.Label>
+                                    <input type="number" className="form-control" name="sortId" value={this.state.sitePage.sortId} onChange={this.handleChangeNumber}  />
+                                    <Form.Text className="text-muted">
+                                        Le pagine vengono visualizzate in ordine crescente: inserire il numero corrispondente alla posizione della pagina. 
+                                        Anche le sotto-pagine utilizzano lo stesso metodo: la numerazione è relativa al gruppo di pagine.
+                                    </Form.Text>
+                                </Form.Group> 
+                                <Form.Group className="flex-1 md:m-2">
+                                    <Form.Label className="text-xl"><b>Titolo</b> della pagina</Form.Label>
+                                    <input type="text" className="form-control" name="titleUrl" value={this.state.sitePage.titleUrl} onChange={this.handleChange} maxLength={200} />
+                                    <Form.Text className="text-muted">
+                                        Titolo della pagina per selezione: non viene visualizzato nel sito, viene utilizzato solo per identificare la pagina (ad esempio in selezione sottopagine).
+                                        Utilizzare un nome diverso per ogni pagina: viene utilizzato come indirizzo della pagina per indicizzare le ricerche dei motori di ricerca come Google.
+                                    </Form.Text>
+                                </Form.Group>
+                            </div>
+                        </div>
+
+                        {this.state.sitePage.sitePageId > 0 && !this.state.loading &&                 
+                        <div className="md:flex p-2 mt-2 border rounded content-center">
+                            <div className="flex flex-col">
+                                <label className="text-xl"><b>Immagine</b> di Sfondo:</label>                                
                                 {this.state.sitePage && this.state.sitePage.imageUrl != '' &&
                                 <Image className="border rounded w-32 mb-2" src={baseImageUrl+this.state.sitePage.imageUrl} />}
                                 <Uploader prefix={this.state.sitePage.appSiteId} fileName={this.state.sitePage.imageUrl} onFileNameChange={this.handleFileName} />      
@@ -257,12 +315,18 @@ class SitePageAddEdit extends React.Component {
                             </div>                            
                             <div>
                             {this.state.sitePage && !this.state.loading && 
-                                <Form.Group>
-                                    <Form.Label className="text-xl">Colore per <b>Sfondo</b></Form.Label><br />
-                                    <CompactPicker
-                                        color={ this.state.sitePage.boxColor }
-                                        onChangeComplete={(color) => this.handleColorChange(color, 'boxColor') }
-                                    /><br />
+                                <Form.Group className="flex flex-col flex-1">
+                                    <Form.Label className="text-xl"><b>Colore</b> di Sfondo</Form.Label>
+                                    <div className="flex-none m-2 mt-0">
+                                        <CompactPicker                                        
+                                            color={ this.state.sitePage.boxColor }
+                                            onChangeComplete={ (color) => this.handleColorChange(color, 'boxColor') } />
+                                    </div>                                
+                                    <div className="flex-grow m-2">
+                                        <SliderPicker
+                                            color={ this.state.sitePage.boxColor }
+                                            onChangeComplete={ (color) => this.handleColorChange(color, 'boxColor') } />
+                                    </div>
                                     {this.state.sitePage && this.state.sitePage.boxColor != '' &&
                                         <Button onClick={() => this.handleColorRemove('boxColor')} className="bg-red-400 m-2">
                                             Rimuovi colore
@@ -276,73 +340,47 @@ class SitePageAddEdit extends React.Component {
                             </div>
                         </div>}
                         <div className="p-2 border rounded mt-2">                            
-                            <div className="md:flex">
-                                {this.state.sitePage && this.state.sitePages && !this.state.loadingPages && 
-                                <Form.Group>
-                                    <Form.Label className="text-xl">Sotto pagina di:</Form.Label>
-                                    <Form.Control as="select" value={this.state.sitePage.parentPageId} name="parentPageId" onChange={this.handleChangeNumber}>
-                                        <option value={undefined}>Radice</option>
-                                        {this.state.sitePages && this.state.sitePages.map(parentPage =>
-                                            <option key={parentPage.sitePageId} value={parseInt(parentPage.sitePageId)}>{parentPage.titleUrl}</option>
-                                        )}   
-                                    </Form.Control>
-                                    <Form.Text className="text-muted">
-                                        Utilizzare la funzione 'Sotto-Pagine' per creare dei gruppi nel menù di navigazione ed estendere i contenuti del sito.
-                                        Selezionare il valore 'radice' per impostare la pagina nel primo livello del menù. 
-                                        Non ci sono limiti ai sotto livelli che è possibile creare (Radice, livello 1, livello 2, livello N)
-                                    </Form.Text>
-                                </Form.Group>}
-
-                                {!this.state.loading &&
-                                <Form.Group className="md:ml-2">
-                                    <Form.Label className="text-xl">Tipo di <b>Pagina</b></Form.Label>
-                                    <PageTypeSelect pageType={this.state.sitePage.pageType} onPageTypeChange={(pageType) => this.handlePageTypeChange(+pageType)} label={'Tipo di pagina'} />
-                                    <Form.Text className="text-muted">
-                                        Ci sono diversi tipi di pagina: default è per le pagine disponibili nel menù di navigazione, privacy per informativa e landing per pagine di 'approdo' (tramite collegamento).
-                                    </Form.Text>
-                                </Form.Group>}
-                            </div>
-
-                            <div className="md:flex">
-                                <Form.Group className="md:m-2">
-                                    <Form.Label className="text-xl">Valore per Ordinamento</Form.Label>
-                                    <input type="number" className="form-control" name="sortId" value={this.state.sitePage.sortId} onChange={this.handleChangeNumber}  />
-                                    <Form.Text className="text-muted">
-                                        Le pagine vengono visualizzate in ordine crescente.
-                                    </Form.Text>
-                                </Form.Group> 
-                                <Form.Group className="md:m-2">
-                                    <Form.Label className="text-xl"><b>Titolo</b> della pagina</Form.Label>
-                                    <input type="text" className="form-control" name="titleUrl" value={this.state.sitePage.titleUrl} onChange={this.handleChange} maxLength={200} />
-                                    <Form.Text className="text-muted">
-                                        Titolo della pagina per selezione: non viene visualizzato nel sito, viene utilizzato solo per identificare la pagina (ad esempio in selezione sottopagine).
-                                    </Form.Text>
-                                </Form.Group>
-                            </div>
-                            
-                            <div className="flex">
+                                                        
+                            <div className="flex flex-col lg:flex-row">
 
                                 {this.state.sitePage && !this.state.loading && 
-                                <Form.Group>
-                                    <Form.Label className="text-xl">Colore per <b>Barra di navigazione</b> e <b>Fondo pagina</b></Form.Label><br />
-                                    <CompactPicker
-                                        color={ this.state.sitePage.navColor }
-                                        onChangeComplete={(color) => this.handleColorChange(color, 'navColor') }
-                                    />
-                                    {this.state.sitePage && this.state.sitePage.navColor != '' &&
+                                <Form.Group className="flex-1">
+                                    <div className="flex flex-col">
+                                        <Form.Label className="text-xl">Colore per <b>Navigazione</b> e <b>Fondo</b></Form.Label><br />
+                                        <div className="flex-none m-2 mt-0">
+                                            <CompactPicker                                        
+                                                color={ this.state.sitePage.navColor }
+                                                onChangeComplete={ (color) => this.handleColorChange(color, 'navColor') } />
+                                        </div>                                
+                                        <div className="flex-grow m-2">
+                                            <SliderPicker
+                                                color={ this.state.sitePage.navColor }
+                                                onChangeComplete={ (color) => this.handleColorChange(color, 'navColor') } />
+                                        </div>                                        
+                                        {this.state.sitePage && this.state.sitePage.navColor != '' &&
                                         <Button onClick={() => this.handleColorRemove('navColor')} className="bg-red-400 m-2">
                                             Rimuovi colore
                                         </Button>                                    
-                                    }
+                                        }
+                                    </div>
                                     <Form.Text className="text-muted">
                                         Colore di sfondo per il menù di navigazione: ogni pagina può avere un colore diverso. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
                                         Con il bottone rimuovi la barra di navigazione utilizzi i colori di default o il valore per tutto il sito.
                                     </Form.Text>
                                 </Form.Group>}
+
+                                {!this.state.loading &&
+                                <Form.Group className="flex-1 ml-2">
+                                    <Form.Label className="text-lg">Posizione <b>Navigazione</b></Form.Label>
+                                    <NavPositionSelect position={this.state.sitePage.navPosition} onPositionChange={(position) => this.handleNavPosition(+position)} label={'Posizione Navigazione'} />
+                                    <Form.Text className="text-muted">
+                                        Posizione della barra di navigazione: è possibile selezionare il comportamento del menù (fisso o scorrevole). Ogni pagina dispone della sua barra di navigazione ed è possibile creare delle varianti in base al contesto della pagina.
+                                    </Form.Text>
+                                </Form.Group>}
                                   
                                 {!this.state.loading &&
-                                <Form.Group>
-                                    <Form.Label>Posizione del logo nella slide</Form.Label>
+                                <Form.Group className="flex-1 ml-2">
+                                    <Form.Label className="text-lg">Posizione del <b>Logo nella slide</b></Form.Label>
                                     <PositionSelect position={this.state.sitePage.logoPosition} onPositionChange={(position) => this.handleLogoPosition(+position)} label={'Posizione del logo'} />
                                     <Form.Text className="text-muted">
                                         Posizione del logo nella slide della pagina. Ogni pagina dispone della sua slide ed è possibile creare delle varianti in base al contesto della pagina.
@@ -354,9 +392,9 @@ class SitePageAddEdit extends React.Component {
                     </div>    
 
                     {!this.state.loading && this.state.languageCode == '' && 
-                    <Form.Group>
-                        <Form.Label className="text-xl"><b>Titolo</b> per Menù Navigazione</Form.Label>                                
-                        <div className="editor-inline" style={{backgroundColor: this.state.sitePage.navColor}}>
+                    <Form.Group className="mt-2">
+                        <Form.Label className="text-xl"><b>Titolo</b> per Navigazione</Form.Label>                                
+                        <div className="border rounded-lg ring-2 ring-blue-200 p-1" style={{backgroundColor: this.state.sitePage.navColor}}>
                             <Editor
                                 apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                 initialValue={this.state.sitePage.titleNav}                                
@@ -402,7 +440,7 @@ class SitePageAddEdit extends React.Component {
                             <Form.Group>
                             <Form.Label className="text-xl">Titolo della Slide</Form.Label>
                             {/* <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} /> */}
-                            <div className="editor-inline">
+                            <div className="border rounded-lg ring-2 ring-blue-200 p-1">
                                 <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                     initialValue={this.state.sitePage.title}                                
@@ -440,7 +478,7 @@ class SitePageAddEdit extends React.Component {
                         {!this.state.loading && this.state.sitePage.sitePageId > 0 && this.state.languageCode == '' &&
                             <div>
                                 <label className="text-xl">Testo della Slide</label>
-                                <div className="editor-inline">
+                                <div className="border rounded-lg ring-2 ring-blue-200 p-1">
                                     <Editor
                                         apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                         initialValue={this.state.sitePage.slideText}      
@@ -489,18 +527,24 @@ class SitePageAddEdit extends React.Component {
             </Card>                    
             <Navbar fixed="bottom" className="flex bg-blue-800">
                 <Nav className="flex space-x-3 text-sm font-medium mr-auto">
-                    <Button onClick={() => this.onSubmit()} className="w-1/2 flex items-center justify-center rounded-md bg-green-500">
+                    <Button onClick={() => this.onSubmit()} className="flex items-center justify-center rounded-full bg-green-500">
                         <FaSave className="mr-2" /> Salva
                     </Button> 
                     {this.state.sitePage.sitePageId > 0 && 
                     <Link title="Vai a gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${this.state.sitePage.appSiteId}/${this.state.sitePage.sitePageId}`} 
-                        className="w-1/2 flex items-center justify-center rounded-md  bg-blue-400 text-white p-2 ml-5">
-                        <FaBoxes className="mr-2" /> Gestione Contenitori
+                        className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                        </svg>
+                        Gestione Contenitori
                     </Link>}
                     {this.state.sitePage.sitePageId > 0 && 
                     <Link to={`/admin/sites/edit/${this.state.sitePage.appSiteId}`}
-                        className="w-1/2 flex items-center justify-center rounded-md  bg-blue-500 text-white p-2">
-                        <FaLanguage className="mr-2" /> modifica sito
+                        className="flex items-center justify-center rounded-full  bg-blue-500 text-white p-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                        Modifica sito
                     </Link>}
                 </Nav>
                 <Form inline>

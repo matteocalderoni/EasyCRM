@@ -48,16 +48,16 @@ function List({ match }) {
                 <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
                 <li className="breadcrumb-item active">Elenco Siti</li>
             </ul>
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-2">
                 <h1 className="text-xl text-blue-900 font-bold">Gestione Siti</h1>
                 <p className="text-muted">In questa sezione puoi consultare i tuoi siti: per ogni sito puoi modificare immagini e testi. Per creare un nuovo sito clicca sul bottone in basso (se non visualizzi il bottone non disponi dei permessi necessari).<br />
-                Tramite la sezione 'Dettagli' puoi modificare le informazioni relative ai tuoi riferimenti.<br />
-                Tramite la sezione 'Lingue' puoi visualizzare, modificare e aggiungere le lingue del relativo sito.<br />
-                Tramite la sezione 'Pagine' puoi visualizzare, modificare e aggiungere le pagine del relativo sito.<br />
-                Tramite la sezione 'Percorsi' puoi visualizzare, modificare e aggiungere i percorsi da inserire nelle pagine.</p>
+                Tramite la sezione <b>Dettagli</b> puoi modificare le informazioni relative ai tuoi riferimenti. 
+                Tramite la sezione <b>Lingue</b> puoi visualizzare, modificare e aggiungere le lingue del relativo sito. 
+                Tramite la sezione <b>Pagine</b> puoi visualizzare, modificare e aggiungere le pagine del relativo sito. 
+                Tramite la sezione <b>Percorsi</b> puoi visualizzare, modificare e aggiungere i percorsi da inserire nelle pagine.</p>
             </div>
             
-            <div className="shadow rounded-xl mt-4 p-4">
+            <div className="shadow rounded-xl mt-2 p-2">
                 <Row className="bg-blue-400 rounded-top p-2">                    
                     <Col sm={2} className="text-white text-bold">Logo</Col>
                     <Col sm={8} className="text-white text-bold">Nome del Sito</Col>
@@ -79,20 +79,20 @@ function List({ match }) {
                         <b>{appSite.name}</b><br />
                         {/* <p className="text-grey">{appSite.description && parse(appSite.description)}</p> */}
                     </Col>
-                    <Col sm={4} className="mart2 text-center">
-                        <Link to={`${path}/edit/${appSite.appSiteId}`} title="Modifica sito" className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
-                            <BsPencil /> Modifica informazioni generali
+                    <Col sm={4}>
+                        <Link to={`${path}/edit/${appSite.appSiteId}`} title="Modifica sito" className="flex items-center justify-center rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
+                            <BsPencil /> Informazioni generali
                         </Link>
-                        <Link to={`${path}/sitepages/${appSite.appSiteId}`} title="Pagine del sito" className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
+                        <Link to={`${path}/sitepages/${appSite.appSiteId}`} title="Pagine del sito" className="flex items-center justify-center rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
                             <IoDocumentsOutline /> Gestione pagine
                         </Link>
-                        <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} title="Lingue del sito" className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
+                        <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} title="Lingue del sito" className="flex items-center justify-center rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
                             <FaLanguage /> Gestione lingue
                         </Link>
-                        <Link to={`${path}/sitesurveys/${appSite.appSiteId}`} title="Percorsi del sito" className="flex items-center justify-center rounded-md bg-blue-200 mt-1 p-1 text-blue-900">
+                        <Link to={`${path}/sitesurveys/${appSite.appSiteId}`} title="Percorsi del sito" className="flex items-center justify-center rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
                             <FaRoad /> Gestione percorsi
                         </Link>
-                        <div className="mt-2 rounded block bg-red-500">
+                        <div className="mt-2">
                             <DeleteConfirmation onConfirm={() => deleteAppSite(appSite.appSiteId)} />
                             {/* <Button onClick={() => deleteAppSite(appSite.appSiteId)} title="Elimina sito" className="btn btn-danger" disabled={appSite.isDeleting}>
                                 {appSite.isDeleting 
@@ -108,8 +108,11 @@ function List({ match }) {
             {user.role === Role.Admin && 
             <Navbar fixed="bottom" className="flex bg-blue-800">
                 <Nav className="flex space-x-2 text-sm font-medium mr-auto">
-                    <Link to={`${path}/add/0`} className="w-1/2 flex p-2 items-center justify-center rounded-md bg-green-500">
-                        <IoMdAddCircle className="mr-2 text-xl" /> Crea Sito
+                    <Link to={`${path}/add/0`} className="flex text-white p-2 items-center justify-center rounded-full bg-green-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Crea Sito
                     </Link>
                 </Nav>              
             </Navbar>}
