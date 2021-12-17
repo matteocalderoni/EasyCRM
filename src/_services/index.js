@@ -5,3 +5,5 @@ export * from './product.service';
 export * from './alert.service';
 export * from './language.service';
 export * from './survey.service';
+export * from './user.service';
+export * from './role.service';

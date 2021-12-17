@@ -26,7 +26,7 @@ function VerifyEmail({ history }) {
             .catch(() => {
                 setEmailStatus(EmailStatus.Failed);
             });
-    }, []);
+    });
 
     function getBody() {
         switch (emailStatus) {
@@ -34,6 +34,8 @@ function VerifyEmail({ history }) {
                 return <div>Verifying...</div>;
             case EmailStatus.Failed:
                 return <div>Verification failed, you can also verify your account using the <Link to="forgot-password">forgot password</Link> page.</div>;
+            default:
+                return <></>;
         }
     }
 

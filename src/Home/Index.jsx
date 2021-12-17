@@ -57,7 +57,15 @@ function Home() {
                 </Card.Header>
                 <Card.Body>
                     <ul className="list-group">
-                    <li className="list-group-item">
+                        <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.4.1.21 (Dicembre 2021)</b>: grosse novità in questo aggiornamento:                             
+                            <ul className="list-disc ml-3">
+                                <li>completamento dei percorsi: finalmente è possibile utilizzare i percorsi nei siti e creare moduli personalizzati per ottenere ordini di prodotti o sondaggi su specifiche tematiche. Aspettiamo i vostri feedback per migliorare continuamente il servizio.</li>
+                                <li><b>iscrizione utenti pubblici</b>: da adesso gli utenti che visitano il vostro sito possono registrarsi per ottenere funzionalità aggiuntive. Ad esempio effettuare ordini o visualizzare pagine o contenuti speciali. Le pagine e i contenitori possono essere attivate solo per gli utenti loggati.</li>
+                                <li><b>carrello per ordini</b>: è possibile effettuare ordini direttamente dal sito e visualizzare lo storico tramite la nuova sezione apposita.</li>                                                            
+                            </ul>                            
+                        </li>
+                        <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.4.0.20-preview (Dicembre 2021)</b>: 
                             <ul className="list-disc ml-3">
                                 <li>aggiunta selezione posizione della barra di navigazione (fisso sopra o sotto, o scorrevole con la pagina).</li>

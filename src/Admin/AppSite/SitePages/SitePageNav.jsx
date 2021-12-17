@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, Navbar, Nav, ProgressBar } from 'react-bootstrap';
+import { Container, Navbar, Nav, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 import { FcHome } from 'react-icons/fc';
-import { FaLanguage } from 'react-icons/fa';
 import { SitePageList } from './SitePageList';
 
 //const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;

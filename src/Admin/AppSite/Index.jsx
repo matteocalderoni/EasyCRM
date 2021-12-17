@@ -6,6 +6,7 @@ import { AddEdit } from './AddEdit';
 import { SitePages } from './SitePages';
 import { SiteLanguages } from './SiteLanguages';
 import { SiteSurveys } from './SiteSurvey'
+import { Users } from './Users';
 
 function AppSites({ match }) {
     const { path } = match;
@@ -18,6 +19,7 @@ function AppSites({ match }) {
             <Route path={`${path}/sitepages`} component={SitePages} />
             <Route path={`${path}/sitelanguages`} component={SiteLanguages} />
             <Route path={`${path}/sitesurveys`} component={SiteSurveys} />
+            <Route path={`${path}/users`} component={Users} />
         </Switch>
     );
 }

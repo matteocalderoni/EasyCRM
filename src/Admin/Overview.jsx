@@ -19,7 +19,7 @@ function Overview({ match }) {
                 <p>La piattaforma ti consente di creare un sito web e gestire i suoi contenuti in modo semplice e dinamico.</p>
             </div> 
             <div className="md:flex items-stretch mt-8">
-                {user.role === Role.Admin &&
+                {user.roles && user.roles.indexOf(Role.Admin) > -1 &&
                     <div className="m-2 self-auto">
                         <Card className="shadow">
                             <Card.Header className="bg-red-50">

@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom';
 import { Image, Container,ProgressBar, Row, Col, Navbar, Nav} from 'react-bootstrap';
 import { appSiteService, accountService } from '../../_services';
 import { Role } from '../../_helpers';
-import parse from 'html-react-parser';
 import { BsPencil } from 'react-icons/bs';
 import { IoDocumentsOutline } from 'react-icons/io5';
 import { FcHome } from 'react-icons/fc';
-import { IoMdAddCircle } from 'react-icons/io';
-import { FaRoad, FaLanguage} from 'react-icons/fa';
+import { FaUser, FaRoad, FaLanguage} from 'react-icons/fa';
 import { DeleteConfirmation } from '../../_components/DeleteConfirmation';
+import parse from 'html-react-parser';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -49,12 +48,7 @@ function List({ match }) {
                 <li className="breadcrumb-item active">Elenco Siti</li>
             </ul>
             <div className="shadow rounded-xl mt-2 bg-gray-100 p-2">
-                <h1 className="text-xl text-blue-900 font-bold">Gestione Siti</h1>
-                <p className="text-muted">In questa sezione puoi consultare i tuoi siti: per ogni sito puoi modificare immagini e testi. Per creare un nuovo sito clicca sul bottone in basso (se non visualizzi il bottone non disponi dei permessi necessari).<br />
-                Tramite la sezione <b>Dettagli</b> puoi modificare le informazioni relative ai tuoi riferimenti. 
-                Tramite la sezione <b>Lingue</b> puoi visualizzare, modificare e aggiungere le lingue del relativo sito. 
-                Tramite la sezione <b>Pagine</b> puoi visualizzare, modificare e aggiungere le pagine del relativo sito. 
-                Tramite la sezione <b>Percorsi</b> puoi visualizzare, modificare e aggiungere i percorsi da inserire nelle pagine.</p>
+                <h1 className="text-xl text-blue-900 font-bold">Gestione Siti</h1>                
             </div>
             
             <div className="shadow rounded-xl mt-2 p-2">
@@ -77,23 +71,28 @@ function List({ match }) {
                     </Col>
                     <Col sm={6}>
                         <b>{appSite.name}</b><br />
-                        {/* <p className="text-grey">{appSite.description && parse(appSite.description)}</p> */}
+                        <div className='h-32 overflow-hidden'>
+                            <p className="text-grey">{appSite.description && parse(appSite.description)}</p>
+                        </div>
                     </Col>
                     <Col sm={4}>
-                        <Link to={`${path}/edit/${appSite.appSiteId}`} title="Modifica sito" className="flex items-center justify-center rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
-                            <BsPencil /> Informazioni generali
+                        <Link to={`${path}/edit/${appSite.appSiteId}`} title="Modifica sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
+                            <BsPencil className='bg-white rounded-full ml-2 mr-2 text-xl' /> Informazioni generali
                         </Link>
-                        <Link to={`${path}/sitepages/${appSite.appSiteId}`} title="Pagine del sito" className="flex items-center justify-center rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
-                            <IoDocumentsOutline /> Gestione pagine
+                        <Link to={`${path}/sitepages/${appSite.appSiteId}`} title="Pagine del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
+                            <IoDocumentsOutline className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione pagine
                         </Link>
-                        <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} title="Lingue del sito" className="flex items-center justify-center rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
-                            <FaLanguage /> Gestione lingue
+                        <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} title="Lingue del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
+                            <FaLanguage className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione lingue
                         </Link>
-                        <Link to={`${path}/sitesurveys/${appSite.appSiteId}`} title="Percorsi del sito" className="flex items-center justify-center rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
-                            <FaRoad /> Gestione percorsi
+                        <Link to={`${path}/sitesurveys/${appSite.appSiteId}`} title="Percorsi del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
+                            <FaRoad className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione percorsi
                         </Link>
-                        <div className="mt-2">
-                            <DeleteConfirmation onConfirm={() => deleteAppSite(appSite.appSiteId)} />
+                        <Link to={`${path}/users/${appSite.appSiteId}`} title="Utenti del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
+                            <FaUser className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione Utenti
+                        </Link>
+                        <div className="mt-3 pr-2 rounded-full block bg-red-500 text-white">
+                            <DeleteConfirmation onConfirm={() => deleteAppSite(appSite.appSiteId)} /> Elimina
                             {/* <Button onClick={() => deleteAppSite(appSite.appSiteId)} title="Elimina sito" className="btn btn-danger" disabled={appSite.isDeleting}>
                                 {appSite.isDeleting 
                                     ? <span className="spinner-border spinner-border-sm"></span>
@@ -105,11 +104,19 @@ function List({ match }) {
                 </Row>
             )}
             </div>
-            {user.role === Role.Admin && 
+            
+            <div className='border rounded mt-5 p-2'>
+                <p className="text-muted">In questa sezione puoi consultare i tuoi siti: per ogni sito puoi modificare immagini e testi. Per creare un nuovo sito clicca sul bottone in basso (se non visualizzi il bottone non disponi dei permessi necessari).<br />
+                Tramite la sezione <b>Dettagli</b> puoi modificare le informazioni relative ai tuoi riferimenti. 
+                Tramite la sezione <b>Lingue</b> puoi visualizzare, modificare e aggiungere le lingue del relativo sito. 
+                Tramite la sezione <b>Pagine</b> puoi visualizzare, modificare e aggiungere le pagine del relativo sito. 
+                Tramite la sezione <b>Percorsi</b> puoi visualizzare, modificare e aggiungere i percorsi da inserire nelle pagine.</p>
+            </div>
+            {user.roles && user.roles.indexOf(Role.Admin) > -1 && 
             <Navbar fixed="bottom" className="flex bg-blue-800">
                 <Nav className="flex space-x-2 text-sm font-medium mr-auto">
                     <Link to={`${path}/add/0`} className="flex text-white p-2 items-center justify-center rounded-full bg-green-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
                         Crea Sito

@@ -5,7 +5,7 @@ import { Uploader,LanguageSelect,LanguageEditor,PositionSelect } from '../../../
 import { Form, Button, Card, ProgressBar,Navbar, Nav, Image, Row, Col } from 'react-bootstrap'
 import { CompactPicker,SliderPicker } from 'react-color';
 import { Editor } from "@tinymce/tinymce-react";
-import { FaSave, FaLanguage, FaBoxes} from 'react-icons/fa';
+import { FaSave } from 'react-icons/fa';
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../_helpers/fetch-wrapper';
 import { PageTypeSelect } from '../../../_components/PageTypeSelect';

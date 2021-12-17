@@ -53,7 +53,7 @@ function AdminNav({ match }) {
         <Navbar className="bg-grey-500">
             <Nav bg="light" className="mr-auto">
                 <NavLink to={`${path}/`} className="nav-item nav-link">Dashboard</NavLink>        
-                {user.role === Role.Admin &&
+                {user.roles && user.roles.indexOf(Role.Admin) > -1 &&
                     <NavLink to={`${path}/users`} className="nav-item nav-link">Gestione Utenti</NavLink>
                 }
                 <NavLink to={`${path}/sites`} className="nav-item nav-link">Gestione Siti</NavLink>        

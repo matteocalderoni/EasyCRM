@@ -17,7 +17,7 @@ function Account({ history, match }) {
         if (accountService.userValue) {
             history.push('/');
         }
-    }, []);
+    });
 
     return (
         <div className="container">

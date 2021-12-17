@@ -5,10 +5,7 @@ import { Image, Row, Col, Form, Button, Card, Container, ProgressBar,Navbar, Nav
 import { Editor } from "@tinymce/tinymce-react";
 import { Link } from 'react-router-dom';
 import { LanguageSelect } from '../../_components/LanguageSelect';
-import { AiFillSave } from 'react-icons/ai';
 import { FcHome } from 'react-icons/fc';
-import { IoDocumentsOutline } from 'react-icons/io5';
-import { FaRoad, FaLanguage } from 'react-icons/fa';
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../_helpers/tinySettings';
 import { fetchWrapper } from '../../_helpers/fetch-wrapper';
 
@@ -31,7 +28,9 @@ class AddEdit extends React.Component {
                 longitude: 0,
                 phone: '',
                 email: '',
-                isDefault: false
+                isDefault: false,
+                loginEnabled: false,
+                shopEnabled: false
             },
             languages: [],
             languageCode: '',
@@ -349,6 +348,21 @@ class AddEdit extends React.Component {
                             </Form.Group>
                         </Col>
                     </Row>
+                    <dic className="flex">
+                        <Form.Group className="flex-1 mt-2">
+                            <Form.Check type="checkbox" label="Attivo login" name="loginEnabled" checked={this.state.appSite.loginEnabled} onChange={this.handleChangeBool} />
+                            <Form.Text>
+                                Con questa opzione si attiva la possibilità di registrarsi e accedere al sito. Questa funzione è utile per la gestione di percorsi collegati agli utenti.
+                            </Form.Text>
+                        </Form.Group>
+
+                        <Form.Group className="flex-1 mt-2">
+                            <Form.Check type="checkbox" label="Attiva Shop" name="shopEnabled" checked={this.state.appSite.shopEnabled} onChange={this.handleChangeBool} />
+                            <Form.Text>
+                                Con questa opzione si attiva la possibilità di effettuare ordini dal sito: viene visualizzato il carello di utente.
+                            </Form.Text>
+                        </Form.Group>
+                    </dic>
 
                     {this.state.appSite && this.state.sitePages && !this.state.loadingPages && <Form.Group>
                         <Form.Label>Pagina per la privacy policy:</Form.Label>
@@ -362,6 +376,7 @@ class AddEdit extends React.Component {
                             Selezionare tra le pagine disponibile quella da utilizzare per la privacy policy (normative GDPR). Creare una pagina PRIVACY con tutti i riferimenti su utilizzo dei dati di utenti (per ulteriori dettagli contattare Amministratore di sito).
                         </Form.Text>
                     </Form.Group>}
+
                     
                     {/* <Form.Group>
                         <Form.Check type="checkbox" label="Pubblico" name="isDefault" checked={this.state.appSite.isDefault} onChange={this.handleChangeBool} />

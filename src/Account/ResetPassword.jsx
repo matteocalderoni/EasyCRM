@@ -30,7 +30,7 @@ function ResetPassword({ history }) {
             .catch(() => {
                 setTokenStatus(TokenStatus.Invalid);
             });
-    }, []);
+    });
 
     function getForm() {
         const initialValues = {
@@ -97,6 +97,8 @@ function ResetPassword({ history }) {
                 return <div>Token validation failed, if the token has expired you can get a new one at the <Link to="forgot-password">forgot password</Link> page.</div>;
             case TokenStatus.Validating:
                 return <div>Validating token...</div>;
+            default:
+                return <></>;
         }
     }
 

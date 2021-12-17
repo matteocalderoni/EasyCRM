@@ -89,7 +89,6 @@ function OutcomeTypeList ({ match }){
             </Row>                
         </Container>
     );
-
 }
 
 export { OutcomeTypeList };

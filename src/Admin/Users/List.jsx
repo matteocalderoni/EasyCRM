@@ -45,15 +45,19 @@ function List({ match }) {
                             <td>{user.title} {user.firstName} {user.lastName}</td>
                             <td>{user.email}</td>
                             <td>{user.role}</td>
-                            <td style={{ whiteSpace: 'nowrap' }}>
-                                <Link to={`${path}/edit/${user.id}`} className="btn btn-sm btn-primary mr-1">Modifica</Link>
+                            <td className='flex flex-row md:flex-col'>
+                                <div className='flex-1'> 
+                                    <Link to={`${path}/edit/${user.id}`} className="btn btn-sm btn-primary mr-1">Modifica</Link>
+                                </div>
                                 {/* <button onClick={() => deleteUser(user.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={user.isDeleting}>
                                     {user.isDeleting 
                                         ? <span className="spinner-border spinner-border-sm"></span>
                                         : <span>Elimina</span>
                                     }
                                 </button> */}
-                                <DeleteConfirmation onConfirm={() => deleteUser(user.id)} />
+                                <div className='flex-1'>
+                                    <DeleteConfirmation onConfirm={() => deleteUser(user.id)} />
+                                </div>
                             </td>
                         </tr>
                     )}
