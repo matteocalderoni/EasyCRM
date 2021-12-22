@@ -18,7 +18,6 @@ import { BoxTypes } from '../../../../_helpers'
 import { DeleteConfirmation,FacebookFeed,InstagramFeed,YoutubeVideo } from '../../../../_components';
 import { SiteSurveyBox } from '../../SiteSurvey/SiteSurveyBox/SiteSurveyBox';
 
-
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function PageBoxList({ match }) {
@@ -28,6 +27,71 @@ function PageBoxList({ match }) {
     const [sitePage, setSitePage] = useState(null)
     const [pageBoxes, setPageBoxes] = useState(null)
     const [loading, setLoading] = useState(false)
+
+    const initialDnDState = {
+        draggedFrom: null,
+        draggedTo: null,
+        isDragging: false,
+        originalOrder: [],
+        updatedOrder: [],
+    };
+    const [dragAndDrop, setDragAndDrop] = useState(initialDnDState);
+
+    const onDragStart = (e) => {
+        const initialPosition = Number(e.currentTarget.dataset.position);
+    
+        setDragAndDrop({
+          ...dragAndDrop,
+          draggedFrom: initialPosition,
+          isDragging: true,
+          originalOrder: pageBoxes,
+        });
+    };
+
+    const onDragOver = (e) => {
+        e.preventDefault();
+        let newList = dragAndDrop.originalOrder;
+        const draggedFrom = dragAndDrop.draggedFrom;
+        const draggedTo = Number(e.currentTarget.dataset.position);
+        const itemDragged = newList[draggedFrom];
+        const remainingItems = newList.filter(
+          (item, index) => index !== draggedFrom
+        );
+    
+        newList = [
+          ...remainingItems.slice(0, draggedTo),
+          itemDragged,
+          ...remainingItems.slice(draggedTo),
+        ];
+    
+        if (draggedTo !== dragAndDrop.draggedTo) {
+          setDragAndDrop({
+            ...dragAndDrop,
+            updatedOrder: newList,
+            draggedTo: draggedTo,
+          });
+        }
+    };
+    
+    const onDrop = () => {
+        appSiteService.saveOrderBoxesOfPage(appSiteId,pageId,dragAndDrop.updatedOrder.map(a=>a.pageBoxId));
+
+        setPageBoxes(dragAndDrop.updatedOrder);
+    
+        setDragAndDrop({
+          ...dragAndDrop,
+          draggedFrom: null,
+          draggedTo: null,
+          isDragging: false,
+        });
+    };
+
+    const onDragLeave = () => {
+        setDragAndDrop({
+          ...dragAndDrop,
+          draggedTo: null,
+        });
+    };
 
     useEffect(() => {
         setLoading(true)
@@ -99,8 +163,14 @@ function PageBoxList({ match }) {
                     </div>
                 }
                 <Row>
-                {pageBoxes && pageBoxes.map(pageBox =>                                    
-                <Col sm={parseInt(pageBox.cardSize)} className="page-box"  key={pageBox.pageBoxId}>
+                {pageBoxes && pageBoxes.map((pageBox,index) =>                                    
+                <Col sm={parseInt(pageBox.cardSize)} className="page-box"  key={pageBox.pageBoxId}
+                    data-position={index}
+                    draggable
+                    onDragStart={onDragStart}
+                    onDragOver={onDragOver}
+                    onDrop={onDrop}
+                    onDragLeave={onDragLeave}>
                     <Accordion defaultActiveKey="0">
                         <Card style={{backgroundColor: pageBox.boxColor}}>
                             <Card.Header>                            
@@ -108,14 +178,14 @@ function PageBoxList({ match }) {
                                     <div className="flex-grow">
                                         {BoxTypes && BoxTypes[pageBox.boxType - 1].label}
                                         <Card.Title className="flex">
-                                            {pageBox.sortId}° <span className="ml-2">{pageBox.title && parse(pageBox.title)}</span>
+                                            <span className="ml-2">{pageBox.title && parse(pageBox.title)}</span>
                                         </Card.Title>     
                                     </div>
                                     <div className="flex-none">
                                         {pageBox.landingPageId > 0 &&
                                         <div className="bg-white p-2 rounded-full mr-4">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="Pagina collegata">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                                <path stroke-linecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                             </svg>
                                         </div>}
                                     </div>

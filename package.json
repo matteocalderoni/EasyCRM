@@ -1,6 +1,6 @@
 {
   "name": "easy-crm",
-  "version": "1.4.0",
+  "version": "1.4.22",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.2.0",

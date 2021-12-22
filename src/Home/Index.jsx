@@ -58,6 +58,12 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.4.1.22 (Dicembre 2021)</b>: ecco gli ultimi aggiornamenti:                             
+                            <ul className="list-disc ml-3">
+                                <li><b>trascinamento dei contenitori</b>: per ordinare i contenitori delle pagine puoi trascinarli comodamente, oppure inserire manualmente ordine.</li>                                
+                            </ul>                            
+                        </li>
+                        <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.4.1.21 (Dicembre 2021)</b>: grosse novità in questo aggiornamento:                             
                             <ul className="list-disc ml-3">
                                 <li>completamento dei percorsi: finalmente è possibile utilizzare i percorsi nei siti e creare moduli personalizzati per ottenere ordini di prodotti o sondaggi su specifiche tematiche. Aspettiamo i vostri feedback per migliorare continuamente il servizio.</li>

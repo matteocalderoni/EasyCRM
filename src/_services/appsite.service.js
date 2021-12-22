@@ -34,7 +34,8 @@ export const appSiteService = {
     deleteOpenTime,
     deleteEmployee,
     deleteTopService,
-    setDefaultAppSite
+    setDefaultAppSite,
+    saveOrderBoxesOfPage
 };
 
 function getAppSites(search,page,count) {
@@ -159,4 +160,8 @@ function deleteTopService(appSiteId, sitePageId, pageBoxId,topServiceId) {
 
 function setDefaultAppSite(appSiteId) {
     return fetchWrapper.get(`${baseUrl}/SetDefaultAppSite/${appSiteId}`);
+}
+
+function saveOrderBoxesOfPage(appSiteId, pageId, ids) {
+    return fetchWrapper.post(`${baseUrl}/SaveOrderBoxesOfPage/${appSiteId}/${pageId}`, { ids: ids });
 }
