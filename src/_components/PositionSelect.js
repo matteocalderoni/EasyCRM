@@ -7,7 +7,7 @@ class PositionSelect extends Component {
       super(props);
       this.state = {         
         positions: [
-          {label: 'Nascosto', value: 0},
+          {label: 'Nascosto', value: -1},
           {label: 'Sopra', value: 1},
           {label: 'Sinistra', value: 2},
           {label: 'Sotto', value: 3},

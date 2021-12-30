@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
 import { accountService, alertService } from '../../_services';
 
 function AddEdit({ history, match }) {
@@ -18,28 +16,6 @@ function AddEdit({ history, match }) {
         password: '',
         confirmPassword: ''
     };
-
-    const validationSchema = Yup.object().shape({
-        title: Yup.string()
-            .required('Title is required'),
-        firstName: Yup.string()
-            .required('First Name is required'),
-        lastName: Yup.string()
-            .required('Last Name is required'),
-        email: Yup.string()
-            .email('Email is invalid')
-            .required('Email is required'),
-        role: Yup.string()
-            .required('Role is required'),
-        password: Yup.string()
-            .concat(isAddMode ? Yup.string().required('Password is required') : null)
-            .min(6, 'Password must be at least 6 characters'),
-        confirmPassword: Yup.string()
-            .when('password', (password, schema) => {
-                if (password) return schema.required('Confirm Password is required');
-            })
-            .oneOf([Yup.ref('password')], 'Passwords must match')
-    });
 
     function onSubmit(fields, { setStatus, setSubmitting }) {
         setStatus();
@@ -75,7 +51,7 @@ function AddEdit({ history, match }) {
     }
 
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, touched, isSubmitting, setFieldValue }) => {
                 
                 if (!isAddMode) {

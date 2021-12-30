@@ -6,7 +6,7 @@ import { SitePageModal } from './SitePageModal';
 import { BsPencil} from 'react-icons/bs';
 import { FaBoxes} from 'react-icons/fa';
 import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
-import parse from 'html-react-parser';
+//import parse from 'html-react-parser';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 

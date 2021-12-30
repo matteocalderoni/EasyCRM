@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 
 import { accountService, alertService } from '../_services';
 
@@ -17,28 +16,6 @@ function Register({ history }) {
         acceptTerms: false
     };
 
-    const validationSchema = Yup.object().shape({
-        title: Yup.string()
-            .required('Title is required'),
-        firstName: Yup.string()
-            .required('First Name is required'),
-        lastName: Yup.string()
-            .required('Last Name is required'),
-        email: Yup.string()
-            .email('Email is invalid')
-            .required('Email is required'),
-        userName: Yup.string()
-            .required('User Name is required'),
-        password: Yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Password is required'),
-        confirmPassword: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Passwords must match')
-            .required('Confirm Password is required'),
-        acceptTerms: Yup.bool()
-            .oneOf([true], 'Accept Terms & Conditions is required')
-    });
-
     function onSubmit(fields, { setStatus, setSubmitting }) {
         setStatus();
         accountService.register(fields)
@@ -53,7 +30,7 @@ function Register({ history }) {
     }
 
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, touched, isSubmitting }) => (
                 <Form>
                     <h3 className="card-header">Register</h3>

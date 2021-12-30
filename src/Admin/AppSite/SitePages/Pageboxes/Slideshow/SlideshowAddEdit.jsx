@@ -4,7 +4,7 @@ import { Uploader } from '../../../../../_components';
 import { Image, Form, Button, Modal, ProgressBar, Row,Col } from 'react-bootstrap'
 import { CardSizes } from '../../../../../_helpers/cardSize';
 import { Editor } from "@tinymce/tinymce-react";
-import { LanguageSelect } from '../../../../../_components/LanguageSelect';
+//import { LanguageSelect } from '../../../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../../_components/LanguageInput';
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../_helpers/tinySettings';

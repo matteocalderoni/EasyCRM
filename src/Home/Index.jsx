@@ -8,7 +8,7 @@ function Home() {
     const user = accountService.userValue;
     
     return (
-        <Container className="pt-4">
+        <Container fluid className="pt-4">
             <div className="shadow rounded-xl mt-16 bg-gray-100 p-8">
                 <h1 className="font-bold text-green-900">Benvenuto {user.firstName} {user.lastName}!</h1>
                 <p className="text-grey-100">Easy<b className="text-red-800">CRM</b> è un <b className="text-red-800">C</b>ontent <b className="text-red-800">R</b>apid <b className="text-red-800">M</b>anagament: un sistema rapido e semplice per gestire i contenuti online.</p>

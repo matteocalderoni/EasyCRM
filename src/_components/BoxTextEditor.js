@@ -75,13 +75,13 @@ class BoxTextEditor extends React.Component {
         return (  
             <>                
                 <div>
-                    {this.state.loading && <div className="text-center mart2">
+                    {this.state.loading && <div className="text-center">
                         <ProgressBar animated now={100} />
                     </div>}
                                                 
                     {!this.state.loading && this.state.languageCode == '' &&
                         <Form.Group>
-                            <Form.Label>Titolo</Form.Label>
+                            <Form.Label className='text-sm'>Titolo</Form.Label>
                             <div className="border rounded-lg ring-2 ring-blue-200 p-1">
                                 <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
@@ -100,9 +100,9 @@ class BoxTextEditor extends React.Component {
                                     >
                                 </Editor>                                 
                             </div>
-                            <Form.Text className="text-muted">
+                            {/* <Form.Text className="text-muted">
                                 Titolo del contenuto: possibilità di formattare il testo. Cliccare sopra per iniziare la modifica del testo.
-                            </Form.Text>
+                            </Form.Text> */}
                         </Form.Group>}                                       
 
                         {this.state.languageCode !== '' &&
@@ -120,7 +120,7 @@ class BoxTextEditor extends React.Component {
                         (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&                 
                     <div>
                         <Form.Group>
-                            <Form.Label>Descrizione del contenitore</Form.Label>
+                            <Form.Label className='text-sm'>Descrizione</Form.Label>
                             <div className="border rounded-lg ring-2 ring-blue-200 p-1">
                                 <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
@@ -138,9 +138,9 @@ class BoxTextEditor extends React.Component {
                                     onEditorChange={this.handleEditorChange}
                                 />
                             </div>
-                            <Form.Text className="text-muted">
+                            {/* <Form.Text className="text-muted">
                                 Descrizione del contenuto: possibilità di formattare il testo. Cliccare sopra iniziare a modificare il testo.
-                            </Form.Text>
+                            </Form.Text> */}
                         </Form.Group>
                     </div>}
 
@@ -157,12 +157,12 @@ class BoxTextEditor extends React.Component {
                     </div>}              
                     
                 </div>
-                <Navbar variant="dark" bg="dark">
+                <Navbar>
                     <Nav className="mr-auto">
                         {this.state.languageCode === '' &&
-                            <Button onClick={this.updatePageBox} variant="success" className="mr-1">
-                                Salva le modifiche
-                            </Button>}                         
+                        <Button onClick={this.updatePageBox} variant="success" className="bg-green-600 mr-1">
+                            Salva le modifiche
+                        </Button>}                         
                     </Nav>
                     <Form inline>
                         <LanguageSelect appSiteId={this.state.pageBox.appSiteId} onLanguageChange={this.handleLanguageCode} />                   

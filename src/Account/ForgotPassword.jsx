@@ -1,20 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
 import { accountService, alertService } from '../_services';
 
 function ForgotPassword() {
     const initialValues = {
         email: ''
     };
-
-    const validationSchema = Yup.object().shape({
-        email: Yup.string()
-            .email('Email is invalid')
-            .required('Email is required')
-    });
 
     function onSubmit({ email }, { setSubmitting }) {
         alertService.clear();
@@ -25,7 +17,7 @@ function ForgotPassword() {
     }
 
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, touched, isSubmitting }) => (
                 <Form>
                     <h3 className="card-header">Forgot Password</h3>

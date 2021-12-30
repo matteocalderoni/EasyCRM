@@ -19,7 +19,7 @@ function SiteLanguageDetail({ match }) {
     }, [appSiteId]);  
     
     useEffect(() => {
-        if (code != '') {
+        if (code != null && code !== '') {
             setLoading(true)
             languageService.getSiteLanguageById(appSiteId, code).then((x) => { 
                 setLoading(false)

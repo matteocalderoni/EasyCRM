@@ -80,7 +80,7 @@ class SiteLanguageAddEdit extends React.Component {
     }
 
     handleOpen() {    
-        if (this.props.code != '') {
+        if (this.props.code != null && this.props.code !== '') {
             this.setState({loading: true})
             languageService.getSiteLanguageById(this.props.appSiteId, this.props.code)
                 .then(_siteLanguage => {                    
@@ -104,7 +104,7 @@ class SiteLanguageAddEdit extends React.Component {
     };                  
     
     onSubmit = () => {
-        if (this.props.appSiteId > 0 && this.props.code != '') {
+        if (this.props.appSiteId > 0 && this.props.code != null && this.props.code !== '') {
             this.updateSiteLanguage();
         } else {
             this.createSiteLanguage();            
@@ -153,7 +153,7 @@ class SiteLanguageAddEdit extends React.Component {
                     </div>}
                     <Row>
                         <Col md={4}>
-                        {this.state.siteLanguage.code != '' &&                    
+                        {this.state.siteLanguage.code != null && this.state.siteLanguage.code !== '' &&                    
                             <div>
                                 <Image fluid src={baseImageUrl+this.state.siteLanguage.imageUrl} />
                                 <Uploader prefix={this.state.siteLanguage.appSiteId} fileName={this.state.siteLanguage.imageUrl} onFileNameChange={this.handleFileName} />      
@@ -172,7 +172,7 @@ class SiteLanguageAddEdit extends React.Component {
                         </Col>
                     </Row>
                     
-                    {!this.state.loading && this.state.siteLanguage.code != '' &&
+                    {!this.state.loading && this.state.siteLanguage.code != null && this.state.siteLanguage.code !== '' &&
                         <div>
                             <label>Descrizione</label>
                             <Editor

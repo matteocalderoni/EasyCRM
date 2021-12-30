@@ -72,7 +72,7 @@ function List({ match }) {
                     <Col sm={6}>
                         <b>{appSite.name}</b><br />
                         <div className='h-32 overflow-hidden'>
-                            <p className="text-grey">{appSite.description && parse(appSite.description)}</p>
+                            {appSite.description && parse(appSite.description)}
                         </div>
                     </Col>
                     <Col sm={4}>
@@ -117,7 +117,7 @@ function List({ match }) {
                 <Nav className="flex space-x-2 text-sm font-medium mr-auto">
                     <Link to={`${path}/add/0`} className="flex text-white p-2 items-center justify-center rounded-full bg-green-500">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" strokeLinejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            <path strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
                         Crea Sito
                     </Link>

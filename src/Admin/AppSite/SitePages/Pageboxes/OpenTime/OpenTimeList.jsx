@@ -1,6 +1,6 @@
 import React from 'react';
 import * as moment from 'moment'
-import { Container, Jumbotron, Card, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Container, Card, Row, Col, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../../../_services';
 import { OpenTimeAddEdit } from './OpenTimeAddEdit';
 import { DeleteConfirmation } from '../../../../../_components/DeleteConfirmation';
@@ -57,11 +57,7 @@ class OpenTimeList extends React.Component{
     
     render() {
         return (
-            <Container fluid>
-                <Jumbotron className="small-jumbotron">
-                    <h3>Contenitore <b>Giorni di servizio</b></h3>
-                    <p>Con questo contenitore puoi creare un elenco dei giorni di apertura con i relativi orari di inizio/pausa/ripresa/chiusura.</p>
-                </Jumbotron>
+            <Container fluid>                
                 <OpenTimeAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} weekDay={0} handleAddEdit={this.handleAddEdit} />
                 <Row className="mart2" >
                 {this.state.loading &&               

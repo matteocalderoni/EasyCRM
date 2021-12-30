@@ -232,7 +232,7 @@ class ArticleAddEdit extends React.Component {
                                 </Form.Control>
                             </Form.Group>
 
-                            {this.state.languageCode == '' &&
+                            {(this.state.languageCode == null || this.state.languageCode === '') &&
                             <Form.Group>
                                 <Form.Label>Titolo</Form.Label>
                                 <input type="text" className="form-control" name="title" value={this.state.article.title} onChange={this.handleChange}  />

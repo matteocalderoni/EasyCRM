@@ -91,3 +91,9 @@ https://tailwindui.com/#product-application-ui-elements
 ### ESEMPIO di Costruzione Siti
 https://mobirise.com/
 https://devdojo.com/tails/app
+
+
+### LIBRERIA PER GESTIONE DRAG DROP E RESIZE !!!!
+### DA UTILIZZARE !!!
+https://github.com/react-grid-layout/react-grid-layout#usage
+

@@ -10,8 +10,6 @@ function OutcomeTypeDetail({ match }) {
     const [outcomeType, setOutcomeType] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    const [isChanged, setIsChanged] = useState(0)
-
     useEffect(() => {
         setLoading(true)
         appSiteService.getAppSiteById(appSiteId).then((x) => { 

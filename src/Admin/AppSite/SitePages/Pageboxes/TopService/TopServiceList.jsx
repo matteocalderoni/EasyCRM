@@ -53,11 +53,7 @@ class TopServiceList extends React.Component{
     
     render() {
         return (
-            <Container fluid>
-                <div className="border">                    
-                    <p className="text-muted">Con questo contenitore puoi creare un elenco di card con immagine e testo.
-                    Puoi scegliere la dimensione dei riquadri per creare layout differenti.</p>
-                </div>
+            <Container fluid>                
                 <TopServiceAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} topServiceId={0} handleAddEdit={this.handleAddEdit} />
                 {this.state.loading && <div className="text-center mart2">
                     <ProgressBar animated now={100} />

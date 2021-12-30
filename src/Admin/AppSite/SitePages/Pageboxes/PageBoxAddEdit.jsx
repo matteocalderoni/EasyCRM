@@ -2,7 +2,7 @@ import React from 'react';
 import { appSiteService, alertService } from '../../../../_services';
 import { Uploader } from '../../../../_components'
 import { Form, Button, Card, Image, ProgressBar,Row,Col,Navbar,Nav } from 'react-bootstrap'
-import { BoxTypes,CardSizes } from '../../../../_helpers'
+import { BoxTypes } from '../../../../_helpers'
 import { LanguageSelect } from '../../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../../_components/LanguageEditor';
 import { CompactPicker,SliderPicker } from 'react-color';
@@ -264,7 +264,7 @@ class PageBoxAddEdit extends React.Component {
                         </div>
                         
                         <Row>
-                            <Col sm={6}>
+                            {/* <Col sm={6}>
                                 <Form.Group>
                                     <Form.Label className="font-bold">Ordinamento</Form.Label>
                                     <input type="number" className="form-control" name="sortId" value={this.state.pageBox.sortId} onChange={this.handleChangeNumber}  />
@@ -272,8 +272,8 @@ class PageBoxAddEdit extends React.Component {
                                         Valore per ordinamento crescente dei contenitori nella pagina. E' consigliato utilizzare valori con step di 10 (10,10,30,ecc) per avere la possibilità di inserire pagine intermedie in futuro.
                                     </Form.Text>
                                 </Form.Group>      
-                            </Col>
-                            <Col sm={6}>
+                            </Col> */}
+                            <Col sm={12}>
                                 {!this.state.loading && this.state.languageCode == '' &&
                                 <Form.Group>
                                     <Form.Label className="font-bold">Titolo</Form.Label>                                    
@@ -301,7 +301,7 @@ class PageBoxAddEdit extends React.Component {
                             </Col>
                         </Row>
                                                 
-                        <Form.Group>
+                        {/* <Form.Group>
                             <Form.Label>Dimensione</Form.Label>
                             <Form.Control as="select" value={this.state.pageBox.cardSize} name="cardSize" onChange={this.handleChangeNumber}>
                                 <option value={0}>Seleziona una dimensione</option>
@@ -312,7 +312,7 @@ class PageBoxAddEdit extends React.Component {
                             <Form.Text className="text-muted">
                                 I tipi servono per impostare la dimensionw del contenitore.
                             </Form.Text>
-                        </Form.Group>      
+                        </Form.Group>       */}
                         
                         {this.state.pageBox && this.state.sitePages && !this.state.loadingPages && 
                         <Form.Group>

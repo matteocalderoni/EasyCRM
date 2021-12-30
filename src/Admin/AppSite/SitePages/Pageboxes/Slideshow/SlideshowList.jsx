@@ -1,8 +1,7 @@
 import React from 'react';
-import { Container, Card, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Container, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../../../_services';
 import { SlideshowAddEdit } from './SlideshowAddEdit';
-import parse from 'html-react-parser';
 import { DeleteConfirmation } from '../../../../../_components/DeleteConfirmation';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -16,7 +15,9 @@ class SlideshowList extends React.Component{
             appSiteId: this.props.appSiteId,
             sitePageId: this.props.sitePageId,
             pageBoxId: this.props.pageBoxId,
-            loading: false
+            loading: false,
+            currentSlide: 0,
+            paused: false
         }
     }
 
@@ -47,42 +48,65 @@ class SlideshowList extends React.Component{
             });
     }
 
+    nextSlide() {
+        let newSlide =
+            this.state.currentSlide === this.state.slideshows.length - 1
+            ? 0
+            : this.state.currentSlide + 1;
+        this.setState({ currentSlide: newSlide });
+    };
+    
+    prevSlide = () => {
+        let newSlide =
+            this.state.currentSlide === 0
+            ? this.state.slideshows.length - 1
+            : this.state.currentSlide - 1;
+        this.setState({ currentSlide: newSlide });
+    };
+
+    setCurrentSlide = (index) => {
+        this.setState({ currentSlide: index });
+    };
+
     handleAddEdit = (appSiteId, sitePageId, pageBoxId) => {
         this.getSlideshows(appSiteId, sitePageId, pageBoxId);
     }
     
     render() {
         return (
-            <Container fluid>
-                <div className="border">                    
-                    <p className="text-muted">Con questo contenitore puoi creare un elenco di card con immagine e testo.
-                    Puoi scegliere la dimensione dei riquadri per creare layout differenti.</p>
-                </div>
+            <Container fluid> 
                 <SlideshowAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} slideshowId={0} handleAddEdit={this.handleAddEdit} />
                 {this.state.loading && <div className="text-center mart2">
                     <ProgressBar animated now={100} />
                 </div>}
-                <Row className="mart2" >
-                {this.state.slideshows && !this.state.loading && this.state.slideshows.map(slideshow =>                
-                    <Col sm={parseInt(slideshow.cardSize)} key={slideshow.topServiceId}>
-                        <Card bg="secondary" text="white">
-                            <Card.Header>
-                                <Card.Title>
-                                    #{slideshow.sortId} {slideshow.title}
-                                </Card.Title>
-                            </Card.Header>
-                            <Card.Img variant="top" src={baseImageUrl+slideshow.imageUrl} />
-                            <Card.Body>                                                                
-                                <div>
-                                {slideshow.description && parse(slideshow.description)}
-                                </div>
-                                <SlideshowAddEdit appSiteId={slideshow.appSiteId} sitePageId={slideshow.sitePageId} pageBoxId={slideshow.pageBoxId} slideshowId={slideshow.topServiceId} handleAddEdit={this.handleAddEdit} />                                
-                                <DeleteConfirmation onConfirm={() => this.deleteSlideshow(slideshow)} />
-                            </Card.Body>
-                        </Card>                        
-                    </Col>                                
-                )}   
-                </Row>
+                <div className="mt-8 mb-8">
+                    <div className="h-96 flex overflow-hidden relative">
+                        {this.state.slideshows && !this.state.loading  && this.state.slideshows.map((slideshow, index) =>                
+                        <img 
+                            key={index} 
+                            src={baseImageUrl+slideshow.imageUrl} 
+                            className={ index === this.state.currentSlide ? "block w-full h-auto object-cover" : "hidden" }
+                            alt={slideshow.title} />                                            
+                        )}
+                    </div>                
+                    <div className="absolute w-full flex justify-center bottom-0">
+                    {this.state.slideshows && !this.state.loading  && this.state.slideshows.map((element, index) => {
+                        return (
+                        <div
+                            className={
+                            index === this.state.currentSlide
+                                ? "h-2 w-2 bg-blue-700 rounded-full mx-2 mb-2 cursor-pointer"
+                                : "h-2 w-2 bg-white rounded-full mx-2 mb-2 cursor-pointer"
+                            }
+                            key={index}
+                            onClick={() => {
+                            this.setCurrentSlide(index);
+                            }}
+                        ></div>
+                        );
+                    })}
+                    </div>
+                </div>                
             </Container>
         );
     }

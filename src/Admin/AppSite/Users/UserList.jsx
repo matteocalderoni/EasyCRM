@@ -11,7 +11,7 @@ function UserList({ match }) {
     const appSiteId = parseInt(match.params.appSiteId);
     const [searchUsers, setSearchUsers] = useState([]);
     const [searchText, setSearchText] = useState('');
-    const [showSearchbar, setShowSearchbar] = useState(false);
+    //const [showSearchbar, setShowSearchbar] = useState(false);
     const [total, setTotal] = useState(0);
   
     useEffect(() => {

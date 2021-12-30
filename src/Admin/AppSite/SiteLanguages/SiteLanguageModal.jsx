@@ -37,11 +37,11 @@ class SiteLanguageModal extends React.Component {
         return (            
           <>
             <Button variant="primary" className="mr-1" onClick={this.handleShow}>
-                {this.state.siteLanguage.code != '' ? 'Modifica la lingua' : 'Aggiungi una lingua'}
+                {(this.state.siteLanguage.code != null && this.state.siteLanguage.code !== '') ? 'Modifica la lingua' : 'Aggiungi una lingua'}
             </Button>
             <Modal show={this.state.setShow} size="lg" onHide={this.handleClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{this.state.siteLanguage.code != '' ? 'Modifica la lingua' : 'Aggiungi una lingua'}</Modal.Title>
+                    <Modal.Title>{(this.state.siteLanguage.code != null && this.state.siteLanguage.code !== '') ? 'Modifica la lingua' : 'Aggiungi una lingua'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {this.state.setShow &&

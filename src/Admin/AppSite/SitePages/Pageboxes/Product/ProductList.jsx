@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Jumbotron, ListGroup, Row,Col,Image, Badge, ProgressBar } from 'react-bootstrap';
+import { Container, ListGroup, Row,Col,Image, Badge, ProgressBar } from 'react-bootstrap';
 import { productService } from '../../../../../_services';
 import { ProductAddEdit } from './ProductAddEdit';
 import { ProductTypeList } from './ProductTypeList';
@@ -47,11 +47,7 @@ class ProductList extends React.Component{
     
     render() {
         return (
-            <Container fluid>
-                <Jumbotron className="small-jumbotron">
-                    <h3>Contenitore <b>Prodotti</b></h3>
-                    <p>Con questo contenitori puoi creare un menù/catalogo dei tupi prodotti con i relativi prezzi.</p>
-                </Jumbotron>
+            <Container fluid>                
 
                 <ProductAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} productId={0} handleAddEdit={(appSiteId, sitePageId, pageBoxId) => this.handleAddEdit(appSiteId, sitePageId, pageBoxId)} />
                 <ProductTypeList appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId}  />

@@ -1,6 +1,4 @@
 import React from 'react';
-import { TimePicker } from 'antd';
-import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import * as moment from 'moment'
 import { appSiteService, alertService } from '../../../../../_services';
 import { Form, Button, Modal } from 'react-bootstrap'
@@ -152,7 +150,7 @@ class OpenTimeAddEdit extends React.Component {
 
                     <Form.Group>
                         <Form.Label>Apertura</Form.Label>
-                        <TimePicker name="startTime" className="form-control" value={moment(this.state.startTime)} onChange={(time) => { this.handleTimeChange(time,'startTime') }} />                                              
+                        <input name="startTime" className="form-control" value={moment(this.state.startTime)} onChange={(time) => { this.handleTimeChange(time,'startTime') }} />                                              
                         <Form.Text className="text-muted">
                             Ora di inizio mattino.
                         </Form.Text>
@@ -160,7 +158,7 @@ class OpenTimeAddEdit extends React.Component {
 
                     <Form.Group>
                         <Form.Label>Pausa</Form.Label>
-                        <TimePicker name="pauseTime" className="form-control" value={moment(this.state.pauseTime)} onChange={(time) => { this.handleTimeChange(time,'pauseTime') }} />                                                   
+                        <input name="pauseTime" className="form-control" value={moment(this.state.pauseTime)} onChange={(time) => { this.handleTimeChange(time,'pauseTime') }} />                                                   
                         <Form.Text className="text-muted">
                             Ora di fine turno mattino.
                         </Form.Text>
@@ -168,7 +166,7 @@ class OpenTimeAddEdit extends React.Component {
 
                     <Form.Group>
                         <Form.Label>Ripresa</Form.Label>
-                        <TimePicker name="resumeTime" className="form-control" value={moment(this.state.resumeTime)} onChange={(time) => { this.handleTimeChange(time,'resumeTime') }} />                                                   
+                        <input name="resumeTime" className="form-control" value={moment(this.state.resumeTime)} onChange={(time) => { this.handleTimeChange(time,'resumeTime') }} />                                                   
                         <Form.Text className="text-muted">
                             Ora di inizio turno pomeriggio.
                         </Form.Text>
@@ -176,7 +174,7 @@ class OpenTimeAddEdit extends React.Component {
 
                     <Form.Group>
                         <Form.Label>Chiusura</Form.Label>
-                        <TimePicker name="endTime" className="form-control" value={moment(this.state.endTime)} onChange={(time) => { this.handleTimeChange(time,'endTime') }} />                                                   
+                        <input name="endTime" className="form-control" value={moment(this.state.endTime)} onChange={(time) => { this.handleTimeChange(time,'endTime') }} />                                                   
                         <Form.Text className="text-muted">
                             Ora di chiusura turno pomeriggio.
                         </Form.Text>

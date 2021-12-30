@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import queryString from 'query-string';
+//import queryString from 'query-string';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 
 import { accountService, alertService } from '../_services';
 
@@ -16,37 +15,28 @@ function ResetPassword({ history }) {
     const [token, setToken] = useState(null);
     const [tokenStatus, setTokenStatus] = useState(TokenStatus.Validating);
 
-    useEffect(() => {
-        const { token } = queryString.parse(window.location.search);
+    // useEffect(() => {
+    //     const { token } = queryString.parse(window.location.search);
 
-        // remove token from url to prevent http referer leakage
-        history.replace(window.location.pathname);
+    //     // remove token from url to prevent http referer leakage
+    //     history.replace(window.location.pathname);
 
-        accountService.validateResetToken(token)
-            .then(() => {
-                setToken(token);
-                setTokenStatus(TokenStatus.Valid);
-            })
-            .catch(() => {
-                setTokenStatus(TokenStatus.Invalid);
-            });
-    });
+    //     accountService.validateResetToken(token)
+    //         .then(() => {
+    //             setToken(token);
+    //             setTokenStatus(TokenStatus.Valid);
+    //         })
+    //         .catch(() => {
+    //             setTokenStatus(TokenStatus.Invalid);
+    //         });
+    // });
 
     function getForm() {
         const initialValues = {
             password: '',
             confirmPassword: ''
         };
-
-        const validationSchema = Yup.object().shape({
-            password: Yup.string()
-                .min(6, 'Password must be at least 6 characters')
-                .required('Password is required'),
-            confirmPassword: Yup.string()
-                .oneOf([Yup.ref('password'), null], 'Passwords must match')
-                .required('Confirm Password is required'),
-        });
-
+        
         function onSubmit({ password, confirmPassword }, { setSubmitting }) {
             alertService.clear();
             accountService.resetPassword({ token, password, confirmPassword })
@@ -61,7 +51,7 @@ function ResetPassword({ history }) {
         }
 
         return (
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+            <Formik initialValues={initialValues} onSubmit={onSubmit}>
                 {({ errors, touched, isSubmitting }) => (
                     <Form>
                         <div className="form-group">

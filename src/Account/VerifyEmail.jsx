@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import queryString from 'query-string';
+//import queryString from 'query-string';
 
 import { accountService, alertService } from '../_services';
 
@@ -12,21 +12,21 @@ function VerifyEmail({ history }) {
 
     const [emailStatus, setEmailStatus] = useState(EmailStatus.Verifying);
 
-    useEffect(() => {
-        const { token } = queryString.parse(window.location.search);
+    // useEffect(() => {
+    //     const { token } = queryString.parse(window.location.search);
 
-        // remove token from url to prevent http referer leakage
-        history.replace(window.location.pathname);
+    //     // remove token from url to prevent http referer leakage
+    //     history.replace(window.location.pathname);
 
-        accountService.verifyEmail(token)
-            .then(() => {
-                alertService.success('Verification successful, you can now login', { keepAfterRouteChange: true });
-                history.push('login');
-            })
-            .catch(() => {
-                setEmailStatus(EmailStatus.Failed);
-            });
-    });
+    //     accountService.verifyEmail(token)
+    //         .then(() => {
+    //             alertService.success('Verification successful, you can now login', { keepAfterRouteChange: true });
+    //             history.push('login');
+    //         })
+    //         .catch(() => {
+    //             setEmailStatus(EmailStatus.Failed);
+    //         });
+    // });
 
     function getBody() {
         switch (emailStatus) {

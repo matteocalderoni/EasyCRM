@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Jumbotron, Card, Row, Col, Image } from 'react-bootstrap';
+import { Container, Card, Row, Col, Image } from 'react-bootstrap';
 import { articleService } from '../../../../../_services';
 import { ArticleAddEdit } from './ArticleAddEdit';
 import { CategoryList } from './CategoryList';
@@ -43,11 +43,7 @@ class ArticleList extends React.Component{
     
     render() {
         return (
-            <Container>
-                <Jumbotron className="small-jumbotron">
-                    <h3>Contenitore <b>Articoli</b></h3>
-                    <p>Il contenitore blog permette di creare articoli per mantenere vivo e dinamico il sito.</p>
-                </Jumbotron>
+            <Container>                
                 
                 <ArticleAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} articleId={0} handleAddEdit={(appSiteId, sitePageId, pageBoxId) => this.handleAddEdit(appSiteId, sitePageId, pageBoxId)} />
                 <CategoryList />

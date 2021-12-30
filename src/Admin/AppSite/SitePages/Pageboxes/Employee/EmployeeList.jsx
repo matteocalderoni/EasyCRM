@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Jumbotron, Card, Image, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Container, Card, Image, Row, Col, ProgressBar } from 'react-bootstrap';
 import { appSiteService } from '../../../../../_services';
 import { EmployeeAddEdit } from './EmployeeAddEdit';
 import parse from 'html-react-parser';
@@ -46,11 +46,7 @@ class EmployeeList extends React.Component{
     
     render() {
         return (
-            <Container fluid>
-                <Jumbotron className="small-jumbotron">
-                    <h3>Contenitore <b>Dipendenti</b></h3>
-                    <p>Con questo contenitore puoi creare un elenco dei componenti della tua squadra.</p>
-                </Jumbotron>
+            <Container fluid>                
                 <EmployeeAddEdit appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId} employeeId={0} handleAddEdit={this.handleAddEdit} />
                 
                 <Row>        

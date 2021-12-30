@@ -16,7 +16,7 @@ function LanguageInput(props) {
           }
           setLoading(false)
         })
-  }, []);
+  }, [props.appSiteId, props.code, props.labelKey]);
       
   const handleChange = (evt) => {
     const value = evt.target.value;

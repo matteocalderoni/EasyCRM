@@ -38,12 +38,12 @@ function SitePageDetail({ match }) {
         setIsChanged(isChanged+1)
     },[pageId])
 
-    function handleAddEdit(appSiteId) {
-        setIsChanged(isChanged+1)
-        //sitePagesEl.current.getSitePages()
-        //SitePageList.handleAddEdit(appSiteId)
-        //appSiteService.getPagesOfAppSite(appSiteId,0).then(x => setSitePages(x.result));
-    }
+    // function handleAddEdit(appSiteId) {
+    //     setIsChanged(isChanged+1)
+    //     //sitePagesEl.current.getSitePages()
+    //     //SitePageList.handleAddEdit(appSiteId)
+    //     //appSiteService.getPagesOfAppSite(appSiteId,0).then(x => setSitePages(x.result));
+    // }
 
     return (
         <Container fluid className="pb-8">

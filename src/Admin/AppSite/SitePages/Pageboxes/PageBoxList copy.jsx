@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, Button, ProgressBar,  Navbar, Nav } from 'react-bootstrap';
-import { appSiteService, alertService } from '../../../../_services';
+import { Container, Card, Button, ProgressBar, Row, Col, Accordion, Navbar, Nav } from 'react-bootstrap';
+import { appSiteService } from '../../../../_services';
 import { PageBoxModal } from './PageBoxModal';
 import { EmployeeList } from './Employee/EmployeeList';
 import { TopServiceList } from './TopService/TopServiceList';
@@ -11,16 +11,13 @@ import { ProductList } from './Product';
 import { ArticleList } from './Article';
 import { BoxTextEditor, SimpleMap } from '../../../../_components';
 import parse from 'html-react-parser';
-import { BsPencil} from 'react-icons/bs';
+import { BsPencil,BsFillEyeFill} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
 import { FaLanguage, FaRoad } from 'react-icons/fa';
 import { BoxTypes } from '../../../../_helpers'
 import { DeleteConfirmation,FacebookFeed,InstagramFeed,YoutubeVideo } from '../../../../_components';
 import { SiteSurveyBox } from '../../SiteSurvey/SiteSurveyBox/SiteSurveyBox';
 import { BoxTypeInfo } from '../../../../_components/BoxTypeInfo';
-
-import { Responsive, WidthProvider } from 'react-grid-layout';
-const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -31,47 +28,87 @@ function PageBoxList({ match }) {
     const [sitePage, setSitePage] = useState(null)
     const [pageBoxes, setPageBoxes] = useState(null)
     const [loading, setLoading] = useState(false)
-    const [loadingLayouts, setLoadingLayouts] = useState(false)
 
-    //const originalLayouts = getFromLS("layouts") || {};
+    const initialDnDState = {
+        draggedFrom: null,
+        draggedTo: null,
+        isDragging: false,
+        originalOrder: [],
+        updatedOrder: [],
+    };
+    const [dragAndDrop, setDragAndDrop] = useState(initialDnDState);
 
-    const [layouts, setLayouts] = useState(null)
+    const onDragStart = (e) => {
+        const initialPosition = Number(e.currentTarget.dataset.position);
+    
+        setDragAndDrop({
+          ...dragAndDrop,
+          draggedFrom: initialPosition,
+          isDragging: true,
+          originalOrder: pageBoxes,
+        });
+    };
+
+    const onDragOver = (e) => {
+        e.preventDefault();
+        let newList = dragAndDrop.originalOrder;
+        const draggedFrom = dragAndDrop.draggedFrom;
+        const draggedTo = Number(e.currentTarget.dataset.position);
+        const itemDragged = newList[draggedFrom];
+        const remainingItems = newList.filter(
+          (item, index) => index !== draggedFrom
+        );
+    
+        newList = [
+          ...remainingItems.slice(0, draggedTo),
+          itemDragged,
+          ...remainingItems.slice(draggedTo),
+        ];
+    
+        if (draggedTo !== dragAndDrop.draggedTo) {
+          setDragAndDrop({
+            ...dragAndDrop,
+            updatedOrder: newList,
+            draggedTo: draggedTo,
+          });
+        }
+    };
+    
+    const onDrop = () => {
+        appSiteService.saveOrderBoxesOfPage(appSiteId,pageId,dragAndDrop.updatedOrder.map(a=>a.pageBoxId));
+
+        setPageBoxes(dragAndDrop.updatedOrder);
+    
+        setDragAndDrop({
+          ...dragAndDrop,
+          draggedFrom: null,
+          draggedTo: null,
+          isDragging: false,
+        });
+    };
+
+    const onDragLeave = () => {
+        setDragAndDrop({
+          ...dragAndDrop,
+          draggedTo: null,
+        });
+    };
 
     useEffect(() => {
-        getBoxes()
-    }, [appSiteId, pageId]);  
-    
-    const getBoxes = () => {
         setLoading(true)
-        appSiteService.getBoxesOfPage(appSiteId, pageId).then((x) => {             
+        appSiteService.getBoxesOfPage(appSiteId, pageId).then((x) => { 
             setLoading(false)
             setPageBoxes(x.result || [])
-
-            getLayouts()
         });
-    }
+    }, [appSiteId, pageId]);  
 
     useEffect(() => {
         setLoading(true)
         appSiteService.getAppSiteById(appSiteId).then((x) => { 
             setLoading(false)
-            setAppSite(x)            
+            setAppSite(x)
         });
     }, [appSiteId]);  
-
-    // useEffect(() => {
-    //     getLayouts()
-    // }, [appSiteId, pageId]);  
-
-    const getLayouts = () => {
-        setLoadingLayouts(true)
-        appSiteService.getPageLayouts(appSiteId, pageId).then((x) => { 
-            setLoadingLayouts(false)            
-            setLayouts(x)
-
-            //getBoxes()
-        });
-    }
     
     useEffect(() => {
         setLoading(true)
@@ -91,45 +128,7 @@ function PageBoxList({ match }) {
     } 
 
     function handleAddEdit(appSiteId, sitePageId) {
-        //appSiteService.getBoxesOfPage(appSiteId, sitePageId).then(x => setPageBoxes(x.result));
-        getBoxes()
-        //getLayouts()
-    }
-
-    const onLayoutChange = (layout, layouts) => {
-        //saveToLS("layouts", layouts);
-        setLayouts(layouts);
-    }
-
-    // function getFromLS(key) {
-    //     let ls = {};
-    //     if (global.localStorage) {
-    //       try {
-    //         ls = JSON.parse(global.localStorage.getItem("rgl-8")) || {};
-    //       } catch (e) {
-    //         /*Ignore*/
-    //       }
-    //     }
-    //     return ls[key];
-    // }
-      
-    // function saveToLS(key, value) {
-    //     if (global.localStorage) {
-    //       global.localStorage.setItem(
-    //         "rgl-8",
-    //         JSON.stringify({
-    //           [key]: value
-    //         })
-    //       );
-    //     }
-    // }
-
-    function savePageLayouts() {
-        appSiteService.savePageLayouts(appSiteId, pageId, layouts)
-            .then((x) => {
-                alertService.success('Aggiornamento riuscito', { keepAfterRouteChange: true });
-                setLayouts(x)
-            })
+        appSiteService.getBoxesOfPage(appSiteId, sitePageId).then(x => setPageBoxes(x.result));
     }
     
     return (
@@ -148,51 +147,38 @@ function PageBoxList({ match }) {
                 </li>
             </ul>
             <div className="shadow rounded-top mt-2 bg-gray-100 p-8">
-                <small className='font-bold'>Contenuti della pagina</small>   
-                {sitePage && <h1 className="text-xl text-blue-500">{sitePage.title && parse(sitePage.titleUrl)}</h1>}
+                <small>Gestione <b>Contenuti della pagina</b></small>   
+                {sitePage && <h1 className="text-xl">{sitePage.title && parse(sitePage.titleUrl)}</h1>}
                 <p className="text-muted text-sm">
                     Tramite questa sezione è possibile gestire i contenitori della pagina. Si possono creare, modificare o eliminare diverse tipologie di contenitori.<br />
-                    Sotto viene visualizzata un anteprima dei contenitori aggiunti (anche quelli non pubblici).
-                    Puoi <b>trascinare e ridimensionare</b> i contenitori per ottenere il layout che preferisci.                   
+                    Sotto viene visualizzata un anteprima dei contenitori aggiunti (anche quelli non pubblici).<br />                    
+                    Utilizzare immagini ottimizzate per un caricamento rapido.
                 </p>
             </div>
             
-            {sitePage &&
+            {sitePage && 
             <div style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} className="fixed-background page-boxes rounded-bottom mb-4">
                 {(!pageBoxes || loading) &&               
                     <div className="text-center mt-1">
                         <ProgressBar animated now={100} />
                     </div>
                 }
-                {!loadingLayouts && layouts &&
-                <ResponsiveGridLayout className="layout"
-                    layouts={layouts}
-                    autoSize={true}
-                    breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-                    cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
-                    onLayoutChange={(layout, layouts) =>
-                        onLayoutChange(layout, layouts)
-                    }
-                    >
+                <Row>
                 {pageBoxes && pageBoxes.map((pageBox,index) =>                                    
-                <div className="page-box rounded-lg border-2 border-gray-400 border-dashed" 
-                    //style={{backgroundColor: pageBox.boxColor}}
-                    key={pageBox.pageBoxId.toString()}
-                    //data-grid={{x: 0, y: (index * 2), w: +pageBox.cardSize, h: 2}}                    
-                    // data-position={index}
-                    // draggable
-                    // onDragStart={onDragStart}
-                    // onDragOver={onDragOver}
-                    // onDrop={onDrop}
-                    // onDragLeave={onDragLeave}
-                    >
-                    
+                <Col sm={parseInt(pageBox.cardSize)} className="page-box"  key={pageBox.pageBoxId}
+                    data-position={index}
+                    draggable
+                    onDragStart={onDragStart}
+                    onDragOver={onDragOver}
+                    onDrop={onDrop}
+                    onDragLeave={onDragLeave}>
+                    <Accordion defaultActiveKey="0">
                         <Card style={{backgroundColor: pageBox.boxColor}}>
                             <Card.Header>                            
                                 <div className="flex flex-row">
                                     <div className="flex-grow md:flex">
-                                        <BoxTypeInfo boxType={pageBox.boxType} boxId={pageBox.pageBoxId} />
-                                        <label className='w-24'>{BoxTypes && BoxTypes[pageBox.boxType - 1].label}</label>
+                                        <BoxTypeInfo boxType={pageBox.boxType} />
+                                        {BoxTypes && BoxTypes[pageBox.boxType - 1].label}
                                         <span className="ml-2">{pageBox.title && parse(pageBox.title)}</span>                                        
                                     </div>
                                     <div className="flex-none">
@@ -204,19 +190,18 @@ function PageBoxList({ match }) {
                                         </div>}
                                     </div>
                                     <div className="flex flex-none align-middle mt-1">                                    
-                                        <PageBoxModal appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} sortId={pageBox.sortId} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId)} />                                
-                                        {/* 
+                                        <PageBoxModal appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} sortId={pageBox.sortId} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId)} />                                                                    
                                         <Accordion.Toggle title="Anteprima" className="bg-gray-500 border-0 rounded-full ml-1" as={Button} eventKey={pageBox.pageBoxId}>
                                             <BsFillEyeFill />
-                                        </Accordion.Toggle> */}
+                                        </Accordion.Toggle>
                                         <DeleteConfirmation onConfirm={() => deleteBox(pageBox)} />
                                     </div>
                                 </div>                        
                             </Card.Header>
-                            
+                            <Accordion.Collapse eventKey={pageBox.pageBoxId}>
                                 <Card.Body>
                                 {pageBox.boxType && (parseInt(pageBox.boxType) === 8 || parseInt(pageBox.boxType) === 9) &&
-                                    <Card.Img src={baseImageUrl+pageBox.imageUrl} />
+                                    <Card.Img variant="top" src={baseImageUrl+pageBox.imageUrl} />
                                 }                                                
                                 {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9) &&                                                                        
                                     <BoxTextEditor prefix={pageBox.appSiteId} pageBox={pageBox} handleSaved={handleAddEdit}></BoxTextEditor>
@@ -255,12 +240,12 @@ function PageBoxList({ match }) {
                                     <SlideshowList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
                                 }    
                                 </Card.Body>                     
-                            
+                            </Accordion.Collapse>
                         </Card>                                            
-                    
-                </div>
+                    </Accordion> 
+                </Col>
                 )}                              
-                </ResponsiveGridLayout>}
+                </Row>
             </div>}
 
             <Navbar fixed="bottom" className="flex bg-blue-800">
@@ -276,9 +261,6 @@ function PageBoxList({ match }) {
                     </Link>
                 </Nav>
                 <Nav className="mr-left">
-                    <Button className="bg-green-500 text-white rounded-full mr-1" onClick={() => savePageLayouts()}>
-                        Salva Layout                        
-                    </Button>
                     <PageBoxModal appSiteId={appSiteId} sitePageId={pageId} pageBoxId={0} sortId={1} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId) } />
                 </Nav>
             </Navbar> 

@@ -13,7 +13,7 @@ function DeleteConfirmation({ onConfirm }) {
 
     return (
         <>
-            <Button title="Elimina" variant="danger" className="rounded-full ml-1" onClick={() => setIsOpen(true)}>
+            <Button title="Elimina" className="btn bg-red-500 border-0 hover:bg-red-600 rounded-full ml-1" onClick={() => setIsOpen(true)}>
                 <BsTrash />
             </Button> 
             <Modal show={isOpen} backdrop="static" keyboard={false}>
@@ -25,10 +25,10 @@ function DeleteConfirmation({ onConfirm }) {
                     <small className="text-muted">Attenzione questa azione è irreversibile.</small>
                 </Modal.Body>
                 <Modal.Footer>                    
-                    <Button className="btn btn-danger" onClick={() => onSubmit(1)}>
+                    <Button className="btn bg-red-600" onClick={() => onSubmit(1)}>
                         conferma
                     </Button> 
-                    <Button className="btn btn-default" onClick={() => onSubmit(0)}>
+                    <Button className="btn bg-gray-400" onClick={() => onSubmit(0)}>
                         annulla
                     </Button> 
                 </Modal.Footer>

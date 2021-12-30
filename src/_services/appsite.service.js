@@ -35,7 +35,9 @@ export const appSiteService = {
     deleteEmployee,
     deleteTopService,
     setDefaultAppSite,
-    saveOrderBoxesOfPage
+    saveOrderBoxesOfPage,
+    getPageLayouts,
+    savePageLayouts
 };
 
 function getAppSites(search,page,count) {
@@ -164,4 +166,12 @@ function setDefaultAppSite(appSiteId) {
 
 function saveOrderBoxesOfPage(appSiteId, pageId, ids) {
     return fetchWrapper.post(`${baseUrl}/SaveOrderBoxesOfPage/${appSiteId}/${pageId}`, { ids: ids });
+}
+
+function getPageLayouts(appSiteId, pageId) {
+    return fetchWrapper.get(`${baseUrl}/GetPageLayouts/${appSiteId}/${pageId}`);
+}
+
+function savePageLayouts(appSiteId, pageId, layouts) {
+    return fetchWrapper.post(`${baseUrl}/SavePageLayouts/${appSiteId}/${pageId}`, layouts);
 }

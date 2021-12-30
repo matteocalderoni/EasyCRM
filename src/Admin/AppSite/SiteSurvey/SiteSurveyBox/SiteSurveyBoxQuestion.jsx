@@ -36,13 +36,13 @@ function SiteSurveyBoxQuestion ({appSiteId, siteSurveyId, surveyStepId, stepQues
                     key={questionAnswer.questionAnswerId}
                     className={`block px-4 py-2 rounded ` + (questionAnswer.endSurvey ? ' bg-green-500' : '')}
                     style={{backgroundColor: questionAnswer.boxColor}}>
-                    <label class="inline-flex items-center">
+                    <label className="inline-flex items-center">
                         {stepQuestion && stepQuestion.questionStyle !== 2 &&
                         <>
                             {!stepQuestion.multipleChoice && 
-                            <input type="radio" class="form-radio" name="questionAnswer" value={questionAnswer.questionAnswerId} />}
+                            <input type="radio" className="form-radio" name="questionAnswer" value={questionAnswer.questionAnswerId} />}
                             {stepQuestion.multipleChoice && 
-                            <input type="checkbox" class="form-checkbox" name="questionAnswer" value={questionAnswer.questionAnswerId} />}
+                            <input type="checkbox" className="form-checkbox" name="questionAnswer" value={questionAnswer.questionAnswerId} />}
                         </>
                         }
                         <div className="ml-2">{questionAnswer.answerText && parse(questionAnswer.answerText)}</div>

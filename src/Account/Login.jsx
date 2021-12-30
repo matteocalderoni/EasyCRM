@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
 import { accountService, alertService } from '../_services';
 
 function Login({ history, location }) {
@@ -10,13 +8,6 @@ function Login({ history, location }) {
         email: '',
         password: ''
     };
-
-    const validationSchema = Yup.object().shape({
-        email: Yup.string()
-            .email('Email is invalid')
-            .required('Email is required'),
-        password: Yup.string().required('Password is required')
-    });
 
     function onSubmit({ email, password }, { setSubmitting }) {
         alertService.clear();
@@ -32,7 +23,7 @@ function Login({ history, location }) {
     }
 
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} className="border rounded-xl">
+        <Formik initialValues={initialValues} onSubmit={onSubmit} className="border rounded-xl">
             {({ errors, touched, isSubmitting }) => (
                 <Form>
                     <div className="bg-blue-500">
@@ -54,14 +45,14 @@ function Login({ history, location }) {
                         </div>
                         <div className="form-row">
                             <div className="form-group col">
-                                <button type="submit" disabled={isSubmitting} className="btn btn-primary">
+                                <button type="submit" disabled={isSubmitting} className="bg-green-500 w-full border-green-300 text-white p-2 rounded-full">
                                     {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                                    accedi
+                                    Accedi
                                 </button>
-                                <Link to="register" className="btn btn-link">Registrati</Link>
                             </div>
-                            <div className="form-group col text-right">
-                                <Link to="forgot-password" className="btn btn-link pr-0">Password dimenticata?</Link>
+                            <div className="form-group col text-right mt-2">
+                                <Link to="register" className="bg-gray-200 ml-2 p-2 rounded-full">Registrati</Link>
+                                <Link to="forgot-password" className="bg-gray-200 ml-2 p-2 rounded-full">Password dimenticata?</Link>
                             </div>
                         </div>
                     </div>

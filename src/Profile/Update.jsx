@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 
 import { accountService, alertService } from '../_services';
 
@@ -15,25 +14,6 @@ function Update({ history }) {
         password: '',
         confirmPassword: ''
     };
-
-    const validationSchema = Yup.object().shape({
-        title: Yup.string()
-            .required('Titolo è richiesto'),
-        firstName: Yup.string()
-            .required('Nome è richiesto'),
-        lastName: Yup.string()
-            .required('Cognome è richiesto'),
-        email: Yup.string()
-            .email('Email non valida')
-            .required('Email è richiesta'),
-        password: Yup.string()
-            .min(6, 'Password deve contenere almeno 6 caratteri'),
-        confirmPassword: Yup.string()
-            .when('password', (password, schema) => {
-                if (password) return schema.required('Conferrma Password è richiesto');
-            })
-            .oneOf([Yup.ref('password')], 'Passwords non corrisponde')
-    });
 
     function onSubmit(fields, { setStatus, setSubmitting }) {
         setStatus();
@@ -58,7 +38,7 @@ function Update({ history }) {
     }
 
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, touched, isSubmitting }) => (
                 <Form>
                     <div className="shadow rounded-xl mt-16 bg-gray-100 p-8">
