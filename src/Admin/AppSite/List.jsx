@@ -59,11 +59,10 @@ function List({ match }) {
                 </Row>       
 
             {!appSites && loading &&
-                <div className="text-center rounded bg-blue-400 text-white mt-2 p-2">
-                    <h5 className="text-white text-bold-xl">Caricamento in corso... Attendere prego...</h5>
-                    <ProgressBar animated now={100} />
-                </div>                
-            }                         
+            <div className="text-center rounded bg-blue-400 text-white mt-2 p-2">
+                <h5 className="text-white text-bold-xl">Caricamento in corso... Attendere prego...</h5>
+                <ProgressBar animated now={100} />
+            </div>}                         
             {appSites && appSites.map(appSite =>
                 <Row key={appSite.appSiteId} className="site-list-item bg-blue-50 p-2">
                     <Col sm={2}>
@@ -117,7 +116,7 @@ function List({ match }) {
                 <Nav className="flex space-x-2 text-sm font-medium mr-auto">
                     <Link to={`${path}/add/0`} className="flex text-white p-2 items-center justify-center rounded-full bg-green-500">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
                         </svg>
                         Crea Sito
                     </Link>

@@ -61,6 +61,7 @@ function Home() {
                             <b className="text-blue-800">Ver 1.4.1.22 (Dicembre 2021)</b>: ecco gli ultimi aggiornamenti:                             
                             <ul className="list-disc ml-3">
                                 <li><b>trascinamento dei contenitori</b>: per ordinare i contenitori delle pagine puoi trascinarli comodamente, oppure inserire manualmente ordine.</li>                                
+                                <li><b>ricerca delle pagine</b>: è possibile ricercare le pagine del sito per titolo o tipo (default, privacy o landing).</li>                                
                             </ul>                            
                         </li>
                         <li className="list-group-item">

@@ -62,7 +62,6 @@ function LanguageEditor(props) {
           <h5>Caricamento etichetta...</h5>
           <ProgressBar animated now={100} />
       </Col>}
-
       <Form.Group>
         <Form.Label>Testo per lingua <b>{props.code}</b> (digitare il testo tradotto)</Form.Label>
         {!loading &&           

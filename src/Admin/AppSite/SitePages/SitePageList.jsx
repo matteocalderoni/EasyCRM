@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, Navbar, Nav } from 'react-bootstrap';
+import { Container, Card, Navbar, Nav, Form } from 'react-bootstrap';
 import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 import { BsPencil} from 'react-icons/bs';
 import { FaBoxes} from 'react-icons/fa';
 import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
+import { PageTypeSelect } from '../../../_components/PageTypeSelect';
 //import parse from 'html-react-parser';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -14,12 +15,15 @@ function SitePageList (props){
     //const { path } = match;
     const appSiteId = parseInt(props.appSiteId)
     const parentPageId = parseInt(props.parentPageId)
+    const appSite = props.appSite
+    const [searchText, setSearchText] = useState('')
+    const [pageType, setPageType] = useState(-1)
     const [sitePages, setSitePages] = useState(null)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         getSitePages()
-    }, [appSiteId,props.isChanged]);     
+    }, [searchText, pageType, appSiteId,props.isChanged]);     
     
     function deleteSitePage(sitePage) {
         setLoading(true)
@@ -34,7 +38,8 @@ function SitePageList (props){
 
     function getSitePages() {
         setLoading(true)
-        appSiteService.getPagesOfAppSite(appSiteId,parentPageId).then((x) => { 
+        var _parentPageId = parentPageId === 0 ? -1 : parentPageId;
+        appSiteService.getPagesOfAppSite(searchText, appSiteId,_parentPageId,pageType).then((x) => { 
             setLoading(false)
             setSitePages(x.result)
         });
@@ -42,7 +47,18 @@ function SitePageList (props){
     
     return (
         <Container fluid>            
-            <div className="mt-4">
+            {parentPageId === 0 && 
+            <Form.Group className='rounded-xl border p-4 mt-4 flex space-x-2'>
+                <div className='flex-1'>
+                    <Form.Label>Ricerca per titolo</Form.Label>
+                    <input type="text" className="form-control" value={searchText} onChange={(e) => setSearchText(e.target.value)}  />
+                </div>
+                <div className='flex-1'>
+                    <Form.Label>Ricerca per Tipo</Form.Label>
+                    <PageTypeSelect pageType={pageType} onPageTypeChange={(pageType) => setPageType(+pageType)} label={'Tipo di pagina'} />
+                </div>
+            </Form.Group>}
+            <div className="mt-2">
             {sitePages && sitePages.map(sitePage =>                                    
                 <div className="block mt-2" key={sitePage.sitePageId}>
                     <Card style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} text="white">
@@ -85,7 +101,7 @@ function SitePageList (props){
             {parentPageId > 0 &&
             <Navbar fixed="bottom" variant="dark" bg="dark">
                 <Nav className="mr-right">
-                    <SitePageModal appSiteId={appSiteId} sitePageId={0} parentPageId={parentPageId} handleAddEdit={(appSiteId) => getSitePages()} />
+                    <SitePageModal appSite={appSite} appSiteId={appSiteId} sitePageId={0} parentPageId={parentPageId} handleAddEdit={(appSiteId) => getSitePages()} />
                 </Nav>
             </Navbar>}
         </Container>

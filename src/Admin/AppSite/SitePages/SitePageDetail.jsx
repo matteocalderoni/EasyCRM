@@ -38,13 +38,6 @@ function SitePageDetail({ match }) {
         setIsChanged(isChanged+1)
     },[pageId])
 
-    // function handleAddEdit(appSiteId) {
-    //     setIsChanged(isChanged+1)
-    //     //sitePagesEl.current.getSitePages()
-    //     //SitePageList.handleAddEdit(appSiteId)
-    //     //appSiteService.getPagesOfAppSite(appSiteId,0).then(x => setSitePages(x.result));
-    // }
-
     return (
         <Container fluid className="pb-8">
             <ul className="breadcrumb">
@@ -70,12 +63,14 @@ function SitePageDetail({ match }) {
             <Tabs id="user-tabs" className="mt-4">
                 <Tab eventKey="info" title="Informazioni generali">
                     <div className="p-2 bg-white border-l border-r border-bottom shadow">
-                        {!loading &&<SitePageAddEdit appSiteId={appSiteId} sitePageId={pageId}></SitePageAddEdit>}
+                        {!loading && sitePage && appSite &&
+                        <SitePageAddEdit sitePage={sitePage} appSiteId={appSiteId} sitePageId={pageId} appSite={appSite} />}
                     </div>
                 </Tab>
                 {pageId > 0 && <Tab eventKey="pages" title="Gestione Sotto Pagine">
                     <div className="p-2 bg-white border-l border-r border-bottom shadow">
-                        <SitePageList appSiteId={appSiteId} parentPageId={pageId} isChanged={isChanged}></SitePageList>
+                        {!loading && sitePage && appSite &&
+                        <SitePageList appSite={appSite} appSiteId={appSiteId} parentPageId={pageId} isChanged={isChanged}></SitePageList>}
                     </div>
                 </Tab>}
             </Tabs>

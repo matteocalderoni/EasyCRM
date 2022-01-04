@@ -46,7 +46,7 @@ class PageBoxAddEdit extends React.Component {
 
     componentDidMount() {
         // get sub pages 
-        appSiteService.getPagesOfAppSite(this.props.appSiteId,-1).then((x) => { 
+        appSiteService.getPagesOfAppSite('',this.props.appSiteId,-1,-1).then((x) => { 
             if (x.totalCount > 0) {
                 // Filter current page
                 this.setState({                

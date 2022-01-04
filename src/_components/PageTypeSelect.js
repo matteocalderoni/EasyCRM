@@ -7,6 +7,7 @@ class PageTypeSelect extends Component {
       super(props);
       this.state = {         
         pageTypes: [
+          {label: '', value: -1},
           {label: 'Default', value: 0},
           {label: 'Privacy', value: 1},
           {label: 'Landing', value: 2}

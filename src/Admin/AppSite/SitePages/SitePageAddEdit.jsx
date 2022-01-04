@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { appSiteService, alertService } from '../../../_services';
 import { Uploader,LanguageSelect,LanguageEditor,PositionSelect } from '../../../_components'
-import { Form, Button, Card, ProgressBar,Navbar, Nav, Image, Row, Col } from 'react-bootstrap'
+import { Form, Button, Card, Navbar, Nav, Image, Row, Col, ProgressBar } from 'react-bootstrap'
 import { CompactPicker,SliderPicker } from 'react-color';
 import { Editor } from "@tinymce/tinymce-react";
 import { FaSave } from 'react-icons/fa';
@@ -19,26 +19,10 @@ class SitePageAddEdit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {   
-            sitePage: {
-                appSiteId: this.props.appSiteId,                         
-                sitePageId: this.props.sitePageId,
-                parentPageId: this.props.parentPageId,
-                pageType: 0,
-                imageUrl: '',
-                titleUrl: '',
-                titleNav: '',
-                title: '',
-                description: '',
-                slideText: '',
-                sortId: 1,
-                isPublished: true,
-                logoPosition: 1,
-                navPosition: 1
-            },
-            companyLogo: '', 
+            sitePage: this.props.sitePage,
+            companyLogo: this.props.appSite ? this.props.appSite.companyLogo : '', 
             languageCode: '',
             sitePages: [],
-            loading: false,
             loadingPages: true                         
          };
 
@@ -48,10 +32,8 @@ class SitePageAddEdit extends React.Component {
     }
 
     componentDidMount() {
-        // Check new or update
-        this.handleOpen()
         // get sub pages 
-        appSiteService.getPagesOfAppSite(this.props.appSiteId,-1).then((x) => { 
+        appSiteService.getPagesOfAppSite('',this.props.appSiteId,-1,-1).then((x) => { 
             if (x.totalCount > 0) {
                 // Filter current page
                 this.setState({                
@@ -60,9 +42,6 @@ class SitePageAddEdit extends React.Component {
                 })
             } else this.setState({sitePages: [], loadingPages: false})            
         });
-        // Get Site info
-        appSiteService.getAppSiteById(this.props.appSiteId)
-            .then((x) => this.setState({companyLogo: x.companyLogo}))
     }
 
     handleChange(evt) {
@@ -178,19 +157,6 @@ class SitePageAddEdit extends React.Component {
             }          
         });
     }
-
-    handleOpen() {    
-        if (this.props.sitePageId > 0) {
-            this.setState({loading: true})
-            appSiteService.getSitePageById(this.props.appSiteId, this.props.sitePageId)
-                .then(_sitePage => {                    
-                    this.setState({
-                        sitePage: _sitePage,
-                        loading: false
-                    })                    
-                });
-        }         
-    }
     
     onSubmit = () => {
         if (this.state.sitePage.appSiteId > 0 && this.state.sitePage.sitePageId > 0) 
@@ -245,11 +211,11 @@ class SitePageAddEdit extends React.Component {
         return (            
           <>
             <Card>                
-                <Card.Body className="home container-fluid">                    
-                    {this.state.loading && <div className="text-center mart2">
-                        <ProgressBar animated now={100} />
-                    </div>}
+                <Card.Body className="home container-fluid">                                        
                     <div>
+                        {this.state.loadingPages && <div className="text-center">
+                            <ProgressBar animated now={100} />
+                        </div>}
                         <div className="flex flex-col md:flex-row p-2 border rounded content-center">
                             <div className="flex-1 p-1">
                                 {this.state.sitePage && this.state.sitePages && !this.state.loadingPages && 
@@ -267,15 +233,14 @@ class SitePageAddEdit extends React.Component {
                                         Non ci sono limiti ai sotto livelli che è possibile creare (Radice, livello 1, livello 2, livello N)
                                     </Form.Text>
                                 </Form.Group>}
-
-                                {!this.state.loading &&
+                                
                                 <Form.Group className="flex-1 md:ml-2">
                                     <Form.Label className="text-xl"><b>Tipo</b> di Pagina</Form.Label>
                                     <PageTypeSelect pageType={this.state.sitePage.pageType} onPageTypeChange={(pageType) => this.handlePageTypeChange(+pageType)} label={'Tipo di pagina'} />
                                     <Form.Text className="text-muted">
                                         Ci sono diversi tipi di pagina: <b>default</b> è per le pagine disponibili nel menù di navigazione, <b>privacy</b> per 'informativa utilizzo dati'  e <b>landing</b> per pagine di 'approdo' (tramite collegamento).
                                     </Form.Text>
-                                </Form.Group>}
+                                </Form.Group>
                             </div>
 
                             <div className="flex-1 p-1">
@@ -298,7 +263,7 @@ class SitePageAddEdit extends React.Component {
                             </div>
                         </div>
 
-                        {this.state.sitePage.sitePageId > 0 && !this.state.loading &&                 
+                        {this.state.sitePage.sitePageId > 0 &&                 
                         <div className="md:flex p-2 mt-2 border rounded content-center">
                             <div className="flex flex-col">
                                 <label className="text-xl"><b>Immagine</b> di Sfondo:</label>                                
@@ -315,7 +280,7 @@ class SitePageAddEdit extends React.Component {
                                 </p>
                             </div>                            
                             <div>
-                            {this.state.sitePage && !this.state.loading && 
+                            {this.state.sitePage &&
                                 <Form.Group className="flex flex-col flex-1">
                                     <Form.Label className="text-xl"><b>Colore</b> di Sfondo</Form.Label>
                                     <div className="flex-none m-2 mt-0">
@@ -344,7 +309,7 @@ class SitePageAddEdit extends React.Component {
                                                         
                             <div className="flex flex-col lg:flex-row">
 
-                                {this.state.sitePage && !this.state.loading && 
+                                {this.state.sitePage &&
                                 <Form.Group className="flex-1">
                                     <div className="flex flex-col">
                                         <Form.Label className="text-xl">Colore per <b>Navigazione</b> e <b>Fondo</b></Form.Label><br />
@@ -370,29 +335,27 @@ class SitePageAddEdit extends React.Component {
                                     </Form.Text>
                                 </Form.Group>}
 
-                                {!this.state.loading &&
                                 <Form.Group className="flex-1 ml-2">
                                     <Form.Label className="text-lg">Posizione <b>Navigazione</b></Form.Label>
                                     <NavPositionSelect position={this.state.sitePage.navPosition} onPositionChange={(position) => this.handleNavPosition(+position)} label={'Posizione Navigazione'} />
                                     <Form.Text className="text-muted">
                                         Posizione della barra di navigazione: è possibile selezionare il comportamento del menù (fisso o scorrevole). Ogni pagina dispone della sua barra di navigazione ed è possibile creare delle varianti in base al contesto della pagina.
                                     </Form.Text>
-                                </Form.Group>}
+                                </Form.Group>
                                   
-                                {!this.state.loading &&
                                 <Form.Group className="flex-1 ml-2">
                                     <Form.Label className="text-lg">Posizione del <b>Logo nella slide</b></Form.Label>
                                     <PositionSelect position={this.state.sitePage.logoPosition} onPositionChange={(position) => this.handleLogoPosition(+position)} label={'Posizione del logo'} />
                                     <Form.Text className="text-muted">
                                         Posizione del logo nella slide della pagina. Ogni pagina dispone della sua slide ed è possibile creare delle varianti in base al contesto della pagina.
                                     </Form.Text>
-                                </Form.Group>}
+                                </Form.Group>
 
                             </div>    
                         </div>
                     </div>    
 
-                    {!this.state.loading && this.state.languageCode == '' && 
+                    {this.state.languageCode == '' && 
                     <Form.Group className="mt-2">
                         <Form.Label className="text-xl"><b>Titolo</b> per Navigazione</Form.Label>                                
                         <div className="border rounded-lg ring-2 ring-blue-200 p-1" style={{backgroundColor: this.state.sitePage.navColor}}>
@@ -437,7 +400,7 @@ class SitePageAddEdit extends React.Component {
                             </Col>}
                             <Col sm={(this.state.sitePage.logoPosition === 2 || this.state.sitePage.logoPosition === 4) ? 6 : 12}>
                                 
-                            {!this.state.loading && this.state.languageCode == '' && 
+                            {this.state.languageCode == '' && 
                             <Form.Group>
                             <Form.Label className="text-xl">Titolo della Slide</Form.Label>
                             {/* <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} /> */}
@@ -476,7 +439,7 @@ class SitePageAddEdit extends React.Component {
                             </LanguageEditor>                                
                         </div>}   
 
-                        {!this.state.loading && this.state.sitePage.sitePageId > 0 && this.state.languageCode == '' &&
+                        {this.state.sitePage.sitePageId > 0 && this.state.languageCode == '' &&
                             <div>
                                 <label className="text-xl">Testo della Slide</label>
                                 <div className="border rounded-lg ring-2 ring-blue-200 p-1">
@@ -535,7 +498,7 @@ class SitePageAddEdit extends React.Component {
                     <Link title="Vai a gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${this.state.sitePage.appSiteId}/${this.state.sitePage.sitePageId}`} 
                         className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-2">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
                         </svg>
                         Gestione Contenitori
                     </Link>}
@@ -543,14 +506,13 @@ class SitePageAddEdit extends React.Component {
                     <Link to={`/admin/sites/edit/${this.state.sitePage.appSiteId}`}
                         className="flex items-center justify-center rounded-full  bg-blue-500 text-white p-2">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                         </svg>
                         Modifica sito
                     </Link>}
                 </Nav>
                 <Form inline>
-                    {!this.state.loading &&
-                    <LanguageSelect appSiteId={this.state.sitePage.appSiteId} onLanguageChange={(code) => this.handleLanguageCode(code)} />}
+                    <LanguageSelect appSiteId={this.state.sitePage.appSiteId} onLanguageChange={(code) => this.handleLanguageCode(code)} />
                 </Form>
             </Navbar>                
           </>          

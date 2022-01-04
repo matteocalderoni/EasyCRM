@@ -58,7 +58,7 @@ code {
 .site-list-item .logo { margin: 5px; }
 
 .page-boxes { padding: 5px; }
-.page-boxes .page-box { margin-bottom: 15px; overflow: hidden; }
+.page-boxes .page-box { overflow: hidden; }
 
 .fb-page { width: 100%; text-align: center;  }
 

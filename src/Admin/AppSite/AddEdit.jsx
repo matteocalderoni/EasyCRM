@@ -48,7 +48,7 @@ class AddEdit extends React.Component {
         this.getLanguages()
         this.getSite()
 
-        appSiteService.getPagesOfAppSite(this.props.match.params.appSiteId,-1).then((x) => { 
+        appSiteService.getPagesOfAppSite('',this.props.match.params.appSiteId,-1,-1).then((x) => { 
             if (x.totalCount > 0) {                
                 this.setState({                
                     sitePages: x.result,
@@ -212,13 +212,12 @@ class AddEdit extends React.Component {
             </ul>
 
             {this.state.loading &&
-                <Row className="mb-4">
-                    <Col className="text-center rounded bg-blue-400 text-white mt-2 p-2">
-                        Caricamento dei contenuti in corso... Attende prego...
-                        <ProgressBar animated now={100} />
-                    </Col>
-                </Row>
-            }                         
+            <Row className="mb-4">
+                <Col className="text-center rounded bg-blue-400 text-white mt-2 p-2">
+                    Caricamento dei contenuti in corso... Attende prego...
+                    <ProgressBar animated now={100} />
+                </Col>
+            </Row>}                         
             <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
                 <p>Le informazioni principali del sito vengono utilizzate in tutte le pagine. Il logo viene inserito nel menù di navigazione e i riferimenti nel fondo pagina.</p>
             </div>
@@ -349,7 +348,7 @@ class AddEdit extends React.Component {
                             </Form.Group>
                         </Col>
                     </Row>
-                    <dic className="flex">
+                    <div className="flex">
                         <Form.Group className="flex-1 mt-2">
                             <Form.Check type="checkbox" label="Attivo login" name="loginEnabled" checked={this.state.appSite.loginEnabled} onChange={this.handleChangeBool} />
                             <Form.Text>
@@ -363,7 +362,7 @@ class AddEdit extends React.Component {
                                 Con questa opzione si attiva la possibilità di effettuare ordini dal sito: viene visualizzato il carello di utente.
                             </Form.Text>
                         </Form.Group>
-                    </dic>
+                    </div>
 
                     {this.state.appSite && this.state.sitePages && !this.state.loadingPages && <Form.Group>
                         <Form.Label>Pagina per la privacy policy:</Form.Label>
@@ -398,26 +397,26 @@ class AddEdit extends React.Component {
                 <Nav className="flex space-x-2 text-sm font-medium mr-auto">
                     <Button onClick={this.onSubmit} className="flex items-center justify-center rounded-full bg-green-500">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                         </svg>
                         Salva Modifiche
                     </Button> 
                     <Link to={`/admin/sites/sitepages/${this.state.appSite.appSiteId}`} title="Pagine del sito" 
                         className="flex items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
                         </svg>
                         Gestione Pagine
                     </Link>
                     <Link to={`/admin/sites/sitelanguages/${this.state.appSite.appSiteId}`} title="Lingue del sito" className="flex items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                         </svg>
                         Gestione Lingue
                     </Link>
                     <Link to={`/admin/sites/sitelanguages/${this.state.appSite.appSiteId}`} title="Lingue del sito" className="flex items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                         </svg>
                         Gestione Percorsi
                     </Link>

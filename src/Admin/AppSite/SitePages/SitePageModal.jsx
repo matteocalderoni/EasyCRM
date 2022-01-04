@@ -8,24 +8,32 @@ class SitePageModal extends React.Component {
         super(props);
         this.state = {   
             setShow: false,
+            appSite: props.appSite,
             sitePage: {
                 appSiteId: props.appSiteId,                                
                 sitePageId: props.sitePageId,
-                parentPageId: props.parentPageId > 0 ? parseInt(props.parentPageId) : undefined
+                parentPageId: props.parentPageId > 0 ? parseInt(props.parentPageId) : undefined,
+                pageType: 0,
+                imageUrl: '',
+                titleUrl: '',
+                titleNav: '',
+                title: '',
+                description: '',
+                slideText: '',
+                sortId: 1,
+                isPublished: true,
+                logoPosition: 1,
+                navPosition: 1
             }
          };
     }
     
     handleShow = () => {    
-        this.setState({
-            setShow: true
-        });        
+        this.setState({ setShow: true });        
     }
 
     handleClose = () => {
-        this.setState({
-            setShow: false
-        });
+        this.setState({ setShow: false });
     }            
 
     handleSaved = () => {
@@ -44,8 +52,8 @@ class SitePageModal extends React.Component {
                     <Modal.Title>{(this.state.sitePage.sitePageId > 0 ? 'Modifica la ' : 'Crea una nuova ') + (this.state.sitePage.parentPageId > 0 ? 'Sotto-Pagina' : 'Pagina')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {this.state.setShow &&
-                        <SitePageAddEdit appSiteId={this.state.sitePage.appSiteId} sitePageId={this.state.sitePage.sitePageId} parentPageId={this.state.sitePage.parentPageId} handleSaved={this.handleSaved} />
+                    {this.state.setShow && this.state.appSite &&
+                        <SitePageAddEdit sitePage={this.state.sitePage} appSiteId={this.state.sitePage.appSiteId} sitePageId={this.state.sitePage.sitePageId} parentPageId={this.state.sitePage.parentPageId} appSite={this.state.appSite} handleSaved={this.handleSaved} />
                     }                    
                 </Modal.Body>
                 <Modal.Footer>

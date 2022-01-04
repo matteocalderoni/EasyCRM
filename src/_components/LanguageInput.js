@@ -45,7 +45,6 @@ function LanguageInput(props) {
         <h5>Caricamento etichetta...</h5>
         <ProgressBar animated now={100} />
       </div>}
-
       <Card bg="primary" text="white">
         <Card.Header>
           <Card.Title>Testo per {props.code}</Card.Title>

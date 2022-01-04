@@ -139,15 +139,13 @@ function PageBoxList({ match }) {
                 <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>          
                 <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                      
                 <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito <b>{appSite && appSite.name}</b></Link></li>                
-                <li className="breadcrumb-item">
-                    <Link to={'/admin/sites/sitepages/'+ appSiteId}>Pagine del Sito {appSite && <b>{appSite.name}</b>}</Link>                    
-                </li>                
+                <li className="breadcrumb-item"><Link to={'/admin/sites/sitepages/'+ appSiteId}>Elenco Pagine</Link></li>
                 <li className="breadcrumb-item"><Link to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`}>Pagina <b>{sitePage && sitePage.title && parse(sitePage.titleUrl)}</b></Link></li>                
                 <li className="breadcrumb-item active">
                     Contenitori della Pagina <b>{sitePage && sitePage.title && parse(sitePage.titleUrl)}</b>
                 </li>
             </ul>
-            <div className="shadow rounded-top mt-2 bg-gray-100 p-8">
+            <div className="rounded-t-xl border mt-2 bg-gray-100 p-8">
                 <small className='font-bold'>Contenuti della pagina</small>   
                 {sitePage && <h1 className="text-xl text-blue-500">{sitePage.title && parse(sitePage.titleUrl)}</h1>}
                 <p className="text-muted text-sm">
@@ -158,7 +156,7 @@ function PageBoxList({ match }) {
             </div>
             
             {sitePage &&
-            <div style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} className="fixed-background page-boxes rounded-bottom mb-4">
+            <div style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} className="fixed-background page-boxes rounded-b-xl border mb-4">
                 {(!pageBoxes || loading) &&               
                     <div className="text-center mt-1">
                         <ProgressBar animated now={100} />
@@ -175,90 +173,89 @@ function PageBoxList({ match }) {
                     }
                     >
                 {pageBoxes && pageBoxes.map((pageBox,index) =>                                    
-                <div className="page-box rounded-lg border-2 border-gray-400 border-dashed" 
-                    //style={{backgroundColor: pageBox.boxColor}}
-                    key={pageBox.pageBoxId.toString()}
-                    //data-grid={{x: 0, y: (index * 2), w: +pageBox.cardSize, h: 2}}                    
-                    // data-position={index}
-                    // draggable
-                    // onDragStart={onDragStart}
-                    // onDragOver={onDragOver}
-                    // onDrop={onDrop}
-                    // onDragLeave={onDragLeave}
-                    >
+                // <div className="page-box rounded-lg border-2 border-gray-400 border-dashed" 
+                //     //style={{backgroundColor: pageBox.boxColor}}
+                //     key={pageBox.pageBoxId.toString()}
+                //     //data-grid={{x: 0, y: (index * 2), w: +pageBox.cardSize, h: 2}}                    
+                //     // data-position={index}
+                //     // draggable
+                //     // onDragStart={onDragStart}
+                //     // onDragOver={onDragOver}
+                //     // onDrop={onDrop}
+                //     // onDragLeave={onDragLeave}
+                //     >
                     
-                        <Card style={{backgroundColor: pageBox.boxColor}}>
-                            <Card.Header>                            
-                                <div className="flex flex-row">
-                                    <div className="flex-grow md:flex">
-                                        <BoxTypeInfo boxType={pageBox.boxType} boxId={pageBox.pageBoxId} />
-                                        <label className='w-24'>{BoxTypes && BoxTypes[pageBox.boxType - 1].label}</label>
-                                        <span className="ml-2">{pageBox.title && parse(pageBox.title)}</span>                                        
-                                    </div>
-                                    <div className="flex-none">
-                                        {pageBox.landingPageId > 0 &&
-                                        <div className="p-2 rounded-full mr-4">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="Pagina collegata">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                            </svg>
-                                        </div>}
-                                    </div>
-                                    <div className="flex flex-none align-middle mt-1">                                    
-                                        <PageBoxModal appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} sortId={pageBox.sortId} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId)} />                                
-                                        {/* 
-                                        <Accordion.Toggle title="Anteprima" className="bg-gray-500 border-0 rounded-full ml-1" as={Button} eventKey={pageBox.pageBoxId}>
-                                            <BsFillEyeFill />
-                                        </Accordion.Toggle> */}
-                                        <DeleteConfirmation onConfirm={() => deleteBox(pageBox)} />
-                                    </div>
-                                </div>                        
-                            </Card.Header>
-                            
-                                <Card.Body>
-                                {pageBox.boxType && (parseInt(pageBox.boxType) === 8 || parseInt(pageBox.boxType) === 9) &&
-                                    <Card.Img src={baseImageUrl+pageBox.imageUrl} />
-                                }                                                
-                                {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9) &&                                                                        
-                                    <BoxTextEditor prefix={pageBox.appSiteId} pageBox={pageBox} handleSaved={handleAddEdit}></BoxTextEditor>
-                                }
-                                {pageBox.boxType && parseInt(pageBox.boxType) === 2 &&
-                                    <TopServiceList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                                }    
-                                {pageBox.boxType && parseInt(pageBox.boxType) === 3 &&
-                                    <EmployeeList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                                }    
-                                {pageBox.boxType && parseInt(pageBox.boxType) === 4 &&
-                                    <OpenTimeList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                                }                        
-                                {pageBox.boxType && parseInt(pageBox.boxType) === 5 &&
-                                    <ProductList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                                } 
-                                {pageBox.boxType && parseInt(pageBox.boxType) === 6 &&
-                                    <ArticleList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                                }    
-                                {pageBox.boxType && parseInt(pageBox.boxType) === 7 &&
-                                    <SimpleMap appSiteId={pageBox.appSiteId} />                                                
-                                }   
-                                {pageBox.boxType && parseInt(pageBox.boxType) === 11 &&
-                                    <FacebookFeed feedUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />
-                                }   
-                                {/* {pageBox.boxType && parseInt(pageBox.boxType) === 12 &&
-                                    <InstagramFeed userName={pageBox.boxEmail} className="Feed" classNameLoading="Loading" limit="8" />
-                                }    */}
-                                {pageBox.boxType && parseInt(pageBox.boxType) === 13 &&
-                                    <YoutubeVideo videoUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />
-                                }   
-                                {pageBox.boxType && parseInt(pageBox.boxType) === 14 &&
-                                    <SiteSurveyBox appSiteId={pageBox.appSiteId} siteSurveyId={pageBox.siteSurveyId} />
-                                }   
-                                {pageBox.boxType && parseInt(pageBox.boxType) === 15 &&
-                                    <SlideshowList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                                }    
-                                </Card.Body>                     
-                            
-                        </Card>                                            
+                <Card key={pageBox.pageBoxId.toString()} style={{backgroundColor: pageBox.boxColor}} className="page-box rounded-lg border-2 border-gray-400 border-dashed">
+                    <Card.Header>                            
+                        <div className="flex flex-row">
+                            <div className="flex-grow md:flex">
+                                <BoxTypeInfo boxType={pageBox.boxType} boxId={pageBox.pageBoxId} />
+                                <label className='w-24'>{BoxTypes && BoxTypes[pageBox.boxType - 1].label}</label>
+                                <span className="ml-2">{pageBox.title && parse(pageBox.title)}</span>                                        
+                            </div>
+                            <div className="flex-none">
+                                {pageBox.landingPageId > 0 &&
+                                <div className="p-2 rounded-full mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="Pagina collegata">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                </div>}
+                            </div>
+                            <div className="flex flex-none align-middle mt-1">                                    
+                                <PageBoxModal appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} sortId={pageBox.sortId} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId)} />                                
+                                {/* 
+                                <Accordion.Toggle title="Anteprima" className="bg-gray-500 border-0 rounded-full ml-1" as={Button} eventKey={pageBox.pageBoxId}>
+                                    <BsFillEyeFill />
+                                </Accordion.Toggle> */}
+                                <DeleteConfirmation onConfirm={() => deleteBox(pageBox)} />
+                            </div>
+                        </div>                        
+                    </Card.Header>
                     
-                </div>
+                        <Card.Body>
+                        {pageBox.boxType && (parseInt(pageBox.boxType) === 8 || parseInt(pageBox.boxType) === 9) &&
+                            <Card.Img src={baseImageUrl+pageBox.imageUrl} />
+                        }                                                
+                        {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9) &&                                                                        
+                            <BoxTextEditor prefix={pageBox.appSiteId} pageBox={pageBox} handleSaved={handleAddEdit}></BoxTextEditor>
+                        }
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 2 &&
+                            <TopServiceList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
+                        }    
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 3 &&
+                            <EmployeeList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
+                        }    
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 4 &&
+                            <OpenTimeList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
+                        }                        
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 5 &&
+                            <ProductList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
+                        } 
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 6 &&
+                            <ArticleList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
+                        }    
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 7 &&
+                            <SimpleMap appSiteId={pageBox.appSiteId} />                                                
+                        }   
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 11 &&
+                            <FacebookFeed feedUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />
+                        }   
+                        {/* {pageBox.boxType && parseInt(pageBox.boxType) === 12 &&
+                            <InstagramFeed userName={pageBox.boxEmail} className="Feed" classNameLoading="Loading" limit="8" />
+                        }    */}
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 13 &&
+                            <YoutubeVideo videoUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />
+                        }   
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 14 &&
+                            <SiteSurveyBox appSiteId={pageBox.appSiteId} siteSurveyId={pageBox.siteSurveyId} />
+                        }   
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 15 &&
+                            <SlideshowList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
+                        }    
+                        </Card.Body>                     
+                    
+                </Card>                                            
+                                    
                 )}                              
                 </ResponsiveGridLayout>}
             </div>}
