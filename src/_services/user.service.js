@@ -8,6 +8,7 @@ export const userService = {
     getUserById,
     createUser,
     updateUser,
+    deleteUser,
     addUserToRole,
     removeUserFromRole
 };
@@ -26,6 +27,10 @@ function createUser(user, appSiteId) {
 
 function updateUser(user) {
     return fetchWrapper.post(`${baseUrl}/UpdateUser`, { user: user });
+}
+
+function deleteUser(userId) {
+    return fetchWrapper.post(`${baseUrl}/DeleteUser`, { userId: userId });
 }
 
 function addUserToRole(userName, roleName) {

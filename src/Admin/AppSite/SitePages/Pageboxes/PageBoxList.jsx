@@ -202,6 +202,11 @@ function PageBoxList({ match }) {
                                 </div>}
                             </div>
                             <div className="flex flex-none align-middle mt-1">                                    
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                                        </svg>
+                                    </div>
                                 <PageBoxModal appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} sortId={pageBox.sortId} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId)} />                                
                                 {/* 
                                 <Accordion.Toggle title="Anteprima" className="bg-gray-500 border-0 rounded-full ml-1" as={Button} eventKey={pageBox.pageBoxId}>

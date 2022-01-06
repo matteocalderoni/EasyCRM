@@ -182,6 +182,9 @@ class SitePageAddEdit extends React.Component {
                     alertService.error('Problemi durante il salvataggio', { keepAfterRouteChange: true });
                 } else {
                     alertService.success('Pagina aggiunta con successo', { keepAfterRouteChange: true });
+                    this.setState({ 
+                        sitePage: result
+                    });        
                 }            
                 if (this.props.handleSaved)    
                     this.props.handleSaved(this.state.sitePage.appSiteId);                
@@ -198,6 +201,9 @@ class SitePageAddEdit extends React.Component {
                     alertService.error('Problemi durante il salvataggio', { keepAfterRouteChange: true });
                 } else {
                     alertService.success('Aggiornamento riuscito', { keepAfterRouteChange: true });
+                    this.setState({ 
+                        sitePage: result
+                    });        
                 }    
                 if (this.props.handleSaved)                                
                     this.props.handleSaved(this.state.sitePage.appSiteId);                
@@ -219,7 +225,7 @@ class SitePageAddEdit extends React.Component {
                         <div className="flex flex-col md:flex-row p-2 border rounded content-center">
                             <div className="flex-1 p-1">
                                 {this.state.sitePage && this.state.sitePages && !this.state.loadingPages && 
-                                <Form.Group className="flex-1">
+                                <Form.Group className="flex-1 h-48">
                                     <Form.Label className="text-xl">Sotto Pagina di:</Form.Label>
                                     <Form.Control as="select" value={this.state.sitePage.parentPageId} name="parentPageId" onChange={this.handleChangeNumber}>
                                         <option value={undefined}>Radice</option>
@@ -253,11 +259,12 @@ class SitePageAddEdit extends React.Component {
                                     </Form.Text>
                                 </Form.Group> 
                                 <Form.Group className="flex-1 md:m-2">
-                                    <Form.Label className="text-xl"><b>Titolo</b> della pagina</Form.Label>
+                                    <Form.Label className="text-xl"><b>Titolo URL</b> della pagina</Form.Label>
                                     <input type="text" className="form-control" name="titleUrl" value={this.state.sitePage.titleUrl} onChange={this.handleChange} maxLength={200} />
                                     <Form.Text className="text-muted">
                                         Titolo della pagina per selezione: non viene visualizzato nel sito, viene utilizzato solo per identificare la pagina (ad esempio in selezione sottopagine).
                                         Utilizzare un nome diverso per ogni pagina: viene utilizzato come indirizzo della pagina per indicizzare le ricerche dei motori di ricerca come Google.
+                                        <b>Attenzione non utilizzare simboli o spazi.</b>
                                     </Form.Text>
                                 </Form.Group>
                             </div>

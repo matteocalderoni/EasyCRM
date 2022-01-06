@@ -206,7 +206,7 @@ class SiteSurveyAddEdit extends React.Component {
                     
                 </Card.Body>    
                 <Card.Footer>
-                    <Button onClick={this.onSubmit} variant="success">
+                    <Button onClick={this.onSubmit} variant="success" className='bg-green-500'>
                         Salva le modifiche
                     </Button> 
                 </Card.Footer>

@@ -31,6 +31,20 @@ function ResetPassword({ history }) {
     //         });
     // });
 
+    useEffect(() => {
+        var tokenIndex = window.location.search.indexOf('token=');
+        const token = window.location.search.substring(tokenIndex + 6);
+        
+        accountService.validateResetToken(token)
+            .then(() => {
+                setToken(token);
+                setTokenStatus(TokenStatus.Valid);
+            })
+            .catch(() => {
+                setTokenStatus(TokenStatus.Invalid);
+            });
+    });
+
     function getForm() {
         const initialValues = {
             password: '',

@@ -43,16 +43,16 @@ function Login({ history, location }) {
                             <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
                             <ErrorMessage name="password" component="div" className="invalid-feedback" />
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col">
+                        <div className="flex flex-col">
+                            <div className="flex-1 mt-2">
                                 <button type="submit" disabled={isSubmitting} className="bg-green-500 w-full border-green-300 text-white p-2 rounded-full">
                                     {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                                     Accedi
                                 </button>
                             </div>
-                            <div className="form-group col text-right mt-2">
-                                <Link to="register" className="bg-gray-200 ml-2 p-2 rounded-full">Registrati</Link>
-                                <Link to="forgot-password" className="bg-gray-200 ml-2 p-2 rounded-full">Password dimenticata?</Link>
+                            <div className="flex-1 md:flex mt-4">
+                                <Link to="register" className="flex-1 bg-gray-200 p-2 rounded-full text-center">Registrati</Link>
+                                <Link to="forgot-password" className="flex-1 bg-gray-200 ml-2 p-2 rounded-full text-center">Password dimenticata?</Link>
                             </div>
                         </div>
                     </div>

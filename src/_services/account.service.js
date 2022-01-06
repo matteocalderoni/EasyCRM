@@ -10,6 +10,7 @@ export const accountService = {
     logout,
     refreshToken,
     register,
+    resendVerificationEmail,
     verifyEmail,
     forgotPassword,
     validateResetToken,
@@ -53,6 +54,10 @@ function refreshToken() {
 
 function register(params) {
     return fetchWrapper.post(`${baseUrl}/register`, params);
+}
+
+function resendVerificationEmail(userName) {
+    return fetchWrapper.post(`${baseUrl}/resend-verification-email`, { userName: userName });
 }
 
 function verifyEmail(token) {

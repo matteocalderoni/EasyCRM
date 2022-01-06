@@ -36,7 +36,7 @@ class SiteSurveyModal extends React.Component {
     render() {
         return (            
           <>
-            <Button variant="primary" className="mr-1" onClick={this.handleShow}>
+            <Button variant="primary" className="mr-1 bg-green-500" onClick={this.handleShow}>
                 {this.state.siteSurvey.siteSurveyId > 0 ? 'Modifica percorso' : 'Aggiungi percorso'}
             </Button>
             <Modal show={this.state.setShow} size="lg" onHide={this.handleClose} backdrop="static" keyboard={false}>

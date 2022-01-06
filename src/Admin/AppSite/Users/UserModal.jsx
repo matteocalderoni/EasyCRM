@@ -36,7 +36,7 @@ class UserModal extends React.Component {
     render() {
         return (            
           <>
-            <Button variant="primary" className="mr-1" onClick={this.handleShow}>
+            <Button variant="primary" className="mr-1 bg-green-500 border-0 rounded-full" onClick={this.handleShow}>
                 {this.state.user.id > 0 ? 'Modifica utente' : 'Aggiungi utente'}
             </Button>
             <Modal show={this.state.setShow} size="lg" onHide={this.handleClose} backdrop="static" keyboard={false}>
