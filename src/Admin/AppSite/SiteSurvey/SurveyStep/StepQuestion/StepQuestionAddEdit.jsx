@@ -56,7 +56,7 @@ class StepQuestionAddEdit extends React.Component {
     }
     
     handleChangeNumber(evt) {
-        const value = parseFloat(evt.target.value);
+        const value = +evt.target.value;
         this.setState({
             stepQuestion: {
                 ...this.state.stepQuestion,

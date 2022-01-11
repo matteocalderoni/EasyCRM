@@ -21,13 +21,13 @@ class PageBoxAddEdit extends React.Component {
                 appSiteId: this.props.appSiteId,         
                 sitePageId: this.props.sitePageId,
                 pageBoxId: this.props.pageBoxId,
-                imageUrl: 'logo.png',
+                imageUrl: '',
                 title: '',
                 description: '',
                 cardSize: 12,
                 sortId: this.props.sortId | 1,
                 boxType: 1, 
-                boxColor: '#CCCCCC',   
+                boxColor: '',   
                 boxEmail: '',
                 boxLatitude: 0,            
                 boxLongitude: 0,
@@ -79,7 +79,7 @@ class PageBoxAddEdit extends React.Component {
     }
 
     handleChangeNumber(evt) {
-        const value = parseInt(evt.target.value);
+        const value = +evt.target.value;
         this.setState({
             pageBox: {
                 ...this.state.pageBox,

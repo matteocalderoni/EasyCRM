@@ -115,7 +115,7 @@ class ProductTypeList extends React.Component {
     render() {
         return (
             <>
-                <Button variant="secondary" className="mr-1" onClick={this.handleShow}>
+                <Button variant="secondary" className="mr-1 bg-blue-500" onClick={this.handleShow}>
                     Gestione Categoria Prodotti
                 </Button>
                 <Modal
@@ -148,8 +148,8 @@ class ProductTypeList extends React.Component {
                                     </Form.Group>
                                 </Col>
                                 <Col>
-                                    <div className="mart5">
-                                        <Button onClick={this.createProductType} variant="primary" className="mart2">
+                                    <div className="mt-5 text-center">
+                                        <Button onClick={this.createProductType} variant="primary" className="mr-2 bg-green-500 border-0">
                                             crea
                                         </Button> 
                                     </div>                                    

@@ -225,7 +225,7 @@ class SitePageAddEdit extends React.Component {
                         <div className="flex flex-col md:flex-row p-2 border rounded content-center">
                             <div className="flex-1 p-1">
                                 {this.state.sitePage && this.state.sitePages && !this.state.loadingPages && 
-                                <Form.Group className="flex-1 h-48">
+                                <Form.Group className="flex-1 h-48 lg:h-36">
                                     <Form.Label className="text-xl">Sotto Pagina di:</Form.Label>
                                     <Form.Control as="select" value={this.state.sitePage.parentPageId} name="parentPageId" onChange={this.handleChangeNumber}>
                                         <option value={undefined}>Radice</option>
@@ -240,7 +240,7 @@ class SitePageAddEdit extends React.Component {
                                     </Form.Text>
                                 </Form.Group>}
                                 
-                                <Form.Group className="flex-1 md:ml-2">
+                                <Form.Group className="flex-1 h-48 lg:h-36">
                                     <Form.Label className="text-xl"><b>Tipo</b> di Pagina</Form.Label>
                                     <PageTypeSelect pageType={this.state.sitePage.pageType} onPageTypeChange={(pageType) => this.handlePageTypeChange(+pageType)} label={'Tipo di pagina'} />
                                     <Form.Text className="text-muted">
@@ -250,15 +250,15 @@ class SitePageAddEdit extends React.Component {
                             </div>
 
                             <div className="flex-1 p-1">
-                                <Form.Group className="flex-1">
+                                <Form.Group className="flex-1 h-48 lg:h-36">
                                     <Form.Label className="text-xl">Ordinamento</Form.Label>
                                     <input type="number" className="form-control" name="sortId" value={this.state.sitePage.sortId} onChange={this.handleChangeNumber}  />
                                     <Form.Text className="text-muted">
-                                        Le pagine vengono visualizzate in ordine crescente: inserire il numero corrispondente alla posizione della pagina. 
+                                        Le pagine vengono visualizzate in <b>ordine crescente</b>: inserire il numero corrispondente alla posizione della pagina. 
                                         Anche le sotto-pagine utilizzano lo stesso metodo: la numerazione è relativa al gruppo di pagine.
                                     </Form.Text>
                                 </Form.Group> 
-                                <Form.Group className="flex-1 md:m-2">
+                                <Form.Group className="flex-1 h-48 lg:h-36">
                                     <Form.Label className="text-xl"><b>Titolo URL</b> della pagina</Form.Label>
                                     <input type="text" className="form-control" name="titleUrl" value={this.state.sitePage.titleUrl} onChange={this.handleChange} maxLength={200} />
                                     <Form.Text className="text-muted">
@@ -272,10 +272,10 @@ class SitePageAddEdit extends React.Component {
 
                         {this.state.sitePage.sitePageId > 0 &&                 
                         <div className="md:flex p-2 mt-2 border rounded content-center">
-                            <div className="flex flex-col">
+                            <div className="flex-1 flex flex-col">
                                 <label className="text-xl"><b>Immagine</b> di Sfondo:</label>                                
                                 {this.state.sitePage && this.state.sitePage.imageUrl != '' &&
-                                <Image className="border rounded w-32 mb-2" src={baseImageUrl+this.state.sitePage.imageUrl} />}
+                                <Image className="border rounded w-48 mb-2" src={baseImageUrl+this.state.sitePage.imageUrl} />}
                                 <Uploader prefix={this.state.sitePage.appSiteId} fileName={this.state.sitePage.imageUrl} onFileNameChange={this.handleFileName} />      
                                 <Button onClick={() => this.handleColorRemove('imageUrl')} className="mt-2 bg-red-400">
                                     Rimuovi immagine
@@ -286,9 +286,9 @@ class SitePageAddEdit extends React.Component {
                                 </small>
                                 </p>
                             </div>                            
-                            <div>
+                            <div className="flex-1 flex flex-col">
                             {this.state.sitePage &&
-                                <Form.Group className="flex flex-col flex-1">
+                                <Form.Group className="flex-1 flex flex-col">
                                     <Form.Label className="text-xl"><b>Colore</b> di Sfondo</Form.Label>
                                     <div className="flex-none m-2 mt-0">
                                         <CompactPicker                                        
@@ -341,22 +341,23 @@ class SitePageAddEdit extends React.Component {
                                         Con il bottone rimuovi la barra di navigazione utilizzi i colori di default o il valore per tutto il sito.
                                     </Form.Text>
                                 </Form.Group>}
-
-                                <Form.Group className="flex-1 ml-2">
-                                    <Form.Label className="text-lg">Posizione <b>Navigazione</b></Form.Label>
-                                    <NavPositionSelect position={this.state.sitePage.navPosition} onPositionChange={(position) => this.handleNavPosition(+position)} label={'Posizione Navigazione'} />
-                                    <Form.Text className="text-muted">
-                                        Posizione della barra di navigazione: è possibile selezionare il comportamento del menù (fisso o scorrevole). Ogni pagina dispone della sua barra di navigazione ed è possibile creare delle varianti in base al contesto della pagina.
-                                    </Form.Text>
-                                </Form.Group>
-                                  
-                                <Form.Group className="flex-1 ml-2">
-                                    <Form.Label className="text-lg">Posizione del <b>Logo nella slide</b></Form.Label>
-                                    <PositionSelect position={this.state.sitePage.logoPosition} onPositionChange={(position) => this.handleLogoPosition(+position)} label={'Posizione del logo'} />
-                                    <Form.Text className="text-muted">
-                                        Posizione del logo nella slide della pagina. Ogni pagina dispone della sua slide ed è possibile creare delle varianti in base al contesto della pagina.
-                                    </Form.Text>
-                                </Form.Group>
+                                <div className="flex-1 ml-2">
+                                    <Form.Group>
+                                        <Form.Label className="text-lg">Posizione <b>Navigazione</b></Form.Label>
+                                        <NavPositionSelect position={this.state.sitePage.navPosition} onPositionChange={(position) => this.handleNavPosition(+position)} label={'Posizione Navigazione'} />
+                                        <Form.Text className="text-muted">
+                                            Posizione della barra di navigazione: è possibile selezionare il comportamento del menù (fisso o scorrevole). Ogni pagina dispone della sua barra di navigazione ed è possibile creare delle varianti in base al contesto della pagina.
+                                        </Form.Text>
+                                    </Form.Group>
+                                    
+                                    <Form.Group>
+                                        <Form.Label className="text-lg">Posizione del <b>Logo nella slide</b></Form.Label>
+                                        <PositionSelect position={this.state.sitePage.logoPosition} onPositionChange={(position) => this.handleLogoPosition(+position)} label={'Posizione del logo'} />
+                                        <Form.Text className="text-muted">
+                                            Posizione del logo nella slide della pagina. Ogni pagina dispone della sua slide ed è possibile creare delle varianti in base al contesto della pagina.
+                                        </Form.Text>
+                                    </Form.Group>
+                                </div>
 
                             </div>    
                         </div>

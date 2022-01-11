@@ -181,7 +181,7 @@ class ProductAddEdit extends React.Component {
     render() {
         return (            
           <>
-            <Button variant="primary" className="mr-1" onClick={this.handleShow}>
+            <Button variant="primary" className="mr-1 bg-green-500 border-0" onClick={this.handleShow}>
                 {this.state.product.productId > 0 ? 'Modifica ' : 'Nuovo '} Prodotto
             </Button>
             <Modal
@@ -196,7 +196,7 @@ class ProductAddEdit extends React.Component {
                 <Modal.Body>
 
                     <div className="text-center">
-                        <Image src={baseImageUrl+this.state.product.imageUrl} fluid />                    
+                        <Image className='w-48' src={baseImageUrl+this.state.product.imageUrl} fluid />                    
                         <Uploader prefix={this.state.product.appSiteId} fileName={this.state.product.imageUrl} onFileNameChange={this.handleFileName} />      
                         <small>Utilizzare immagini con formato 640 X 640 px.</small>
                     </div>            
