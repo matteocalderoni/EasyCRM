@@ -58,10 +58,20 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
-                            <b className="text-blue-800">Ver 1.4.1.22 (Dicembre 2021)</b>: ecco gli ultimi aggiornamenti:                             
+                            <b className="text-blue-800">Ver 1.4.2.23 (Gennaio 2022)</b>: ecco gli ultimi aggiornamenti:                             
+                            <ul className="list-disc ml-3">
+                                <li><b>gestione prodotti</b>: creazione dei prodotti per lo shop e abbinamento al contenitore catalogo.</li>                                
+                                <li><b>contenitore IFrame</b>: tramite questo contenitore è possibile inserire un IFrame con contenuti dinamici.</li>                                
+                                <li><b>allineamento navigazione</b>: la barra di navigazione può essere allineata a sinistra, centro o destra.</li>                                
+                                <li><b>colorazione fondo pagina</b>: è possibile assegnare un colore specifico per ogni fondo pagina, diverso dal menù di navigazione.</li>                                
+                                <li><b>bug</b>: sistemazione campi numerici decimali.</li>                                
+                            </ul>                            
+                        </li>
+                        <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.4.2.22 (Dicembre 2021)</b>: ecco gli ultimi aggiornamenti:                             
                             <ul className="list-disc ml-3">
                                 <li><b>trascinamento dei contenitori</b>: per ordinare i contenitori delle pagine puoi trascinarli comodamente, oppure inserire manualmente ordine.</li>                                
-                                <li><b>ricerca delle pagine</b>: è possibile ricercare le pagine del sito per titolo o tipo (default, privacy o landing).</li>                                
+                                <li><b>ricerca delle pagine</b>: è possibile ricercare le pagine del sito per titolo o tipo (default, privacy o landing).</li>                                                                
                             </ul>                            
                         </li>
                         <li className="list-group-item">

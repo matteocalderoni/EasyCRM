@@ -13,7 +13,7 @@ import { BoxTextEditor, SimpleMap } from '../../../../_components';
 import parse from 'html-react-parser';
 import { BsPencil} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
-import { FaLanguage, FaRoad } from 'react-icons/fa';
+import { FaCubes, FaLanguage, FaRoad } from 'react-icons/fa';
 import { BoxTypes } from '../../../../_helpers'
 import { DeleteConfirmation,FacebookFeed,InstagramFeed,YoutubeVideo } from '../../../../_components';
 import { SiteSurveyBox } from '../../SiteSurvey/SiteSurveyBox/SiteSurveyBox';
@@ -258,6 +258,8 @@ function PageBoxList({ match }) {
                         {pageBox.boxType && parseInt(pageBox.boxType) === 15 &&
                             <SlideshowList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
                         }    
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 16 &&
+                            <iframe className='w-full' height={pageBox.boxLatitude} title={pageBox.titleUrl} src={pageBox.boxEmail}></iframe>}
                         </Card.Body>                     
                     
                 </Card>                                            
@@ -268,14 +270,17 @@ function PageBoxList({ match }) {
 
             <Navbar fixed="bottom" className="flex bg-blue-800">
                 <Nav className="mr-auto">
-                    <Link className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-1" to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`} title="Modifica la pagina">
-                        <BsPencil className="mr-2" /> Modifica Pagina
+                    <Link className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-1" to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`} title="Modifica la Pagina">
+                        <BsPencil className="mr-2" /> Pagina
                     </Link>
-                    <Link className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-2" to={`/admin/sites/sitelanguages/${appSiteId}`} title="Gestione lingue del sito">
+                    <Link className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-2" to={`/admin/sites/sitelanguages/${appSiteId}`} title="Gestione Lingue del sito">
                         <FaLanguage className="mr-2" /> Lingue
                     </Link>
-                    <Link className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-2" to={`/admin/sites/sitesurveys/${appSiteId}`} title="Gestione percorsi del sito">
-                        <FaRoad className="mr-2" /> percorsi
+                    <Link className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-2" to={`/admin/sites/siteproducts/${appSiteId}`} title="Gestione Prodotti del sito">
+                        <FaCubes className="mr-2" /> Prodotti
+                    </Link>
+                    <Link className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-2" to={`/admin/sites/sitesurveys/${appSiteId}`} title="Gestione Percorsi del sito">
+                        <FaRoad className="mr-2" /> Percorsi
                     </Link>
                 </Nav>
                 <Nav className="mr-left">

@@ -55,7 +55,7 @@ class ProductTypeList extends React.Component {
         let _productType = {
             productTypeId: 0, 
             name: this.state.newProductType,
-            appSiteId: this.state.linkBox ? this.props.appSiteId : 0,
+            appSiteId: this.props.appSiteId,
             sitePageId: this.state.linkBox ? this.props.sitePageId : 0,
             pageBoxId: this.state.linkBox ? this.props.pageBoxId : 0
         }
@@ -86,11 +86,11 @@ class ProductTypeList extends React.Component {
 
     handleLinkProductType = (_productType) => {
         if (_productType.pageBoxId > 0) {
-            _productType.appSiteId = 0;
+            //_productType.appSiteId = 0;
             _productType.sitePageId = 0;
             _productType.pageBoxId = 0;
         } else {
-            _productType.appSiteId = this.props.appSiteId;
+            //_productType.appSiteId = this.props.appSiteId;
             _productType.sitePageId = this.props.sitePageId;
             _productType.pageBoxId = this.props.pageBoxId;
         }
@@ -115,8 +115,8 @@ class ProductTypeList extends React.Component {
     render() {
         return (
             <>
-                <Button variant="secondary" className="mr-1 bg-blue-500" onClick={this.handleShow}>
-                    Gestione Categoria Prodotti
+                <Button variant="secondary" className="mr-1 btn-sm bg-blue-500" onClick={this.handleShow}>
+                    Gestione Categoria
                 </Button>
                 <Modal
                     size="lg"
@@ -168,7 +168,7 @@ class ProductTypeList extends React.Component {
                                     {this.state.productTypes && this.state.productTypes.map(productType => 
                                         <tr key={productType.productTypeId}>
                                             <td>
-                                                <Button size="sm" onClick={() => this.handleSortProductType(-1,productType)} variant="secondary" className="mart2">
+                                                <Button size="sm" onClick={() => this.handleSortProductType(-1,productType)} variant="secondary" className="mt-2 bg-blue-400 border-0">
                                                     -
                                                 </Button>                                                                                                                                                 
                                             </td>
@@ -177,18 +177,18 @@ class ProductTypeList extends React.Component {
                                             </td>
                                             <td>
                                                 
-                                                <Button size="sm" onClick={() => this.handleSortProductType(1,productType)} variant="secondary" className="mart2">
+                                                <Button size="sm" onClick={() => this.handleSortProductType(1,productType)} variant="secondary" className="mt-2 bg-blue-400 border-0">
                                                     +
                                                 </Button>           
                                             </td>
                                             <td>{productType.name}</td>
                                             <td>
-                                                <Button size="sm" onClick={() => this.handleLinkProductType(productType)} variant="secondary" className="mart2">
+                                                <Button size="sm" onClick={() => this.handleLinkProductType(productType)} variant="secondary" className="mt-2 bg-blue-400 border-0">
                                                     {productType.pageBoxId > 0 ? 'SI' : 'NO'}
                                                 </Button>                                                 
                                             </td>
                                             <td style={{ whiteSpace: 'nowrap' }}>                                                
-                                                <button onClick={() => this.deleteProductType(productType.productTypeId)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={productType.isDeleting}>
+                                                <button onClick={() => this.deleteProductType(productType.productTypeId)} className="mt-2 btn btn-sm btn-danger border-0" style={{ width: '60px' }} disabled={productType.isDeleting}>
                                                     {productType.isDeleting 
                                                         ? <span className="spinner-border spinner-border-sm"></span>
                                                         : <span>elimina</span>
@@ -201,7 +201,7 @@ class ProductTypeList extends React.Component {
                             </table>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button onClick={this.handleClose} variant="primary">
+                            <Button onClick={this.handleClose} variant="primary" className='bg-gray-400 border-0'>
                                 chiudi
                             </Button> 
                         </Modal.Footer>

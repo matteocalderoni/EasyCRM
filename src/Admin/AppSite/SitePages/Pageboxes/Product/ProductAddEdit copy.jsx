@@ -4,12 +4,12 @@ import { Uploader } from '../../../../../_components'
 import { Image, Form, Button, Modal, Navbar, Nav } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../../../_components/LanguageSelect';
+import { SiteProductSelect } from '../../../../../_components/SiteProductSelect';
 import { LanguageEditor } from '../../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../../_components/LanguageInput';
 import { menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../../../_helpers/fetch-wrapper';
 import { FaSave } from 'react-icons/fa';
-import { SiteProductPreview } from '../../../../../_components/SiteProductPreview';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -26,7 +26,6 @@ class ProductAddEdit extends React.Component {
                 sitePageId: this.props.sitePageId,
                 pageBoxId: this.props.pageBoxId,
                 productId: this.props.productId,
-                siteProductId: this.props.siteProductId,
                 imageUrl: 'logo.png',
                 title: '',
                 code: '',
@@ -193,12 +192,8 @@ class ProductAddEdit extends React.Component {
     render() {
         return (            
           <>
-            <Button variant="primary" className="mr-1 bg-green-500 rounded-xl border-0 shadow-md hover:bg-green-600" onClick={this.handleShow}>
-                {this.state.product.productId === 0 && 
-                <div className='grow mx-auto overflow-hidden h-48 w-48'>
-                    Aggiungi Prodotto
-                </div>}
-                {this.state.product.productId > 0 && 'Modifica Prodotto'} 
+            <Button variant="primary" className="mr-1 bg-green-500 border-0" onClick={this.handleShow}>
+                {this.state.product.productId > 0 ? 'Modifica ' : 'Nuovo '} Prodotto
             </Button>
             <Modal
                 show={this.state.setShow}
@@ -211,6 +206,11 @@ class ProductAddEdit extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                     <div className='md:flex'>
+                        <div className="text-center flex-1">
+                            <Image className='w-48' src={baseImageUrl+this.state.product.imageUrl} fluid />                    
+                            <Uploader prefix={this.state.product.appSiteId} fileName={this.state.product.imageUrl} onFileNameChange={this.handleFileName} />      
+                            <small>Utilizzare immagini con formato 640 X 640 px.</small>
+                        </div>                                    
                         <div className='flex-1'>
                             <Form.Group>
                                 <Form.Label>Categoria prodotto</Form.Label>
@@ -224,15 +224,78 @@ class ProductAddEdit extends React.Component {
                             
                             <div>
                                 <label>Prodotto</label>
-                                <SiteProductPreview 
+                                <SiteProductSelect appSiteId={this.state.product.appSiteId} onChange={(_siteProductId) => this.handleSiteProductId(_siteProductId)} />                   
+                            </div>
+
+                            {this.state.languageCode == '' &&
+                            <Form.Group>
+                                <Form.Label>Titolo</Form.Label>
+                                <input type="text" placeholder='Titolo' className="form-control" name="title" value={this.state.product.title} onChange={this.handleChange} maxLength={200} />
+                                <Form.Text className="text-muted">
+                                    Ruolo svolto dal dipendente (max 200 caratteri).
+                                </Form.Text>
+                            </Form.Group>}        
+
+                            {this.state.languageCode !== '' &&
+                            <div>
+                                <LanguageInput 
+                                    originalText={this.state.product.title}
                                     appSiteId={this.state.product.appSiteId} 
-                                    siteProductId={this.state.product.siteProductId}
-                                    onChange={this.handleSiteProductId} />                   
-                            </div>                            
+                                    code={this.state.languageCode}
+                                    labelKey={`PRODUCT_${this.state.product.appSiteId}_${this.state.product.sitePageId}_${this.state.product.pageBoxId}_${this.state.product.productId}-Title`}>
+                                </LanguageInput>
+                            </div>}            
+
+                            <Form.Group>
+                                <Form.Label>Prezzo</Form.Label>
+                                <input type="number" className="form-control" name="price" value={parseFloat(this.state.product.price)} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Prezzo del prodotto (compresa iva).
+                                </Form.Text>
+                            </Form.Group>                    
                         </div>
-                    </div>                                  
-                    
-                    <Form.Group className='mt-2'>
+                    </div>
+
+                    {/* <LanguageSelect appSiteId={this.state.product.appSiteId} onLanguageChange={this.handleLanguageCode} /> */}                    
+
+                    {/* <Form.Group>
+                        <Form.Label>Ordinamento</Form.Label>
+                        <input type="number" className="form-control" name="sortId" value={this.state.product.sortId} onChange={this.handleChangeNumber}  />
+                        <Form.Text className="text-muted">
+                            Valore per ordinamento crescente.
+                        </Form.Text>
+                    </Form.Group>    */}                       
+
+                    {this.state.product && !this.state.loading && this.state.languageCode === '' &&       
+                    <div>
+                        <label>Descrizione estesa</label>
+                        <Editor
+                            apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                            initialValue={this.state.product.description}
+                            init={{
+                                height: 500,
+                                menubar: menuSettings,
+                                plugins: pluginsSettings,
+                                toolbar: toolbarSettings,
+                                font_formats: fontSettings,
+                                content_style: styleSettings,
+                                images_upload_handler: this.tiny_image_upload_handler
+                            }}
+                            onEditorChange={this.handleEditorChange}
+                        />                                            
+                    </div>}
+
+                    {this.state.languageCode && this.state.languageCode !== '' &&
+                    <div>
+                        <LanguageEditor 
+                            originalText={this.state.product.description}
+                            appSiteId={this.state.product.appSiteId} 
+                            code={this.state.languageCode}
+                            labelKey={`PRODUCT_${this.state.product.appSiteId}_${this.state.product.sitePageId}_${this.state.product.pageBoxId}_${this.state.product.productId}-Description`}>                                    
+                        </LanguageEditor>
+                    </div>}                                               
+
+                    <Form.Group>
                         <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.product.isPublished} onChange={this.handleChangeBool} />
                         <Form.Text>
                             Solo se il prodotto è pubblico viene visualizzato nel sito.

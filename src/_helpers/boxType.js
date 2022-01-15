@@ -13,5 +13,6 @@ export const BoxTypes = [
     { label: 'Instagram Feed', value: 12 },
     { label: 'Video Youtube', value: 13 },
     { label: 'Percorso', value: 14 },    
-    { label: 'Slide', value: 15 }    
+    { label: 'Slide', value: 15 },
+    { label: 'IFrame', value: 16 },    
 ]

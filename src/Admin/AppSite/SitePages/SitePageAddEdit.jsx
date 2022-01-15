@@ -10,6 +10,7 @@ import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings 
 import { fetchWrapper } from '../../../_helpers/fetch-wrapper';
 import { PageTypeSelect } from '../../../_components/PageTypeSelect';
 import { NavPositionSelect } from '../../../_components/NavPositionSelect';
+import { NavAlignSelect } from '../../../_components/NavAlignSelect';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -81,6 +82,15 @@ class SitePageAddEdit extends React.Component {
             sitePage: {
                 ...this.state.sitePage,
                 navPosition: position                
+            }          
+        });        
+    }
+
+    handleNavAlign = (align) => {
+        this.setState({ 
+            sitePage: {
+                ...this.state.sitePage,
+                navAlign: align                
             }          
         });        
     }
@@ -316,37 +326,76 @@ class SitePageAddEdit extends React.Component {
                                                         
                             <div className="flex flex-col lg:flex-row">
 
-                                {this.state.sitePage &&
-                                <Form.Group className="flex-1">
-                                    <div className="flex flex-col">
-                                        <Form.Label className="text-xl">Colore per <b>Navigazione</b> e <b>Fondo</b></Form.Label><br />
-                                        <div className="flex-none m-2 mt-0">
-                                            <CompactPicker                                        
-                                                color={ this.state.sitePage.navColor }
-                                                onChangeComplete={ (color) => this.handleColorChange(color, 'navColor') } />
-                                        </div>                                
-                                        <div className="flex-grow m-2">
-                                            <SliderPicker
-                                                color={ this.state.sitePage.navColor }
-                                                onChangeComplete={ (color) => this.handleColorChange(color, 'navColor') } />
-                                        </div>                                        
-                                        {this.state.sitePage && this.state.sitePage.navColor != '' &&
-                                        <Button onClick={() => this.handleColorRemove('navColor')} className="bg-red-400 m-2">
-                                            Rimuovi colore
-                                        </Button>                                    
-                                        }
+                                <div className="flex-1">
+                                    {this.state.sitePage &&
+                                    <div className='md:flex'>
+                                        <Form.Group className='flex-1'>
+                                            <div className="flex flex-col">
+                                                <Form.Label className="text-xl">Colore per <b>Navigazione</b></Form.Label><br />
+                                                <div className="flex-none m-2 mt-0">
+                                                    <CompactPicker                                        
+                                                        color={ this.state.sitePage.navColor }
+                                                        onChangeComplete={ (color) => this.handleColorChange(color, 'navColor') } />
+                                                </div>                                
+                                                <div className="flex-grow m-2">
+                                                    <SliderPicker
+                                                        color={ this.state.sitePage.navColor }
+                                                        onChangeComplete={ (color) => this.handleColorChange(color, 'navColor') } />
+                                                </div>                                        
+                                                {this.state.sitePage && this.state.sitePage.navColor != '' &&
+                                                <Button onClick={() => this.handleColorRemove('navColor')} className="bg-red-400 m-2">
+                                                    Rimuovi colore
+                                                </Button>                                    
+                                                }
+                                            </div>
+                                            <Form.Text className="text-muted">
+                                                Colore di sfondo per il menù di navigazione: ogni pagina può avere un colore diverso. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
+                                                Con il bottone rimuovi la barra di navigazione utilizzi i colori di default o il valore per tutto il sito.
+                                            </Form.Text>
+                                        </Form.Group>
+
+                                        <Form.Group className='flex-1'>
+                                            <div className="flex flex-col">
+                                                <Form.Label className="text-xl">Colore per <b>Fondo Pagina</b></Form.Label><br />
+                                                <div className="flex-none m-2 mt-0">
+                                                    <CompactPicker                                        
+                                                        color={ this.state.sitePage.footerColor }
+                                                        onChangeComplete={ (color) => this.handleColorChange(color, 'footerColor') } />
+                                                </div>                                
+                                                <div className="flex-grow m-2">
+                                                    <SliderPicker
+                                                        color={ this.state.sitePage.footerColor }
+                                                        onChangeComplete={ (color) => this.handleColorChange(color, 'footerColor') } />
+                                                </div>                                        
+                                                {this.state.sitePage && this.state.sitePage.footerColor != '' &&
+                                                <Button onClick={() => this.handleColorRemove('footerColor')} className="bg-red-400 m-2">
+                                                    Rimuovi colore
+                                                </Button>                                    
+                                                }
+                                            </div>
+                                            <Form.Text className="text-muted">
+                                                Colore di sfondo per il fondo pagina: ogni pagina può avere un colore diverso. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
+                                                Con il bottone rimuovi la barra di navigazione utilizzi i colori di default o il valore per tutto il sito.
+                                            </Form.Text>
+                                        </Form.Group>
                                     </div>
-                                    <Form.Text className="text-muted">
-                                        Colore di sfondo per il menù di navigazione: ogni pagina può avere un colore diverso. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
-                                        Con il bottone rimuovi la barra di navigazione utilizzi i colori di default o il valore per tutto il sito.
-                                    </Form.Text>
-                                </Form.Group>}
+                                    }
+                                </div>
+
                                 <div className="flex-1 ml-2">
                                     <Form.Group>
                                         <Form.Label className="text-lg">Posizione <b>Navigazione</b></Form.Label>
                                         <NavPositionSelect position={this.state.sitePage.navPosition} onPositionChange={(position) => this.handleNavPosition(+position)} label={'Posizione Navigazione'} />
                                         <Form.Text className="text-muted">
                                             Posizione della barra di navigazione: è possibile selezionare il comportamento del menù (fisso o scorrevole). Ogni pagina dispone della sua barra di navigazione ed è possibile creare delle varianti in base al contesto della pagina.
+                                        </Form.Text>
+                                    </Form.Group>
+
+                                    <Form.Group>
+                                        <Form.Label className="text-lg">Allineamento <b>Navigazione</b></Form.Label>
+                                        <NavAlignSelect align={this.state.sitePage.navAlign} onAlignChange={(align) => this.handleNavAlign(+align)} label={'Allineamento Navigazione'} />
+                                        <Form.Text className="text-muted">
+                                            Allinemento della barra di navigazione: è possibile selezionare allineamento del menù (sinistra, centro, destra). Ogni pagina dispone della sua barra di navigazione ed è possibile creare delle varianti in base al contesto della pagina.
                                         </Form.Text>
                                     </Form.Group>
                                     
@@ -488,12 +537,24 @@ class SitePageAddEdit extends React.Component {
                         </Row>     
                     </div>
                     
-                    <Form.Group className="mt-2">
-                        <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.sitePage.isPublished} onChange={this.handleChangeBool} />
-                        <Form.Text>
-                            Solo i contenuti pubblici vengono visualizzati nel sito. Puoi creare la pagina e salvarla come bozza per pubblicarla al momento opportuno.
-                        </Form.Text>
-                    </Form.Group>
+                    <div className='md:flex'>
+                        <div className='flex-1'>
+                            <Form.Group className="mt-2">
+                                <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.sitePage.isPublished} onChange={this.handleChangeBool} />
+                                <Form.Text>
+                                    Solo i contenuti pubblici vengono visualizzati nel sito. Puoi creare la pagina e salvarla come bozza per pubblicarla al momento opportuno.
+                                </Form.Text>
+                            </Form.Group>
+                        </div>
+                        <div className='flex-1'>
+                            <Form.Group className="mt-2">
+                                <Form.Check type="checkbox" label="Login richiesto" name="loginRequest" checked={this.state.sitePage.loginRequest} onChange={this.handleChangeBool} />
+                                <Form.Text>
+                                Se richiesto il login la pagina è disponibile solo agli utenti registrati, ad accesso effettuato.
+                                </Form.Text>
+                            </Form.Group>
+                        </div>
+                    </div>
 
                 </Card.Body>    
             </Card>                    

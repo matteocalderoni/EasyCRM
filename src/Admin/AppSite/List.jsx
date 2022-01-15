@@ -6,7 +6,7 @@ import { Role } from '../../_helpers';
 import { BsPencil } from 'react-icons/bs';
 import { IoDocumentsOutline } from 'react-icons/io5';
 import { FcHome } from 'react-icons/fc';
-import { FaUser, FaRoad, FaLanguage} from 'react-icons/fa';
+import { FaUser, FaRoad, FaLanguage, FaCubes} from 'react-icons/fa';
 import { DeleteConfirmation } from '../../_components/DeleteConfirmation';
 import parse from 'html-react-parser';
 
@@ -76,16 +76,19 @@ function List({ match }) {
                     </Col>
                     <Col sm={4}>
                         <Link to={`${path}/edit/${appSite.appSiteId}`} title="Modifica sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
-                            <BsPencil className='bg-white rounded-full ml-2 mr-2 text-xl' /> Informazioni generali
+                            <BsPencil className='bg-white rounded-full ml-2 mr-2 text-xl' /> Informazioni Generali
                         </Link>
                         <Link to={`${path}/sitepages/${appSite.appSiteId}`} title="Pagine del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
-                            <IoDocumentsOutline className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione pagine
+                            <IoDocumentsOutline className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione Pagine
                         </Link>
                         <Link to={`${path}/sitelanguages/${appSite.appSiteId}`} title="Lingue del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
-                            <FaLanguage className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione lingue
+                            <FaLanguage className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione Lingue
                         </Link>
                         <Link to={`${path}/sitesurveys/${appSite.appSiteId}`} title="Percorsi del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
-                            <FaRoad className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione percorsi
+                            <FaRoad className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione Percorsi
+                        </Link>
+                        <Link to={`${path}/siteproducts/${appSite.appSiteId}`} title="Prodotti del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
+                            <FaCubes className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione Prodotti
                         </Link>
                         <Link to={`${path}/users/${appSite.appSiteId}`} title="Utenti del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
                             <FaUser className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione Utenti
@@ -109,7 +112,9 @@ function List({ match }) {
                 Tramite la sezione <b>Dettagli</b> puoi modificare le informazioni relative ai tuoi riferimenti. 
                 Tramite la sezione <b>Lingue</b> puoi visualizzare, modificare e aggiungere le lingue del relativo sito. 
                 Tramite la sezione <b>Pagine</b> puoi visualizzare, modificare e aggiungere le pagine del relativo sito. 
-                Tramite la sezione <b>Percorsi</b> puoi visualizzare, modificare e aggiungere i percorsi da inserire nelle pagine.</p>
+                Tramite la sezione <b>Percorsi</b> puoi visualizzare, modificare e aggiungere i percorsi da inserire nelle pagine.
+                Tramite la sezione <b>Prodotti</b> puoi visualizzare, modificare e aggiungere i prodotti per lo shop.
+                Tramite la sezione <b>Utenti</b> puoi visualizzare, modificare e aggiungere gli utenti registrati sul sito.</p>
             </div>
             {user.roles && user.roles.indexOf(Role.Admin) > -1 && 
             <Navbar fixed="bottom" className="flex bg-blue-800">

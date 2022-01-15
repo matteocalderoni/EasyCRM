@@ -48,26 +48,24 @@ function SitePageList (props){
     return (
         <Container fluid>            
             {parentPageId === 0 && 
-            <Form.Group className='rounded-xl border p-4 mt-4 flex space-x-2'>
+            <Form.Group className='rounded-xl border p-2 pt-4 mt-4 md:flex md:space-x-2'>
                 <div className='flex-1'>
-                    <Form.Label>Ricerca per titolo</Form.Label>
-                    <input type="text" className="form-control" value={searchText} onChange={(e) => setSearchText(e.target.value)}  />
+                    <input type="text" placeholder='Ricerca per titolo' className="form-control" value={searchText} onChange={(e) => setSearchText(e.target.value)}  />
                 </div>
                 <div className='flex-1'>
-                    <Form.Label>Ricerca per Tipo</Form.Label>
                     <PageTypeSelect pageType={pageType} onPageTypeChange={(pageType) => setPageType(+pageType)} label={'Tipo di pagina'} />
                 </div>
             </Form.Group>}
             <div className="mt-2">
             {sitePages && sitePages.map(sitePage =>                                    
-                <div className="block mt-2" key={sitePage.sitePageId}>
+                <div className="block mt-1" key={sitePage.sitePageId}>
                     <Card style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} text="white">
                         <Card.Header className="bg-blue-500">
-                            <Card.Title className="md:flex">
+                            <Card.Title className="flex">
                                 <div className="flex-none">
-                                    # {sitePage.sortId} 
+                                    <div className='rounded-full bg-blue-800 p-2'># {sitePage.sortId}</div>
                                 </div>                                
-                                <div className="flex-grow">
+                                <div className="flex-grow ml-2 p-2">
                                     {sitePage.titleUrl}
                                 </div>
                             </Card.Title>                                                        
@@ -79,7 +77,7 @@ function SitePageList (props){
                             <Card.Text>                                
                                 {sitePage.slideText && parse(sitePage.slideText)}
                             </Card.Text>                             */}
-                            <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-full bg-blue-200 mt-2 p-1 text-blue-900">
+                            <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900">
                                 <BsPencil className="mr-2" /> modifica pagina
                             </Link>
                             <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-full bg-blue-200 mt-1 p-1 text-blue-900">

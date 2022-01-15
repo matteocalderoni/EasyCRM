@@ -31,7 +31,8 @@ class PageBoxAddEdit extends React.Component {
                 boxEmail: '',
                 boxLatitude: 0,            
                 boxLongitude: 0,
-                isPublished: true
+                isPublished: true,
+                loginRequest: false
             },
             languageCode: '',
             sitePages: [],
@@ -399,14 +400,57 @@ class PageBoxAddEdit extends React.Component {
                                     </Form.Text>
                                 </Form.Group>
                             </Col>                            
-                        </Row>}                    
-                        
-                        <Form.Group className="mart2">
-                            <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.pageBox.isPublished} onChange={this.handleChangeBool} />
-                            <Form.Text>
-                                Solo i contenuti pubblici vengono visualizzati nel sito. Puoi creare il contenitore e salvarlo come bozza per pubblicarlo al momento opportuno.
+                        </Row>}       
+
+                        {this.state.pageBox.boxType === 16 && 
+                        <>
+                        <Form.Group>
+                            <Form.Label>Embed IFrame</Form.Label>
+                            <input type="text" className="form-control" name="boxEmail" value={this.state.pageBox.boxEmail} onChange={this.handleChange}  />
+                            <Form.Text className="text-muted">
+                                Indicare url della pagina da inserire nel IFrame del contenitore.
                             </Form.Text>
                         </Form.Group>
+                        <Row>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Label>Altezza</Form.Label>
+                                    <input type="number" className="form-control" name="boxLatitude" value={this.state.pageBox.boxLatitude} onChange={this.handleChangeNumber} />
+                                    <Form.Text className="text-muted">
+                                        Altezza del IFrame.
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Label>Larghezza</Form.Label>
+                                    <input type="number" className="form-control" name="boxLongitude" value={this.state.pageBox.boxLongitude} onChange={this.handleChangeNumber} />
+                                    <Form.Text className="text-muted">
+                                        Larghezza del IFrame, lasciare a 0 per utilizzare larghezza del contenitore.
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        </>}              
+                        
+                        <div className='md:flex'>
+                            <div className='flex-1'>
+                                <Form.Group className="mart2">
+                                    <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.pageBox.isPublished} onChange={this.handleChangeBool} />
+                                    <Form.Text>
+                                        Solo i contenuti pubblici vengono visualizzati nel sito. Puoi creare il contenitore e salvarlo come bozza per pubblicarlo al momento opportuno.
+                                    </Form.Text>
+                                </Form.Group>
+                            </div>    
+                            <div className='flex-1'>
+                                <Form.Group className="mart2">
+                                    <Form.Check type="checkbox" label="Richiesto login" name="loginRequest" checked={this.state.pageBox.loginRequest} onChange={this.handleChangeBool} />
+                                    <Form.Text>
+                                        Se richiesto il login il contenitore viene visualizzato solo agli utenti registrati, ad accesso effettuato.
+                                    </Form.Text>
+                                </Form.Group>
+                            </div>
+                        </div>
 
                     </Card.Body>
                 </Card>
