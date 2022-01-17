@@ -1,41 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, Navbar, Nav, Image } from 'react-bootstrap';
+import { Container, Card, Navbar, Nav } from 'react-bootstrap';
 import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
 import { BsPencil} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
-import { productService } from '../../../_services';
-import { SiteProductModal } from './SiteProductModal';
-import parse from 'html-react-parser';
+import { orderService } from '../../../_services';
 
-const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
-
-function SiteProductList({ match }) {
+function SiteOrderList({ match }) {
     const appSiteId = parseInt(match.params.appSiteId);
-    const [siteProducts, setSiteProducts] = useState([]);
+    const [siteOrders, setSiteOrders] = useState([]);
+    const [startDate, setStartDate] = useState(new Date())
+    const [endDate, setEndDate] = useState(new Date())
     const [searchText, setSearchText] = useState('');
     const [total, setTotal] = useState(0);
   
     useEffect(() => {
-        getSiteProducts()
+        getSiteOrders()
     },[searchText])
     
-    function getSiteProducts() {
-        productService.getSiteProducts(searchText,0,0,appSiteId)
-            .then((_siteProducts) => { 
-                setTotal(_siteProducts.totalCount)
-                setSiteProducts(_siteProducts.result)
+    function getSiteOrders() {
+        
+        orderService.getSiteOrders(startDate, endDate, searchText,0,0,appSiteId)
+            .then((_siteOrders) => { 
+                setTotal(_siteOrders.totalCount)
+                setSiteOrders(_siteOrders.result)
             });
         // eslint-disable-next-line    
     }
 
-    function deleteSiteProduct(siteProductId) {
-        setSiteProducts(siteProducts.map(x => {
-            if (x.siteProductId === siteProductId) { x.isDeleting = true; }
+    function deleteSiteOrder(orderYear, orderId) {
+        setSiteOrders(siteOrders.map(x => {
+            if (x.orderYear === orderYear && x.orderId === orderId) { x.isDeleting = true; }
                 return x;
         }));
-        productService.deleteSiteProduct(appSiteId, +siteProductId).then(() => {            
-            getSiteProducts()
+        orderService.deleteSiteOrder(appSiteId, orderYear, orderId).then(() => {            
+            getSiteOrders()
         });                
     }
 
@@ -45,32 +44,28 @@ function SiteProductList({ match }) {
             <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
             <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
             <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>
-            <li className="breadcrumb-item active">Elenco Prodotti ({total})</li>
+            <li className="breadcrumb-item active">Elenco Ordini ({total})</li>
         </ul>
 
         <div className='mt-2'>
-            <input type='text' placeholder='Ricerca Prodotti' className='form-control' onChange={(e) => setSearchText(e.target.value)}></input>
+            <input type='text' placeholder='Ricerca Ordini' className='form-control' onChange={(e) => setSearchText(e.target.value)}></input>
         </div>
         
         <div className="mt-2">
-            {siteProducts && siteProducts.map(siteProduct =>                                    
-                <div className="block mt-1" key={siteProduct.siteProductId}>
+            {siteOrders && siteOrders.map(siteOrder =>                                    
+                <div className="block mt-1" key={siteOrder.orderId}>
                     <Card>
                         <Card.Header className="bg-gray-200 rounded-lg">
-                            <div className="md:flex space-x-2">             
-                                <div className='flex-none w-24'>
-                                    <Image className='h-24 rounded-lg' src={baseImageUrl+siteProduct.imageUrl} />                    
-                                </div>
+                            <div className="flex space-x-2">             
                                 <div className='flex-1'>
-                                    <p className='font-semibold'>{siteProduct.code}</p>                                                        
-                                    {siteProduct.description && parse(siteProduct.description)}
+                                    <p className='font-semibold'>{siteOrder.orderYear}-{siteOrder.orderId}</p>                                                        
                                 </div>
-                                <Link title="Modifica prodotti" to={`/admin/sites/siteproducts/edit/${appSiteId}/${siteProduct.siteProductId}`} 
+                                <Link title="Modifica ordine" to={`/admin/sites/siteorders/edit/${appSiteId}/${siteOrder.orderYear}/${siteOrder.orderId}`} 
                                     className="rounded-full flex bg-blue-500 p-2 pl-3 pr-3 text-white">
                                     <BsPencil />
                                 </Link>
                                 <div className="p-1 rounded-full block bg-red-500 text-white">
-                                    <DeleteConfirmation onConfirm={() => deleteSiteProduct(siteProduct.siteProductId)} />
+                                    <DeleteConfirmation onConfirm={() => deleteSiteOrder(siteOrder.orderYear,siteOrder.orderId)} />
                                 </div>                            
                             </div>                                                        
                         </Card.Header>                                                
@@ -79,8 +74,7 @@ function SiteProductList({ match }) {
             )}   
         </div>
         <Navbar fixed="bottom" variant="dark" bg="dark">
-            <Nav className="mr-right">
-                <SiteProductModal appSiteId={appSiteId} siteProductId={0} handleAddEdit={(appSiteId) => getSiteProducts()} /> 
+            <Nav className="mr-right">                
                 
                 <Link to={`/admin/sites/edit/${appSiteId}`}
                     className="flex items-center justify-center rounded-full  bg-blue-500 text-white p-2">
@@ -95,4 +89,4 @@ function SiteProductList({ match }) {
   );
 };
 
-export { SiteProductList };
+export { SiteOrderList };

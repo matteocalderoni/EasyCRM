@@ -7,3 +7,4 @@ export * from './language.service';
 export * from './survey.service';
 export * from './user.service';
 export * from './role.service';
+export * from './order.service';

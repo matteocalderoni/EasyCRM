@@ -54,7 +54,7 @@ code {
 
 /* Site list */
 .site-list-header { border: 1px solid #777; background-color: #777; color: #FFF; font-size: 1.3em; }
-.site-list-item { border: 1px solid #777; }
+
 .site-list-item .logo { margin: 5px; }
 
 .page-boxes { padding: 5px; }

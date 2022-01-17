@@ -6,7 +6,7 @@ import { Role } from '../../_helpers';
 import { BsPencil } from 'react-icons/bs';
 import { IoDocumentsOutline } from 'react-icons/io5';
 import { FcHome } from 'react-icons/fc';
-import { FaUser, FaRoad, FaLanguage, FaCubes} from 'react-icons/fa';
+import { FaUser, FaRoad, FaLanguage, FaCubes, FaTruck} from 'react-icons/fa';
 import { DeleteConfirmation } from '../../_components/DeleteConfirmation';
 import parse from 'html-react-parser';
 
@@ -48,22 +48,22 @@ function List({ match }) {
                 <li className="breadcrumb-item active">Elenco Siti</li>
             </ul>
             <div className="shadow rounded-xl mt-2 bg-gray-100 p-2">
-                <h1 className="text-xl text-blue-900 font-bold">Gestione Siti</h1>                
+                <h1 className="text-xl text-blue-900 font-bold ml-2">Gestione Siti</h1>                
             </div>
             
-            <div className="shadow rounded-xl mt-2 p-2">
+            <div className="shadow rounded-xl mt-4 overflow-hidden">
                 <Row className="bg-blue-400 rounded-top p-2">                    
                     <Col sm={2} className="text-white text-bold">Logo</Col>
                     <Col sm={8} className="text-white text-bold">Nome del Sito</Col>
                     <Col sm={2} className="text-white text-bold text-right">#{appSites.length}</Col>
                 </Row>       
 
-            {!appSites && loading &&
-            <div className="text-center rounded bg-blue-400 text-white mt-2 p-2">
-                <h5 className="text-white text-bold-xl">Caricamento in corso... Attendere prego...</h5>
-                <ProgressBar animated now={100} />
-            </div>}                         
-            {appSites && appSites.map(appSite =>
+                {!appSites && loading &&
+                <div className="text-center rounded bg-blue-400 text-white mt-2 p-2">
+                    <h5 className="text-white text-bold-xl">Caricamento in corso... Attendere prego...</h5>
+                    <ProgressBar animated now={100} />
+                </div>}                         
+                {appSites && appSites.map(appSite =>
                 <Row key={appSite.appSiteId} className="site-list-item bg-blue-50 p-2">
                     <Col sm={2}>
                         <Image src={baseImageUrl+appSite.companyLogo} className="logo rounded border" fluid />
@@ -90,6 +90,9 @@ function List({ match }) {
                         <Link to={`${path}/siteproducts/${appSite.appSiteId}`} title="Prodotti del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
                             <FaCubes className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione Prodotti
                         </Link>
+                        <Link to={`${path}/siteorders/${appSite.appSiteId}`} title="Ordini del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
+                            <FaTruck className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione Ordini
+                        </Link>
                         <Link to={`${path}/users/${appSite.appSiteId}`} title="Utenti del sito" className="flex items-center justify-left rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
                             <FaUser className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione Utenti
                         </Link>
@@ -107,7 +110,7 @@ function List({ match }) {
             )}
             </div>
             
-            <div className='border rounded mt-5 p-2'>
+            <div className='border rounded-lg mt-4 p-2'>
                 <p className="text-muted">In questa sezione puoi consultare i tuoi siti: per ogni sito puoi modificare immagini e testi. Per creare un nuovo sito clicca sul bottone in basso (se non visualizzi il bottone non disponi dei permessi necessari).<br />
                 Tramite la sezione <b>Dettagli</b> puoi modificare le informazioni relative ai tuoi riferimenti. 
                 Tramite la sezione <b>Lingue</b> puoi visualizzare, modificare e aggiungere le lingue del relativo sito. 

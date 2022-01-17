@@ -1,6 +1,6 @@
 {
   "name": "easy-crm",
-  "version": "1.4.22",
+  "version": "1.4.2.23",
   "private": true,
   "dependencies": {
     "@tinymce/tinymce-react": "^3.7.0",
