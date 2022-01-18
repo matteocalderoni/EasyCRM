@@ -7,13 +7,14 @@ class AnswerTypeSelect extends Component {
       super(props);
       this.state = {         
         answerTypes: [
-          {label: 'Seleziona', value: 0},
+          {label: 'Seleziona', value: 0},          
           {label: 'Testo', value: 1},
           {label: 'Numero', value: 2},
-          {label: 'File upload', value: 3}
+          {label: 'File upload', value: 3},
+          {label: 'Prodotto', value: 4}
         ],
-        label: props.label | '',
-        selectedAnswerType: props.answerType | 1               
+        label: props.label || '',
+        selectedAnswerType: props.answerType || 1               
       };                   
     }    
     

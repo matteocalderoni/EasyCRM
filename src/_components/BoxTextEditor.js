@@ -75,7 +75,8 @@ class BoxTextEditor extends React.Component {
         return (  
             <>                
                 <div>
-                    {this.state.loading && <div className="text-center">
+                    {this.state.loading && 
+                    <div className="text-center">
                         <ProgressBar animated now={100} />
                     </div>}
                                                 

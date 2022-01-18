@@ -7,6 +7,7 @@ import { CompactPicker,SliderPicker } from 'react-color';
 import { Editor } from "@tinymce/tinymce-react";
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../../../../_helpers/fetch-wrapper';
+import { SiteProductPreview } from '../../../../../../_components/SiteProductPreview';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -144,11 +145,20 @@ class QuestionAnswerAddEdit extends React.Component {
 
     handleFieldRemove = (field) => {
         this.setState({
-            sitePage: {
-                ...this.state.sitePage,
+            questionAnswer: {
+                ...this.state.questionAnswer,
                 [field]: ''                 
             }          
         });
+    }
+
+    handleSiteProductId = (_siteProductId) => {        
+        this.setState({ 
+            questionAnswer: {
+                ...this.state.questionAnswer,
+                siteProductId: _siteProductId 
+            }
+        });        
     }
 
     tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
@@ -210,13 +220,14 @@ class QuestionAnswerAddEdit extends React.Component {
                                 Ogni domanda può essere avere una o più risposte: la posizione serve per assegnare un ordine.
                             </Form.Text>
                         </Form.Group>              
-                        <Form.Group>
-                            <Form.Label>Tipo Risposta</Form.Label>
-                            <AnswerTypeSelect value={this.state.questionAnswer.answerType} onChange={(value) => this.handleChangeAnswerType(value)} />
+                        <Form.Group>                            
+                            {!this.state.loading && 
+                            <AnswerTypeSelect label='Tipo Risposta' answerType={this.state.questionAnswer.answerType} onChange={(value) => this.handleChangeAnswerType(value)} />}
                             <Form.Text className="text-muted">
                                 {this.state.questionAnswer.answerType === 1 && <p>Una risposta di <b>testo</b> propone una scelta</p>}
                                 {this.state.questionAnswer.answerType === 2 && <p>Una risposta di tipo <b>numero</b> permette di inserire un valore compreso nell'intervallo selezionato</p>}
                                 {this.state.questionAnswer.answerType === 3 && <p>Una risposta di tipo <b>upload</b> permette di inviare un file.</p>}
+                                {this.state.questionAnswer.answerType === 4 && <p>Una risposta di tipo <b>prodotto</b> permette di selezionare un prodotto da quelli disponibili.</p>}
                             </Form.Text>
                         </Form.Group>    
                         {!this.state.loading && this.state.languageCode == '' &&
@@ -259,6 +270,15 @@ class QuestionAnswerAddEdit extends React.Component {
                                 </Form.Text>
                             </Form.Group>                              
                         </div>}
+
+                        {this.state.questionAnswer && this.state.questionAnswer.answerType === 4 &&
+                        <div>
+                            <label>Prodotto</label>
+                            <SiteProductPreview 
+                                appSiteId={this.state.questionAnswer.appSiteId} 
+                                siteProductId={this.state.questionAnswer.siteProductId}
+                                onChange={this.handleSiteProductId} />                   
+                        </div>                            }
                         <div className="flex space-x-5">
                             <Form.Group className="mart2">
                                 <Form.Check type="checkbox" label="Commenti" name="withComment" checked={this.state.questionAnswer.withComment} onChange={this.handleChangeBool} />
@@ -280,7 +300,7 @@ class QuestionAnswerAddEdit extends React.Component {
                                 Note visualizzate nel fondo dello risposta: utilizzare per aiutare nella scelta di utente.
                             </Form.Text>
                         </Form.Group>    
-                        {this.state.questionAnswer && 
+                        {this.state.questionAnswer && this.state.questionAnswer.answerType !== 4 &&
                         <div className="flex flex-col space-x-2 mart2">
                             <Form.Label className="font-bold">Immagine</Form.Label>
                             {this.state.questionAnswer.imageUrl &&
@@ -310,18 +330,20 @@ class QuestionAnswerAddEdit extends React.Component {
                                 Colore di sfondo per i contenitori di testo. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
                             </Form.Text>
                         </Form.Group>}    
+                        
+                        {this.state.questionAnswer && this.state.questionAnswer.answerType !== 4 &&
                         <Form.Group>
                             <Form.Label>Prezzo Risposta</Form.Label>
                             <input type="number" inputMode="decimal" className="form-control focus:ring-2 focus:ring-blue-600" name="price" value={this.state.questionAnswer.price} onChange={this.handleChangeNumber} />
                             <Form.Text className="text-muted">
                                 Assegnare un prezzo valido per la risposta: : se utente risponde/seleziona la risposta viene aggiunto il valore al totale finale del percorso. . 
                             </Form.Text>
-                        </Form.Group>  
+                        </Form.Group>}
                     </Form>
 
                 </Card.Body>    
                 <Card.Footer>
-                    <Button onClick={this.onSubmit} variant="success">
+                    <Button onClick={this.onSubmit} variant="success" className='bg-green-500 text-white border-0 hover:bg-green-400'>
                         Salva le modifiche
                     </Button> 
                 </Card.Footer>

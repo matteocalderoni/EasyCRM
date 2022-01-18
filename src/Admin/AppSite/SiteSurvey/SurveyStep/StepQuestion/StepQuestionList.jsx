@@ -50,17 +50,17 @@ function StepQuestionList (props){
     
     return (
         <Container fluid>            
-            <div className="mt-2">
+            <div>
             {stepQuestions && stepQuestions.map(stepQuestion =>                                    
-                <div className="block mt-2" key={stepQuestion.stepQuestionId}>
+                <div className="mt-1" key={stepQuestion.stepQuestionId}>
                     <Card>
                         <Card.Header className="bg-blue-400">
                             <Card.Title className="md:flex">                                       
-                                <div className="flex mr-2">
-                                    # {stepQuestion.position}
+                                <div className="bg-white rounded-full p-2 h-10 w-10 text-center">
+                                    {stepQuestion.position}
                                 </div>
-                                <div className="flex-grow">
-                                    <label className="text-sm">
+                                <div className="flex-grow ml-2">
+                                    <label className="text-sm mt-2">
                                         {stepQuestion.questionText && parse(stepQuestion.questionText)}
                                     </label><br />
                                     {stepQuestion.multipleChoice && <small>scelta multipla</small>}
@@ -82,7 +82,7 @@ function StepQuestionList (props){
                         <Card.Body style={{backgroundColor: stepQuestion.boxColor}}>                                                                       
                             <QuestionAnswerList appSiteId={stepQuestion.appSiteId} siteSurveyId={stepQuestion.siteSurveyId} surveyStepId={stepQuestion.surveyStepId} stepQuestionId={stepQuestion.stepQuestionId} isChanged={isChanged}></QuestionAnswerList>                                                    
 
-                            <div className="border shadow rounded m-3 p-2">
+                            <div className="border shadow rounded m-1 p-1">
                                 {stepQuestion.questionNote && parse(stepQuestion.questionNote)}
                             </div>                                                        
                         </Card.Body>

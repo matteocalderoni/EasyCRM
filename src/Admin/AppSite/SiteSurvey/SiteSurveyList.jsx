@@ -77,7 +77,7 @@ function SiteSurveyList ({ match }){
             <Row>
             {siteSurveys && siteSurveys.map(siteSurvey =>                                    
                 <Col sm={6} md={4} key={siteSurvey.siteSurveyId}>
-                    <Card className="m-2 rounded-xl shadow-xl">
+                    <Card className="rounded-xl shadow-xl">
                         <Card.Body style={{backgroundColor: siteSurvey.boxColor}}>                                
                             <Card.Title>
                                 {siteSurvey.siteSurveyName} 
@@ -92,7 +92,6 @@ function SiteSurveyList ({ match }){
             </Row>                
         </Container>
     );
-
 }
 
 export { SiteSurveyList };

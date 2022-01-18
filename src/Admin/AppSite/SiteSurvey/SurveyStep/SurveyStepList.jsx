@@ -48,7 +48,7 @@ function SurveyStepList (props){
     
     return (
         <Container fluid>            
-            <div className="mt-4">
+            <div>
             {loading && 
             <div className="text-center rounded bg-blue-400 text-white mt-2 p-2">
                 <h5 className="text-white text-bold-xl">Caricamento in corso... Attendere prego...</h5>
@@ -56,15 +56,15 @@ function SurveyStepList (props){
             </div>                
             }
             {surveySteps && surveySteps.map(surveyStep =>                                    
-                <div className="block mt-2" key={surveyStep.surveyStepId}>
+                <div className="mt-1" key={surveyStep.surveyStepId}>
                     <Card>
                         <Card.Header className="bg-blue-500">
                             <Card.Title className="md:flex">                                         
-                                <div className="flex mr-2">
-                                    # {surveyStep.position} 
+                                <div className="bg-white rounded-full p-2 h-10 w-10 text-center">
+                                    {surveyStep.position} 
                                 </div>
-                                <div className="flex-grow">
-                                    <label className="text-sm">
+                                <div className="flex-grow ml-2">
+                                    <label className="text-sm mt-2">
                                         {surveyStep.description && parse(surveyStep.description)}
                                     </label>
                                 </div>

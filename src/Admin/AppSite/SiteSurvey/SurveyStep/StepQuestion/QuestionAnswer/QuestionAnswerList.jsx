@@ -5,7 +5,7 @@ import { QuestionAnswerModal } from './QuestionAnswerModal';
 import { DeleteConfirmation } from '../../../../../../_components/DeleteConfirmation';
 import parse from 'html-react-parser';
 
-//const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function QuestionAnswerList (props){
     //const { path } = match;
@@ -48,16 +48,16 @@ function QuestionAnswerList (props){
     
     return (
         <Container fluid>            
-            <div className="md:flex mt-2">
+            <div className="md:flex">
             {questionAnswers && questionAnswers.map(questionAnswer =>                                    
                 <div className="block m-1" key={questionAnswer.questionAnswerId}>
                     <Card>
                         <Card.Header className="bg-blue-300 pl-2 pb-0">
                             <Card.Title className="md:flex">              
-                                <div className="flex">
-                                    # {questionAnswer.position}
+                                <div className="bg-white rounded-full p-2 h-10 w-10 text-center">
+                                    {questionAnswer.position}
                                 </div>                       
-                                <div className="flex-grow">
+                                <div className="flex-grow ml-2">
                                     <label className="text-sm">
                                         {questionAnswer.answerText && parse(questionAnswer.answerText)}
                                     </label>
@@ -65,6 +65,23 @@ function QuestionAnswerList (props){
                             </Card.Title>                                                        
                         </Card.Header>                        
                         <Card.Body style={{backgroundColor: questionAnswer.boxColor}}>                                                                       
+                            {questionAnswer.siteProduct &&
+                            <div className='border flex rounded-lg overflow-hidden w-full'>
+                                <div className="w-20">
+                                    <img className="h-20 object-cover" src={baseImageUrl+questionAnswer.siteProduct.imageUrl} alt={questionAnswer.siteProduct.code} />
+                                </div>
+                                <div className="flex-grow p-3 leading-tight text-black">
+                                    <div className='text-lg leading-tight font-medium'>{questionAnswer.siteProduct.code}</div>
+                                    <div className='leading-tight text-sm'>
+                                        prodotto
+                                    </div>
+                                </div>                                
+                                <div className="p-4">
+                                    <div className="uppercase tracking-wide font-medium text-indigo-500">
+                                        € {questionAnswer.price}
+                                    </div>
+                                </div>                                                        
+                            </div>}
                             <Card.Text>                                
                                 <small>{questionAnswer.answerNote && parse(questionAnswer.answerNote)}</small>
                             </Card.Text>                                                                                

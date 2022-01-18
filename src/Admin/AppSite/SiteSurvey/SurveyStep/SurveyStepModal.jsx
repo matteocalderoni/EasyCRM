@@ -37,7 +37,7 @@ class SurveyStepModal extends React.Component {
     render() {
         return (            
           <>
-            <Button variant="primary" className="btn-sm mr-1" onClick={this.handleShow}>
+            <Button variant="primary" className="btn-sm bg-yellow-400 text-black border-0 rounded-lg mr-1" onClick={this.handleShow}>
                 {this.state.surveyStep.surveyStepId > 0 ? 'Modifica step' : 'Aggiungi step'}
             </Button>
             <Modal show={this.state.setShow} size="lg" onHide={this.handleClose} backdrop="static" keyboard={false}>
