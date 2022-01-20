@@ -19,6 +19,7 @@ class SiteProductAddEdit extends React.Component {
             siteProduct: {
                 appSiteId: +props.appSiteId | 0,
                 siteProductId: +props.siteProductId | 0,
+                internalCode: '',
                 code: '',                         
                 description: '',
                 price: 0
@@ -158,6 +159,14 @@ class SiteProductAddEdit extends React.Component {
                     {!this.state.loading && <div className="p-2 border rounded mt-2">                            
                         <Form onSubmit={() => this.onSubmit()}>
                             
+                            <Form.Group>
+                                <Form.Label>Codice interno</Form.Label>
+                                <input type="text" className="form-control" name="internalCode" value={this.state.siteProduct.internalCode} onChange={this.handleChange} />
+                                <Form.Text className="text-muted">
+                                    Codice univoco interno del prodotto.
+                                </Form.Text>
+                            </Form.Group> 
+
                             <Form.Group>
                                 <Form.Label>Codice</Form.Label>
                                 <input type="text" className="form-control" name="code" value={this.state.siteProduct.code} onChange={this.handleChange} />

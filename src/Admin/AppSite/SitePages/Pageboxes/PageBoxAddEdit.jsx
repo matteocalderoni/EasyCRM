@@ -9,6 +9,7 @@ import { CompactPicker,SliderPicker } from 'react-color';
 import { FaSave} from 'react-icons/fa';
 import { SiteSurveySelect } from '../../../../_components/SiteSurveySelect';
 import parse from 'html-react-parser';
+import { ShapeSelect } from '../../../../_components/ShapeSelect';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -25,7 +26,7 @@ class PageBoxAddEdit extends React.Component {
                 title: '',
                 description: '',
                 cardSize: 12,
-                sortId: this.props.sortId | 1,
+                sortId: -1,         // Shape Type 
                 boxType: 1, 
                 boxColor: '',   
                 boxEmail: '',
@@ -85,6 +86,15 @@ class PageBoxAddEdit extends React.Component {
             pageBox: {
                 ...this.state.pageBox,
                 [evt.target.name]: value                
+            }          
+        });
+    }
+
+    handleChangeShape(shape) {
+        this.setState({
+            pageBox: {
+                ...this.state.pageBox,
+                sortId: shape                
             }          
         });
     }
@@ -302,18 +312,14 @@ class PageBoxAddEdit extends React.Component {
                             </Col>
                         </Row>
                                                 
-                        {/* <Form.Group>
-                            <Form.Label>Dimensione</Form.Label>
-                            <Form.Control as="select" value={this.state.pageBox.cardSize} name="cardSize" onChange={this.handleChangeNumber}>
-                                <option value={0}>Seleziona una dimensione</option>
-                                {CardSizes && CardSizes.map(cardSize =>
-                                    <option key={cardSize.value} value={parseInt(cardSize.value)}>{cardSize.label}</option>
-                                )}   
-                            </Form.Control>
+                        
+                        <Form.Group>
+                            <Form.Label>Forma del contenitore</Form.Label>
+                            <ShapeSelect name="sortId" shape={this.state.pageBox.sortId} onChange={(_shape) => this.handleChangeShape(_shape)} />
                             <Form.Text className="text-muted">
-                                I tipi servono per impostare la dimensionw del contenitore.
+                                Seleziona la forma del contenitore: la forma viene utilizzata per il colore di sfondo del testo (per contenitore testo) o per il formato di immagine (per contenitore immagine).
                             </Form.Text>
-                        </Form.Group>       */}
+                        </Form.Group>
                         
                         {this.state.pageBox && this.state.sitePages && !this.state.loadingPages && 
                         <Form.Group>

@@ -364,6 +364,24 @@ class AddEdit extends React.Component {
                         </Form.Group>
                     </div>
 
+                    {this.state.appSite.shopEnabled && 
+                    <div className='flex space-x-2'>
+                        <Form.Group className='flex-1'>
+                            <Form.Label>Stripe Secret Key</Form.Label>
+                            <input type="text" className="form-control" name="stripeSecretKey" value={this.state.appSite.stripeSecretKey} onChange={this.handleChange} />
+                            <Form.Text className="text-muted">
+                                Inserire la chiave secreta collegata ad account Stripe per pagamenti. Attenzione non mostrare a nessuna questa chiave.
+                            </Form.Text>
+                        </Form.Group>
+                        <Form.Group className='flex-1'>
+                            <Form.Label>Stripe Public Key</Form.Label>
+                            <input type="text" className="form-control" name="stripePublicKey" value={this.state.appSite.stripePublicKey} onChange={this.handleChange} />
+                            <Form.Text className="text-muted">
+                                Inserire la chiave pubblica collegata ad account Stripe per pagamenti. Attenzione non mostrare a nessuna questa chiave.
+                            </Form.Text>
+                        </Form.Group>
+                    </div>}
+
                     {this.state.appSite && this.state.sitePages && !this.state.loadingPages && <Form.Group>
                         <Form.Label>Pagina per la privacy policy:</Form.Label>
                         <Form.Control as="select" value={this.state.appSite.privacyPageId} name="privacyPageId" onChange={this.handleChangeNumber}>

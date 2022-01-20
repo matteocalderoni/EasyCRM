@@ -47,9 +47,7 @@ class ProductList extends React.Component{
     
     render() {
         return (
-            <div fluid>                
-
-                
+            <div>                                
                 <ProductTypeList appSiteId={this.state.appSiteId} sitePageId={this.state.sitePageId} pageBoxId={this.state.pageBoxId}  />
                 
                 {this.state.loading &&               

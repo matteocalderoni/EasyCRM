@@ -58,12 +58,21 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.4.3.24 (Gennaio 2022)</b>: ecco gli ultimi aggiornamenti:                             
+                            <ul className="list-disc ml-3">
+                                <li><b>gestione pagamenti</b>: tramite il gestore Stripe è possibile ricevere pagamenti online con carte e altri formati.</li>                                
+                                <li><b>forma per contenitori</b>: i contenitori di testo e immagine possono essere inseriti in diverse forme (quadrato, cerchio).</li>                                                                
+                                <li><b>bug</b>: sistemazione dei problemi che ci segnalate, grazie per la fondamentale collaborazione.</li>                                
+                            </ul>                            
+                        </li>
+                        <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.4.2.23 (Gennaio 2022)</b>: ecco gli ultimi aggiornamenti:                             
                             <ul className="list-disc ml-3">
                                 <li><b>gestione prodotti</b>: creazione dei prodotti per lo shop e abbinamento al contenitore catalogo.</li>                                
                                 <li><b>contenitore IFrame</b>: tramite questo contenitore è possibile inserire un IFrame con contenuti dinamici.</li>                                
                                 <li><b>allineamento navigazione</b>: la barra di navigazione può essere allineata a sinistra, centro o destra.</li>                                
                                 <li><b>colorazione fondo pagina</b>: è possibile assegnare un colore specifico per ogni fondo pagina, diverso dal menù di navigazione.</li>                                
+                                <li><b>collegamento prodotti a percorsi</b>: adesso le risposte dei percorsi possono essere dei prodotti.</li>                                
                                 <li><b>bug</b>: sistemazione campi numerici decimali.</li>                                
                             </ul>                            
                         </li>

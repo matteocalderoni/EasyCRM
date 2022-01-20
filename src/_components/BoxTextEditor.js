@@ -82,9 +82,9 @@ class BoxTextEditor extends React.Component {
                                                 
                     {!this.state.loading && this.state.languageCode == '' &&
                         <Form.Group>
-                            <Form.Label className='text-sm'>Titolo</Form.Label>
+                            <Form.Label className='text-sm'>Titolo e Descrizione</Form.Label>
                             <div className="border rounded-lg ring-2 ring-blue-200 p-1">
-                                <Editor
+                                <Editor                                    
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                     initialValue={this.state.pageBox.title}                                
                                     inline={true}
@@ -121,7 +121,7 @@ class BoxTextEditor extends React.Component {
                         (this.state.pageBox.boxType === 1 || this.state.pageBox.boxType === 9) &&                 
                     <div>
                         <Form.Group>
-                            <Form.Label className='text-sm'>Descrizione</Form.Label>
+                            {/* <Form.Label className='text-xs'>Descrizione</Form.Label> */}
                             <div className="border rounded-lg ring-2 ring-blue-200 p-1">
                                 <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
@@ -158,17 +158,17 @@ class BoxTextEditor extends React.Component {
                     </div>}              
                     
                 </div>
-                <Navbar>
-                    <Nav className="mr-auto">
+                <div className='flex'>
+                    <div className="flex-1">
                         {this.state.languageCode === '' &&
-                        <Button onClick={this.updatePageBox} variant="success" className="bg-green-600 mr-1">
+                        <Button onClick={this.updatePageBox} variant="success" className="w-full bg-green-600 mr-1 rounded-lg">
                             Salva le modifiche
                         </Button>}                         
-                    </Nav>
-                    <Form inline>
+                    </div>
+                    <Form inline className='flex-1'>
                         <LanguageSelect appSiteId={this.state.pageBox.appSiteId} onLanguageChange={this.handleLanguageCode} />                   
                     </Form>
-                </Navbar>                             
+                </div>                             
             </>          
         );
     }

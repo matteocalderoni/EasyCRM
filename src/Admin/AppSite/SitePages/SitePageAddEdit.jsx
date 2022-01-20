@@ -449,7 +449,7 @@ class SitePageAddEdit extends React.Component {
                         </LanguageEditor>                                
                     </div>} 
 
-                    <div style={{backgroundColor: this.state.sitePage.boxColor, backgroundImage: `url(${baseImageUrl+this.state.sitePage.imageUrl})`}} className="fixed-background border rounded mt-2 p-2">
+                    <div style={{backgroundColor: this.state.sitePage.boxColor, backgroundImage: `url(${baseImageUrl+this.state.sitePage.imageUrl})`}} className="fixed-background bg-fixed border rounded mt-2 p-2">
                         <Row>
                             {(this.state.sitePage.logoPosition === 1 || this.state.sitePage.logoPosition === 2) && 
                             <Col sm={this.state.sitePage.logoPosition === 1 ? 12 : 6} className="text-center">

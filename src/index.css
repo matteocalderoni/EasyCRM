@@ -32,8 +32,11 @@ code {
 
 .modal-90w { max-width: 90%; }
 
-.fixed-background { 
-  background-color: #000;
+.fixed-background {   
+  min-height: 500px; 
+}
+
+.fixed-background-old { 
   background: top right no-repeat; 
   background-repeat: no-repeat;
   background-attachment:fixed; 
@@ -59,6 +62,8 @@ code {
 
 .page-boxes { padding: 5px; }
 .page-boxes .page-box { overflow: hidden; }
+.page-box:hover .box-header { display: block; }
+.card { background: transparent;}
 
 .fb-page { width: 100%; text-align: center;  }
 

@@ -156,7 +156,7 @@ function PageBoxList({ match }) {
             </div>
             
             {sitePage &&
-            <div style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} className="fixed-background page-boxes rounded-b-xl border mb-4">
+            <div style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} className="fixed-background bg-fixed page-boxes rounded-b-xl border mb-4">
                 {(!pageBoxes || loading) &&               
                     <div className="text-center mt-1">
                         <ProgressBar animated now={100} />
@@ -186,13 +186,13 @@ function PageBoxList({ match }) {
                 //     // onDragLeave={onDragLeave}
                 //     >
                     
-                <Card key={pageBox.pageBoxId.toString()} style={{backgroundColor: pageBox.boxColor}} className="page-box rounded-lg border-2 border-gray-400 border-dashed">
-                    <Card.Header>                            
+                <Card key={pageBox.pageBoxId.toString()} style={{backgroundColor: (pageBox.sortId === -1 ? pageBox.boxColor : '')}} className="page-box rounded-lg border-2 border-gray-400 border-dashed">
+                    <Card.Header className='absolute w-full bg-white hidden box-header z-10'>                            
                         <div className="flex flex-row">
                             <div className="flex-grow md:flex">
                                 <BoxTypeInfo boxType={pageBox.boxType} boxId={pageBox.pageBoxId} />
                                 <label className='w-24'>{BoxTypes && BoxTypes[pageBox.boxType - 1].label}</label>
-                                <span className="ml-2">{pageBox.title && parse(pageBox.title)}</span>                                        
+                                {/* <span className="ml-2">{pageBox.title && parse(pageBox.title)}</span>                                         */}
                             </div>
                             <div className="flex-none">
                                 {pageBox.landingPageId > 0 &&
@@ -218,12 +218,20 @@ function PageBoxList({ match }) {
                         </div>                        
                     </Card.Header>
                     
-                        <Card.Body>
+                        <Card.Body className='p-1'>
                         {pageBox.boxType && (parseInt(pageBox.boxType) === 8 || parseInt(pageBox.boxType) === 9) &&
-                            <Card.Img src={baseImageUrl+pageBox.imageUrl} />
+                            <div 
+                                style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
+                                className={`p-4 m-4 ${(pageBox.sortId === 2 ? 'rounded-full' : 'rounded')}`}>
+                                <Card.Img src={baseImageUrl+pageBox.imageUrl} />
+                            </div>
                         }                                                
                         {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9) &&                                                                        
-                            <BoxTextEditor prefix={pageBox.appSiteId} pageBox={pageBox} handleSaved={handleAddEdit}></BoxTextEditor>
+                            <div 
+                                style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
+                                className={`p-4 m-4 ${(pageBox.sortId === 2 ? 'rounded-full' : 'rounded')}`}>
+                                <BoxTextEditor prefix={pageBox.appSiteId} pageBox={pageBox} handleSaved={handleAddEdit}></BoxTextEditor>
+                            </div>
                         }
                         {pageBox.boxType && parseInt(pageBox.boxType) === 2 &&
                             <TopServiceList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
