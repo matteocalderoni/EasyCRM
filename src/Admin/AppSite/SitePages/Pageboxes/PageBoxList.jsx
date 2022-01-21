@@ -12,7 +12,7 @@ import { ArticleList } from './Article';
 import { BoxTextEditor, SimpleMap } from '../../../../_components';
 import parse from 'html-react-parser';
 import { BsPencil} from 'react-icons/bs';
-import { FcHome } from 'react-icons/fc';
+import { FcHome, FcRotateToLandscape } from 'react-icons/fc';
 import { FaCubes, FaLanguage, FaRoad } from 'react-icons/fa';
 import { BoxTypes } from '../../../../_helpers'
 import { DeleteConfirmation,FacebookFeed,InstagramFeed,YoutubeVideo } from '../../../../_components';
@@ -145,14 +145,48 @@ function PageBoxList({ match }) {
                     Contenitori della Pagina <b>{sitePage && sitePage.title && parse(sitePage.titleUrl)}</b>
                 </li>
             </ul>
-            <div className="rounded-t-xl border mt-2 bg-gray-100 p-8">
-                <small className='font-bold'>Contenuti della pagina</small>   
-                {sitePage && <h1 className="text-xl text-blue-500">{sitePage.title && parse(sitePage.titleUrl)}</h1>}
-                <p className="text-muted text-sm">
-                    Tramite questa sezione è possibile gestire i contenitori della pagina. Si possono creare, modificare o eliminare diverse tipologie di contenitori.<br />
-                    Sotto viene visualizzata un anteprima dei contenitori aggiunti (anche quelli non pubblici).
-                    Puoi <b>trascinare e ridimensionare</b> i contenitori per ottenere il layout che preferisci.                   
-                </p>
+            <div className="rounded-t-xl border mt-2 bg-gray-100 p-8 flex">
+                <div className='flex-grow'>
+                    <small className='font-bold'>Contenuti della pagina</small>   
+                    {sitePage && <h1 className="text-xl text-blue-500">{sitePage.title && parse(sitePage.titleUrl)}</h1>}
+                    <p className="text-muted text-sm">
+                        Tramite questa sezione è possibile gestire i contenitori della pagina. Si possono creare, modificare o eliminare diverse tipologie di contenitori.<br />
+                        Sotto viene visualizzata un anteprima dei contenitori aggiunti (anche quelli non pubblici).
+                        Puoi <b>trascinare e ridimensionare</b> i contenitori per ottenere il layout che preferisci.                   
+                    </p>
+                </div>
+                <div className='m-2 mt-4'>
+                    <div className='view-xxs font-bold p-2 bg-purple-800 border rounded-lg text-white'>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        XXS
+                    </div>
+                    <div className='view-xs font-bold p-2 bg-orange-800 rounded-lg text-white'>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        XS
+                    </div>
+                    <div className='view-sm font-bold p-2 bg-green-800 rounded-lg text-white'>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        SM
+                    </div>
+                    <div className='view-md font-bold p-2 bg-pink-800 rounded-lg text-white'>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        MD
+                    </div>
+                    <div className='view-lg font-bold p-2 bg-sky-800 rounded-lg text-white'>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        LG
+                    </div>
+                </div>
             </div>
             
             {sitePage &&

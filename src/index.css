@@ -63,6 +63,23 @@ code {
 .page-boxes { padding: 5px; }
 .page-boxes .page-box { overflow: hidden; }
 .page-box:hover .box-header { display: block; }
+.view-xxs,.view-xs,.view-sm,.view-md,.view-lg { display: none; }
+@media(max-width:480px){
+  .view-xxs { display: block; }
+}
+@media(min-width:481px) and (max-width:768px) {
+  .view-xs { display: block; }
+}
+@media(min-width:769px) and (max-width:996px) {
+  .view-sm { display: block; }
+}
+@media(min-width:997px) and (max-width:1200px) {
+  .view-md { display: block; }
+}
+@media(min-width:1201px) {
+  .view-lg { display: block; }
+}
+
 .card { background: transparent;}
 
 .fb-page { width: 100%; text-align: center;  }

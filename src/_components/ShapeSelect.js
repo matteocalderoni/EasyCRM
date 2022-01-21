@@ -14,7 +14,7 @@ function ShapeSelect({label,shape,onChange})
     <>
     {shapes && 
     <Form.Group>
-        <Form.Control as="select" value={shape} name="selectedPosition" onChange={(e) => onChange(+e.target.value)}>
+        <Form.Control as="select" value={shape} name="selectedShape" onChange={(e) => onChange(+e.target.value)}>
             {shapes.map(_shape =>
                 <option key={_shape.value} value={_shape.value}>{_shape.label}</option>
             )}   
