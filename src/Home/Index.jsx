@@ -62,6 +62,7 @@ function Home() {
                             <ul className="list-disc ml-3">
                                 <li><b>gestione pagamenti</b>: tramite il gestore Stripe è possibile ricevere pagamenti online con carte e altri formati.</li>                                
                                 <li><b>forma per contenitori</b>: i contenitori di testo e immagine possono essere inseriti in diverse forme (quadrato, cerchio).</li>                                                                
+                                <li><b>info su risoluzioni</b>: dalla gestione contenitori è possibile visualizzare la risoluzione attiva.</li>                                                                
                                 <li><b>bug</b>: sistemazione dei problemi che ci segnalate, grazie per la fondamentale collaborazione.</li>                                
                             </ul>                            
                         </li>

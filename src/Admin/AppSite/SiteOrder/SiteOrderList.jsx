@@ -55,10 +55,17 @@ function SiteOrderList({ match }) {
             {siteOrders && siteOrders.map(siteOrder =>                                    
                 <div className="block mt-1" key={siteOrder.orderId}>
                     <Card>
-                        <Card.Header className="bg-gray-200 rounded-lg">
+                        <Card.Header className={`${(siteOrder.orderState === 2 ? 'bg-green-200' : 'bg-orange-100' )} border rounded-lg`}>
                             <div className="flex space-x-2">             
-                                <div className='flex-1'>
+                                <div className='w-32'>
                                     <p className='font-semibold'>{siteOrder.orderYear}-{siteOrder.orderId}</p>                                                        
+                                </div>
+                                <div className='flex-1'>
+                                    {siteOrder.registry &&
+                                    <p>{siteOrder.registry.name}</p>}
+                                </div>
+                                <div className='w-32'>
+                                    <p className='font-semibold'>{siteOrder.orderTotal} €</p>                                                        
                                 </div>
                                 <Link title="Modifica ordine" to={`/admin/sites/siteorders/edit/${appSiteId}/${siteOrder.orderYear}/${siteOrder.orderId}`} 
                                     className="rounded-full flex bg-blue-500 p-2 pl-3 pr-3 text-white">

@@ -12,8 +12,8 @@ class PageTypeSelect extends Component {
           {label: 'Privacy', value: 1},
           {label: 'Landing', value: 2}
         ],
-        label: props.label | '',
-        selectedPageType: props.pageType | 0             
+        label: props.label || '',
+        selectedPageType: props.pageType || 0             
       };                   
     }    
     

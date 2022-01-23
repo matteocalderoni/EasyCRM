@@ -12,8 +12,8 @@ class NavPositionSelect extends Component {
           {label: 'Sopra', value: 2},
           {label: 'Fisso Sotto', value: 3}          
         ],
-        label: props.label | '',
-        selectedNavPosition: props.position | 1               
+        label: props.label || '',
+        selectedNavPosition: props.position || 1               
       };                   
     }    
     

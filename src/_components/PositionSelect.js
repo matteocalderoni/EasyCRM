@@ -13,8 +13,8 @@ class PositionSelect extends Component {
           {label: 'Sotto', value: 3},
           {label: 'Destra', value: 4}
         ],
-        label: props.label | '',
-        selectedPosition: props.position | 1               
+        label: props.label || '',
+        selectedPosition: props.position || 1               
       };                   
     }    
     

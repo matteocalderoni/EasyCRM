@@ -11,8 +11,8 @@ class QuestionStyleSelect extends Component {
           {label: 'Elenco', value: 1},
           {label: 'Bottone', value: 2}
         ],
-        label: props.label | '',
-        selectedQuestionStyle: props.value | 1               
+        label: props.label || '',
+        selectedQuestionStyle: props.value || 1               
       };                   
     }    
     

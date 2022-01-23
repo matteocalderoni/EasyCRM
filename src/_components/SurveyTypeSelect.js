@@ -12,8 +12,8 @@ class SurveyTypeSelect extends Component {
           {label: 'Percorso Presentazione', value: 2},
           {label: 'Modulo personalizzato', value: 3}
         ],
-        label: props.label | '',
-        selectedSurveyType: props.surveyType | 0             
+        label: props.label || '',
+        selectedSurveyType: props.surveyType || 0             
       };                   
     }    
     

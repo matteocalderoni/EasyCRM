@@ -9,7 +9,7 @@ class LanguageSelect extends Component {
       this.state = { 
         appSiteId: props.appSiteId,
         languages: [],
-        code: props.code | ''               
+        code: props.code || ''               
       };                   
     }    
 

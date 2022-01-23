@@ -11,8 +11,8 @@ class NavAlignSelect extends Component {
           {label: 'Centro', value: 2 },
           {label: 'Destra', value: 3 }          
         ],
-        label: props.label | '',
-        selectedNavAlign: props.align | 1               
+        label: props.label || '',
+        selectedNavAlign: props.align || 1               
       };                   
     }    
     
@@ -27,8 +27,9 @@ class NavAlignSelect extends Component {
     render() {      
       return ( 
         <>
-        {this.state.selectedNavAlign && <Form.Group>
-            <Form.Control as="select" value={this.state.selectedNavAlign} name="selectedNavAlign" onChange={this.handleChange}>
+        {this.state.selectedNavAlign && 
+        <Form.Group>
+            <Form.Control as="select" value={+this.state.selectedNavAlign} name="selectedNavAlign" onChange={() => this.handleChange()}>
                 {this.state.aligns && this.state.aligns.map(align =>
                     <option key={align.value} value={align.value}>{align.label}</option>
                 )}   

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Tabs, Tab, Container,ProgressBar } from 'react-bootstrap'
 import { orderService } from '../../../_services'
+import { SiteOrderAddEdit } from './SiteOrderAddEdit'
 
 function SiteOrderDetail({ match }) {
     const { appSiteId, orderYear, orderId } = match.params;  
@@ -41,6 +42,12 @@ function SiteOrderDetail({ match }) {
             <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">                                
                 <Tabs id="siteorder-tabs">
                     <Tab eventKey="info" title="Informazioni generali">
+                        {!loading && <SiteOrderAddEdit appSiteId={appSiteId} orderYear={orderYear} orderId={orderId} />}
+                    </Tab>
+                    <Tab eventKey="info" title="Cliente">
+                        
+                    </Tab>
+                    <Tab eventKey="info" title="Prodotti">
                         
                     </Tab>
                 </Tabs>
