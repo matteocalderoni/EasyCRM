@@ -67,7 +67,7 @@ function SiteOrderList({ match }) {
                                 <div className='w-32'>
                                     <p className='font-semibold'>{siteOrder.orderTotal} €</p>                                                        
                                 </div>
-                                <Link title="Modifica ordine" to={`/admin/sites/siteorders/edit/${appSiteId}/${siteOrder.orderYear}/${siteOrder.orderId}`} 
+                                <Link title="Modifica ordine" to={`/admin/sites/siteorders/edit/${appSiteId}/${siteOrder.orderYear}/${siteOrder.orderId}/${siteOrder.registryId}`} 
                                     className="rounded-full flex bg-blue-500 p-2 pl-3 pr-3 text-white">
                                     <BsPencil />
                                 </Link>

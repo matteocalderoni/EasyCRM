@@ -11,7 +11,8 @@ import { PageTypeSelect } from '../../../_components/PageTypeSelect';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
-function SitePageList (props){
+function SitePageList (props)
+{
     //const { path } = match;
     const appSiteId = parseInt(props.appSiteId)
     const parentPageId = parseInt(props.parentPageId)

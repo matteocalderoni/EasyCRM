@@ -119,43 +119,51 @@ class SiteOrderAddEdit extends React.Component
 
     render() {
         return (            
-          <>
-            <Card>                
-                <Card.Body className="home container-fluid">                    
-                    {this.state.loading && <div className="text-center mart2">
-                        <ProgressBar animated now={100} />
-                    </div>}
-                    {!this.state.loading && <div className="p-2 border rounded mt-2">                            
-                        <Form onSubmit={() => this.onSubmit()}>
-                            
-                            <Form.Group>
-                                <Form.Label>Anno</Form.Label>
-                                <input type="number" className="form-control" name="orderYear" value={this.state.siteOrder.orderYear} onChange={this.handleChangeNumber} />
-                                <Form.Text className="text-muted">
-                                    Anno di ordine.
-                                </Form.Text>
-                            </Form.Group> 
+          <>       
+            <>                    
+                {this.state.loading && 
+                <div className="text-center mart2">
+                    <ProgressBar animated now={100} />
+                </div>}
+                {!this.state.loading && 
+                <div className={`${(this.state.siteOrder.orderState === 2 ? 'bg-green-100' : '')} p-2 border rounded-b-lg`}>                            
+                    <Form onSubmit={() => this.onSubmit()}>
+                        
+                        <Form.Group>
+                            <Form.Label>Anno</Form.Label>
+                            <input type="number" className="form-control" name="orderYear" value={this.state.siteOrder.orderYear} onChange={this.handleChangeNumber} />
+                            <Form.Text className="text-muted">
+                                Anno di ordine.
+                            </Form.Text>
+                        </Form.Group> 
 
-                            <Form.Group>
-                                <Form.Label>Numero ordine</Form.Label>
-                                <input type="number" className="form-control" name="orderId" value={this.state.siteOrder.orderId} onChange={this.handleChangeNumber} />
-                                <Form.Text className="text-muted">
-                                    Numero identificato di ordine.
-                                </Form.Text>
-                            </Form.Group> 
+                        <Form.Group>
+                            <Form.Label>Numero ordine</Form.Label>
+                            <input type="number" className="form-control" name="orderId" value={this.state.siteOrder.orderId} onChange={this.handleChangeNumber} />
+                            <Form.Text className="text-muted">
+                                Numero identificato di ordine.
+                            </Form.Text>
+                        </Form.Group> 
 
-                            <Form.Group>
-                                <Form.Label>Totale</Form.Label>
-                                <input type="number" className="form-control" name="orderTotal" value={this.state.siteOrder.orderTotal} onChange={this.handleChangeNumber} />
-                                <Form.Text className="text-muted">
-                                    Totale di ordine confermato.
-                                </Form.Text>
-                            </Form.Group> 
-                            
-                        </Form>
-                    </div>}
-                </Card.Body>    
-            </Card>                    
+                        <Form.Group>
+                            <Form.Label>Totale</Form.Label>
+                            <input type="number" className="form-control" name="orderTotal" value={this.state.siteOrder.orderTotal} onChange={this.handleChangeNumber} />
+                            <Form.Text className="text-muted">
+                                Totale di ordine confermato.
+                            </Form.Text>
+                        </Form.Group> 
+
+                        <Form.Group>
+                            <Form.Label>Stripe Payment Id</Form.Label>
+                            <input type="text" className="form-control" name="stripePaymentId" value={this.state.siteOrder.stripePaymentId} onChange={this.handleChangeNumber} />
+                            <Form.Text className="text-muted">
+                                Ogni pagamento viene identificato tramite un codice univoco.
+                            </Form.Text>
+                        </Form.Group> 
+                        
+                    </Form>
+                </div>}
+            </>    
             <Navbar fixed="bottom" className="flex bg-blue-800">
                 <Nav className="flex space-x-3 text-sm font-medium mr-auto">
                     <Button onClick={() => this.onSubmit()} className="flex items-center justify-center rounded-full bg-green-500">

@@ -8,7 +8,7 @@ function SiteOrders({ match }) {
     
     return (
         <Switch>            
-            <Route path={`${path}/edit/:appSiteId/:orderYear/:orderId`} component={SiteOrderDetail} />            
+            <Route path={`${path}/edit/:appSiteId/:orderYear/:orderId/:registryId`} component={SiteOrderDetail} />            
             <Route path={`${path}/:appSiteId`} component={SiteOrderList} />            
         </Switch>
     );
