@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react';
 import { productService } from '../_services'
 import { SiteProductSelect } from './SiteProductSelect';
 import { Image } from 'react-bootstrap'
-import parse from 'html-react-parser';
+import parse from 'html-react-parser'
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 

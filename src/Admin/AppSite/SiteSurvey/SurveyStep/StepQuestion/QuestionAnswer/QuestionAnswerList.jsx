@@ -28,13 +28,13 @@ function QuestionAnswerList (props){
                 x.siteSurveyId === questionAnswer.siteSurveyId &&
                 x.surveyStepId === questionAnswer.surveyStepId &&
                 x.stepQuestionId === questionAnswer.stepQuestionId &&
-                x.questionAnswerId === questionAnswer.questionAnswerId) { x.isDeleting = true; }
+                x.questionAnswerId === questionAnswer.questionAnswerId) { 
+                    x.isDeleting = true; 
+                }
             return x;
         }));
         surveyService.deleteQuestionAnswer(questionAnswer.appSiteId, questionAnswer.siteSurveyId, questionAnswer.surveyStepId, questionAnswer.stepQuestionId, questionAnswer.questionAnswerId)
-            .then(() => {            
-                getQuestionAnswers()
-            });                
+            .then(() => getQuestionAnswers());                
     }
 
     function getQuestionAnswers() {
@@ -48,8 +48,8 @@ function QuestionAnswerList (props){
     
     return (
         <Container fluid>            
-            <div className="md:flex">
-            {questionAnswers && questionAnswers.map(questionAnswer =>                                    
+            <div className="md:flex flex-wrap">
+            {!loading && questionAnswers && questionAnswers.map(questionAnswer =>                                    
                 <div className="block m-1" key={questionAnswer.questionAnswerId}>
                     <Card>
                         <Card.Header className="bg-blue-300 pl-2 pb-0">
@@ -67,13 +67,14 @@ function QuestionAnswerList (props){
                         <Card.Body style={{backgroundColor: questionAnswer.boxColor}}>                                                                       
                             {questionAnswer.siteProduct &&
                             <div className='border flex rounded-lg overflow-hidden w-full'>
+                                {questionAnswer.siteProduct.imageUrl &&
                                 <div className="w-20">
                                     <img className="h-20 object-cover" src={baseImageUrl+questionAnswer.siteProduct.imageUrl} alt={questionAnswer.siteProduct.code} />
-                                </div>
+                                </div>}
                                 <div className="flex-grow p-3 leading-tight text-black">
                                     <div className='text-lg leading-tight font-medium'>{questionAnswer.siteProduct.code}</div>
-                                    <div className='leading-tight text-sm'>
-                                        prodotto
+                                    <div className='leading-tight text-sm h-24 w-24'>
+                                        {questionAnswer.siteProduct.description && parse(questionAnswer.siteProduct.description)}
                                     </div>
                                 </div>                                
                                 <div className="p-4">
@@ -105,7 +106,6 @@ function QuestionAnswerList (props){
             </Navbar>
         </Container>
     );
-
 }
 
 export { QuestionAnswerList };

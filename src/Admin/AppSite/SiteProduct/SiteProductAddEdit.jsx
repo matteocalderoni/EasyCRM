@@ -85,6 +85,15 @@ class SiteProductAddEdit extends React.Component {
             }          
         });
     }
+
+    handleFieldRemove = (field) => {
+        this.setState({ 
+            siteProduct: {
+                ...this.state.siteProduct, 
+                [field]: ''
+            } 
+        });
+    }
     
     handleOpen() {    
         if (this.props.siteProductId > 0) {
@@ -179,6 +188,9 @@ class SiteProductAddEdit extends React.Component {
                                 <Image className='w-48' src={baseImageUrl+this.state.siteProduct.imageUrl} fluid />                    
                                 <Uploader prefix={this.state.siteProduct.appSiteId} fileName={this.state.siteProduct.imageUrl} onFileNameChange={this.handleFileName} />      
                                 <small>Utilizzare immagini con formato 640 X 640 px.</small>
+                                <Button onClick={() => this.handleFieldRemove('imageUrl')} className="mt-2 bg-red-400">
+                                        Rimuovi immagine
+                                </Button>        
                             </div>                                    
 
                             {this.state.languageCode == '' && 
