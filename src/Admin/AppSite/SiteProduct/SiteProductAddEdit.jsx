@@ -4,6 +4,7 @@ import { Form, Button, Card, ProgressBar,Navbar, Nav, Image } from 'react-bootst
 import { FaSave } from 'react-icons/fa';
 import { LanguageEditor, Uploader } from '../../../_components'
 import { Editor } from "@tinymce/tinymce-react";
+import { CompactPicker,SliderPicker } from 'react-color';
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../_helpers/fetch-wrapper'
 
@@ -94,6 +95,15 @@ class SiteProductAddEdit extends React.Component {
             } 
         });
     }
+
+    handleColorChange = (color) => {
+        this.setState({
+            siteProduct: { 
+                ...this.state.siteProduct, 
+                boxColor: color.hex 
+            }
+        });
+    };
     
     handleOpen() {    
         if (this.props.siteProductId > 0) {
@@ -236,6 +246,26 @@ class SiteProductAddEdit extends React.Component {
                                     Descrizione estesa del prodotto.
                                 </Form.Text>
                             </Form.Group>  */}
+
+                            {this.state.siteProduct && !this.state.loading && 
+                            <Form.Group className="flex flex-col mt-2">
+                                <Form.Label className="font-bold">Colore di Sfondo</Form.Label>
+                                <div className="flex flex-col md:flex:row">                            
+                                    <div className="flex-none m-2 mt-0">
+                                        <CompactPicker                                        
+                                            color={ this.state.siteProduct.boxColor }
+                                            onChangeComplete={ (color) => this.handleColorChange(color) } />
+                                    </div>                                
+                                    <div className="flex-grow m-2">
+                                        <SliderPicker
+                                            color={ this.state.siteProduct.boxColor }
+                                            onChangeComplete={ (color) => this.handleColorChange(color) } />
+                                    </div>                                                                                                    
+                                </div>                            
+                                <Form.Text className="text-muted">
+                                    Colore di sfondo per i contenitori di testo. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
+                                </Form.Text>
+                            </Form.Group>}    
 
                             <Form.Group>
                                 <Form.Label>Prezzo</Form.Label>

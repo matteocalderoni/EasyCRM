@@ -60,7 +60,7 @@ class ProductList extends React.Component{
                     {this.state.products && this.state.products.map(product =>                                    
                         <div key={product.productId} className="mx-auto rounded-xl shadow-md overflow-hidden">
                             {product.siteProduct && 
-                            <div>
+                            <div style={{backgroundColor: product.siteProduct.boxColor}}>
                                 <div className="md:shrink-0">
                                     <img className="h-48 w-full object-cover" src={baseImageUrl+product.siteProduct.imageUrl} alt={product.siteProduct.code} />
                                 </div>

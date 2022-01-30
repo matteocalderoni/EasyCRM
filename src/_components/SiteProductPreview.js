@@ -31,7 +31,7 @@ function SiteProductPreview({ appSiteId, siteProductId, onChange, readOnly })
             {!isReadOnly && 
             <SiteProductSelect appSiteId={appSiteId} siteProductId={selSiteProductId} onChange={(_siteProductId) => handleSiteProductId(_siteProductId)} />}
             {siteProduct && 
-            <div className='border rounded md:flex'>
+            <div className='border rounded md:flex' style={{backgroundColor: siteProduct.boxColor}}>
                 <Image className='w-48 h-48' src={baseImageUrl+siteProduct.imageUrl} fluid />                    
                 <div className='bg-gray-200 p-2'>
                     <h1 className='font-semibold'>{siteProduct.code}</h1>
