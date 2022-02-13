@@ -97,13 +97,7 @@ function List({ match }) {
                             <FaUser className='bg-white rounded-full ml-2 mr-2 text-xl' /> Gestione Utenti
                         </Link>
                         <div className="mt-3 pr-2 rounded-full block bg-red-500 text-white">
-                            <DeleteConfirmation onConfirm={() => deleteAppSite(appSite.appSiteId)} /> Elimina
-                            {/* <Button onClick={() => deleteAppSite(appSite.appSiteId)} title="Elimina sito" className="btn btn-danger" disabled={appSite.isDeleting}>
-                                {appSite.isDeleting 
-                                    ? <span className="spinner-border spinner-border-sm"></span>
-                                    : <span><BsTrash /></span>
-                                }
-                            </Button> */}
+                            <DeleteConfirmation onConfirm={() => deleteAppSite(appSite.appSiteId)} /> Elimina                            
                         </div>
                     </Col>
                 </Row>

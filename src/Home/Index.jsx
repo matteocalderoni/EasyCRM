@@ -58,6 +58,14 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.4.3.25 (Febbraio 2022)</b>: ecco gli ultimi aggiornamenti:                             
+                            <ul className="list-disc ml-3">
+                                <li><b>Contenitore Prodotto</b>: è possibile inserire un singolo prodotto al posto del catalogo.</li>
+                                <li><b>margin e padding</b>: gestione di spazio interno ed esterno di contenitore (da 0 a 5).</li>                                                                                                                              
+                                <li><b>bug</b>: sistemazione dei problemi che ci segnalate, grazie per la fondamentale collaborazione.</li>                                
+                            </ul>                            
+                        </li>
+                        <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.4.3.24 (Gennaio 2022)</b>: ecco gli ultimi aggiornamenti:                             
                             <ul className="list-disc ml-3">
                                 <li><b>gestione pagamenti</b>: tramite il gestore Stripe è possibile ricevere pagamenti online con carte e altri formati.</li>                                

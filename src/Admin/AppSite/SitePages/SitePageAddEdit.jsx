@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { appSiteService, alertService } from '../../../_services';
 import { Uploader,LanguageSelect,LanguageEditor,PositionSelect } from '../../../_components'
-import { Form, Button, Card, Navbar, Nav, Image, Row, Col, ProgressBar } from 'react-bootstrap'
+import { Form, Button, Card, Navbar, Nav, Image, Row, Col, ProgressBar, Accordion } from 'react-bootstrap'
 import { CompactPicker,SliderPicker } from 'react-color';
 import { Editor } from "@tinymce/tinymce-react";
 import { FaSave } from 'react-icons/fa';
@@ -230,8 +230,11 @@ class SitePageAddEdit extends React.Component {
                 <Card.Body className="home container-fluid">                                        
                     <div>
                         {this.state.loadingPages && <div className="text-center">
+                            <label className='bounce'>Caricamento in corso...</label>
                             <ProgressBar animated now={100} />
                         </div>}
+
+                        
                         <div className="flex flex-col md:flex-row p-2 border rounded content-center">
                             <div className="flex-1 p-1">
                                 {this.state.sitePage && this.state.sitePages && !this.state.loadingPages && 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, ListGroup, Row,Col,Image, Badge, ProgressBar } from 'react-bootstrap';
+import { ProgressBar } from 'react-bootstrap';
 import { productService } from '../../../../../_services';
 import { ProductAddEdit } from './ProductAddEdit';
 import { ProductTypeList } from './ProductTypeList';
@@ -68,9 +68,9 @@ class ProductList extends React.Component{
                                     <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
                                         € {product.siteProduct.price}
                                     </div>
-                                    <a href="#" className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
+                                    <div className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
                                         {product.siteProduct.code}
-                                    </a>
+                                    </div>
                                     <div className="mt-2 text-slate-500">
                                         {product.siteProduct.description && parse(product.siteProduct.description)}
                                     </div>

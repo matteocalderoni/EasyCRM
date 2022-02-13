@@ -12,7 +12,7 @@ import { ArticleList } from './Article';
 import { BoxTextEditor, SimpleMap } from '../../../../_components';
 import parse from 'html-react-parser';
 import { BsPencil} from 'react-icons/bs';
-import { FcHome, FcRotateToLandscape } from 'react-icons/fc';
+import { FcHome } from 'react-icons/fc';
 import { FaCubes, FaLanguage, FaRoad } from 'react-icons/fa';
 import { BoxTypes } from '../../../../_helpers'
 import { DeleteConfirmation,FacebookFeed,InstagramFeed,YoutubeVideo } from '../../../../_components';
@@ -20,6 +20,7 @@ import { SiteSurveyBox } from '../../SiteSurvey/SiteSurveyBox/SiteSurveyBox';
 import { BoxTypeInfo } from '../../../../_components/BoxTypeInfo';
 
 import { Responsive, WidthProvider } from 'react-grid-layout';
+import { ProductBox } from './Product/ProductBox';
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -46,7 +47,6 @@ function PageBoxList({ match }) {
         appSiteService.getBoxesOfPage(appSiteId, pageId).then((x) => {             
             setLoading(false)
             setPageBoxes(x.result || [])
-
             getLayouts()
         });
     }
@@ -59,17 +59,11 @@ function PageBoxList({ match }) {
         });
     }, [appSiteId]);  
 
-    // useEffect(() => {
-    //     getLayouts()
-    // }, [appSiteId, pageId]);  
-
     const getLayouts = () => {
         setLoadingLayouts(true)
         appSiteService.getPageLayouts(appSiteId, pageId).then((x) => { 
             setLoadingLayouts(false)            
             setLayouts(x)
-
-            //getBoxes()
         });
     }
     
@@ -81,19 +75,29 @@ function PageBoxList({ match }) {
         });
     }, [appSiteId, pageId]);   
 
-    const deleteBox = (pageBox) => {
+    const deleteBox = (_pageBox) => {
         setLoading(true)
-        appSiteService.deletePageBox(pageBox.appSiteId, pageBox.sitePageId, pageBox.pageBoxId)
+        appSiteService.deletePageBox(_pageBox.appSiteId, _pageBox.sitePageId, _pageBox.pageBoxId)
             .then(() => {
-                setLoading(false)
-                appSiteService.getBoxesOfPage(appSiteId, pageId).then(x => setPageBoxes(x.result));
+                setLoading(false)                
+                setPageBoxes(pageBoxes.filter((box) => box.pageBoxId !== _pageBox.pageBoxId))
             });
     } 
 
-    function handleAddEdit(appSiteId, sitePageId) {
-        //appSiteService.getBoxesOfPage(appSiteId, sitePageId).then(x => setPageBoxes(x.result));
-        getBoxes()
-        //getLayouts()
+    function handleAddEdit(_pageBox) {        
+        var _pageBoxes = []
+        if (pageBoxes && _pageBox)
+            _pageBoxes = pageBoxes.filter((box) => box.pageBoxId !== _pageBox.pageBoxId)
+
+        var isUpdate = false;
+        if (_pageBoxes.length !== pageBoxes.length)
+            isUpdate = true;
+            
+        _pageBoxes = [..._pageBoxes,_pageBox]
+        setPageBoxes(_pageBoxes)
+
+        if (!isUpdate)
+            getLayouts()
     }
 
     const onLayoutChange = (layout, layouts) => {
@@ -155,7 +159,7 @@ function PageBoxList({ match }) {
                         Puoi <b>trascinare e ridimensionare</b> i contenitori per ottenere il layout che preferisci.                   
                     </p>
                 </div>
-                <div className='m-2 mt-4'>
+                <div className='m-2 mt-4 text-center'>
                     <div className='view-xxs font-bold p-2 bg-purple-800 border rounded-lg text-white'>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -166,13 +170,13 @@ function PageBoxList({ match }) {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                         </svg>
-                        XS
+                        PHONE
                     </div>
                     <div className='view-sm font-bold p-2 bg-green-800 rounded-lg text-white'>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                         </svg>
-                        SM
+                        TABLET
                     </div>
                     <div className='view-md font-bold p-2 bg-pink-800 rounded-lg text-white'>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -183,8 +187,8 @@ function PageBoxList({ match }) {
                     <div className='view-lg font-bold p-2 bg-sky-800 rounded-lg text-white'>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        LG
+                        </svg>                        
+                        PC
                     </div>
                 </div>
             </div>
@@ -200,8 +204,8 @@ function PageBoxList({ match }) {
                 <ResponsiveGridLayout className="layout"
                     layouts={layouts}
                     autoSize={true}
-                    breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-                    cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
+                    breakpoints={{lg: 1200, sm: 768, xs: 0}}
+                    cols={{lg: 12, sm: 6, xs: 4}}
                     onLayoutChange={(layout, layouts) =>
                         onLayoutChange(layout, layouts)
                     }
@@ -220,7 +224,10 @@ function PageBoxList({ match }) {
                 //     // onDragLeave={onDragLeave}
                 //     >
                     
-                <Card key={pageBox.pageBoxId.toString()} style={{backgroundColor: (pageBox.sortId === -1 ? pageBox.boxColor : '')}} className="page-box rounded-lg border-2 border-gray-400 border-dashed">
+                <Card key={pageBox.pageBoxId.toString()} 
+                    style={{backgroundImage: `url(${baseImageUrl+((parseInt(pageBox.boxType) !== 8 && parseInt(pageBox.boxType) !== 9) ? pageBox.imageUrl : '')})`, 
+                        backgroundColor: (pageBox.sortId < 0 ? pageBox.boxColor : '')}}
+                    className="page-box rounded-lg border-2 border-gray-400 border-dashed">
                     <Card.Header className='absolute w-full bg-white hidden box-header z-10'>                            
                         <div className="flex flex-row">
                             <div className="flex-grow md:flex">
@@ -242,7 +249,13 @@ function PageBoxList({ match }) {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                                     </svg>
                                 </div>
-                                <PageBoxModal appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} sortId={pageBox.sortId} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId)} />                                
+                                <PageBoxModal 
+                                    appSiteId={pageBox.appSiteId} 
+                                    sitePageId={pageBox.sitePageId} 
+                                    pageBoxId={pageBox.pageBoxId} 
+                                    sortId={pageBox.sortId} 
+                                    title={pageBox.title}
+                                    handleAddEdit={(_pageBox) => handleAddEdit(_pageBox)} />                                
                                 {/* 
                                 <Accordion.Toggle title="Anteprima" className="bg-gray-500 border-0 rounded-full ml-1" as={Button} eventKey={pageBox.pageBoxId}>
                                     <BsFillEyeFill />
@@ -256,15 +269,19 @@ function PageBoxList({ match }) {
                         {pageBox.boxType && (parseInt(pageBox.boxType) === 8 || parseInt(pageBox.boxType) === 9) &&
                             <div 
                                 style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
-                                className={`p-4 m-4 ${(pageBox.sortId === 2 ? 'rounded-full' : 'rounded')}`}>
+                                className={`p-${pageBox.boxPadding} m-${pageBox.boxMargin} ${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
                                 <Card.Img src={baseImageUrl+pageBox.imageUrl} />
                             </div>
                         }                                                
                         {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9) &&                                                                        
                             <div 
                                 style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
-                                className={`p-4 m-4 ${(pageBox.sortId === 2 ? 'rounded-full' : 'rounded')}`}>
-                                <BoxTextEditor prefix={pageBox.appSiteId} pageBox={pageBox} handleSaved={handleAddEdit}></BoxTextEditor>
+                                className={`p-${pageBox.boxPadding} m-${pageBox.boxMargin} ${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
+                                <BoxTextEditor 
+                                    prefix={pageBox.appSiteId} 
+                                    pageBox={pageBox} 
+                                    handleSaved={(_pageBox) => handleAddEdit(_pageBox)}>                                        
+                                </BoxTextEditor>
                             </div>
                         }
                         {pageBox.boxType && parseInt(pageBox.boxType) === 2 &&
@@ -302,6 +319,11 @@ function PageBoxList({ match }) {
                         }    
                         {pageBox.boxType && parseInt(pageBox.boxType) === 16 &&
                             <iframe className='w-full' height={pageBox.boxLatitude} title={pageBox.titleUrl} src={pageBox.boxEmail}></iframe>}
+
+                        {pageBox.boxType && parseInt(pageBox.boxType) === 17 &&
+                            <ProductBox appSiteId={pageBox.appSiteId} siteProductId={pageBox.siteProductId} />     
+                        }
+                        
                         </Card.Body>                     
                     
                 </Card>                                            
@@ -329,7 +351,13 @@ function PageBoxList({ match }) {
                     <Button className="bg-green-500 text-white rounded-full mr-1" onClick={() => savePageLayouts()}>
                         Salva Layout                        
                     </Button>
-                    <PageBoxModal appSiteId={appSiteId} sitePageId={pageId} pageBoxId={0} sortId={1} handleAddEdit={(appSiteId, sitePageId) => handleAddEdit(appSiteId, sitePageId) } />
+                    <PageBoxModal 
+                        appSiteId={appSiteId} 
+                        sitePageId={pageId} 
+                        pageBoxId={0} 
+                        sortId={1} 
+                        title={''}
+                        handleAddEdit={(_pageBox) => handleAddEdit(_pageBox) } />
                 </Nav>
             </Navbar> 
         </Container>

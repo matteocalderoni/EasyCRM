@@ -6,10 +6,11 @@ import { BoxTypes } from '../../../../_helpers'
 import { LanguageSelect } from '../../../../_components/LanguageSelect';
 import { LanguageEditor } from '../../../../_components/LanguageEditor';
 import { CompactPicker,SliderPicker } from 'react-color';
-import { FaSave} from 'react-icons/fa';
+import { FaSave, FaUndo} from 'react-icons/fa';
 import { SiteSurveySelect } from '../../../../_components/SiteSurveySelect';
 import parse from 'html-react-parser';
 import { ShapeSelect } from '../../../../_components/ShapeSelect';
+import { SiteProductPreview } from '../../../../_components/SiteProductPreview';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -32,6 +33,8 @@ class PageBoxAddEdit extends React.Component {
                 boxEmail: '',
                 boxLatitude: 0,            
                 boxLongitude: 0,
+                boxMargin: 4,
+                boxPadding: 4,
                 isPublished: true,
                 loginRequest: false
             },
@@ -57,7 +60,6 @@ class PageBoxAddEdit extends React.Component {
                 })
             } else this.setState({sitePages: [], loadingPages: false})            
         });
-
         this.handleOpen()
     }
 
@@ -124,7 +126,6 @@ class PageBoxAddEdit extends React.Component {
                 boxColor: color.hex                 
             }          
         });
-        //this.setState({ background: color.hex });
     };
 
     handleSiteSurveyChange = (siteSurveyId) => {
@@ -134,7 +135,15 @@ class PageBoxAddEdit extends React.Component {
                 siteSurveyId: siteSurveyId                 
             }          
         });
-        //this.setState({ background: color.hex });
+    };
+
+    handleSiteProductChange = (siteProductId) => {
+        this.setState({
+            pageBox: {
+                ...this.state.pageBox,
+                siteProductId: siteProductId                 
+            }          
+        });
     };
 
     handleFieldReset = (field) => {
@@ -175,11 +184,10 @@ class PageBoxAddEdit extends React.Component {
     }
 
     onSubmit = () => {
-        if (this.state.pageBox.appSiteId > 0 && this.state.pageBox.sitePageId > 0 && this.state.pageBox.pageBoxId > 0) {
-            this.updatePageBox();
-        } else {
-            this.createPageBox();            
-        }
+        if (this.state.pageBox.pageBoxId > 0)
+            this.updatePageBox()
+        else
+            this.createPageBox()
     }
 
     createPageBox() {
@@ -188,9 +196,9 @@ class PageBoxAddEdit extends React.Component {
                 if (result.hasErrors) {
                     alertService.error('Problemi durante salvataggio.', { keepAfterRouteChange: true });
                 } else {
-                    alertService.success('Pagina aggiunta con successo', { keepAfterRouteChange: true });
+                    alertService.success('Contenitore aggiunto con successo', { keepAfterRouteChange: true });
+                    this.props.handleSaved(result);                
                 }             
-                this.props.handleSaved();                
             })
             .catch(error => {
                 alertService.error(error);
@@ -204,8 +212,8 @@ class PageBoxAddEdit extends React.Component {
                     alertService.error('Problemi durante salvataggio.', { keepAfterRouteChange: true });
                 } else {
                     alertService.success('Aggiornamento riuscito', { keepAfterRouteChange: true });
+                    this.props.handleSaved(result);            
                 }                
-                this.props.handleSaved();            
             })
             .catch(error => {
                 alertService.error(error);
@@ -215,7 +223,7 @@ class PageBoxAddEdit extends React.Component {
     render() {
         return (  
             <>
-                <Card>
+                <Card className='mb-8'>
                     <Card.Body>
                         {this.state.loading && <div className="text-center mart2">
                             <ProgressBar animated now={100} />
@@ -232,13 +240,13 @@ class PageBoxAddEdit extends React.Component {
                                 I tipi servono per impostare il formato e le proprietà del contenitore.
                             </Form.Text>
                         </Form.Group>
-                        <div className="flex space-x-4 mt-2">
+                        <div className="md:flex space-y-2 md:space-x-4 mt-2">
                             {this.state.pageBox && this.state.pageBox.boxType &&
                             <div className="flex-1">
                                 <div className="flex flex-col">
                                     <Form.Label className="font-bold">Seleziona immagine {(this.state.pageBox.boxType !== 8 && this.state.pageBox.boxType !== 9) ? 'di Sfondo' : ''}</Form.Label>
                                     {this.state.pageBox.imageUrl && 
-                                    <Image className="w-32" src={baseImageUrl+this.state.pageBox.imageUrl} fluid />}
+                                    <Image className="h-32" src={baseImageUrl+this.state.pageBox.imageUrl} fluid />}
                                     {this.state.pageBox.imageUrl !== '' &&
                                     <Button onClick={() => this.handleFieldReset('imageUrl')} className="mt-2 bg-red-400">
                                         Rimuovi immagine
@@ -312,30 +320,49 @@ class PageBoxAddEdit extends React.Component {
                             </Col>
                         </Row>
                                                 
-                        
-                        <Form.Group>
-                            <Form.Label>Forma del contenitore</Form.Label>
-                            <ShapeSelect name="sortId" shape={this.state.pageBox.sortId} onChange={(_shape) => this.handleChangeShape(_shape)} />
-                            <Form.Text className="text-muted">
-                                Seleziona la forma del contenitore: la forma viene utilizzata per il colore di sfondo del testo (per contenitore testo) o per il formato di immagine (per contenitore immagine).
-                            </Form.Text>
-                        </Form.Group>
-                        
-                        {this.state.pageBox && this.state.sitePages && !this.state.loadingPages && 
-                        <Form.Group>
-                            <Form.Label className="text-xl">Landing Page (pagina di approdo):</Form.Label>
-                            <Form.Control as="select" value={this.state.pageBox.landingPageId} name="landingPageId" onChange={this.handleChangeNumber}>
-                                <option value={undefined}>Nessun collegamento</option>
-                                {this.state.sitePages && this.state.sitePages.map(landingPage =>
-                                    <option key={landingPage.sitePageId} value={parseInt(landingPage.sitePageId)}>{landingPage.titleUrl}</option>
-                                )}   
-                            </Form.Control>
-                            <Form.Text className="text-muted">
-                                Utilizzare la funzione 'LandingPage' per trasformare il contenitore in un collegamento a una pagina di approdo (sono valide tutte le pagine, non solo le landing page).
-                                Selezionare il valore 'Nessun collegamento' per non attivare il collegamento. 
-                                Se viene selezionata una pagina il contenitore puntera alla pagina selezionata (viene aggiunto un bottone sul fondo del contenitore): è possibile annidare vari collegamenti creando percorsi all'interno delle pagine del sito basate sulle preferenze di utente.
-                            </Form.Text>
-                        </Form.Group>}
+                        <div className='md:flex space-y-2 md:space-x-2 md:space-y-0'>
+                            <Form.Group className='flex-1'>
+                                <Form.Label>Forma del contenitore</Form.Label>
+                                <ShapeSelect name="sortId" shape={this.state.pageBox.sortId} onChange={(_shape) => this.handleChangeShape(_shape)} />
+                                <Form.Text className="text-muted">
+                                    Seleziona la forma del contenitore: la forma viene utilizzata per il colore di sfondo del testo (per contenitore testo) o per il formato di immagine (per contenitore immagine).
+                                </Form.Text>
+                            </Form.Group>
+                            
+                            {this.state.pageBox && this.state.sitePages && !this.state.loadingPages && 
+                            <Form.Group className='flex-1'>
+                                <Form.Label>Landing Page (pagina di approdo):</Form.Label>
+                                <Form.Control as="select" value={this.state.pageBox.landingPageId} name="landingPageId" onChange={this.handleChangeNumber}>
+                                    <option value={undefined}>Nessun collegamento</option>
+                                    {this.state.sitePages && this.state.sitePages.map(landingPage =>
+                                        <option key={landingPage.sitePageId} value={parseInt(landingPage.sitePageId)}>{landingPage.titleUrl}</option>
+                                    )}   
+                                </Form.Control>
+                                <Form.Text className="text-muted">
+                                    Utilizzare la funzione 'LandingPage' per trasformare il contenitore in un collegamento a una pagina di approdo (sono valide tutte le pagine, non solo le landing page).
+                                    Selezionare il valore 'Nessun collegamento' per non attivare il collegamento. 
+                                    Se viene selezionata una pagina il contenitore puntera alla pagina selezionata (viene aggiunto un bottone sul fondo del contenitore): è possibile annidare vari collegamenti creando percorsi all'interno delle pagine del sito basate sulle preferenze di utente.
+                                </Form.Text>
+                            </Form.Group>}
+                        </div>
+
+                        {this.state.pageBox && this.state.pageBox.sortId > 0 &&
+                        <div className='md:flex space-y-2 md:space-x-2 md:space-y-0'>
+                            <Form.Group className='flex-1'>
+                                <Form.Label>Margin</Form.Label>
+                                <input type="number" className="form-control" name="boxMargin" value={this.state.pageBox.boxMargin} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Il margine è lo spazio esterno del box.
+                                </Form.Text>
+                            </Form.Group>
+                            <Form.Group className='flex-1'>
+                                <Form.Label>Padding</Form.Label>
+                                <input type="number" className="form-control" name="boxPadding" value={this.state.pageBox.boxPadding} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                Il padding è lo spazio interno del box.
+                                </Form.Text>
+                            </Form.Group>
+                        </div>}
 
                         {this.state.pageBox.boxType === 10 && 
                         <Form.Group>
@@ -437,7 +464,23 @@ class PageBoxAddEdit extends React.Component {
                                 </Form.Group>
                             </Col>
                         </Row>
-                        </>}              
+                        </>}         
+
+                        {this.state.pageBox.boxType === 17 && 
+                        <Row>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Label>Prodotto del contenitore</Form.Label>
+                                    <SiteProductPreview 
+                                        appSiteId={this.state.pageBox.appSiteId} 
+                                        siteProductId={this.state.pageBox.siteProductId}
+                                        onChange={this.handleSiteProductChange} />           
+                                    <Form.Text className="text-muted">
+                                        Seleziona il prodotto da inserire nel contenitore.
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>                            
+                        </Row>}            
                         
                         <div className='md:flex'>
                             <div className='flex-1'>
@@ -464,6 +507,9 @@ class PageBoxAddEdit extends React.Component {
                     <Nav className="mr-auto">
                         <Button onClick={this.onSubmit}  className="flex items-center justify-center rounded-full bg-green-500">
                             <FaSave className="mr-2" /> Salva
+                        </Button>                         
+                        <Button onClick={() =>this.props.onClose()}  className="flex items-center justify-center rounded-full bg-gray-200 text-black ml-2">
+                            <FaUndo className="mr-2" /> annulla
                         </Button>                         
                     </Nav>
                     <Form inline>

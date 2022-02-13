@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap'
 import { BsPlus,BsPencil } from 'react-icons/bs';
 import { PageBoxAddEdit } from './PageBoxAddEdit'; 
+import parse from 'html-react-parser';
 
 class PageBoxModal extends React.Component {
 
@@ -13,7 +14,8 @@ class PageBoxModal extends React.Component {
                 appSiteId: props.appSiteId,                
                 sitePageId: props.sitePageId,
                 pageBoxId: props.pageBoxId,
-                sortId: props.sortId
+                sortId: props.sortId,
+                title: props.title
             }
          };
     }
@@ -30,9 +32,13 @@ class PageBoxModal extends React.Component {
         });
     }            
 
-    handleSaved = () => {        
-        this.props.handleAddEdit(this.state.pageBox.appSiteId, this.state.pageBox.sitePageId);
-        this.handleClose();
+    handleSaved = (_pageBox) => {        
+        this.props.handleAddEdit(_pageBox);
+        this.setState({
+            setShow: false,
+            pageBox: _pageBox
+        });
+        //this.handleClose();
     }
 
     render() {
@@ -40,22 +46,26 @@ class PageBoxModal extends React.Component {
           <>
             <Button className="bg-blue-500 text-white rounded-full" onClick={this.handleShow}>
                 {this.state.pageBox.pageBoxId > 0 && <BsPencil title="Modifica il contenitore" />} 
-                {this.state.pageBox.pageBoxId == 0 && <BsPlus title="Aggiungi un nuovo contenitore" />}                
+                {this.state.pageBox.pageBoxId === 0 && <BsPlus title="Aggiungi un nuovo contenitore" />}                
             </Button>
             <Modal show={this.state.setShow} dialogClassName="modal-90w" onHide={this.handleClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{this.state.pageBox.pageBoxId > 0 ? 'Modifica il ' : 'Crea un nuovo '} Contenitore</Modal.Title>
+                    <Modal.Title>
+                        {this.state.pageBox.pageBoxId > 0 ? parse(this.state.pageBox.title) : 'Crea un nuovo Contenitore'} 
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {this.state.setShow &&
-                        <PageBoxAddEdit appSiteId={this.state.pageBox.appSiteId} sitePageId={this.state.pageBox.sitePageId} pageBoxId={this.state.pageBox.pageBoxId} sortId={this.state.pageBox.sortId} handleSaved={this.handleSaved} />
+                        <PageBoxAddEdit 
+                            appSiteId={this.state.pageBox.appSiteId} 
+                            sitePageId={this.state.pageBox.sitePageId} 
+                            pageBoxId={this.state.pageBox.pageBoxId} 
+                            sortId={this.state.pageBox.sortId} 
+                            handleSaved={(pageBox) => this.handleSaved(pageBox)} 
+                            onClose={() => this.handleClose()} 
+                            />
                     }                    
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this.handleClose} variant="default">
-                        chiudi e annulla
-                    </Button> 
-                </Modal.Footer>
+                </Modal.Body>                
             </Modal>              
           </>          
         );

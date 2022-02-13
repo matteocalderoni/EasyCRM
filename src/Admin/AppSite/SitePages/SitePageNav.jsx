@@ -5,6 +5,7 @@ import { appSiteService } from '../../../_services';
 import { SitePageModal } from './SitePageModal';
 import { FcHome } from 'react-icons/fc';
 import { SitePageList } from './SitePageList';
+import { FaUser, FaRoad, FaCubes, FaTruck} from 'react-icons/fa';
 
 //const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -69,6 +70,22 @@ function SitePageNav ({ match }){
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                         </svg>
                         Lingue
+                    </Link>
+                    <Link className="flex items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900" to={`/admin/sites/sitesurveys/${appSiteId}`}>                        
+                        <FaRoad className='bg-white rounded-full ml-2 mr-2 text-xl' /> 
+                        Percorsi
+                    </Link>
+                    <Link className="flex items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900" to={`/admin/sites/siteproducts/${appSiteId}`}>                        
+                        <FaCubes className='bg-white rounded-full ml-2 mr-2 text-xl' /> 
+                        Prodotti
+                    </Link>
+                    <Link className="flex items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900" to={`/admin/sites/siteorders/${appSiteId}`}>                        
+                        <FaTruck className='bg-white rounded-full ml-2 mr-2 text-xl' />
+                        Ordini
+                    </Link>
+                    <Link className="flex items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900" to={`/admin/sites/users/${appSiteId}`}>                        
+                        <FaUser className='bg-white rounded-full ml-2 mr-2 text-xl' />
+                        Utenti
                     </Link>
                 </Nav>     
                 <Nav className="mr-left">

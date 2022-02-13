@@ -49,7 +49,7 @@ function SitePageList (props)
     return (
         <Container fluid>            
             {parentPageId === 0 && 
-            <Form.Group className='rounded-xl border p-2 pt-4 mt-4 md:flex md:space-x-2'>
+            <Form.Group className='rounded-xl border p-1 pt-2 mt-2 md:flex md:space-x-2'>
                 <div className='flex-1'>
                     <input type="text" placeholder='Ricerca per titolo' className="form-control" value={searchText} onChange={(e) => setSearchText(e.target.value)}  />
                 </div>
@@ -71,13 +71,7 @@ function SitePageList (props)
                                 </div>
                             </Card.Title>                                                        
                         </Card.Header>                        
-                        <Card.Body className="mx-full">           
-                            {/* <div>
-                                {sitePage.title && parse(sitePage.title)}
-                            </div>                                       
-                            <Card.Text>                                
-                                {sitePage.slideText && parse(sitePage.slideText)}
-                            </Card.Text>                             */}
+                        <Card.Body className="mx-full">                                       
                             <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900">
                                 <BsPencil className="mr-2" /> modifica pagina
                             </Link>

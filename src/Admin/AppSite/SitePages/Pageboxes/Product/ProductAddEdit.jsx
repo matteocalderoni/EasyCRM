@@ -1,12 +1,7 @@
 import React from 'react';
 import { productService, alertService } from '../../../../../_services';
-import { Uploader } from '../../../../../_components'
-import { Image, Form, Button, Modal, Navbar, Nav } from 'react-bootstrap'
-import { Editor } from "@tinymce/tinymce-react";
+import { Form, Button, Modal, Navbar, Nav } from 'react-bootstrap'
 import { LanguageSelect } from '../../../../../_components/LanguageSelect';
-import { LanguageEditor } from '../../../../../_components/LanguageEditor';
-import { LanguageInput } from '../../../../../_components/LanguageInput';
-import { menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../../../_helpers/fetch-wrapper';
 import { FaSave } from 'react-icons/fa';
 import { SiteProductPreview } from '../../../../../_components/SiteProductPreview';

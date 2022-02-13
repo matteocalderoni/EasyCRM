@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { LanguageSelect } from '../../_components/LanguageSelect';
 import { FcHome } from 'react-icons/fc';
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../_helpers/tinySettings';
-import { FaCubes } from 'react-icons/fa';
 import { fetchWrapper } from '../../_helpers/fetch-wrapper';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
@@ -55,10 +54,7 @@ class AddEdit extends React.Component {
                     sitePages: x.result,
                     loadingPages: false
                 })
-            } else {
-                // Empty
-                this.setState({sitePages: [], loadingPages: false})
-            }
+            } else this.setState({sitePages: [], loadingPages: false})            
         });
     }    
 
@@ -142,7 +138,6 @@ class AddEdit extends React.Component {
     }
     
     onSubmit = () => {
-        //if (isAddMode) {
         if (this.state.appSite.appSiteId > 0) {
             this.updateAppSite();
         } else {
@@ -151,8 +146,7 @@ class AddEdit extends React.Component {
     }
 
     tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
-        const fileName = (this.state.appSite.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
-    
+        const fileName = (this.state.appSite.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';    
         // Request made to the backend api 
         // Send formData object 
         fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
@@ -164,11 +158,10 @@ class AddEdit extends React.Component {
     createAppSite() {
         appSiteService.createAppSite({ appSite: this.state.appSite })
             .then(result => {
-                if (result.hasErrors) {
+                if (result.hasErrors) 
                     alertService.success('Problemi durante il salvataggio. Modifica i valori e riprova.', { keepAfterRouteChange: true });
-                } else {
-                    alertService.success('Sito creato con successo', { keepAfterRouteChange: true });
-                }                
+                else
+                    alertService.success('Sito creato con successo', { keepAfterRouteChange: true });                             
             })
             .catch(error => {
                 alertService.error(error);
@@ -178,27 +171,13 @@ class AddEdit extends React.Component {
     updateAppSite() {
         appSiteService.updateAppSite({ appSite: this.state.appSite })
             .then(result => {
-                if (result.hasErrors) {
+                if (result.hasErrors) 
                     alertService.success('Problemi durante il salvataggio. Modifica i valori e riprova.', { keepAfterRouteChange: true });
-                } else {
-                    alertService.success('Update successful', { keepAfterRouteChange: true });
-                }                
+                else
+                    alertService.success('Update successful', { keepAfterRouteChange: true });                             
             })
             .catch(error => {
                 alertService.error(error);
-            });
-    }
-
-    setDefaultAppSite = () => {        
-        appSiteService.setDefaultAppSite(this.state.appSite.appSiteId)
-            .then(() => {
-                alertService.success('Sito impostato come default con successo', { keepAfterRouteChange: true });
-                this.setState({
-                    appSite:{
-                        ...this.state.appSite,
-                        isDefault: true
-                    }
-                })
             });
     }
 
@@ -213,9 +192,9 @@ class AddEdit extends React.Component {
             </ul>
 
             {this.state.loading &&
-            <Row className="mb-4">
+            <Row className="m-4 mb-4">
                 <Col className="text-center rounded bg-blue-400 text-white mt-2 p-2">
-                    Caricamento dei contenuti in corso... Attende prego...
+                    Caricamento dettagli del sito in corso... Attende prego...
                     <ProgressBar animated now={100} />
                 </Col>
             </Row>}                         
@@ -236,7 +215,8 @@ class AddEdit extends React.Component {
                             <Form.Label>Nome del tuo Sito</Form.Label>
                             <Form.Control type="text" size="lg" className="form-control" name="name" value={this.state.appSite.name} onChange={this.handleChange} maxLength={200} />
                             <Form.Text className="text-muted">
-                                Indicare il nome del tuo sito per ricercarlo in elenco siti.
+                                Indicare il nome del tuo sito per ricercarlo in elenco siti. 
+                                Il nome del sito viene visualizzato in nel titolo di tutte le pagine. 
                             </Form.Text>
 
                             <Form.Text className="text-muted mt-4">
@@ -325,7 +305,8 @@ class AddEdit extends React.Component {
                             onEditorChange={this.handleEditorChange}
                         />}       
                         <Form.Text className="text-muted">
-                            Questo testo è molto importante perchè viene riportato su tutte le pagine del sito. Utilizzare parole utili per la visibilità nei motori di ricerca.
+                            Questo testo è molto importante perchè viene riportato su tutte le pagine del sito, nel fondo pagina. Utilizzare parole utili per la visibilità nei motori di ricerca.
+                            
                         </Form.Text>                                     
                     </div>                    
                     
@@ -394,27 +375,12 @@ class AddEdit extends React.Component {
                         <Form.Text className="text-muted">
                             Selezionare tra le pagine disponibile quella da utilizzare per la privacy policy (normative GDPR). Creare una pagina PRIVACY con tutti i riferimenti su utilizzo dei dati di utenti (per ulteriori dettagli contattare Amministratore di sito).
                         </Form.Text>
-                    </Form.Group>}
-
-                    
-                    {/* <Form.Group>
-                        <Form.Check type="checkbox" label="Pubblico" name="isDefault" checked={this.state.appSite.isDefault} onChange={this.handleChangeBool} />
-                        <Form.Text>
-                            Il Sito di default viene utilizzato per i contenuti del sito.
-                        </Form.Text>
-                    </Form.Group> */}
-
-                    {/* {this.state.appSite && this.state.appSite.appSiteId > 0 && !this.state.appSite.isDefault &&
-                    <div>
-                        <Button onClick={this.setDefaultAppSite} variant="success">
-                            Imposta come Sito di Default
-                        </Button> 
-                    </div>} */}                                    
+                    </Form.Group>}                                
                 </Card.Body>
             </Card>          
             <Navbar fixed="bottom" className="flex bg-blue-800">
                 <Nav className="flex space-x-2 text-sm font-medium mr-auto">
-                    <Button onClick={this.onSubmit} className="flex items-center justify-center rounded-full bg-green-500">
+                    <Button onClick={() => this.onSubmit()} className="flex items-center justify-center rounded-full bg-green-500">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                         </svg>

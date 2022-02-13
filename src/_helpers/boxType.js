@@ -15,4 +15,5 @@ export const BoxTypes = [
     { label: 'Percorso', value: 14 },    
     { label: 'Slide', value: 15 },
     { label: 'IFrame', value: 16 },    
+    { label: 'Prodotto', value: 17 }   
 ]

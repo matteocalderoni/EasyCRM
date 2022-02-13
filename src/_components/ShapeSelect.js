@@ -6,8 +6,8 @@ function ShapeSelect({label,shape,onChange})
   const shapes = [
     {label: 'Riempi contenitore', value: -1},
     {label: 'Quadrato', value: 1},
-    {label: 'Arrotondato', value: 2},
-    {label: 'Cerchio', value: 3}
+    {label: 'Cerchio', value: 2},
+    {label: 'Arrotondato', value: 3}
   ]    
             
   return ( 

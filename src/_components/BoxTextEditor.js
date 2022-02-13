@@ -63,8 +63,8 @@ class BoxTextEditor extends React.Component {
                     alertService.error('Problemi durante salvataggio.', { keepAfterRouteChange: true });
                 } else {
                     alertService.success('Aggiornamento riuscito', { keepAfterRouteChange: true });
+                    this.props.handleSaved(result);            
                 }                
-                this.props.handleSaved(this.state.pageBox.appSiteId,this.state.pageBox.sitePageId);            
             })
             .catch(error => {
                 alertService.error(error);
