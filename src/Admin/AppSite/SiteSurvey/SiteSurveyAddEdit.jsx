@@ -1,8 +1,11 @@
 import React from 'react';
 import { surveyService, alertService } from '../../../_services';
-import { Form, Button, Card, ProgressBar } from 'react-bootstrap'
+import { Form, Button, Card, ProgressBar, Image } from 'react-bootstrap'
 import { CompactPicker, SliderPicker } from 'react-color';
 import { SurveyTypeSelect } from '../../../_components/SurveyTypeSelect';
+import { Uploader } from '../../../_components'
+
+const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class SiteSurveyAddEdit extends React.Component {
 
@@ -85,6 +88,24 @@ class SiteSurveyAddEdit extends React.Component {
         });
         //this.setState({ background: color.hex });
     };
+
+    handleFileName = (fileName) => {        
+        this.setState({ 
+            siteSurvey: {
+                ...this.state.siteSurvey,
+                imageUrl: fileName
+            }
+        });        
+    }
+
+    handleFieldRemove = (field) => {
+        this.setState({ 
+            siteSurvey: {
+                ...this.state.siteSurvey, 
+                [field]: ''
+            } 
+        });
+    }
 
     handleOpen() {    
         if (this.props.siteSurveyId > 0) {
@@ -171,6 +192,14 @@ class SiteSurveyAddEdit extends React.Component {
                                 La descrizione viene mostrata nello step 0 (iniziale) del percorso e serve per presentare il prodotto agli utenti.
                             </Form.Text>
                         </Form.Group> 
+                        {this.state.siteSurvey && !this.state.loading && <div className="text-center flex-1">
+                            <Image className='w-48' src={baseImageUrl+this.state.siteSurvey.imageUrl} fluid />                    
+                            <Uploader prefix={this.state.siteSurvey.appSiteId} fileName={this.state.siteSurvey.imageUrl} onFileNameChange={this.handleFileName} />      
+                            <small>Utilizzare immagini con formato 640 X 640 px.</small>
+                            <Button onClick={() => this.handleFieldRemove('imageUrl')} className="mt-2 bg-red-400">
+                                    Rimuovi immagine
+                            </Button>        
+                        </div>}
                         {this.state.siteSurvey && !this.state.loading && 
                         <Form.Group className="flex flex-col">
                             <Form.Label className="text-xl">Colore di <b>Sfondo</b></Form.Label>

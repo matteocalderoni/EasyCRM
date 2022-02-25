@@ -81,9 +81,8 @@ class BoxTextEditor extends React.Component {
                     </div>}
                                                 
                     {!this.state.loading && this.state.languageCode == '' &&
-                        <Form.Group>
-                            <Form.Label className='text-sm'>Titolo e Descrizione</Form.Label>
-                            <div className="border rounded-lg ring-2 ring-blue-200 p-1">
+                        <Form.Group>                            
+                            <div className="border rounded-xl border-blue-500 p-1">
                                 <Editor                                    
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                     initialValue={this.state.pageBox.title}                                
@@ -122,7 +121,7 @@ class BoxTextEditor extends React.Component {
                     <div>
                         <Form.Group>
                             {/* <Form.Label className='text-xs'>Descrizione</Form.Label> */}
-                            <div className="border rounded-lg ring-2 ring-blue-200 p-1">
+                            <div className="border rounded-xl ring-blue-700 p-1">
                                 <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                     initialValue={this.state.pageBox.description}

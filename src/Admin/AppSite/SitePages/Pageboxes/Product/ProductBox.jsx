@@ -20,16 +20,16 @@ function ProductBox({appSiteId, siteProductId}) {
                 <div className="md:shrink-0">
                     <img className="h-48 w-full object-cover" src={baseImageUrl+siteProduct.imageUrl} alt={siteProduct.code} />
                 </div>
-                <div className="p-8">
+                <div className="p-8 h-48 overflow-hidden">
                     <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
                         € {siteProduct.price}
                     </div>
                     <div className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
                         {siteProduct.code}
                     </div>
-                    <div className="mt-2 text-slate-500">
+                    <div className="mt-2 h-48 overflow-hidden text-slate-500">
                         {siteProduct.description && parse(siteProduct.description)}
-                    </div>
+                    </div>                    
                 </div>
             </div>}            
         </div>                                    

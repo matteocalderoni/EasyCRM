@@ -52,29 +52,32 @@ function SiteProductList({ match }) {
             <input type='text' placeholder='Ricerca Prodotti' className='form-control' onChange={(e) => setSearchText(e.target.value)}></input>
         </div>
         
-        <div className="mt-2">
+        <div className="mt-2 flex columns-3">
             {siteProducts && siteProducts.map(siteProduct =>                                    
-                <div className="block mt-1" key={siteProduct.siteProductId}>
-                    <Card>
-                        <Card.Header className="bg-gray-200 rounded-lg">
-                            <div className="md:flex space-x-2">             
-                                <div className='flex-none w-24'>
-                                    <Image className='h-24 rounded-lg' src={baseImageUrl+siteProduct.imageUrl} />                    
-                                </div>
-                                <div className='flex-1'>
-                                    <p className='font-semibold'>{siteProduct.code}</p>                                                        
-                                    {siteProduct.description && parse(siteProduct.description)}
-                                </div>
-                                <Link title="Modifica prodotti" to={`/admin/sites/siteproducts/edit/${appSiteId}/${siteProduct.siteProductId}`} 
-                                    className="rounded-full flex bg-blue-500 p-2 pl-3 pr-3 text-white">
-                                    <BsPencil />
-                                </Link>
-                                <div className="p-1 rounded-full block bg-red-500 text-white">
-                                    <DeleteConfirmation onConfirm={() => deleteSiteProduct(siteProduct.siteProductId)} />
-                                </div>                            
-                            </div>                                                        
-                        </Card.Header>                                                
-                    </Card>                                            
+                <div className="m-2 w-1/3 rounded-xl border overflow-hidden" key={siteProduct.siteProductId} style={{backgroundColor: siteProduct.boxColor}}>
+                    <div className="md:shrink-0">
+                        <img className="h-48 w-full object-cover" src={baseImageUrl+siteProduct.imageUrl} alt={siteProduct.code} />
+                    </div>
+                    <div className="p-8 h-48 overflow-hidden">
+                        <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+                            € {siteProduct.price}
+                        </div>
+                        <span className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
+                            {siteProduct.code}
+                        </span>
+                        <div className="mt-2 text-slate-500">
+                            {siteProduct.description && parse(siteProduct.description)}
+                        </div>
+                    </div>
+                    <div className='p-2 space-y-2'>
+                        <Link title="Modifica prodotti" to={`/admin/sites/siteproducts/edit/${appSiteId}/${siteProduct.siteProductId}`} 
+                            className="rounded-full flex bg-blue-500 p-2 pl-3 pr-3 text-white">
+                            <BsPencil />
+                        </Link>
+                        <div className="p-1 rounded-full block bg-red-500 text-white">
+                            <DeleteConfirmation onConfirm={() => deleteSiteProduct(siteProduct.siteProductId)} />
+                        </div>                                                    
+                    </div>                    
                 </div>                    
             )}   
         </div>

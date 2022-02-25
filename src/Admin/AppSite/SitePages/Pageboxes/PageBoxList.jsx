@@ -265,18 +265,20 @@ function PageBoxList({ match }) {
                         </div>                        
                     </Card.Header>
                     
-                        <Card.Body className='p-1'>
+                    <Card.Body
+                        style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
+                        className={`p-${pageBox.boxPadding} m-${pageBox.boxMargin} ${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
                         {pageBox.boxType && (parseInt(pageBox.boxType) === 8 || parseInt(pageBox.boxType) === 9) &&
-                            <div 
-                                style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
-                                className={`p-${pageBox.boxPadding} m-${pageBox.boxMargin} ${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
-                                <Card.Img src={baseImageUrl+pageBox.imageUrl} />
-                            </div>
+                        <div 
+                            style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
+                            className={`${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
+                            <Card.Img src={baseImageUrl+pageBox.imageUrl} />
+                        </div>
                         }                                                
-                        {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9) &&                                                                        
+                        {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9) &&
                             <div 
                                 style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
-                                className={`p-${pageBox.boxPadding} m-${pageBox.boxMargin} ${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
+                                className={`${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
                                 <BoxTextEditor 
                                     prefix={pageBox.appSiteId} 
                                     pageBox={pageBox} 

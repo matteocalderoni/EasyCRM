@@ -53,7 +53,7 @@ class SitePageModal extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                     {this.state.setShow && this.state.appSite &&
-                        <SitePageAddEdit sitePage={this.state.sitePage} appSiteId={this.state.sitePage.appSiteId} sitePageId={this.state.sitePage.sitePageId} parentPageId={this.state.sitePage.parentPageId} appSite={this.state.appSite} handleSaved={this.handleSaved} />
+                    <SitePageAddEdit sitePage={this.state.sitePage} appSiteId={this.state.sitePage.appSiteId} sitePageId={this.state.sitePage.sitePageId} parentPageId={this.state.sitePage.parentPageId} appSite={this.state.appSite} handleSaved={this.handleSaved} />
                     }                    
                 </Modal.Body>
                 <Modal.Footer>

@@ -246,7 +246,7 @@ class PageBoxAddEdit extends React.Component {
                                 <div className="flex flex-col">
                                     <Form.Label className="font-bold">Seleziona immagine {(this.state.pageBox.boxType !== 8 && this.state.pageBox.boxType !== 9) ? 'di Sfondo' : ''}</Form.Label>
                                     {this.state.pageBox.imageUrl && 
-                                    <Image className="h-32" src={baseImageUrl+this.state.pageBox.imageUrl} fluid />}
+                                    <Image className="w-64" src={baseImageUrl+this.state.pageBox.imageUrl} fluid />}
                                     {this.state.pageBox.imageUrl !== '' &&
                                     <Button onClick={() => this.handleFieldReset('imageUrl')} className="mt-2 bg-red-400">
                                         Rimuovi immagine
@@ -319,6 +319,22 @@ class PageBoxAddEdit extends React.Component {
                                 </div>}  
                             </Col>
                         </Row>
+
+                        {this.state.pageBox && this.state.sitePages && !this.state.loadingPages && 
+                        <Form.Group>
+                            <Form.Label>Landing Page (pagina di approdo):</Form.Label>
+                            <Form.Control as="select" value={this.state.pageBox.landingPageId} name="landingPageId" onChange={this.handleChangeNumber}>
+                                <option value={undefined}>Nessun collegamento</option>
+                                {this.state.sitePages && this.state.sitePages.map(landingPage =>
+                                    <option key={landingPage.sitePageId} value={parseInt(landingPage.sitePageId)}>{landingPage.titleUrl}</option>
+                                )}   
+                            </Form.Control>
+                            <Form.Text className="text-muted">
+                                Utilizzare la funzione 'LandingPage' per trasformare il contenitore in un collegamento a una pagina di approdo (sono valide tutte le pagine, non solo le landing page).
+                                Selezionare il valore 'Nessun collegamento' per non attivare il collegamento. 
+                                Se viene selezionata una pagina il contenitore puntera alla pagina selezionata (viene aggiunto un bottone sul fondo del contenitore): è possibile annidare vari collegamenti creando percorsi all'interno delle pagine del sito basate sulle preferenze di utente.
+                            </Form.Text>
+                        </Form.Group>}
                                                 
                         <div className='md:flex space-y-2 md:space-x-2 md:space-y-0'>
                             <Form.Group className='flex-1'>
@@ -328,41 +344,26 @@ class PageBoxAddEdit extends React.Component {
                                     Seleziona la forma del contenitore: la forma viene utilizzata per il colore di sfondo del testo (per contenitore testo) o per il formato di immagine (per contenitore immagine).
                                 </Form.Text>
                             </Form.Group>
-                            
-                            {this.state.pageBox && this.state.sitePages && !this.state.loadingPages && 
-                            <Form.Group className='flex-1'>
-                                <Form.Label>Landing Page (pagina di approdo):</Form.Label>
-                                <Form.Control as="select" value={this.state.pageBox.landingPageId} name="landingPageId" onChange={this.handleChangeNumber}>
-                                    <option value={undefined}>Nessun collegamento</option>
-                                    {this.state.sitePages && this.state.sitePages.map(landingPage =>
-                                        <option key={landingPage.sitePageId} value={parseInt(landingPage.sitePageId)}>{landingPage.titleUrl}</option>
-                                    )}   
-                                </Form.Control>
-                                <Form.Text className="text-muted">
-                                    Utilizzare la funzione 'LandingPage' per trasformare il contenitore in un collegamento a una pagina di approdo (sono valide tutte le pagine, non solo le landing page).
-                                    Selezionare il valore 'Nessun collegamento' per non attivare il collegamento. 
-                                    Se viene selezionata una pagina il contenitore puntera alla pagina selezionata (viene aggiunto un bottone sul fondo del contenitore): è possibile annidare vari collegamenti creando percorsi all'interno delle pagine del sito basate sulle preferenze di utente.
-                                </Form.Text>
-                            </Form.Group>}
+                            <div className='flex-1'>
+                                {this.state.pageBox && this.state.pageBox.sortId > 0 &&
+                                <div className='md:flex space-y-2 md:space-x-2 md:space-y-0'>
+                                    <Form.Group className='flex-1'>
+                                        <Form.Label>Margin</Form.Label>
+                                        <input type="number" className="form-control" name="boxMargin" value={this.state.pageBox.boxMargin} onChange={this.handleChangeNumber} />
+                                        <Form.Text className="text-muted">
+                                            Il margine è lo spazio esterno del box.
+                                        </Form.Text>
+                                    </Form.Group>
+                                    <Form.Group className='flex-1'>
+                                        <Form.Label>Padding</Form.Label>
+                                        <input type="number" className="form-control" name="boxPadding" value={this.state.pageBox.boxPadding} onChange={this.handleChangeNumber} />
+                                        <Form.Text className="text-muted">
+                                        Il padding è lo spazio interno del box.
+                                        </Form.Text>
+                                    </Form.Group>
+                                </div>}
+                            </div>                            
                         </div>
-
-                        {this.state.pageBox && this.state.pageBox.sortId > 0 &&
-                        <div className='md:flex space-y-2 md:space-x-2 md:space-y-0'>
-                            <Form.Group className='flex-1'>
-                                <Form.Label>Margin</Form.Label>
-                                <input type="number" className="form-control" name="boxMargin" value={this.state.pageBox.boxMargin} onChange={this.handleChangeNumber} />
-                                <Form.Text className="text-muted">
-                                    Il margine è lo spazio esterno del box.
-                                </Form.Text>
-                            </Form.Group>
-                            <Form.Group className='flex-1'>
-                                <Form.Label>Padding</Form.Label>
-                                <input type="number" className="form-control" name="boxPadding" value={this.state.pageBox.boxPadding} onChange={this.handleChangeNumber} />
-                                <Form.Text className="text-muted">
-                                Il padding è lo spazio interno del box.
-                                </Form.Text>
-                            </Form.Group>
-                        </div>}
 
                         {this.state.pageBox.boxType === 10 && 
                         <Form.Group>

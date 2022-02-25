@@ -44,8 +44,7 @@ function SitePageNav ({ match }){
                 <p className="mb-2">Gestione <b>Pagine del Sito</b></p>
                 {appSite && <h1 className="text-blue-900 text-xl">{appSite.name}</h1>}                
                 <p className="mt-2 text-muted">
-                    Tramite questa sezione si configurano le pagine del sito relative al sito. Attenzione la prima pagina dopo la creazione non può essere eliminata.<br />
-                    Utilizzare immagini ottimizzate per un caricamento rapido.
+                    Tramite questa sezione si configurano le pagine del sito relative al sito. Attenzione la prima pagina dopo la creazione non può essere eliminata.
                 </p>
             </div>
 

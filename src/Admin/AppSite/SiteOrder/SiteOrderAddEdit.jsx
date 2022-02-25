@@ -127,21 +127,31 @@ class SiteOrderAddEdit extends React.Component
                 </div>}
                 {!this.state.loading && 
                 <div className={`${(this.state.siteOrder.orderState === 2 ? 'bg-green-100' : '')} p-2 border rounded-b-lg`}>                            
-                    <Form onSubmit={() => this.onSubmit()}>
+                    <Form onSubmit={() => this.onSubmit()}>                                        
                         
-                        <Form.Group>
-                            <Form.Label>Anno</Form.Label>
-                            <input type="number" className="form-control" name="orderYear" value={this.state.siteOrder.orderYear} onChange={this.handleChangeNumber} />
-                            <Form.Text className="text-muted">
-                                Anno di ordine.
-                            </Form.Text>
-                        </Form.Group> 
+                        <div className='md:flex md:space-x-2'>
+                            <Form.Group className='flex-1'>
+                                <Form.Label>Anno</Form.Label>
+                                <input type="number" className="form-control" name="orderYear" value={this.state.siteOrder.orderYear} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Anno di ordine.
+                                </Form.Text>
+                            </Form.Group> 
+
+                            <Form.Group className='flex-1'>
+                                <Form.Label>Numero ordine</Form.Label>
+                                <input type="number" className="form-control" name="orderId" value={this.state.siteOrder.orderId} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Numero identificato di ordine.
+                                </Form.Text>
+                            </Form.Group> 
+                        </div>
 
                         <Form.Group>
-                            <Form.Label>Numero ordine</Form.Label>
-                            <input type="number" className="form-control" name="orderId" value={this.state.siteOrder.orderId} onChange={this.handleChangeNumber} />
+                            <Form.Label>Data</Form.Label>
+                            <input type="text" className="form-control" name="orderDate" value={this.state.siteOrder.orderDate} onChange={this.handleChange} />
                             <Form.Text className="text-muted">
-                                Numero identificato di ordine.
+                                Data di esecuzione ordine.
                             </Form.Text>
                         </Form.Group> 
 

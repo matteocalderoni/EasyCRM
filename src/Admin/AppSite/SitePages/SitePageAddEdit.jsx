@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { appSiteService, alertService } from '../../../_services';
 import { Uploader,LanguageSelect,LanguageEditor,PositionSelect } from '../../../_components'
-import { Form, Button, Card, Navbar, Nav, Image, Row, Col, ProgressBar, Accordion } from 'react-bootstrap'
+import { Form, Button, Card, Navbar, Nav, Image, Row, Col, ProgressBar } from 'react-bootstrap'
 import { CompactPicker,SliderPicker } from 'react-color';
 import { Editor } from "@tinymce/tinymce-react";
 import { FaSave } from 'react-icons/fa';
@@ -47,21 +47,11 @@ class SitePageAddEdit extends React.Component {
 
     handleChange(evt) {
         const value = evt.target.value;
-        this.setState({
-            sitePage: {
-                ...this.state.sitePage,
-                [evt.target.name]: value
-            }          
-        });
+        this.setState({ sitePage: { ...this.state.sitePage, [evt.target.name]: value } });
     }
 
     handleFileName = (fileName) => {        
-        this.setState({ 
-            sitePage: {
-                ...this.state.sitePage,
-                imageUrl: fileName
-            }
-        });        
+        this.setState({ sitePage: { ...this.state.sitePage, imageUrl: fileName } });        
     }
 
     handleLanguageCode = (code) => {        
@@ -69,103 +59,48 @@ class SitePageAddEdit extends React.Component {
     }
 
     handleLogoPosition = (position) => {        
-        this.setState({ 
-            sitePage: {
-                ...this.state.sitePage,
-                logoPosition: position                
-            }          
-        });        
+        this.setState({ sitePage: { ...this.state.sitePage, logoPosition: position } });        
     }
 
     handleNavPosition = (position) => {
-        this.setState({ 
-            sitePage: {
-                ...this.state.sitePage,
-                navPosition: position                
-            }          
-        });        
+        this.setState({ sitePage: { ...this.state.sitePage, navPosition: position } });        
     }
 
     handleNavAlign = (align) => {
-        this.setState({ 
-            sitePage: {
-                ...this.state.sitePage,
-                navAlign: align                
-            }          
-        });        
+        this.setState({ sitePage: { ...this.state.sitePage, navAlign: align } });        
     }
 
     handleChangeNumber(evt) {
         const value = parseInt(evt.target.value);
-        this.setState({
-            sitePage: {
-                ...this.state.sitePage,
-                [evt.target.name]: value                
-            }          
-        });
+        this.setState({ sitePage: { ...this.state.sitePage, [evt.target.name]: value } });
     }
 
     handleChangeBool(evt) {  
-        this.setState({
-            sitePage: {
-                ...this.state.sitePage,
-                [evt.target.name]: evt.target.checked                 
-            }          
-        });
+        this.setState({ sitePage: { ...this.state.sitePage, [evt.target.name]: evt.target.checked } });
     }
 
     handleEditorChange = (content, editor) => {
-        this.setState({
-            sitePage: {
-                ...this.state.sitePage,
-                slideText: content                 
-            }          
-        });
+        this.setState({ sitePage: { ...this.state.sitePage, slideText: content } });
     }
 
     handleTitleNavEditorChange = (content, editor) => {
-        this.setState({
-            sitePage: {
-                ...this.state.sitePage,
-                titleNav: content                 
-            }          
-        });
+        this.setState({ sitePage: { ...this.state.sitePage, titleNav: content } });
     }
 
     handleTitleEditorChange = (content, editor) => {
-        this.setState({
-            sitePage: {
-                ...this.state.sitePage,
-                title: content                 
-            }          
-        });
+        this.setState({ sitePage: { ...this.state.sitePage, title: content } });
     }
 
     handleColorChange = (color, field) => {
-        this.setState({
-            sitePage: {
-                ...this.state.sitePage,
-                [field]: color.hex                 
-            }          
-        });
+        this.setState({ sitePage: { ...this.state.sitePage, [field]: color.hex } });
     };
 
-    handleColorRemove = (field) => {
-        this.setState({
-            sitePage: {
-                ...this.state.sitePage,
-                [field]: ''                 
-            }          
-        });
+    handleColorRemove = (field) => { 
+        this.setState({ sitePage: { ...this.state.sitePage, [field]: '' } }); 
     }
 
     handlePageTypeChange = (pageType) => {
-        this.setState({
-            sitePage: {
-                ...this.state.sitePage,
-                pageType: pageType                 
-            }          
-        });
+        this.setState({ sitePage: { ...this.state.sitePage, pageType: pageType } });
     }
     
     onSubmit = () => {
@@ -177,8 +112,6 @@ class SitePageAddEdit extends React.Component {
 
     tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
         const fileName = (this.state.sitePage.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';    
-        // Request made to the backend api 
-        // Send formData object 
         fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
             .then((result) => {
                 success(`${baseImageUrl}${result.fileName}`);                
@@ -199,9 +132,7 @@ class SitePageAddEdit extends React.Component {
                 if (this.props.handleSaved)    
                     this.props.handleSaved(this.state.sitePage.appSiteId);                
             })
-            .catch(error => {
-                alertService.error(error);
-            });
+            .catch(error => alertService.error(error));
     }
 
     updateSitePage() {
@@ -218,24 +149,22 @@ class SitePageAddEdit extends React.Component {
                 if (this.props.handleSaved)                                
                     this.props.handleSaved(this.state.sitePage.appSiteId);                
             })
-            .catch(error => {
-                alertService.error(error);
-            });
+            .catch(error => alertService.error(error));
     }     
 
     render() {
         return (            
           <>
             <Card>                
-                <Card.Body className="home container-fluid">                                        
+                <Card.Body className='bg-gray-100'>                                        
                     <div>
-                        {this.state.loadingPages && <div className="text-center">
-                            <label className='bounce'>Caricamento in corso...</label>
+                        {this.state.loadingPages && 
+                        <div className="text-center mb-3">
+                            <label>Caricamento in corso...</label>
                             <ProgressBar animated now={100} />
                         </div>}
 
-                        
-                        <div className="flex flex-col md:flex-row p-2 border rounded content-center">
+                        <div className="flex flex-col md:flex-row p-2 rounded-xl shadow-sm content-center bg-white">
                             <div className="flex-1 p-1">
                                 {this.state.sitePage && this.state.sitePages && !this.state.loadingPages && 
                                 <Form.Group className="flex-1 h-48 lg:h-36">
@@ -246,8 +175,8 @@ class SitePageAddEdit extends React.Component {
                                             <option key={parentPage.sitePageId} value={parseInt(parentPage.sitePageId)}>{parentPage.titleUrl}</option>
                                         )}   
                                     </Form.Control>
-                                    <Form.Text className="text-muted">
-                                        Utilizzare la funzione 'Sotto-Pagine' per creare dei gruppi nel menù di navigazione ed estendere i contenuti del sito.
+                                    <Form.Text className="text-muted text-xs">
+                                        Utilizzare la funzione <b>'Sotto-Pagine'</b> per creare gruppi di pagine nel menù di navigazione ed estendere i contenuti del sito.
                                         Selezionare il valore 'radice' per impostare la pagina nel primo livello del menù (sempre visible). 
                                         Non ci sono limiti ai sotto livelli che è possibile creare (Radice, livello 1, livello 2, livello N)
                                     </Form.Text>
@@ -256,7 +185,7 @@ class SitePageAddEdit extends React.Component {
                                 <Form.Group className="flex-1 h-48 lg:h-36">
                                     <Form.Label className="text-xl"><b>Tipo</b> di Pagina</Form.Label>
                                     <PageTypeSelect pageType={this.state.sitePage.pageType} onPageTypeChange={(pageType) => this.handlePageTypeChange(+pageType)} label={'Tipo di pagina'} />
-                                    <Form.Text className="text-muted">
+                                    <Form.Text className="text-muted text-xs">
                                         Ci sono diversi tipi di pagina: <b>default</b> è per le pagine disponibili nel menù di navigazione, <b>privacy</b> per 'informativa utilizzo dati'  e <b>landing</b> per pagine di 'approdo' (tramite collegamento).
                                     </Form.Text>
                                 </Form.Group>
@@ -266,7 +195,7 @@ class SitePageAddEdit extends React.Component {
                                 <Form.Group className="flex-1 h-48 lg:h-36">
                                     <Form.Label className="text-xl">Ordinamento</Form.Label>
                                     <input type="number" className="form-control" name="sortId" value={this.state.sitePage.sortId} onChange={this.handleChangeNumber}  />
-                                    <Form.Text className="text-muted">
+                                    <Form.Text className="text-muted text-xs">
                                         Le pagine vengono visualizzate in <b>ordine crescente</b>: inserire il numero corrispondente alla posizione della pagina. 
                                         Anche le sotto-pagine utilizzano lo stesso metodo: la numerazione è relativa al gruppo di pagine.
                                     </Form.Text>
@@ -274,7 +203,7 @@ class SitePageAddEdit extends React.Component {
                                 <Form.Group className="flex-1 h-48 lg:h-36">
                                     <Form.Label className="text-xl"><b>Titolo URL</b> della pagina</Form.Label>
                                     <input type="text" className="form-control" name="titleUrl" value={this.state.sitePage.titleUrl} onChange={this.handleChange} maxLength={200} />
-                                    <Form.Text className="text-muted">
+                                    <Form.Text className="text-muted text-xs">
                                         Titolo della pagina per selezione: non viene visualizzato nel sito, viene utilizzato solo per identificare la pagina (ad esempio in selezione sottopagine).
                                         Utilizzare un nome diverso per ogni pagina: viene utilizzato come indirizzo della pagina per indicizzare le ricerche dei motori di ricerca come Google.
                                         <b>Attenzione non utilizzare simboli o spazi.</b>
@@ -284,7 +213,7 @@ class SitePageAddEdit extends React.Component {
                         </div>
 
                         {this.state.sitePage.sitePageId > 0 &&                 
-                        <div className="md:flex p-2 mt-2 border rounded content-center">
+                        <div className="md:flex p-2 mt-2 rounded-xl content-center bg-white shadow-sm">
                             <div className="flex-1 flex flex-col">
                                 <label className="text-xl"><b>Immagine</b> di Sfondo:</label>                                
                                 {this.state.sitePage && this.state.sitePage.imageUrl != '' &&
@@ -293,7 +222,7 @@ class SitePageAddEdit extends React.Component {
                                 <Button onClick={() => this.handleColorRemove('imageUrl')} className="mt-2 bg-red-400">
                                     Rimuovi immagine
                                 </Button>                                    
-                                <p className="text-muted">
+                                <p className="text-muted text-xs">
                                 <small>Questa immagine viene utilizzate come sfondo della pagina: su desktop rimane fissa, su mobile scorre. E' consigliato utilizzare un immagine con formato 1920 X 1080 px.
                                     Se viene rimossa immagine viene visualizzato il colore di sfondo.
                                 </small>
@@ -318,14 +247,14 @@ class SitePageAddEdit extends React.Component {
                                             Rimuovi colore
                                         </Button>                                    
                                     }
-                                    <Form.Text className="text-muted">
+                                    <Form.Text className="text-muted text-xs">
                                         Colore di sfondo per la pagina: ogni pagina può avere un colore diverso. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
                                         Con il bottone rimuovi viene rimosso il colore di sfondo e si utilizza il tema di default.
                                     </Form.Text>
                                 </Form.Group>}
                             </div>
                         </div>}
-                        <div className="p-2 border rounded mt-2">                            
+                        <div className="p-2 rounded-xl mt-2 shadow-sm bg-white">                            
                                                         
                             <div className="flex flex-col lg:flex-row">
 
@@ -351,7 +280,7 @@ class SitePageAddEdit extends React.Component {
                                                 </Button>                                    
                                                 }
                                             </div>
-                                            <Form.Text className="text-muted">
+                                            <Form.Text className="text-muted text-xs">
                                                 Colore di sfondo per il menù di navigazione: ogni pagina può avere un colore diverso. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
                                                 Con il bottone rimuovi la barra di navigazione utilizzi i colori di default o il valore per tutto il sito.
                                             </Form.Text>
@@ -376,7 +305,7 @@ class SitePageAddEdit extends React.Component {
                                                 </Button>                                    
                                                 }
                                             </div>
-                                            <Form.Text className="text-muted">
+                                            <Form.Text className="text-muted text-xs">
                                                 Colore di sfondo per il fondo pagina: ogni pagina può avere un colore diverso. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
                                                 Con il bottone rimuovi la barra di navigazione utilizzi i colori di default o il valore per tutto il sito.
                                             </Form.Text>
@@ -389,7 +318,7 @@ class SitePageAddEdit extends React.Component {
                                     <Form.Group>
                                         <Form.Label className="text-lg">Posizione <b>Navigazione</b></Form.Label>
                                         <NavPositionSelect position={this.state.sitePage.navPosition} onPositionChange={(position) => this.handleNavPosition(+position)} label={'Posizione Navigazione'} />
-                                        <Form.Text className="text-muted">
+                                        <Form.Text className="text-muted text-xs">
                                             Posizione della barra di navigazione: è possibile selezionare il comportamento del menù (fisso o scorrevole). Ogni pagina dispone della sua barra di navigazione ed è possibile creare delle varianti in base al contesto della pagina.
                                         </Form.Text>
                                     </Form.Group>
@@ -397,7 +326,7 @@ class SitePageAddEdit extends React.Component {
                                     <Form.Group>
                                         <Form.Label className="text-lg">Allineamento <b>Navigazione</b></Form.Label>
                                         <NavAlignSelect align={this.state.sitePage.navAlign} onAlignChange={(align) => this.handleNavAlign(+align)} label={'Allineamento Navigazione'} />
-                                        <Form.Text className="text-muted">
+                                        <Form.Text className="text-muted text-xs">
                                             Allinemento della barra di navigazione: è possibile selezionare allineamento del menù (sinistra, centro, destra). Ogni pagina dispone della sua barra di navigazione ed è possibile creare delle varianti in base al contesto della pagina.
                                         </Form.Text>
                                     </Form.Group>
@@ -405,7 +334,7 @@ class SitePageAddEdit extends React.Component {
                                     <Form.Group>
                                         <Form.Label className="text-lg">Posizione del <b>Logo nella slide</b></Form.Label>
                                         <PositionSelect position={this.state.sitePage.logoPosition} onPositionChange={(position) => this.handleLogoPosition(+position)} label={'Posizione del logo'} />
-                                        <Form.Text className="text-muted">
+                                        <Form.Text className="text-muted text-xs">
                                             Posizione del logo nella slide della pagina. Ogni pagina dispone della sua slide ed è possibile creare delle varianti in base al contesto della pagina.
                                         </Form.Text>
                                     </Form.Group>
@@ -418,7 +347,7 @@ class SitePageAddEdit extends React.Component {
                     {this.state.languageCode == '' && 
                     <Form.Group className="mt-2">
                         <Form.Label className="text-xl"><b>Titolo</b> per Navigazione</Form.Label>                                
-                        <div className="border rounded-lg ring-2 ring-blue-200 p-1" style={{backgroundColor: this.state.sitePage.navColor}}>
+                        <div className="border rounded-lg ring ring-blue-200 p-1" style={{backgroundColor: this.state.sitePage.navColor}}>
                             <Editor
                                 apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                 initialValue={this.state.sitePage.titleNav}                                
@@ -436,7 +365,7 @@ class SitePageAddEdit extends React.Component {
                                 >
                             </Editor> 
                         </div>
-                        <Form.Text className="text-muted">
+                        <Form.Text className="text-muted text-xs">
                             Titolo della pagina per il menù di navigazione: viene visualizzato nel menù di navigazione in alto nella pagina.                                    
                         </Form.Text>
                     </Form.Group>}
@@ -452,7 +381,8 @@ class SitePageAddEdit extends React.Component {
                         </LanguageEditor>                                
                     </div>} 
 
-                    <div style={{backgroundColor: this.state.sitePage.boxColor, backgroundImage: `url(${baseImageUrl+this.state.sitePage.imageUrl})`}} className="fixed-background bg-fixed border rounded mt-2 p-2">
+                    <div style={{ backgroundColor: this.state.sitePage.boxColor, backgroundImage: `url(${baseImageUrl+this.state.sitePage.imageUrl})`}} 
+                        className="fixed-background bg-fixed border rounded-xl mt-2 p-2">
                         <Row>
                             {(this.state.sitePage.logoPosition === 1 || this.state.sitePage.logoPosition === 2) && 
                             <Col sm={this.state.sitePage.logoPosition === 1 ? 12 : 6} className="text-center">
@@ -464,7 +394,7 @@ class SitePageAddEdit extends React.Component {
                             <Form.Group>
                             <Form.Label className="text-xl">Titolo della Slide</Form.Label>
                             {/* <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} /> */}
-                            <div className="border rounded-lg ring-2 ring-blue-200 p-1">
+                            <div className="border rounded-lg ring ring-blue-200 p-1">
                                 <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                     initialValue={this.state.sitePage.title}                                
@@ -483,7 +413,7 @@ class SitePageAddEdit extends React.Component {
                                 </Editor> 
                             </div>
 
-                            <Form.Text className="text-muted">
+                            <Form.Text className="text-muted text-xs">
                                 Titolo della Slide: visualizzato sopra testo slide, posizionato in base a logo.
                             </Form.Text>
                         </Form.Group>}
@@ -502,7 +432,7 @@ class SitePageAddEdit extends React.Component {
                         {this.state.sitePage.sitePageId > 0 && this.state.languageCode == '' &&
                             <div>
                                 <label className="text-xl">Testo della Slide</label>
-                                <div className="border rounded-lg ring-2 ring-blue-200 p-1">
+                                <div className="border rounded-lg ring ring-blue-200 p-1">
                                     <Editor
                                         apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                         initialValue={this.state.sitePage.slideText}      
@@ -534,13 +464,13 @@ class SitePageAddEdit extends React.Component {
                         </div>}
 
                             </Col>
-                            {(this.state.sitePage.logoPosition === 3 || this.state.sitePage.logoPosition === 4) && <Col sm={this.state.sitePage.logoPosition === 3 ? 12 : 6} className="text-centet">
+                            {(this.state.sitePage.logoPosition === 3 || this.state.sitePage.logoPosition === 4) && <Col sm={this.state.sitePage.logoPosition === 3 ? 12 : 6} className="text-center">
                                 <Image className="slide-logo" src={baseImageUrl+this.state.companyLogo}></Image>
                             </Col>}
                         </Row>     
                     </div>
                     
-                    <div className='md:flex'>
+                    <div className='md:flex p-2 mt-2 rounded-xl shadow-sm content-center bg-white'>
                         <div className='flex-1'>
                             <Form.Group className="mt-2">
                                 <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.sitePage.isPublished} onChange={this.handleChangeBool} />
@@ -572,7 +502,7 @@ class SitePageAddEdit extends React.Component {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
                         </svg>
-                        Gestione Contenitori
+                        Contenitori
                     </Link>}
                     {this.state.sitePage.sitePageId > 0 && 
                     <Link to={`/admin/sites/edit/${this.state.sitePage.appSiteId}`}
@@ -580,7 +510,7 @@ class SitePageAddEdit extends React.Component {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                         </svg>
-                        Modifica sito
+                        Modifica Sito
                     </Link>}
                 </Nav>
                 <Form inline>

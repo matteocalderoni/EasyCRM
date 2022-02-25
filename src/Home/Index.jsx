@@ -62,6 +62,8 @@ function Home() {
                             <ul className="list-disc ml-3">
                                 <li><b>Contenitore Prodotto</b>: è possibile inserire un singolo prodotto al posto del catalogo.</li>
                                 <li><b>margin e padding</b>: gestione di spazio interno ed esterno di contenitore (da 0 a 5).</li>                                                                                                                              
+                                <li><b>notifiche whattsapp</b>: invio di messaggi whattsapp tramite Twilio per notifiche rapide sugli ordini.</li>                                                                                                                              
+                                <li>riduzione layout: le pagine dispono di 3 layout al posto di 5.</li>
                                 <li><b>bug</b>: sistemazione dei problemi che ci segnalate, grazie per la fondamentale collaborazione.</li>                                
                             </ul>                            
                         </li>

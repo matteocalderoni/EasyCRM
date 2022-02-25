@@ -1,11 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { appSiteService, alertService, languageService } from '../../_services';
 import { Uploader } from '../../_components'
 import { Image, Row, Col, Form, Button, Card, Container, ProgressBar,Navbar, Nav } from 'react-bootstrap'
-import { Editor } from "@tinymce/tinymce-react";
-import { Link } from 'react-router-dom';
 import { LanguageSelect } from '../../_components/LanguageSelect';
 import { FcHome } from 'react-icons/fc';
+import { Editor } from "@tinymce/tinymce-react";
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../_helpers/tinySettings';
 import { fetchWrapper } from '../../_helpers/fetch-wrapper';
 
@@ -35,7 +35,8 @@ class AddEdit extends React.Component {
             languages: [],
             languageCode: '',
             sitePages: [],
-            loading: false,
+            loading: true,
+            loadingProgress: 0, 
             loadingPages: true                                       
          };
  
@@ -45,110 +46,72 @@ class AddEdit extends React.Component {
     }
 
     componentDidMount() {
-        this.getLanguages()
-        this.getSite()
+        this.getSite()        
+    }   
+    
+    getSite() {
+        if (this.props.match.params.appSiteId) {            
+            appSiteService.getAppSiteById(this.props.match.params.appSiteId)
+                .then(_appSite => {     
+                    this.setState({ ...this.state, appSite: _appSite, loadingProgress: 100/3 });           
+                    // Get Pages for Privacy         
+                    this.getPagesOfSite();
+                });
+        }
+    }
 
+    getPagesOfSite() {
         appSiteService.getPagesOfAppSite('',this.props.match.params.appSiteId,-1,-1).then((x) => { 
-            if (x.totalCount > 0) {                
-                this.setState({                
-                    sitePages: x.result,
-                    loadingPages: false
-                })
-            } else this.setState({sitePages: [], loadingPages: false})            
+            if (x.totalCount > 0) this.setState({ sitePages: x.result, loadingPages: false, loadingProgress: 200/3 })
+            else this.setState({sitePages: [], loadingPages: false, loadingProgress: 100 })            
+            // Get Languages for text
+            this.getLanguages();
         });
-    }    
+    }
 
     getLanguages() {
         if (this.props.match.params.appSiteId) {
             languageService.getlanguagesOfSite(this.props.match.params.appSiteId)
                 .then(_codes => {
-                    this.setState({
-                        ...this.state,
-                        languages: _codes
-                    })
-                })
-        }
-    }
-
-    getSite() {
-        if (this.props.match.params.appSiteId) {
-            this.setState({ loading: true })
-            appSiteService.getAppSiteById(this.props.match.params.appSiteId)
-                .then(_appSite => {     
-                    this.setState({
-                        ...this.state,
-                        appSite: _appSite,
-                        loading: false
-                    });                                 
+                    this.setState({ ...this.state, languages: _codes, loading: false, loadingProgress: 100 })
                 });
         }
     }
 
     handleChange(evt) {
         const value = evt.target.value;
-        this.setState({
-            appSite: {
-                ...this.state.appSite,
-                [evt.target.name]: value
-            }          
-        });
+        this.setState({ appSite: { ...this.state.appSite, [evt.target.name]: value } })
     }
 
     handleChangeNumber(evt) {
         const value = parseFloat(evt.target.value);
-        this.setState({
-            appSite: {
-                ...this.state.appSite,
-                [evt.target.name]: value                
-            }          
-        });
+        this.setState({ appSite: { ...this.state.appSite, [evt.target.name]: value } })
     }
 
     handleEditorChange = (content, editor) => {
-        this.setState({
-            appSite: {
-                ...this.state.appSite,
-                description: content                 
-            }            
-        });
+        this.setState({ appSite: { ...this.state.appSite, description: content } })
     }
 
     handleChangeBool(evt) {  
-        this.setState({
-            appSite: {
-                ...this.state.appSite,
-                [evt.target.name]: evt.target.checked                 
-            }          
-        });
+        this.setState({ appSite: { ...this.state.appSite, [evt.target.name]: evt.target.checked } })
     }
 
     handleFileName = (fileName) => {        
-        this.setState({ 
-            appSite: {
-                ...this.state.appSite,
-                companyLogo: fileName 
-            }            
-        });        
+        this.setState({ appSite: { ...this.state.appSite, companyLogo: fileName } })      
     }
 
     handleLanguageCode = (code) => {        
-        this.setState({ 
-            languageCode: code
-        });        
+        this.setState({ languageCode: code })     
     }
     
     onSubmit = () => {
-        if (this.state.appSite.appSiteId > 0) {
-            this.updateAppSite();
-        } else {
-            this.createAppSite();            
-        }
+        if (this.state.appSite.appSiteId > 0) this.updateAppSite()
+        else this.createAppSite()            
     }
 
+    // Upload image for text area
     tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
-        const fileName = (this.state.appSite.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';    
-        // Request made to the backend api 
-        // Send formData object 
+        const fileName = (this.state.appSite.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';            
         fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
             .then((result) => {
                 success(`${baseImageUrl}${result.fileName}`);                
@@ -163,9 +126,7 @@ class AddEdit extends React.Component {
                 else
                     alertService.success('Sito creato con successo', { keepAfterRouteChange: true });                             
             })
-            .catch(error => {
-                alertService.error(error);
-            });
+            .catch(error => alertService.error(error));
     }
 
     updateAppSite() {
@@ -176,14 +137,12 @@ class AddEdit extends React.Component {
                 else
                     alertService.success('Update successful', { keepAfterRouteChange: true });                             
             })
-            .catch(error => {
-                alertService.error(error);
-            });
+            .catch(error => alertService.error(error));
     }
 
     render() {
         return (            
-          <Container fluid className="pb-4">
+          <Container fluid className="pb-2">
               <ul className="breadcrumb">
                 <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>          
@@ -195,7 +154,7 @@ class AddEdit extends React.Component {
             <Row className="m-4 mb-4">
                 <Col className="text-center rounded bg-blue-400 text-white mt-2 p-2">
                     Caricamento dettagli del sito in corso... Attende prego...
-                    <ProgressBar animated now={100} />
+                    <ProgressBar animated now={this.state.loadingProgress} />
                 </Col>
             </Row>}                         
             <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
@@ -204,7 +163,7 @@ class AddEdit extends React.Component {
               <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">                        
                 <Row className="mt-2">
                     <Col sm={4}>
-                        <Image src={baseImageUrl+this.state.appSite.companyLogo} className="rounded border" fluid />                    
+                        <Image src={baseImageUrl+this.state.appSite.companyLogo} className="rounded-xl border" fluid />                    
                         <div className="mt-1">
                             Carica il logo del tuo sito:
                             <Uploader prefix={this.state.appSite.appSiteId} fileName={this.state.appSite.companyLogo} onFileNameChange={this.handleFileName} />                                               
@@ -216,7 +175,7 @@ class AddEdit extends React.Component {
                             <Form.Control type="text" size="lg" className="form-control" name="name" value={this.state.appSite.name} onChange={this.handleChange} maxLength={200} />
                             <Form.Text className="text-muted">
                                 Indicare il nome del tuo sito per ricercarlo in elenco siti. 
-                                Il nome del sito viene visualizzato in nel titolo di tutte le pagine. 
+                                Il nome del sito viene visualizzato nel titolo di tutte le pagine. 
                             </Form.Text>
 
                             <Form.Text className="text-muted mt-4">
@@ -419,7 +378,7 @@ class AddEdit extends React.Component {
                         Ordini
                     </Link>
                 </Nav>
-                <Form inline className="flex items-center justify-center hidden md:block">
+                <Form inline className="flex items-center justify-center md:block">
                     <LanguageSelect appSiteId={this.state.appSite.appSiteId} onLanguageChange={this.handleLanguageCode} />      
                 </Form>                
             </Navbar>          
