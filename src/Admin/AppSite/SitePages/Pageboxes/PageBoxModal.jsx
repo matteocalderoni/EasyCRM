@@ -21,32 +21,24 @@ class PageBoxModal extends React.Component {
     }
     
     handleShow = () => {    
-        this.setState({
-            setShow: true
-        });        
+        this.setState({ setShow: true });        
     }
 
     handleClose = () => {
-        this.setState({
-            setShow: false
-        });
+        this.setState({ setShow: false });
     }            
 
     handleSaved = (_pageBox) => {        
-        this.props.handleAddEdit(_pageBox);
-        this.setState({
-            setShow: false,
-            pageBox: _pageBox
-        });
-        //this.handleClose();
+        this.props.handleAddEdit(_pageBox);        
+        this.handleClose();
     }
 
     render() {
         return (            
           <>
             <Button className="bg-blue-500 text-white rounded-full" onClick={this.handleShow}>
-                {this.state.pageBox.pageBoxId > 0 && <BsPencil title="Modifica il contenitore" />} 
-                {this.state.pageBox.pageBoxId === 0 && <BsPlus title="Aggiungi un nuovo contenitore" />}                
+                {this.props.pageBoxId > 0 && <BsPencil title="Modifica il contenitore" />} 
+                {this.props.pageBoxId === 0 && <BsPlus title="Aggiungi un nuovo contenitore" />}                
             </Button>
             <Modal show={this.state.setShow} dialogClassName="modal-90w" onHide={this.handleClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>

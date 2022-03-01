@@ -31,13 +31,13 @@ function SiteProductPreview({ appSiteId, siteProductId, onChange, readOnly })
             {!isReadOnly && 
             <SiteProductSelect appSiteId={appSiteId} siteProductId={selSiteProductId} onChange={(_siteProductId) => handleSiteProductId(_siteProductId)} />}
             {siteProduct && 
-            <div className='border rounded md:flex' style={{backgroundColor: siteProduct.boxColor}}>
-                <Image className='w-48 h-48' src={baseImageUrl+siteProduct.imageUrl} fluid />                    
-                <div className='bg-gray-200 p-2'>
-                    <h1 className='font-semibold'>{siteProduct.code}</h1>
-                    {siteProduct.description && parse(siteProduct.description)}
-                    <div>
-                        € {siteProduct.price}
+            <div className='border rounded-xl overflow-hidden md:flex' style={{backgroundColor: siteProduct.boxColor}}>
+                <Image className='w-full md:w-48 h-48' src={baseImageUrl+siteProduct.imageUrl} fluid />                    
+                <div className='p-2'>
+                    <h1 className='font-semibold text-xl'>{siteProduct.code}</h1>
+                    <div className='font-bold'> € {siteProduct.price} </div>
+                    <div className='h-24 overflow-hidden'>
+                        {siteProduct.description && parse(siteProduct.description)}
                     </div>
                 </div>
             </div>}

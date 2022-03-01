@@ -42,67 +42,32 @@ class SiteProductAddEdit extends React.Component {
 
     handleChange(evt) {
         const value = evt.target.value;
-        this.setState({
-            siteProduct: {
-                ...this.state.siteProduct,
-                [evt.target.name]: value
-            }          
-        });
+        this.setState({ siteProduct: { ...this.state.siteProduct, [evt.target.name]: value } });
     }
 
     handleChangeNumber(evt) {
         const value = +evt.target.value;
-        this.setState({
-            siteProduct: {
-                ...this.state.siteProduct,
-                [evt.target.name]: value                
-            }          
-        });
+        this.setState({ siteProduct: { ...this.state.siteProduct, [evt.target.name]: value } });
     }
 
     handleChangeBool(evt) {  
-        this.setState({
-            siteProduct: {
-                ...this.state.siteProduct,
-                [evt.target.name]: evt.target.checked                 
-            }          
-        });
+        this.setState({ siteProduct: { ...this.state.siteProduct, [evt.target.name]: evt.target.checked } });
     }
 
     handleFileName = (fileName) => {        
-        this.setState({ 
-            siteProduct: {
-                ...this.state.siteProduct,
-                imageUrl: fileName
-            }
-        });        
+        this.setState({ siteProduct: { ...this.state.siteProduct, imageUrl: fileName } });        
     }
 
     handleDescriptionEditorChange = (content, editor) => {
-        this.setState({
-            siteProduct: {
-                ...this.state.siteProduct,
-                description: content                 
-            }          
-        });
+        this.setState({ siteProduct: { ...this.state.siteProduct, description: content } });
     }
 
     handleFieldRemove = (field) => {
-        this.setState({ 
-            siteProduct: {
-                ...this.state.siteProduct, 
-                [field]: ''
-            } 
-        });
+        this.setState({ siteProduct: { ...this.state.siteProduct, [field]: '' } });
     }
 
     handleColorChange = (color) => {
-        this.setState({
-            siteProduct: { 
-                ...this.state.siteProduct, 
-                boxColor: color.hex 
-            }
-        });
+        this.setState({ siteProduct: { ...this.state.siteProduct, boxColor: color.hex } });
     };
     
     handleOpen() {    
@@ -110,22 +75,15 @@ class SiteProductAddEdit extends React.Component {
             this.setState({loading: true})
             productService.getSiteProductById(this.state.appSiteId, this.state.siteProduct.siteProductId)
                 .then(_siteProduct => {                    
-                    this.setState({
-                        siteProduct: _siteProduct,
-                        loading: false
-                    })                    
+                    this.setState({ siteProduct: _siteProduct, loading: false })                    
                 });
         }         
     }
 
     tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
-        const fileName = (this.state.sitePage.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';    
-        // Request made to the backend api 
-        // Send formData object 
+        const fileName = (this.state.sitePage.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';            
         fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
-            .then((result) => {
-                success(`${baseImageUrl}${result.fileName}`);                
-            });         
+            .then((result) => success(`${baseImageUrl}${result.fileName}`));         
       };                  
     
     onSubmit = () => {
@@ -138,33 +96,28 @@ class SiteProductAddEdit extends React.Component {
     createSiteProduct() {
         productService.createSiteProduct(this.state.siteProduct)
             .then(result => {
-                if (result.hasErrors) {
+                if (result.hasErrors) 
                     alertService.error('Problemi durante il salvataggio', { keepAfterRouteChange: true });
-                } else {
-                    alertService.success('Prodotto aggiunta con successo', { keepAfterRouteChange: true });
-                }            
+                else
+                    alertService.success('Prodotto aggiunta con successo', { keepAfterRouteChange: true });         
                 if (this.props.handleSaved)    
                     this.props.handleSaved(this.state.appSiteId);                
             })
-            .catch(error => {
-                alertService.error(error);
-            });
+            .catch(error => alertService.error(error));
     }
 
     updateSiteProduct() {
         productService.updateSiteProduct(this.state.siteProduct)
             .then(result => {
-                if (result.hasErrors) {
+                if (result.hasErrors)
                     alertService.error('Problemi durante il salvataggio', { keepAfterRouteChange: true });
-                } else {
+                else
                     alertService.success('Aggiornamento riuscito', { keepAfterRouteChange: true });
-                }    
+
                 if (this.props.handleSaved)                                
                     this.props.handleSaved(this.state.appSiteId);                
             })
-            .catch(error => {
-                alertService.error(error);
-            });
+            .catch(error => alertService.error(error));
     }     
 
     render() {
@@ -172,41 +125,48 @@ class SiteProductAddEdit extends React.Component {
           <>
             <Card>                
                 <Card.Body className="home container-fluid">                    
-                    {this.state.loading && <div className="text-center mart2">
+                    {this.state.loading && 
+                    <div className="text-center mart2">
                         <ProgressBar animated now={100} />
                     </div>}
-                    {!this.state.loading && <div className="p-2 border rounded mt-2">                            
+                    {!this.state.loading && 
+                    <div className="p-2 bg-white shadow rounded-xl mt-2">                            
                         <Form onSubmit={() => this.onSubmit()}>
                             
-                            <Form.Group>
-                                <Form.Label>Codice interno</Form.Label>
-                                <input type="text" className="form-control" name="internalCode" value={this.state.siteProduct.internalCode} onChange={this.handleChange} />
-                                <Form.Text className="text-muted">
-                                    Codice univoco interno del prodotto.
-                                </Form.Text>
-                            </Form.Group> 
+                            <div className='flex'>
+                                <div className="text-center flex-row space-x-2">
+                                    <Image className='w-48' src={baseImageUrl+this.state.siteProduct.imageUrl} fluid />                    
+                                    <Uploader prefix={this.state.siteProduct.appSiteId} fileName={this.state.siteProduct.imageUrl} onFileNameChange={this.handleFileName} />      
+                                    <small>Utilizzare immagini con formato ottimizzate per il web.</small>  
+                                    <Button onClick={() => this.handleFieldRemove('imageUrl')} className="mt-2 w-10/12  bg-red-400">
+                                            Rimuovi immagine
+                                    </Button>        
+                                </div>                                    
+                                
+                                <div className='flex-1'>
+                                    <Form.Group>
+                                        <Form.Label>Codice interno</Form.Label>
+                                        <input type="text" className="form-control" name="internalCode" value={this.state.siteProduct.internalCode} onChange={this.handleChange} />
+                                        <Form.Text className="text-muted">
+                                            Codice univoco per uso interno.
+                                        </Form.Text>
+                                    </Form.Group> 
 
-                            <Form.Group>
-                                <Form.Label>Codice</Form.Label>
-                                <input type="text" className="form-control" name="code" value={this.state.siteProduct.code} onChange={this.handleChange} />
-                                <Form.Text className="text-muted">
-                                    Codice univoco del prodotto.
-                                </Form.Text>
-                            </Form.Group> 
+                                    <Form.Group>
+                                        <Form.Label>Codice</Form.Label>
+                                        <input type="text" className="form-control" name="code" value={this.state.siteProduct.code} onChange={this.handleChange} />
+                                        <Form.Text className="text-muted">
+                                            Codice pubblico del prodotto.
+                                        </Form.Text>
+                                    </Form.Group> 
+                                </div>
+                            </div>
 
-                            <div className="text-center flex-1">
-                                <Image className='w-48' src={baseImageUrl+this.state.siteProduct.imageUrl} fluid />                    
-                                <Uploader prefix={this.state.siteProduct.appSiteId} fileName={this.state.siteProduct.imageUrl} onFileNameChange={this.handleFileName} />      
-                                <small>Utilizzare immagini con formato 640 X 640 px.</small>
-                                <Button onClick={() => this.handleFieldRemove('imageUrl')} className="mt-2 bg-red-400">
-                                        Rimuovi immagine
-                                </Button>        
-                            </div>                                    
 
                             {this.state.languageCode == '' && 
                             <Form.Group className="mt-2">
                                 <Form.Label className="text-xl">Descrizione</Form.Label>                                
-                                <div className="border rounded-lg ring-2 ring-blue-200 p-1">
+                                <div className="border rounded-lg p-1">
                                     <Editor
                                         apiKey={process.env.REACT_APP_TINTMCE_KEY}
                                         initialValue={this.state.siteProduct.description}                                                                        
@@ -247,33 +207,36 @@ class SiteProductAddEdit extends React.Component {
                                 </Form.Text>
                             </Form.Group>  */}
 
-                            {this.state.siteProduct && !this.state.loading && 
-                            <Form.Group className="flex flex-col mt-2">
-                                <Form.Label className="font-bold">Colore di Sfondo</Form.Label>
-                                <div className="flex flex-col md:flex:row">                            
-                                    <div className="flex-none m-2 mt-0">
-                                        <CompactPicker                                        
-                                            color={ this.state.siteProduct.boxColor }
-                                            onChangeComplete={ (color) => this.handleColorChange(color) } />
-                                    </div>                                
-                                    <div className="flex-grow m-2">
-                                        <SliderPicker
-                                            color={ this.state.siteProduct.boxColor }
-                                            onChangeComplete={ (color) => this.handleColorChange(color) } />
-                                    </div>                                                                                                    
-                                </div>                            
-                                <Form.Text className="text-muted">
-                                    Colore di sfondo per i contenitori di testo. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
-                                </Form.Text>
-                            </Form.Group>}    
+                            <div className='flex'>
+                                {this.state.siteProduct && !this.state.loading && 
+                                <Form.Group className="flex-1 flex flex-col mt-2">
+                                    <Form.Label className="font-bold">Colore di Sfondo</Form.Label>
+                                    <div className="flex flex-col md:flex:row">                            
+                                        <div className="flex-none m-2 mt-0">
+                                            <CompactPicker                                        
+                                                color={ this.state.siteProduct.boxColor }
+                                                onChangeComplete={ (color) => this.handleColorChange(color) } />
+                                        </div>                                
+                                        <div className="flex-grow m-2">
+                                            <SliderPicker
+                                                color={ this.state.siteProduct.boxColor }
+                                                onChangeComplete={ (color) => this.handleColorChange(color) } />
+                                        </div>                                                                                                    
+                                    </div>                            
+                                    <Form.Text className="text-muted">
+                                        Colore di sfondo per i contenitori di testo. Attenzione scegliere colori contrastanti tra sfondo e testo per una buona leggibilità dei contenuti.
+                                    </Form.Text>
+                                </Form.Group>}    
 
-                            <Form.Group>
-                                <Form.Label>Prezzo</Form.Label>
-                                <input type="number" className="form-control" name="price" value={this.state.siteProduct.price} onChange={this.handleChangeNumber} />
-                                <Form.Text className="text-muted">
-                                    Prezzo di vendità.
-                                </Form.Text>
-                            </Form.Group> 
+                                <Form.Group className='flex-1'>
+                                    <Form.Label>Prezzo</Form.Label>
+                                    <input type="number" className="form-control" name="price" value={this.state.siteProduct.price} onChange={this.handleChangeNumber} />
+                                    <Form.Text className="text-muted">
+                                        Prezzo di vendità. Lasciare a 0 per non visualizzarlo nel contenitore.
+                                    </Form.Text>
+                                </Form.Group> 
+                            </div>
+
                             
                         </Form>
                     </div>}

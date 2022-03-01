@@ -29,7 +29,7 @@ class NavAlignSelect extends Component {
         <>
         {this.state.selectedNavAlign && 
         <Form.Group>
-            <Form.Control as="select" value={+this.state.selectedNavAlign} name="selectedNavAlign" onChange={() => this.handleChange()}>
+            <Form.Control as="select" value={+this.state.selectedNavAlign} name="selectedNavAlign" onChange={(e) => this.handleChange(e)}>
                 {this.state.aligns && this.state.aligns.map(align =>
                     <option key={align.value} value={align.value}>{align.label}</option>
                 )}   

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, Navbar, Nav, Image } from 'react-bootstrap';
+import { Container, Navbar, Nav } from 'react-bootstrap';
 import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
 import { BsPencil} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
@@ -26,17 +26,16 @@ function SiteProductList({ match }) {
                 setTotal(_siteProducts.totalCount)
                 setSiteProducts(_siteProducts.result)
             });
-        // eslint-disable-next-line    
     }
 
     function deleteSiteProduct(siteProductId) {
         setSiteProducts(siteProducts.map(x => {
-            if (x.siteProductId === siteProductId) { x.isDeleting = true; }
-                return x;
+            if (x.siteProductId === siteProductId) 
+                x.isDeleting = true; 
+            return x;
         }));
-        productService.deleteSiteProduct(appSiteId, +siteProductId).then(() => {            
-            getSiteProducts()
-        });                
+        productService.deleteSiteProduct(appSiteId, +siteProductId)
+            .then(() => getSiteProducts());                
     }
 
     return (
@@ -52,9 +51,9 @@ function SiteProductList({ match }) {
             <input type='text' placeholder='Ricerca Prodotti' className='form-control' onChange={(e) => setSearchText(e.target.value)}></input>
         </div>
         
-        <div className="mt-2 flex columns-3">
+        <div className="mt-2 flex flex-wrap space-x-2">
             {siteProducts && siteProducts.map(siteProduct =>                                    
-                <div className="m-2 w-1/3 rounded-xl border overflow-hidden" key={siteProduct.siteProductId} style={{backgroundColor: siteProduct.boxColor}}>
+                <div className="mt-2 rounded-xl border w-96 mx-auto overflow-hidden" key={siteProduct.siteProductId} style={{backgroundColor: siteProduct.boxColor}}>
                     <div className="md:shrink-0">
                         <img className="h-48 w-full object-cover" src={baseImageUrl+siteProduct.imageUrl} alt={siteProduct.code} />
                     </div>
