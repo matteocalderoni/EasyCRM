@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-
 import { List } from './List';
 import { AddEdit } from './AddEdit';
 import { SitePages } from './SitePages';

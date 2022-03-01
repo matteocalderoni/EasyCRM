@@ -31,7 +31,8 @@ function List({ match }) {
     function deleteAppSite(appSiteId) {
         setLoading(true)
         setAppSites(appSites.map(x => {
-            if (x.appSiteId === appSiteId) { x.isDeleting = true; }
+            if (x.appSiteId === appSiteId) 
+                x.isDeleting = true;
             return x;
         }));
         appSiteService.deleteAppSite(appSiteId).then(() => {            

@@ -15,7 +15,7 @@ function Overview({ match }) {
     return (
         <Container fluid>
             <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
-                <h1 className="font-bold text-green-900">Dashboard</h1>
+                <h1 className="text-xl text-blue-900 font-bold ml-2">Dashboard</h1>
                 <p>La piattaforma ti consente di creare un sito web e gestire i suoi contenuti in modo semplice e dinamico.</p>
             </div> 
             <div className="md:flex items-stretch mt-8">
@@ -26,7 +26,7 @@ function Overview({ match }) {
                                 <Card.Title>Gestione utenti</Card.Title>
                             </Card.Header>
                             <Card.Body>
-                                <Card.Text>
+                                <Card.Text className='h-32'>
                                     Sezione con accesso consentito solo ad Admin: gestione utenti e relativi siti.<br />
                                     Creazione nuovi utenti e modifica di quelli già registrati.
                                 </Card.Text>                                
@@ -43,7 +43,7 @@ function Overview({ match }) {
                             <Card.Title>Gestione siti</Card.Title>
                         </Card.Header>
                         <Card.Body>
-                            <Card.Text>
+                            <Card.Text className='h-32'>
                                 Inizia subito a gestire il tuo sito e i suoi contenuti.
                                 Aggiungi testi per ottimizzare le ricerche, immagini sempre nuove e aggiorna i tuoi prodotti.
                             </Card.Text>                            

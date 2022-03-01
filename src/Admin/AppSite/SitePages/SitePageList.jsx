@@ -7,13 +7,11 @@ import { BsPencil} from 'react-icons/bs';
 import { FaBoxes} from 'react-icons/fa';
 import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
 import { PageTypeSelect } from '../../../_components/PageTypeSelect';
-//import parse from 'html-react-parser';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function SitePageList (props)
 {
-    //const { path } = match;
     const appSiteId = parseInt(props.appSiteId)
     const parentPageId = parseInt(props.parentPageId)
     const appSite = props.appSite
@@ -24,26 +22,27 @@ function SitePageList (props)
 
     useEffect(() => {
         getSitePages()
-    }, [searchText, pageType, appSiteId,props.isChanged]);     
+    }, [searchText, pageType, appSiteId, props.isChanged]);     
     
     function deleteSitePage(sitePage) {
         setLoading(true)
         setSitePages(sitePages.map(x => {
-            if (x.appSiteId === appSiteId && x.sitePageId === sitePage.sitePageId) { x.isDeleting = true; }
+            if (x.appSiteId === appSiteId && x.sitePageId === sitePage.sitePageId) 
+                x.isDeleting = true; 
             return x;
         }));
-        appSiteService.deleteSitePage(appSiteId, sitePage.sitePageId).then(() => {            
-            getSitePages()
-        });                
+        appSiteService.deleteSitePage(appSiteId, sitePage.sitePageId)
+            .then(() => getSitePages());                
     }
 
     function getSitePages() {
         setLoading(true)
         var _parentPageId = parentPageId === 0 ? -1 : parentPageId;
-        appSiteService.getPagesOfAppSite(searchText, appSiteId,_parentPageId,pageType).then((x) => { 
-            setLoading(false)
-            setSitePages(x.result)
-        });
+        appSiteService.getPagesOfAppSite(searchText, appSiteId,_parentPageId,pageType)
+            .then((x) => { 
+                setLoading(false)
+                setSitePages(x.result)
+            });
     }
     
     return (
@@ -58,7 +57,7 @@ function SitePageList (props)
                 </div>
             </Form.Group>}
             <div className="mt-2">
-            {sitePages && sitePages.map(sitePage =>                                    
+            {!loading && sitePages && sitePages.map(sitePage =>                                    
                 <div className="block mt-1" key={sitePage.sitePageId}>
                     <Card style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} text="white">
                         <Card.Header className="bg-blue-500">
