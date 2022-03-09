@@ -60,6 +60,7 @@ function Home() {
                         <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.4.3.26 (Marzo 2022)</b>: ecco gli ultimi aggiornamenti:                             
                             <ul className="list-disc ml-3">                                
+                                <li><b>Nuovi Font</b>: aggiunta di numerosi font nuovi.</li>
                                 <li><b>bug</b>: sistemazione dei problemi che ci segnalate, grazie per la vostra fondamentale collaborazione.</li>                                
                             </ul>                            
                         </li>

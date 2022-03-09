@@ -8,7 +8,7 @@
 @import '../node_modules/react-resizable/css/styles.css';
 
 /* Google Font */
-@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Arvo&family=Comforter+Brush&family=Concert+One&family=Estonia&family=Exo+2:wght@200&family=Karla:wght@200&family=Lora&family=Montserrat:wght@200&family=Rakkas&family=Roboto:wght@300&family=Yatra+One&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Amatic+SC&family=Architects+Daughter&family=Arvo&family=Cabin&family=Comfortaa&family=Comforter+Brush&family=Concert+One&family=Dancing+Script&family=Estonia&family=Exo+2:wght@200&family=Hubballi&family=Karla:wght@200&family=Lobster&family=Lora&family=Mali&family=Montserrat:wght@200&family=Orbitron&family=Permanent+Marker&family=Play&family=Poiret+One&family=Poppins&family=Rakkas&family=Red+Hat+Display&family=Righteous&family=Roboto:wght@300&family=Sacramento&family=Source+Sans+Pro:wght@200&family=Titillium+Web&family=Yatra+One&display=swap');
 
 body {
   margin: 0;
@@ -29,6 +29,28 @@ code {
 .mart5 { margin-top: 5%; }
 .mart7 { margin-top: 7%; }
 .mart10 { margin-top: 10%; }
+
+.p-6 { padding: 6%; }
+.p-7 { padding: 7%; }
+.p-8 { padding: 8%; }
+.p-9 { padding: 9%; }
+.p-10 { padding: 10%; }
+.p-11 { padding: 11%; }
+.p-12 { padding: 12%; }
+.p-13 { padding: 13%; }
+.p-14 { padding: 6%; }
+.p-15 { padding: 15%; }
+
+.m-6 { margin: 6%; }
+.m-7 { margin: 7%; }
+.m-8 { margin: 8%; }
+.m-9 { margin: 9%; }
+.m-10 { margin: 10%; }
+.m-11 { margin: 11%; }
+.m-12 { margin: 12%; }
+.m-13 { margin: 13%; }
+.m-14 { margin: 6%; }
+.m-15 { margin: 15%; }
 
 .modal-90w { max-width: 90%; }
 

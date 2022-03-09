@@ -351,14 +351,14 @@ class PageBoxAddEdit extends React.Component {
                                         <Form.Label>Margin</Form.Label>
                                         <input type="number" className="form-control" name="boxMargin" value={this.state.pageBox.boxMargin} onChange={this.handleChangeNumber} />
                                         <Form.Text className="text-muted">
-                                            Il margine è lo spazio esterno del box.
+                                            Il margine è lo spazio esterno del box (valore da 1 a 15). Il valore è la percentuale relativa alla dimensione della finestra.
                                         </Form.Text>
                                     </Form.Group>
                                     <Form.Group className='flex-1'>
                                         <Form.Label>Padding</Form.Label>
                                         <input type="number" className="form-control" name="boxPadding" value={this.state.pageBox.boxPadding} onChange={this.handleChangeNumber} />
                                         <Form.Text className="text-muted">
-                                        Il padding è lo spazio interno del box.
+                                        Il padding è lo spazio interno del box (valore da 1 a 15). Il valore è la percentuale relativa alla dimensione della finestra.
                                         </Form.Text>
                                     </Form.Group>
                                 </div>}
