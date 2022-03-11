@@ -34,56 +34,24 @@ function QuestionAnswerAddEdit ({appSiteId, siteSurveyId, surveyStepId, stepQues
     const [loading, setLoading] = useState(false)
     const [languageCode, setLanguageCode] = useState('')    
 
-    const handleChange = (evt) => {
-        const value = evt.target.value;
-        setQuestionAnswer({ ...questionAnswer, [evt.target.name]: value });
-    }
+    // Handle changes
+    const handleChange = (evt) => setQuestionAnswer({ ...questionAnswer, [evt.target.name]: evt.target.value })    
+    const handleChangeNumber = (evt) => setQuestionAnswer({ ...questionAnswer, [evt.target.name]: +evt.target.value })
+    const handleChangeBool = (evt) => setQuestionAnswer({ ...questionAnswer, [evt.target.name]: evt.target.checked })    
+    const handleChangeAnswerType = (value) => setQuestionAnswer({ ...questionAnswer, answerType: value })
+    const handleColorChange = (color) => setQuestionAnswer({ ...questionAnswer, boxColor: color.hex })
+    const handleEditorChange = (content, editor) => setQuestionAnswer({ ...questionAnswer, answerText: content })
+    const handleFileName = (fileName) => setQuestionAnswer({ ...questionAnswer, imageUrl: fileName })
+    const handleSiteProductId = (_siteProductId) => setQuestionAnswer({ ...questionAnswer, siteProductId: _siteProductId })
     
-    const handleChangeNumber = (evt) => {
-        const value = +evt.target.value;
-        setQuestionAnswer({ ...questionAnswer, [evt.target.name]: value });
-    }
-
-    const handleChangeBool = (evt) => {  
-        setQuestionAnswer({ ...questionAnswer, [evt.target.name]: evt.target.checked });
-    }
+    const handleFieldReset = (field) => setQuestionAnswer({ ...questionAnswer, [field]: '' })
+    const handleFieldRemove = (field) => setQuestionAnswer({ ...questionAnswer, [field]: '' })
     
-    const handleChangeAnswerType = (value) => {  
-        setQuestionAnswer({ ...questionAnswer, answerType: value });
-    }
+    // Navigate survey
+    const handleNextStepId = (surveyStepId) => setQuestionAnswer({ ...questionAnswer, nextStepId: surveyStepId })
+    const handleNextQuestionId = (stepQuestionId) => setQuestionAnswer({ ...questionAnswer, nextQuestionId: stepQuestionId })
 
-    const handleColorChange = (color) => {
-        setQuestionAnswer({ ...questionAnswer, boxColor: color.hex });
-    };
-
-    const handleEditorChange = (content, editor) => {
-        setQuestionAnswer({ ...questionAnswer, answerText: content });
-    }
-
-    const handleFieldReset = (field) => {
-        setQuestionAnswer({ ...questionAnswer, [field]: '' });
-    }
-
-    const handleFileName = (fileName) => {        
-        setQuestionAnswer({ ...questionAnswer, imageUrl: fileName });        
-    }
-
-    const handleFieldRemove = (field) => {
-        setQuestionAnswer({ ...questionAnswer, [field]: '' });
-    }
-
-    const handleSiteProductId = (_siteProductId) => {        
-        setQuestionAnswer({ ...questionAnswer, siteProductId: _siteProductId });        
-    }
-
-    const handleNextStepId = (surveyStepId) => {        
-        setQuestionAnswer({ ...questionAnswer, nextStepId: surveyStepId });        
-    }
-
-    const handleNextQuestionId = (stepQuestionId) => {        
-        setQuestionAnswer({ ...questionAnswer, nextQuestionId: stepQuestionId });        
-    }
-
+    // Load Answer by Id
     useEffect(() => {    
         if (questionAnswerId > 0) {
             setLoading(true)
@@ -96,10 +64,8 @@ function QuestionAnswerAddEdit ({appSiteId, siteSurveyId, surveyStepId, stepQues
     }, [appSiteId, siteSurveyId, surveyStepId, stepQuestionId, questionAnswerId])
     
     const onSubmit = () => {
-        if (questionAnswerId > 0) 
-            updateQuestionAnswer();
-        else
-            createQuestionAnswer();                    
+        if (questionAnswerId > 0) updateQuestionAnswer();
+        else createQuestionAnswer();                    
     }    
 
     const tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
@@ -116,8 +82,8 @@ function QuestionAnswerAddEdit ({appSiteId, siteSurveyId, surveyStepId, stepQues
                 if (result.hasErrors) 
                     alertService.error('Problemi durante il salvataggio', { keepAfterRouteChange: true });
                 else 
-                    alertService.success('Salvataggio riuscito con successo', { keepAfterRouteChange: true });
-                        
+                    alertService.success('Salvataggio riuscito con successo', { keepAfterRouteChange: true });                     
+                
                 if (handleSaved)    
                     handleSaved(questionAnswer.appSiteId);                
             })
@@ -151,7 +117,7 @@ function QuestionAnswerAddEdit ({appSiteId, siteSurveyId, surveyStepId, stepQues
                         <Form.Label>Posizione Risposta</Form.Label>
                         <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="position" value={questionAnswer.position} onChange={handleChangeNumber} />
                         <Form.Text className="text-muted">
-                            Ogni domanda può essere avere una o più risposte: la posizione serve per assegnare un ordine.
+                            Ogni domanda può essere avere una o più risposte: la posizione serve per assegnare un ordine alle risposte.
                         </Form.Text>
                     </Form.Group>              
                     <Form.Group>                            
@@ -164,41 +130,39 @@ function QuestionAnswerAddEdit ({appSiteId, siteSurveyId, surveyStepId, stepQues
                             {questionAnswer.answerType === 4 && <p>Una risposta di tipo <b>prodotto</b> permette di selezionare un prodotto da quelli disponibili.</p>}
                         </Form.Text>
                     </Form.Group>    
-                    {!loading && languageCode == '' &&
-                        questionAnswer && questionAnswer.answerType === 1 && 
+                    {!loading && languageCode == '' && questionAnswer && questionAnswer.answerType === 1 && 
+                    <div>
+                        <label>Risposta</label>
                         <div>
-                            <label>Risposta</label>
-                            <div>
-                                <Editor
-                                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                    initialValue={questionAnswer.answerText}      
-                                    inline={false}                          
-                                    init={{
-                                        height: 500,
-                                        menubar: menuSettings,
-                                        plugins: pluginsSettings,
-                                        toolbar: toolbarSettings,
-                                        font_formats: fontSettings,
-                                        content_style: styleSettings,
-                                        images_upload_handler: tiny_image_upload_handler
-                                    }}
-                                    onEditorChange={handleEditorChange}
-                                />
-                            </div>
+                            <Editor
+                                apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                initialValue={questionAnswer.answerText}      
+                                inline={false}                          
+                                init={{
+                                    height: 500,
+                                    menubar: menuSettings,
+                                    plugins: pluginsSettings,
+                                    toolbar: toolbarSettings,
+                                    font_formats: fontSettings,
+                                    content_style: styleSettings,
+                                    images_upload_handler: tiny_image_upload_handler
+                                }}
+                                onEditorChange={handleEditorChange}
+                            />
                         </div>
-                    }                                        
+                    </div>}                                        
                     {questionAnswer && questionAnswer.answerType === 2 &&                         
                     <div className="flex space-x-2">
                         <Form.Group>
                             <Form.Label>Valore minimo</Form.Label>
-                            <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="minAnswers" value={questionAnswer.minAnswers} onChange={handleChangeNumber} />
+                            <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="minValue" value={questionAnswer.minValue} onChange={handleChangeNumber} />
                             <Form.Text className="text-muted">
                                 Valore numerico minimo per  la risposta.
                             </Form.Text>
                         </Form.Group>      
                         <Form.Group>
                             <Form.Label>Valore massimo</Form.Label>
-                            <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="maxAnswers" value={questionAnswer.maxAnswers} onChange={handleChangeNumber} />
+                            <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="maxValue" value={questionAnswer.maxValue} onChange={handleChangeNumber} />
                             <Form.Text className="text-muted">
                                 Valore numerico massimo per la risposta.
                             </Form.Text>
@@ -206,14 +170,35 @@ function QuestionAnswerAddEdit ({appSiteId, siteSurveyId, surveyStepId, stepQues
                     </div>}
 
                     {questionAnswer && questionAnswer.answerType === 4 &&
-                    <div>
-                        <label>Prodotto</label>
-                        <SiteProductPreview 
-                            appSiteId={questionAnswer.appSiteId} 
-                            siteProductId={questionAnswer.siteProductId}
-                            onChange={handleSiteProductId} />                   
+                    <>
+                        <div>
+                            <label>Prodotto</label>
+                            <SiteProductPreview 
+                                appSiteId={questionAnswer.appSiteId} 
+                                siteProductId={questionAnswer.siteProductId}
+                                onChange={handleSiteProductId} />                   
+                        </div>                        
+                    </>}
+                    
+                    {questionAnswer && (questionAnswer.answerType === 1 || questionAnswer.answerType === 4) &&
+                    <div className="flex space-x-2">
+                        <Form.Group className='flex-1'>
+                            <Form.Label>Quantità minima</Form.Label>
+                            <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="minValue" value={questionAnswer.minValue} onChange={handleChangeNumber} />
+                            <Form.Text className="text-muted">
+                                Numero minimo per selezione prodotto.
+                            </Form.Text>
+                        </Form.Group>      
+                        <Form.Group className='flex-1'>
+                            <Form.Label>Quantità massima</Form.Label>
+                            <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="maxValue" value={questionAnswer.maxValue} onChange={handleChangeNumber} />
+                            <Form.Text className="text-muted">
+                                Numero massimo per selezione prodotto.
+                            </Form.Text>
+                        </Form.Group>                              
                     </div>}
-                    <div>
+
+                    <div className='mt-2'>
                         <label>Prossimo step</label>
                         <SurveyStepSelect 
                             appSiteId={questionAnswer.appSiteId} 
