@@ -345,7 +345,7 @@ class PageBoxAddEdit extends React.Component {
                                 </Form.Text>
                             </Form.Group>
                             <div className='flex-1'>
-                                {this.state.pageBox && this.state.pageBox.sortId > 0 &&
+                                {this.state.pageBox &&
                                 <div className='md:flex space-y-2 md:space-x-2 md:space-y-0'>
                                     <Form.Group className='flex-1'>
                                         <Form.Label>Margin</Form.Label>

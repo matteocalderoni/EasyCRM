@@ -1,6 +1,6 @@
 import React from 'react';
 import { appSiteService, alertService } from '../_services';
-import { Form, Button, ProgressBar,Navbar,Nav } from 'react-bootstrap'
+import { Form, Button, ProgressBar } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from './LanguageSelect';
 import { LanguageEditor } from './LanguageEditor';
@@ -22,38 +22,21 @@ class BoxTextEditor extends React.Component {
     }
     
     handleTitleEditorChange = (content, editor) => {
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                title: content                 
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, title: content } });
     }
         
     handleEditorChange = (content, editor) => {
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                description: content                 
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, description: content } });
     }
     
-    handleLanguageCode = (code) => {        
-        this.setState({ 
-            languageCode: code
-        });        
-    }
+    handleLanguageCode = (code) => this.setState({ languageCode: code });
 
     tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
         const fileName = (this.props.prefix + '/' || '') + new Date().getTime() + '.jpeg';
-
         // Request made to the backend api 
         // Send formData object 
         fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
-            .then((result) => {
-                success(`${baseImageUrl}${result.fileName}`);                
-            });         
+            .then((result) => success(`${baseImageUrl}${result.fileName}`));         
     };                  
     
     updatePageBox = () => {
@@ -161,7 +144,7 @@ class BoxTextEditor extends React.Component {
                     <div className="flex-1">
                         {this.state.languageCode === '' &&
                         <Button onClick={this.updatePageBox} variant="success" className="w-full bg-green-600 mr-1 rounded-lg">
-                            Salva le modifiche
+                            Salva
                         </Button>}                         
                     </div>
                     <Form inline className='flex-1'>

@@ -228,7 +228,9 @@ function PageBoxList({ match }) {
                     style={{backgroundImage: `url(${baseImageUrl+((parseInt(pageBox.boxType) !== 8 && parseInt(pageBox.boxType) !== 9) ? pageBox.imageUrl : '')})`, 
                         backgroundColor: (pageBox.sortId < 0 ? pageBox.boxColor : '')}}
                     className="page-box rounded-lg border-2 border-gray-400 border-dashed">
-                    <Card.Header className='absolute w-full bg-white hidden box-header z-10'>                            
+                    <Card.Header 
+                        style={{backgroundColor: pageBox.boxColor}}
+                        className='absolute w-full hidden box-header z-10 -mt-28 md:-mt-20 h-20 border border-b-0 rounded-t-xl'>                            
                         <div className="flex flex-row">
                             <div className="flex-grow md:flex">
                                 <BoxTypeInfo boxType={pageBox.boxType} boxId={pageBox.pageBoxId} />
@@ -267,7 +269,7 @@ function PageBoxList({ match }) {
                     
                     <Card.Body
                         style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
-                        className={`p-${pageBox.boxPadding} m-${pageBox.boxMargin} ${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
+                        className={`p-${pageBox.boxPadding} m-${pageBox.boxMargin} ${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))} overflow-hidden`}>
                         {pageBox.boxType && (parseInt(pageBox.boxType) === 8 || parseInt(pageBox.boxType) === 9) &&
                         <div 
                             style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
@@ -275,58 +277,45 @@ function PageBoxList({ match }) {
                             <Card.Img src={baseImageUrl+pageBox.imageUrl} />
                         </div>
                         }                                                
-                        {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9) &&
-                            <div 
-                                style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
-                                className={`${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
-                                <BoxTextEditor 
-                                    prefix={pageBox.appSiteId} 
-                                    pageBox={pageBox} 
-                                    handleSaved={(_pageBox) => handleAddEdit(_pageBox)}>                                        
-                                </BoxTextEditor>
-                            </div>
-                        }
+                        {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9 || parseInt(pageBox.boxType) === 14) &&
+                        <div 
+                            style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
+                            className={`${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
+                            <BoxTextEditor 
+                                prefix={pageBox.appSiteId} 
+                                pageBox={pageBox} 
+                                handleSaved={(_pageBox) => handleAddEdit(_pageBox)}>                                        
+                            </BoxTextEditor>
+                        </div>}
                         {pageBox.boxType && parseInt(pageBox.boxType) === 2 &&
-                            <TopServiceList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                        }    
+                        <TopServiceList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />}    
                         {pageBox.boxType && parseInt(pageBox.boxType) === 3 &&
-                            <EmployeeList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                        }    
+                        <EmployeeList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />}    
                         {pageBox.boxType && parseInt(pageBox.boxType) === 4 &&
-                            <OpenTimeList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                        }                        
+                        <OpenTimeList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />}                        
                         {pageBox.boxType && parseInt(pageBox.boxType) === 5 &&
-                            <ProductList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                        } 
+                        <ProductList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />} 
                         {pageBox.boxType && parseInt(pageBox.boxType) === 6 &&
-                            <ArticleList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                        }    
+                        <ArticleList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />}    
                         {pageBox.boxType && parseInt(pageBox.boxType) === 7 &&
-                            <SimpleMap appSiteId={pageBox.appSiteId} />                                                
-                        }   
+                        <SimpleMap appSiteId={pageBox.appSiteId} />}   
                         {pageBox.boxType && parseInt(pageBox.boxType) === 11 &&
-                            <FacebookFeed feedUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />
-                        }   
+                        <FacebookFeed feedUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />}   
                         {/* {pageBox.boxType && parseInt(pageBox.boxType) === 12 &&
                             <InstagramFeed userName={pageBox.boxEmail} className="Feed" classNameLoading="Loading" limit="8" />
                         }    */}
                         {pageBox.boxType && parseInt(pageBox.boxType) === 13 &&
-                            <YoutubeVideo videoUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />
-                        }   
+                        <YoutubeVideo videoUrl={pageBox.boxEmail} title={pageBox.title} boxColor={pageBox.boxColor} />}   
                         {pageBox.boxType && parseInt(pageBox.boxType) === 14 &&
-                            <SiteSurveyBox appSiteId={pageBox.appSiteId} siteSurveyId={pageBox.siteSurveyId} />
-                        }   
+                        <SiteSurveyBox appSiteId={pageBox.appSiteId} siteSurveyId={pageBox.siteSurveyId} />}   
                         {pageBox.boxType && parseInt(pageBox.boxType) === 15 &&
-                            <SlideshowList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />                                                
-                        }    
+                        <SlideshowList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />}    
                         {pageBox.boxType && parseInt(pageBox.boxType) === 16 &&
-                            <iframe className='w-full' height={pageBox.boxLatitude} title={pageBox.titleUrl} src={pageBox.boxEmail}></iframe>}
-
+                        <iframe className='w-full' height={pageBox.boxLatitude} title={pageBox.titleUrl} src={pageBox.boxEmail}></iframe>}
                         {pageBox.boxType && parseInt(pageBox.boxType) === 17 &&
-                            <ProductBox appSiteId={pageBox.appSiteId} siteProductId={pageBox.siteProductId} />     
-                        }
+                        <ProductBox appSiteId={pageBox.appSiteId} siteProductId={pageBox.siteProductId} />}
                         
-                        </Card.Body>                     
+                    </Card.Body>                     
                     
                 </Card>                                            
                                     

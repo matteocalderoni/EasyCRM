@@ -83,7 +83,6 @@ code {
 .site-list-item .logo { margin: 5px; }
 
 .page-boxes { padding: 5px; }
-.page-boxes .page-box { overflow: hidden; }
 .page-box:hover .box-header { display: block; }
 .view-xxs,.view-xs,.view-sm,.view-md,.view-lg { display: none; }
 /* @media(max-width:480px){

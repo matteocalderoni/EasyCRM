@@ -55,7 +55,7 @@ class SiteSurveyBox extends Component {
             <Link title="Modifica il percorso" to={`/admin/sites/sitesurveys/edit/${this.state.appSiteId}/${this.state.siteSurveyId}`} className="flex items-center justify-center rounded-md bg-blue-200 mt-2 p-1 text-blue-900">
                 <BsPencil /> Modifica il percorso
             </Link>
-            {this.state.siteSurvey && 
+            {/* {this.state.siteSurvey && 
             <div style={{backgroundColor: this.state.siteSurvey.boxColor}} className="mt-2 rounded shadow">
                 {this.state.surveySteps && this.state.surveySteps.length > 0 &&                 
                 <SiteSurveyBoxNav 
@@ -68,7 +68,7 @@ class SiteSurveyBox extends Component {
                     siteSurveyId={this.state.siteSurveyId} 
                     surveyStepId={this.state.surveyStepId} 
                     surveyStep={this.state.selectedSurveyStep} />}
-            </div>}
+            </div>} */}
             </>
         )
     }
