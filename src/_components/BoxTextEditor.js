@@ -2,7 +2,7 @@ import React from 'react';
 import { appSiteService, alertService } from '../_services';
 import { Form, Button, ProgressBar } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
-import { LanguageSelect } from './LanguageSelect';
+import { LanguageSelect } from './Select/LanguageSelect';
 import { LanguageEditor } from './LanguageEditor';
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../_helpers/tinySettings';
 import { fetchWrapper } from '../_helpers';

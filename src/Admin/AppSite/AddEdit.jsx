@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { appSiteService, alertService, languageService } from '../../_services';
 import { Uploader } from '../../_components'
 import { Image, Row, Col, Form, Button, Card, Container, ProgressBar,Navbar, Nav } from 'react-bootstrap'
-import { LanguageSelect } from '../../_components/LanguageSelect';
+import { LanguageSelect } from '../../_components/Select/LanguageSelect';
 import { FcHome } from 'react-icons/fc';
 import { Editor } from "@tinymce/tinymce-react";
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../_helpers/tinySettings';

@@ -40,81 +40,48 @@ class SurveyStepAddEdit extends React.Component {
     handleChange(evt) {
         const value = evt.target.value;
         this.setState({
-            surveyStep: {
-                ...this.state.surveyStep,
-                [evt.target.name]: value
-            }          
+            surveyStep: { ...this.state.surveyStep, [evt.target.name]: value }          
         });
     }
     
     handleChangeNumber(evt) {
         const value = +evt.target.value;
         this.setState({
-            surveyStep: {
-                ...this.state.surveyStep,
-                [evt.target.name]: value                
-            }          
+            surveyStep: { ...this.state.surveyStep, [evt.target.name]: value }          
         });
     }
 
     handleChangeBool(evt) {  
-        this.setState({
-            surveyStep: {
-                ...this.state.surveyStep,
-                [evt.target.name]: evt.target.checked                 
-            }          
-        });
+        this.setState({ surveyStep: { ...this.state.surveyStep, [evt.target.name]: evt.target.checked }});
     }
 
     handleColorChange = (color) => {
-        this.setState({
-            surveyStep: {
-                ...this.state.surveyStep,
-                boxColor: color.hex                 
-            }          
-        });
-        //this.setState({ background: color.hex });
+        this.setState({ surveyStep: { ...this.state.surveyStep, boxColor: color.hex }});
     };
 
     handleEditorChange = (content, editor) => {
-        this.setState({
-            surveyStep: {
-                ...this.state.surveyStep,
-                description: content                 
-            }          
-        });
+        this.setState({ surveyStep: { ...this.state.surveyStep, description: content }});
     }
 
     handleOpen() {    
         if (this.props.surveyStepId > 0) {
             this.setState({loading: true})
             surveyService.getSurveyStepById(this.props.appSiteId, this.props.siteSurveyId, this.props.surveyStepId)
-                .then(_surveyStep => {                    
-                    this.setState({
-                        surveyStep: _surveyStep,
-                        loading: false
-                    })                    
-                });
+                .then(_surveyStep => this.setState({ surveyStep: _surveyStep, loading: false }));
         }         
     }
     
     onSubmit = () => {
-        if (this.props.surveyStepId > 0) {
+        if (this.props.surveyStepId > 0) 
             this.updateSurveyStep();
-        } else {
-            this.createSurveyStep();            
-        }
+        else
+            this.createSurveyStep();                    
     }
 
     tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
         const fileName = (this.state.surveyStep.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
-    
-        // Request made to the backend api 
-        // Send formData object 
         fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
-            .then((result) => {
-                success(`${baseImageUrl}${result.fileName}`);                
-            });         
+            .then((result) => success(`${baseImageUrl}${result.fileName}`));         
       };                  
 
     createSurveyStep() {
@@ -128,9 +95,7 @@ class SurveyStepAddEdit extends React.Component {
                 if (this.props.handleSaved)    
                     this.props.handleSaved(this.state.surveyStep.appSiteId);                
             })
-            .catch(error => {
-                alertService.error(error);
-            });
+            .catch(error => alertService.error(error));
     }
 
     updateSurveyStep() {
@@ -144,9 +109,7 @@ class SurveyStepAddEdit extends React.Component {
                 if (this.props.handleSaved)                                
                     this.props.handleSaved(this.state.surveyStep.appSiteId);                
             })
-            .catch(error => {
-                alertService.error(error);
-            });
+            .catch(error => alertService.error(error));
     }
 
     render() {
@@ -237,6 +200,7 @@ class SurveyStepAddEdit extends React.Component {
                                 Assegnare un prezzo valido per lo Step. 
                             </Form.Text>
                         </Form.Group>                                              
+                        
                     </Form>
                     
                 </Card.Body>    

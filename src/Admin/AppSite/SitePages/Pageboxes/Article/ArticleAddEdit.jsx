@@ -5,7 +5,7 @@ import { CardSizes } from '../../../../../_helpers/cardSize';
 import { Image, Form, Button, Modal, Row, Col } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import './article.css';
-import { LanguageSelect } from '../../../../../_components/LanguageSelect';
+import { LanguageSelect } from '../../../../../_components/Select/LanguageSelect';
 import { LanguageEditor } from '../../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../../_components/LanguageInput';
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../_helpers/tinySettings';

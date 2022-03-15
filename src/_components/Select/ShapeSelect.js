@@ -1,8 +1,8 @@
 import React from 'react'; 
 import { Form } from 'react-bootstrap'
 
-function ShapeSelect({label,shape,onChange}) 
-{ 
+function ShapeSelect({label,shape,onChange})  {
+   
   const shapes = [
     {label: 'Riempi contenitore', value: -1},
     {label: 'Quadrato', value: 1},

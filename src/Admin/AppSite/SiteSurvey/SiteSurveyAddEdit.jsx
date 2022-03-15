@@ -18,7 +18,9 @@ class SiteSurveyAddEdit extends React.Component {
                 imageUrl: 'logo.png',
                 description: '',
                 boxColor: '#FFFFFF',
-                price: 0                
+                price: 0,
+                minAnswers: 0,
+                maxAnswers: 0                
             },
             loading: false                         
          };
@@ -230,7 +232,32 @@ class SiteSurveyAddEdit extends React.Component {
                             <Form.Text className="text-muted">
                                 Assegnare un prezzo valido per tutto il percorso. 
                             </Form.Text>
-                        </Form.Group>                                                                                                 
+                        </Form.Group>     
+
+                        <div className='flex space-x-2'>
+                            <Form.Group className='flex-1'>
+                                <Form.Label>Risposte minime</Form.Label>
+                                <input 
+                                    type="number" 
+                                    className="form-control focus:ring-2 focus:ring-blue-600" 
+                                    name="minAnswers" 
+                                    value={this.state.siteSurvey.minAnswers} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Numero minino di risposte (utilizzare 0 per non impostare un limite minimo). 
+                                </Form.Text>
+                            </Form.Group>                                              
+                            <Form.Group className='flex-1'>
+                                <Form.Label>Risposte massime</Form.Label>
+                                <input 
+                                    type="number" 
+                                    className="form-control focus:ring-2 focus:ring-blue-600" 
+                                    name="maxAnswers" 
+                                    value={this.state.siteSurvey.maxAnswers} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Numero minino di risposte (utilizzare 0 per non impostare un limite minimo). 
+                                </Form.Text>
+                            </Form.Group>                                              
+                        </div>                                                                                            
                     </Form>
                     
                 </Card.Body>    

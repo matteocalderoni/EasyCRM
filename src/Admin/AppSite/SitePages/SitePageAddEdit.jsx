@@ -8,9 +8,9 @@ import { Editor } from "@tinymce/tinymce-react";
 import { FaSave } from 'react-icons/fa';
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../_helpers/fetch-wrapper';
-import { PageTypeSelect } from '../../../_components/PageTypeSelect';
-import { NavPositionSelect } from '../../../_components/NavPositionSelect';
-import { NavAlignSelect } from '../../../_components/NavAlignSelect';
+import { PageTypeSelect } from '../../../_components/Select/PageTypeSelect';
+import { NavPositionSelect } from '../../../_components/Select/NavPositionSelect';
+import { NavAlignSelect } from '../../../_components/Select/NavAlignSelect';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -382,7 +382,7 @@ class SitePageAddEdit extends React.Component {
                     </div>} 
 
                     <div style={{ backgroundColor: this.state.sitePage.boxColor, backgroundImage: `url(${baseImageUrl+this.state.sitePage.imageUrl})`}} 
-                        className="fixed-background bg-fixed border rounded-xl mt-2 p-2">
+                        className="fixed-background bg-fixed bg-no-repeat bg-contain bg-center border rounded-xl mt-2 p-2">
                         <Row>
                             {(this.state.sitePage.logoPosition === 1 || this.state.sitePage.logoPosition === 2) && 
                             <Col sm={this.state.sitePage.logoPosition === 1 ? 12 : 6} className="text-center">

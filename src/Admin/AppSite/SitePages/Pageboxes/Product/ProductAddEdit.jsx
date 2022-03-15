@@ -1,7 +1,7 @@
 import React from 'react';
 import { productService, alertService } from '../../../../../_services';
 import { Form, Button, Modal, Navbar, Nav } from 'react-bootstrap'
-import { LanguageSelect } from '../../../../../_components/LanguageSelect';
+import { LanguageSelect } from '../../../../../_components/Select/LanguageSelect';
 import { fetchWrapper } from '../../../../../_helpers/fetch-wrapper';
 import { FaSave } from 'react-icons/fa';
 import { SiteProductPreview } from '../../../../../_components/SiteProductPreview';

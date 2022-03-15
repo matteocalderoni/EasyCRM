@@ -52,10 +52,10 @@ function SitePageDetail({ match }) {
                     Pagina {sitePage && sitePage.title && parse(sitePage.titleUrl)}
                 </li>
             </ul>
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
                 <small>Gestione della pagina</small>                
                 <div>
-                    <h1 className="text-xl">{sitePage && !loading && sitePage.titleUrl && parse(sitePage.titleUrl)}</h1>
+                    <h1 className="text-xl text-blue-600">{sitePage && !loading && sitePage.titleUrl && parse(sitePage.titleUrl)}</h1>
                 </div>
                 <p className="text-muted">Modifica dettagli relativi alla pagine: modifica immagine di sfondo, il titolo per il menù di navigazione e il testo per la slide.</p>                    
             </div>

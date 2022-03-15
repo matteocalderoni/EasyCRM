@@ -3,13 +3,13 @@ import { appSiteService, alertService } from '../../../../_services';
 import { Uploader } from '../../../../_components'
 import { Form, Button, Card, Image, ProgressBar,Row,Col,Navbar,Nav } from 'react-bootstrap'
 import { BoxTypes } from '../../../../_helpers'
-import { LanguageSelect } from '../../../../_components/LanguageSelect';
+import { LanguageSelect } from '../../../../_components/Select/LanguageSelect';
 import { LanguageEditor } from '../../../../_components/LanguageEditor';
 import { CompactPicker,SliderPicker } from 'react-color';
 import { FaSave, FaUndo} from 'react-icons/fa';
 import { SiteSurveySelect } from '../../../../_components/SiteSurveySelect';
 import parse from 'html-react-parser';
-import { ShapeSelect } from '../../../../_components/ShapeSelect';
+import { ShapeSelect } from '../../../../_components/Select/ShapeSelect';
 import { SiteProductPreview } from '../../../../_components/SiteProductPreview';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
