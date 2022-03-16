@@ -11,16 +11,15 @@ const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 function LanguageEditor(props) { 
   
-  const [labelValue, setLabelValue] = useState('');
+  const [labelValue, setLabelValue] = useState(props.originalText);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
       setLoading(true)
       languageService.getSiteLabelById(props.appSiteId,props.code,props.labelKey)
         .then(_siteLabel => {
-          if (_siteLabel && _siteLabel.labelValue != '') {
+          if (_siteLabel && _siteLabel.labelValue != '') 
             setLabelValue(_siteLabel.labelValue)          
-          }
           setLoading(false)
         })
   }, []);
@@ -31,9 +30,6 @@ function LanguageEditor(props) {
 
   const tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
     const fileName = (props.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
-
-    // Request made to the backend api 
-    // Send formData object 
     fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
         .then((result) => {
             success(`${baseImageUrl}${result.fileName}`);                
@@ -44,27 +40,25 @@ function LanguageEditor(props) {
     if (labelValue != '') {
       languageService.createOrUpdateSiteLabel({ appSiteId: props.appSiteId, code: props.code, labelKey: props.labelKey, labelValue: labelValue })
         .then(result => {
-          if (result.hasErrors) {
+          if (result.hasErrors) 
               alertService.error('Problemi durante il salvataggio', { keepAfterRouteChange: true });
-          } else {
-              alertService.success('Etichetta aggiunta con successo', { keepAfterRouteChange: true });
-          }                      
-      })
-      .catch(error => {
-          alertService.error(error);
-      })
+          else 
+              alertService.success('Etichetta aggiunta con successo', { keepAfterRouteChange: true });                  
+      }).catch(error => alertService.error(error))
     } 
   }
     
   return ( 
     <div>     
-      {loading && <Col className="text-center mart2">
-          <h5>Caricamento etichetta...</h5>
-          <ProgressBar animated now={100} />
+      {loading && 
+      <Col className="text-center mt-1">
+        <h5>Caricamento etichetta...</h5>
+        <ProgressBar animated now={100} />
       </Col>}
-      <Form.Group>
-        <Form.Label>Testo per lingua <b>{props.code}</b> (digitare il testo tradotto)</Form.Label>
+      <Form.Group className='mt-1'>
+        {/* <Form.Label>Testo per lingua <b>{props.code}</b> (digitare il testo tradotto)</Form.Label> */}
         {!loading &&           
+        <div className="border rounded-xl ring-blue-700 p-1">
             <Editor
                 apiKey={process.env.REACT_APP_TINTMCE_KEY}
                 initialValue={labelValue}
@@ -79,19 +73,20 @@ function LanguageEditor(props) {
                     images_upload_handler: tiny_image_upload_handler
                 }}
                 onEditorChange={(content, editor) => { handleEditorChange(content, editor) }}                
-            />}
-          <Form.Text className="text-muted">
-            <div className="mart2">
+            />
+          </div>}
+          {/* <Form.Text>
+            <div>
               <b>Testo originale</b>
               <div>            
                 {props.originalText && parse(props.originalText)}
               </div>
             </div>
-          </Form.Text>
+          </Form.Text> */}
       </Form.Group>
-      <Navbar variant="dark" bg="dark">
+      <Navbar>
         <Nav className="mr-auto">
-          <Button onClick={handleSubmit} variant="success">
+          <Button onClick={handleSubmit} variant="success" className='bg-green-500'>
               Salva etichetta
           </Button> 
         </Nav>

@@ -31,7 +31,7 @@ function SiteProductDetail({ match }) {
                     Prodotti {siteProduct && <b>{siteProduct.code}</b>}
                 </li>
             </ul>
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
                 <h1 className="text-blue-900 font-bold">Gestione Prodotti</h1>                                
                 <p className="text-muted">Modifica dettagli relativi a prodotto</p>                    
             </div>
@@ -39,7 +39,7 @@ function SiteProductDetail({ match }) {
                 <ProgressBar animated now={100} />
             </div>}
 
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">                                
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">                                
                 <Tabs id="siteproduct-tabs">
                     <Tab eventKey="info" title="Informazioni generali">
                         {!loading && <SiteProductAddEdit appSiteId={appSiteId} siteProductId={siteProductId} />}

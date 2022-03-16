@@ -40,7 +40,7 @@ function SitePageNav ({ match }){
                     Pagine del Sito <b>{appSite && appSite.name}</b>                
                 </li>
             </ul>
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
                 <p className="mb-2">Gestione <b>Pagine del Sito</b></p>
                 {appSite && <h1 className="text-blue-900 text-xl">{appSite.name}</h1>}                
                 <p className="mt-2 text-muted">

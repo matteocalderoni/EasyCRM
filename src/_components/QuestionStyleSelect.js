@@ -1,41 +1,30 @@
-import React,{Component} from 'react'; 
+import React,{useState} from 'react'; 
 import { Form } from 'react-bootstrap'
 
-class QuestionStyleSelect extends Component { 
+function QuestionStyleSelect({label, value,onChange }) { 
+
+  const questionStyles = [
+    {label: 'Seleziona', value: 0},
+    {label: 'Elenco', value: 1},
+    {label: 'Bottone', value: 2}
+  ];
+
+  const [selectedQuestionStyle, setSelectedQuestionStyle] = useState(value || 1)
   
-    constructor(props) {
-      super(props);
-      this.state = {         
-        questionStyles: [
-          {label: 'Seleziona', value: 0},
-          {label: 'Elenco', value: 1},
-          {label: 'Bottone', value: 2}
-        ],
-        label: props.label || '',
-        selectedQuestionStyle: props.value || 1               
-      };                   
-    }    
-    
-    handleChange = (evt) => {
-        //const value = evt.target.value;
-        this.setState({
-            selectedQuestionStyle: +evt.target.value 
-        })        
-        // Return value on parent
-        this.props.onChange(+evt.target.value)
-    }    
+  const handleChange = (evt) => {
+      setSelectedQuestionStyle(+evt.target.value)        
+      onChange(+evt.target.value)
+  }    
          
-    render() {      
-      return ( 
-        <Form.Group>            
-            <Form.Control as="select" value={this.state.selectedQuestionStyle} name="selectedQuestionStyle" onChange={this.handleChange}>
-                {this.state.questionStyles && this.state.questionStyles.map(questionStyle =>
-                    <option key={questionStyle.value} value={questionStyle.value}>{questionStyle.label}</option>
-                )}   
-            </Form.Control>                
-        </Form.Group>
-      ); 
-    } 
-  } 
+  return ( 
+    <Form.Group>            
+        <Form.Control as="select" value={selectedQuestionStyle} name="selectedQuestionStyle" onChange={handleChange}>
+            {questionStyles && questionStyles.map(questionStyle =>
+                <option key={questionStyle.value} value={questionStyle.value}>{questionStyle.label}</option>
+            )}   
+        </Form.Control>                
+    </Form.Group>
+  ); 
+} 
   
   export { QuestionStyleSelect };

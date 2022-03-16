@@ -31,7 +31,7 @@ function UserDetail({ match }) {
                     Utente {user && <b>{user.userName}</b>}
                 </li>
             </ul>
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
                 <h1 className="text-blue-900 font-bold">Gestione Utenti</h1>                                
                 <p className="text-muted">Modifica dettagli relativi a utente</p>                    
             </div>
@@ -39,7 +39,7 @@ function UserDetail({ match }) {
                 <ProgressBar animated now={100} />
             </div>}
 
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">                                
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">                                
                 <Tabs id="user-tabs">
                     <Tab eventKey="info" title="Informazioni generali">
                         {!loading && <UserAddEdit appSiteId={appSiteId} id={id} />}

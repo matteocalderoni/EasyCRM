@@ -57,7 +57,7 @@ function OutcomeTypeList ({ match }){
                     Esiti del sito {appSite && <b>{appSite.name}</b>}                
                 </li>
             </ul>
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
                 <Row>
                     <Col sm={8}>
                         <h1 className="text-blue-900 font-bold">Gestione <b>Esiti del Sito</b></h1>

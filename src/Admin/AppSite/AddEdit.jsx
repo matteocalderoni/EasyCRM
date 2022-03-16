@@ -157,10 +157,10 @@ class AddEdit extends React.Component {
                     <ProgressBar animated now={this.state.loadingProgress} />
                 </Col>
             </Row>}                         
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
                 <p>Le informazioni principali del sito vengono utilizzate in tutte le pagine. Il logo viene inserito nel menù di navigazione e i riferimenti nel fondo pagina.</p>
             </div>
-              <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">                        
+              <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">                        
                 <Row className="mt-2">
                     <Col sm={4}>
                         <Image src={baseImageUrl+this.state.appSite.companyLogo} className="rounded-xl border" fluid />                    

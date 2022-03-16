@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react'; 
 import { productService } from '../_services'
-import { SiteProductSelect } from './SiteProductSelect';
+import { SiteProductSelect } from './Select/SiteProductSelect';
 import { Image } from 'react-bootstrap'
 import parse from 'html-react-parser'
 

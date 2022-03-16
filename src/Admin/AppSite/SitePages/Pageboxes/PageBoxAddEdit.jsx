@@ -7,7 +7,7 @@ import { LanguageSelect } from '../../../../_components/Select/LanguageSelect';
 import { LanguageEditor } from '../../../../_components/LanguageEditor';
 import { CompactPicker,SliderPicker } from 'react-color';
 import { FaSave, FaUndo} from 'react-icons/fa';
-import { SiteSurveySelect } from '../../../../_components/SiteSurveySelect';
+import { SiteSurveySelect } from '../../../../_components/Select/SiteSurveySelect';
 import parse from 'html-react-parser';
 import { ShapeSelect } from '../../../../_components/Select/ShapeSelect';
 import { SiteProductPreview } from '../../../../_components/SiteProductPreview';
@@ -245,7 +245,7 @@ class PageBoxAddEdit extends React.Component {
                             <div className="flex-1">
                                 <div className="flex flex-col">
                                     <Form.Label className="font-bold">Seleziona immagine {(this.state.pageBox.boxType !== 8 && this.state.pageBox.boxType !== 9) ? 'di Sfondo' : ''}</Form.Label>
-                                    {this.state.pageBox.imageUrl && 
+                                    {this.state.pageBox.imageUrl != null && this.state.pageBox.imageUrl !== '' &&
                                     <Image className="w-64" src={baseImageUrl+this.state.pageBox.imageUrl} fluid />}
                                     {this.state.pageBox.imageUrl !== '' &&
                                     <Button onClick={() => this.handleFieldReset('imageUrl')} className="mt-2 bg-red-400">

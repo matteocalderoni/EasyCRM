@@ -41,7 +41,7 @@ function OutcomeTypeDetail({ match }) {
                     Esito {outcomeType && <b>{outcomeType.description}</b>}
                 </li>
             </ul>
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
                 <h1 className="text-blue-900 font-bold">Gestione del sito</h1>                                
                 {appSite && <h1>{appSite.name}</h1>}                                
                 <p className="text-muted">Modifica dettagli relativi a esito</p>                    
@@ -50,7 +50,7 @@ function OutcomeTypeDetail({ match }) {
                 <ProgressBar animated now={100} />
             </div>}
 
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">                                
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">                                
                 <Tabs id="user-tabs">
                     <Tab eventKey="info" title="Informazioni generali">
                         {!loading && <OutcomeTypeAddEdit appSiteId={appSiteId} outcomeTypeId={outcomeTypeId} />}

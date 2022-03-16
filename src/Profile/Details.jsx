@@ -10,7 +10,7 @@ function Details({ match }) {
 
     return (
         <div>
-            <div className="shadow rounded-xl mt-16 bg-gray-100 p-8">
+            <div className="shadow rounded-xl mt-16 bg-gray-100 p-4">
                 <h1 className="font-bold text-green-900">Profilo personale</h1>
                 <p>Gestione dei dati di utente collegato.</p>
             </div>

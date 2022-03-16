@@ -14,7 +14,7 @@ function Overview({ match }) {
 
     return (
         <Container fluid>
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-8">
+            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
                 <h1 className="text-xl text-blue-900 font-bold ml-2">Dashboard</h1>
                 <p>La piattaforma ti consente di creare un sito web e gestire i suoi contenuti in modo semplice e dinamico.</p>
             </div> 

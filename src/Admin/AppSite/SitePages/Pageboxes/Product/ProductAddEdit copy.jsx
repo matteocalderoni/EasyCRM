@@ -4,7 +4,7 @@ import { Uploader } from '../../../../../_components'
 import { Image, Form, Button, Modal, Navbar, Nav } from 'react-bootstrap'
 import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../../../_components/Select/LanguageSelect';
-import { SiteProductSelect } from '../../../../../_components/SiteProductSelect';
+import { SiteProductSelect } from '../../../../../_components/Select/SiteProductSelect';
 import { LanguageEditor } from '../../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../../_components/LanguageInput';
 import { menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../_helpers/tinySettings';

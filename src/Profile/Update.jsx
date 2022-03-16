@@ -41,7 +41,7 @@ function Update({ history }) {
         <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, touched, isSubmitting }) => (
                 <Form>
-                    <div className="shadow rounded-xl mt-16 bg-gray-100 p-8">
+                    <div className="shadow rounded-xl mt-16 bg-gray-100 p-4">
                         <h1 className="font-bold text-green-900">Modifica Profilo</h1> 
                         <p>Aggiorna le tue informazioni personali.</p>
                     </div>

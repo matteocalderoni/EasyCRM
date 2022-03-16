@@ -146,7 +146,7 @@ function PageBoxList({ match }) {
                     Contenitori della Pagina <b>{sitePage && sitePage.title && parse(sitePage.titleUrl)}</b>
                 </li>
             </ul>
-            <div className="shadow rounded-top mt-2 bg-gray-100 p-8">
+            <div className="shadow rounded-top mt-2 bg-gray-100 p-4">
                 <small>Gestione <b>Contenuti della pagina</b></small>   
                 {sitePage && <h1 className="text-xl">{sitePage.title && parse(sitePage.titleUrl)}</h1>}
                 <p className="text-muted text-sm">
