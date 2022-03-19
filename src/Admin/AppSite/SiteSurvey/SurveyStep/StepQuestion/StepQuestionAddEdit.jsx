@@ -192,27 +192,27 @@ class StepQuestionAddEdit extends React.Component {
                             </Form.Text>
                         </Form.Group>                                                        
                         {!this.state.loading && this.state.languageCode == '' &&
+                        <div>
+                            <label>Domanda</label>
                             <div>
-                                <label>Domanda</label>
-                                <div>
-                                    <Editor
-                                        apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                        initialValue={this.state.stepQuestion.questionText}      
-                                        inline={false}                          
-                                        init={{
-                                            height: 500,
-                                            menubar: menuSettings,
-                                            plugins: pluginsSettings,
-                                            toolbar: toolbarSettings,
-                                            font_formats: fontSettings,
-                                            content_style: styleSettings,
-                                            images_upload_handler: this.tiny_image_upload_handler
-                                        }}
-                                        onEditorChange={this.handleEditorChange}
-                                    />
-                                </div>
+                                <Editor
+                                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                    initialValue={this.state.stepQuestion.questionText}      
+                                    inline={false}                          
+                                    init={{
+                                        height: 200,
+                                        menubar: menuSettings,
+                                        plugins: pluginsSettings,
+                                        toolbar: toolbarSettings,
+                                        font_formats: fontSettings,
+                                        content_style: styleSettings,
+                                        images_upload_handler: this.tiny_image_upload_handler
+                                    }}
+                                    onEditorChange={this.handleEditorChange}
+                                />
                             </div>
-                        }
+                        </div>}
+
                         {this.state.stepQuestion && !this.state.loading && 
                         <Form.Group>
                             <Form.Label>Tipo Risposta</Form.Label>
@@ -222,35 +222,35 @@ class StepQuestionAddEdit extends React.Component {
                             </Form.Text>
                         </Form.Group>}
                         <div className="flex space-x-2">
-                            <Form.Group>
+                            <Form.Group className='flex-1'>
                                 <Form.Label>Numero minimo di risposte</Form.Label>
                                 <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="minAnswers" value={this.state.stepQuestion.minAnswers} onChange={this.handleChangeNumber} />
                                 <Form.Text className="text-muted">
                                     Per  domanda opzionale impostare 0 altrimenti almeno 1.
                                 </Form.Text>
                             </Form.Group>      
-                            <Form.Group>
+                            <Form.Group className='flex-1'>
                                 <Form.Label>Numero massimo di risposte</Form.Label>
                                 <input type="number" className="form-control focus:ring-2 focus:ring-blue-600" name="maxAnswers" value={this.state.stepQuestion.maxAnswers} onChange={this.handleChangeNumber} />
                                 <Form.Text className="text-muted">
-                                    Maggiore di minimo.
+                                    Deve essere maggiore di minimo (lasciare a 0 per non utilizzare).
                                 </Form.Text>
                             </Form.Group>      
                         </div>
                         <div className="flex space-x-5">
-                            <Form.Group className="mart2">
+                            <Form.Group className="flex-1 mart2">
                                 <Form.Check type="checkbox" label="Scelta multipla" name="multipleChoice" checked={this.state.stepQuestion.multipleChoice} onChange={this.handleChangeBool} />
                                 <Form.Text>
                                     Scelta multipla.
                                 </Form.Text>
                             </Form.Group>           
-                            <Form.Group className="mart2">
+                            <Form.Group className="flex-1 mart2">
                                 <Form.Check type="checkbox" label="Commenti" name="withComment" checked={this.state.stepQuestion.withComment} onChange={this.handleChangeBool} />
                                 <Form.Text>
                                     Commenti dell'utente.
                                 </Form.Text>
                             </Form.Group>                                               
-                            <Form.Group className="mart2">
+                            <Form.Group className="flex-1 mart2">
                                 <Form.Check type="checkbox" label="Opzionale" name="isOptional" checked={this.state.stepQuestion.isOptional} onChange={this.handleChangeBool} />
                                 <Form.Text>
                                     Opzionale.
@@ -266,7 +266,7 @@ class StepQuestionAddEdit extends React.Component {
                                         initialValue={this.state.stepQuestion.questionNote}      
                                         inline={false}                          
                                         init={{
-                                            height: 500,
+                                            height: 200,
                                             menubar: menuSettings,
                                             plugins: pluginsSettings,
                                             toolbar: toolbarSettings,
@@ -308,7 +308,7 @@ class StepQuestionAddEdit extends React.Component {
 
                 </Card.Body>    
                 <Card.Footer>
-                    <Button onClick={this.onSubmit} variant="success">
+                    <Button onClick={this.onSubmit} variant="success" className='bg-green-500'>
                         Salva le modifiche
                     </Button> 
                 </Card.Footer>

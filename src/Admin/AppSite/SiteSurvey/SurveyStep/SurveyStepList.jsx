@@ -69,10 +69,7 @@ function SurveyStepList (props){
                                     </label>
                                 </div>
                                 <div className="flex">
-                                    <SurveyStepModal appSiteId={appSiteId} siteSurveyId={siteSurveyId} surveyStepId={surveyStep.surveyStepId} handleAddEdit={(appSiteId) => getSurveySteps()} />
-                                    {/* <Link title="Modifica lo step" to={`/admin/surveys/surveysteps/edit/${surveyStep.appSiteId}/${surveyStep.siteSurveyId}/${surveyStep.surveyStepId}`} className="flex items-center justify-center rounded-md bg-blue-200 mt-2 p-1 text-blue-900">
-                                        <BsPencil /> 
-                                    </Link> */}
+                                    <SurveyStepModal appSiteId={appSiteId} siteSurveyId={siteSurveyId} surveyStepId={surveyStep.surveyStepId} handleAddEdit={(appSiteId) => getSurveySteps()} />                                    
                                 </div>
                                 <div className="flex">
                                     <StepQuestionModal appSiteId={appSiteId} siteSurveyId={siteSurveyId} surveyStepId={surveyStep.surveyStepId} stepQuestionId={0} handleAddEdit={(appSiteId) => getSurveySteps()} />

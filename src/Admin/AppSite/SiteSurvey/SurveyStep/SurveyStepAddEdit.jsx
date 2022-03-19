@@ -130,27 +130,26 @@ class SurveyStepAddEdit extends React.Component {
                         </Form.Group>   
 
                         {!this.state.loading && this.state.languageCode == '' &&
+                        <div>
+                            <label>Descrizione dello Step</label>
                             <div>
-                                <label>Descrizione</label>
-                                <div>
-                                    <Editor
-                                        apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                        initialValue={this.state.surveyStep.description}      
-                                        inline={false}                          
-                                        init={{
-                                            height: 500,
-                                            menubar: menuSettings,
-                                            plugins: pluginsSettings,
-                                            toolbar: toolbarSettings,
-                                            font_formats: fontSettings,
-                                            content_style: styleSettings,
-                                            images_upload_handler: this.tiny_image_upload_handler
-                                        }}
-                                        onEditorChange={this.handleEditorChange}
-                                    />
-                                </div>
+                                <Editor
+                                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                    initialValue={this.state.surveyStep.description}      
+                                    inline={false}                          
+                                    init={{
+                                        height: 200,
+                                        menubar: menuSettings,
+                                        plugins: pluginsSettings,
+                                        toolbar: toolbarSettings,
+                                        font_formats: fontSettings,
+                                        content_style: styleSettings,
+                                        images_upload_handler: this.tiny_image_upload_handler
+                                    }}
+                                    onEditorChange={this.handleEditorChange}
+                                />
                             </div>
-                        }
+                        </div>}
 
                         {this.state.languageCode && this.state.languageCode !== '' &&
                         <div>
@@ -200,12 +199,37 @@ class SurveyStepAddEdit extends React.Component {
                                 Assegnare un prezzo valido per lo Step. 
                             </Form.Text>
                         </Form.Group>                                              
+
+                        <div className='flex space-x-2'>
+                            <Form.Group className='flex-1'>
+                                <Form.Label>Risposte minime</Form.Label>
+                                <input 
+                                    type="number" 
+                                    className="form-control focus:ring-2 focus:ring-blue-600" 
+                                    name="minAnswers" 
+                                    value={this.state.surveyStep.minAnswers} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Numero minino di risposte (utilizzare 0 per non impostare un limite minimo). 
+                                </Form.Text>
+                            </Form.Group>                                              
+                            <Form.Group className='flex-1'>
+                                <Form.Label>Risposte massime</Form.Label>
+                                <input 
+                                    type="number" 
+                                    className="form-control focus:ring-2 focus:ring-blue-600" 
+                                    name="maxAnswers" 
+                                    value={this.state.surveyStep.maxAnswers} onChange={this.handleChangeNumber} />
+                                <Form.Text className="text-muted">
+                                    Numero minino di risposte (utilizzare 0 per non impostare un limite minimo). 
+                                </Form.Text>
+                            </Form.Group>                                              
+                        </div>  
                         
                     </Form>
                     
                 </Card.Body>    
                 <Card.Footer>
-                    <Button onClick={this.onSubmit} variant="success">
+                    <Button onClick={this.onSubmit} variant="success" className='bg-green-500'>
                         Salva le modifiche
                     </Button> 
                 </Card.Footer>

@@ -139,7 +139,7 @@ function QuestionAnswerAddEdit ({appSiteId, siteSurveyId, surveyStepId, stepQues
                                 initialValue={questionAnswer.answerText}      
                                 inline={false}                          
                                 init={{
-                                    height: 500,
+                                    height: 200,
                                     menubar: menuSettings,
                                     plugins: pluginsSettings,
                                     toolbar: toolbarSettings,
