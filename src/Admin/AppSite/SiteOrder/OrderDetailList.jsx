@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Form } from 'react-bootstrap';
 import { orderService } from '../../../_services';
 import { SiteProductPreview } from '../../../_components/SiteProductPreview'
+import { UserSurveyBox } from '../../../_components/Survey/UserSurveyBox';
 
 function OrderDetailList({appSiteId, orderYear, orderId})
 {
@@ -18,10 +19,10 @@ function OrderDetailList({appSiteId, orderYear, orderId})
     }, [appSiteId, orderYear, orderId]);     
     
     return (
-        <Container className='p-2 border rounded-b-lg'>                        
+        <Container fluid className='p-2 border rounded-b-lg'>                        
             <div className="mt-2">
             {orderDetails && !loading && orderDetails.map(orderDetail =>                                    
-                <div className="md:flex mt-1 md:space-x-2" key={orderDetail.productId}>
+                <div className="md:flex mt-1 md:space-x-2 border rounded-lg bg-gray-200" key={orderDetail.productId}>
                     <div className='flex-1'>                    
                         {orderDetail && orderDetail.siteProductId > 0 &&
                         <SiteProductPreview 
@@ -29,6 +30,12 @@ function OrderDetailList({appSiteId, orderYear, orderId})
                             siteProductId={orderDetail.siteProductId}
                             onChange={() => {}}
                             readOnly={true} />}
+
+                        {orderDetail && orderDetail.siteSurveyId > 0 && orderDetail.userSurveyId > 0 &&
+                        <UserSurveyBox 
+                            appSiteId={orderDetail.appSiteId} 
+                            siteSurveyId={orderDetail.siteSurveyId}
+                            userSurveyId={orderDetail.userSurveyId} />}
                     </div>
                     <div className='flex-none'>
                         <Form.Group>

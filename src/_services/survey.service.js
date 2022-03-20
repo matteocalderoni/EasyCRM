@@ -8,12 +8,14 @@ export const surveyService = {
     getStepsOfSurvey,
     getQuestionsOfStep,
     getAnswersOfQuestion,
-    getOutcomeTypesOfAppSite,
+    getOutcomeTypesOfAppSite,    
     getSiteSurveyById,
     getSurveyStepById,
     getStepQuestionById,
     getQuestionAnswerById,
     getOutcomeTypeById,
+    getUserSurveyById,
+    getUserAnswers,
     createSiteSurvey,
     createSurveyStep,
     createStepQuestion,
@@ -69,6 +71,14 @@ function getQuestionAnswerById(appSiteId, siteSurveyId, surveyStepId, stepQuesti
 
 function getOutcomeTypeById(appSiteId, outcomeTypeId) {
     return fetchWrapper.get(`${baseUrl}/GetOutcomeType/${appSiteId}/${outcomeTypeId}`);
+}
+
+function getUserSurveyById(appSiteId, siteSurveyId, userSurveyId) {
+    return fetchWrapper.get(`${baseUrl}/GetUserSurvey/${appSiteId}/${siteSurveyId}/${userSurveyId}`);
+}
+
+function getUserAnswers(appSiteId, siteSurveyId, userSurveyId) {
+    return fetchWrapper.get(`${baseUrl}/GetUserAnswers/${appSiteId}/${siteSurveyId}/${userSurveyId}`);
 }
 
 function createSiteSurvey(siteSurvey) {
