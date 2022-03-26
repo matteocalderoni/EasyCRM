@@ -18,7 +18,7 @@ function SiteProductList({ match }) {
   
     useEffect(() => {
         getSiteProducts()
-    },[searchText])
+    },[searchText, appSiteId])
     
     function getSiteProducts() {
         productService.getSiteProducts(searchText,0,0,appSiteId)
@@ -53,27 +53,30 @@ function SiteProductList({ match }) {
         
         <div className="mt-2 flex flex-wrap space-x-2">
             {siteProducts && siteProducts.map(siteProduct =>                                    
-                <div className="mt-2 rounded-xl border w-96 mx-auto overflow-hidden" key={siteProduct.siteProductId} style={{backgroundColor: siteProduct.boxColor}}>
+                <div className="mt-2 rounded-xl border w-80 mx-auto overflow-hidden" key={siteProduct.siteProductId} style={{backgroundColor: siteProduct.boxColor}}>
                     <div className="md:shrink-0">
-                        <img className="h-48 w-full object-cover" src={baseImageUrl+siteProduct.imageUrl} alt={siteProduct.code} />
+                        <img className="h-24 w-full object-cover" src={baseImageUrl+siteProduct.imageUrl} alt={siteProduct.code} />
                     </div>
-                    <div className="p-8 h-48 overflow-hidden">
+                    <div className="p-8 h-24 overflow-hidden">
+                        <span className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
+                            {siteProduct.code} ({siteProduct.internalCode})
+                        </span>
+                        {siteProduct.siteProductType && siteProduct.siteProductType.category === 1 && 
                         <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
                             € {siteProduct.price}
-                        </div>
-                        <span className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
-                            {siteProduct.code}
-                        </span>
-                        <div className="mt-2 text-slate-500">
+                        </div>}
+                        {/* <div className="mt-2 text-slate-500">
                             {siteProduct.description && parse(siteProduct.description)}
-                        </div>
+                        </div> */}
                     </div>
-                    <div className='p-2 space-y-2'>
-                        <Link title="Modifica prodotti" to={`/admin/sites/siteproducts/edit/${appSiteId}/${siteProduct.siteProductId}`} 
-                            className="rounded-full flex bg-blue-500 p-2 pl-3 pr-3 text-white">
-                            <BsPencil />
-                        </Link>
-                        <div className="p-1 rounded-full block bg-red-500 text-white">
+                    <div className='flex items-center p-2 space-x-2 space-y-2'>
+                        <div className='flex-1'>
+                            <Link title="Modifica prodotti" to={`/admin/sites/siteproducts/edit/${appSiteId}/${siteProduct.siteProductId}`} 
+                                className="rounded-full flex bg-blue-500 p-2 pl-3 pr-3 text-white">
+                                <BsPencil />
+                            </Link>
+                        </div>
+                        <div className="flex-1 p-1 rounded-full block bg-red-500 text-white">
                             <DeleteConfirmation onConfirm={() => deleteSiteProduct(siteProduct.siteProductId)} />
                         </div>                                                    
                     </div>                    
@@ -81,15 +84,23 @@ function SiteProductList({ match }) {
             )}   
         </div>
         <Navbar fixed="bottom" variant="dark" bg="dark">
-            <Nav className="mr-right">
+            <Nav className="mr-right space-x-2">
                 <SiteProductModal appSiteId={appSiteId} siteProductId={0} handleAddEdit={(appSiteId) => getSiteProducts()} /> 
                 
                 <Link to={`/admin/sites/edit/${appSiteId}`}
                     className="flex items-center justify-center rounded-full  bg-blue-500 text-white p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>
-                    Modifica sito
+                    Sito
+                </Link>
+
+                <Link to={`/admin/sites/siteproducts/siteproducttypes/${appSiteId}`}
+                    className="flex items-center justify-center rounded-full  bg-blue-500 text-white p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                    Tipi
                 </Link>
             </Nav>
         </Navbar>

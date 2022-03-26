@@ -29,6 +29,7 @@ function OrderDetailList({appSiteId, orderYear, orderId})
                             appSiteId={orderDetail.appSiteId} 
                             siteProductId={orderDetail.siteProductId}
                             onChange={() => {}}
+                            template={1}
                             readOnly={true} />}
 
                         {orderDetail && orderDetail.siteSurveyId > 0 && orderDetail.userSurveyId > 0 &&

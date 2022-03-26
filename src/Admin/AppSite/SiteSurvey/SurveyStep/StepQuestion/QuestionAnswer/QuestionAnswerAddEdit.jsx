@@ -176,6 +176,7 @@ function QuestionAnswerAddEdit ({appSiteId, siteSurveyId, surveyStepId, stepQues
                             <SiteProductPreview 
                                 appSiteId={questionAnswer.appSiteId} 
                                 siteProductId={questionAnswer.siteProductId}
+                                template={1}
                                 onChange={handleSiteProductId} />                   
                         </div>                        
                     </>}

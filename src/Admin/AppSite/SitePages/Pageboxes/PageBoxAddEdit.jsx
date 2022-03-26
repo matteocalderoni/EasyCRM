@@ -11,6 +11,7 @@ import { SiteSurveySelect } from '../../../../_components/Select/SiteSurveySelec
 import parse from 'html-react-parser';
 import { ShapeSelect } from '../../../../_components/Select/ShapeSelect';
 import { SiteProductPreview } from '../../../../_components/SiteProductPreview';
+import { BoxTemplateSelect } from '../../../../_components/Select/BoxTemplateSelect';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -159,6 +160,15 @@ class PageBoxAddEdit extends React.Component {
         this.setState({ 
             languageCode: code
         });        
+    }
+
+    handleBoxTemplateChange = (_template) => {
+        this.setState({
+            pageBox: {
+                ...this.state.pageBox,
+                boxTemplate: _template                 
+            }          
+        });
     }
 
     handleTitleEditorChange = (content, editor) => {
@@ -475,7 +485,22 @@ class PageBoxAddEdit extends React.Component {
                                     <SiteProductPreview 
                                         appSiteId={this.state.pageBox.appSiteId} 
                                         siteProductId={this.state.pageBox.siteProductId}
+                                        template={this.state.pageBox.boxTemplate}
                                         onChange={this.handleSiteProductChange} />           
+                                    <Form.Text className="text-muted">
+                                        Seleziona il prodotto da inserire nel contenitore.
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>                            
+                        </Row>}            
+                        {this.state.pageBox.boxType === 17 && 
+                        <Row>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Label>Modello visualizzazione</Form.Label>
+                                    <BoxTemplateSelect 
+                                        template={this.state.pageBox.boxTemplate}
+                                        onTemplateChange={this.handleBoxTemplateChange} />           
                                     <Form.Text className="text-muted">
                                         Seleziona il prodotto da inserire nel contenitore.
                                     </Form.Text>

@@ -7,6 +7,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { CompactPicker,SliderPicker } from 'react-color';
 import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../_helpers/fetch-wrapper'
+import { SiteProductTypeSelect } from '../../../_components/Select/SiteProductTypeSelect';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -54,6 +55,10 @@ class SiteProductAddEdit extends React.Component {
         this.setState({ siteProduct: { ...this.state.siteProduct, [evt.target.name]: evt.target.checked } });
     }
 
+    handleChangeSiteProductTypeId(siteProductTypeId) {
+        this.setState({ siteProduct: { ...this.state.siteProduct, siteProductTypeId: siteProductTypeId } });
+    }
+
     handleFileName = (fileName) => {        
         this.setState({ siteProduct: { ...this.state.siteProduct, imageUrl: fileName } });        
     }
@@ -81,7 +86,7 @@ class SiteProductAddEdit extends React.Component {
     }
 
     tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
-        const fileName = (this.state.sitePage.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';            
+        const fileName = (this.state.siteProduct.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';            
         fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
             .then((result) => success(`${baseImageUrl}${result.fileName}`));         
       };                  
@@ -133,7 +138,7 @@ class SiteProductAddEdit extends React.Component {
                     <div className="p-2 bg-white shadow rounded-xl mt-2">                            
                         <Form onSubmit={() => this.onSubmit()}>
                             
-                            <div className='flex'>
+                            <div>
                                 <div className="text-center flex-row space-x-2">
                                     <Image className='w-48' src={baseImageUrl+this.state.siteProduct.imageUrl} fluid />                    
                                     <Uploader prefix={this.state.siteProduct.appSiteId} fileName={this.state.siteProduct.imageUrl} onFileNameChange={this.handleFileName} />      
@@ -143,7 +148,7 @@ class SiteProductAddEdit extends React.Component {
                                     </Button>        
                                 </div>                                    
                                 
-                                <div className='flex-1'>
+                                <div>
                                     <Form.Group>
                                         <Form.Label>Codice interno</Form.Label>
                                         <input type="text" className="form-control" name="internalCode" value={this.state.siteProduct.internalCode} onChange={this.handleChange} />
@@ -159,6 +164,14 @@ class SiteProductAddEdit extends React.Component {
                                             Codice pubblico del prodotto.
                                         </Form.Text>
                                     </Form.Group> 
+
+                                    <Form.Group>
+                                        <Form.Label>Tipo</Form.Label>
+                                        <SiteProductTypeSelect appSiteId={this.state.appSiteId} siteProductTypeId={this.state.siteProduct.siteProductTypeId} onChange={(_siteProductTypeId) => this.handleChangeSiteProductTypeId(_siteProductTypeId)} />
+                                        <Form.Text className="text-muted">
+                                            Tipo del prodotto.
+                                        </Form.Text>
+                                    </Form.Group>
                                 </div>
                             </div>
 
@@ -207,9 +220,9 @@ class SiteProductAddEdit extends React.Component {
                                 </Form.Text>
                             </Form.Group>  */}
 
-                            <div className='flex'>
+                            <div>
                                 {this.state.siteProduct && !this.state.loading && 
-                                <Form.Group className="flex-1 flex flex-col mt-2">
+                                <Form.Group className="flex flex-col mt-2">
                                     <Form.Label className="font-bold">Colore di Sfondo</Form.Label>
                                     <div className="flex flex-col md:flex:row">                            
                                         <div className="flex-none m-2 mt-0">
@@ -228,7 +241,7 @@ class SiteProductAddEdit extends React.Component {
                                     </Form.Text>
                                 </Form.Group>}    
 
-                                <Form.Group className='flex-1'>
+                                <Form.Group>
                                     <Form.Label>Prezzo</Form.Label>
                                     <input type="number" className="form-control" name="price" value={this.state.siteProduct.price} onChange={this.handleChangeNumber} />
                                     <Form.Text className="text-muted">

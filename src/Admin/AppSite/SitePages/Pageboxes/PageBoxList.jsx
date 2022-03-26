@@ -20,7 +20,7 @@ import { SiteSurveyBox } from '../../SiteSurvey/SiteSurveyBox/SiteSurveyBox';
 import { BoxTypeInfo } from '../../../../_components/BoxTypeInfo';
 
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import { ProductBox } from './Product/ProductBox';
+import { SiteProductPreview } from '../../../../_components/SiteProductPreview';
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -194,7 +194,7 @@ function PageBoxList({ match }) {
             </div>
             
             {sitePage &&
-            <div style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} className="fixed-background bg-fixed page-boxes rounded-b-xl border mb-4">
+            <div style={{backgroundImage: `url(${baseImageUrl+sitePage.imageUrl})`}} className="fixed-background bg-cover bg-fixed page-boxes rounded-b-xl border mb-4">
                 {(!pageBoxes || loading) &&               
                     <div className="text-center mt-1">
                         <ProgressBar animated now={100} />
@@ -227,10 +227,10 @@ function PageBoxList({ match }) {
                 <Card key={pageBox.pageBoxId.toString()} 
                     style={{backgroundImage: `url(${baseImageUrl+((parseInt(pageBox.boxType) !== 8 && parseInt(pageBox.boxType) !== 9) ? pageBox.imageUrl : '')})`, 
                         backgroundColor: (pageBox.sortId < 0 ? pageBox.boxColor : '')}}
-                    className="page-box rounded-lg border-2 border-gray-400 border-dashed">
+                    className="page-box bg-cover rounded-lg border-2 border-gray-400 border-dashed">
                     <Card.Header 
-                        style={{backgroundColor: pageBox.boxColor}}
-                        className='absolute w-full hidden box-header z-10 -mt-28 md:-mt-20 h-20 border border-b-0 rounded-t-xl'>                            
+                        //style={{backgroundColor: pageBox.boxColor}}
+                        className='w-full bg-white hidden box-header z-10 h-20 border border-b-0 rounded-t-xl'>                            
                         <div className="flex flex-row">
                             <div className="flex-grow md:flex">
                                 <BoxTypeInfo boxType={pageBox.boxType} boxId={pageBox.pageBoxId} />
@@ -275,8 +275,8 @@ function PageBoxList({ match }) {
                             style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
                             className={`${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
                             <Card.Img src={baseImageUrl+pageBox.imageUrl} />
-                        </div>
-                        }                                                
+                        </div>}
+
                         {pageBox.boxType && (parseInt(pageBox.boxType) === 1 || parseInt(pageBox.boxType) === 9 || parseInt(pageBox.boxType) === 14) &&
                         <div 
                             style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
@@ -287,6 +287,7 @@ function PageBoxList({ match }) {
                                 handleSaved={(_pageBox) => handleAddEdit(_pageBox)}>                                        
                             </BoxTextEditor>
                         </div>}
+
                         {pageBox.boxType && parseInt(pageBox.boxType) === 2 &&
                         <TopServiceList appSiteId={pageBox.appSiteId} sitePageId={pageBox.sitePageId} pageBoxId={pageBox.pageBoxId} />}    
                         {pageBox.boxType && parseInt(pageBox.boxType) === 3 &&
@@ -313,7 +314,7 @@ function PageBoxList({ match }) {
                         {pageBox.boxType && parseInt(pageBox.boxType) === 16 &&
                         <iframe className='w-full' height={pageBox.boxLatitude} title={pageBox.titleUrl} src={pageBox.boxEmail}></iframe>}
                         {pageBox.boxType && parseInt(pageBox.boxType) === 17 &&
-                        <ProductBox appSiteId={pageBox.appSiteId} siteProductId={pageBox.siteProductId} />}
+                        <SiteProductPreview appSiteId={pageBox.appSiteId} siteProductId={pageBox.siteProductId} template={pageBox.boxTemplate} readOnly={true} />}
                         
                     </Card.Body>                     
                     

@@ -220,8 +220,9 @@ class ProductAddEdit extends React.Component {
                             <div>
                                 <label>Prodotto</label>
                                 <SiteProductPreview 
-                                    appSiteId={this.state.product.appSiteId} 
+                                    appSiteId={this.state.product.appSiteId}                                     
                                     siteProductId={this.state.product.siteProductId}
+                                    template={1}
                                     onChange={this.handleSiteProductId} />                   
                             </div>                            
                         </div>

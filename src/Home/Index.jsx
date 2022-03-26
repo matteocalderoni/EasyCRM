@@ -58,6 +58,13 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.4.4.28 (Marzo 2022)</b>: ecco gli ultimi aggiornamenti:                             
+                            <ul className="list-disc ml-3">  
+                                <li>Nuova gestione <b>Prodotti</b>: abbiamo aggiunto 4 modelli diversi per esporre i prodotti del sito. Tramite i prodotti è possibile creare contenitori riutilizzabili. In fase di sviluppo la possibilità di collegare i prodotti per creare delle opzioni o dei gruppi.</li>                                                              
+                                <li><b>bug</b>: sistemazione dei problemi che ci segnalate, grazie per la vostra fondamentale collaborazione.</li>                                
+                            </ul>                            
+                        </li>
+                        <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.4.3.27 (Marzo 2022)</b>: ecco gli ultimi aggiornamenti:                             
                             <ul className="list-disc ml-3">  
                                 <li><b>Percorsi</b>: nuovo layout per i percorsi. Abbiamo lavorato molto per migliorare la compilazione di un percorso: il contenitore apre una finestra con layout unico per fisso e mobile, nella finestra sono visibili tutte le informazioni importanti.</li>                              
