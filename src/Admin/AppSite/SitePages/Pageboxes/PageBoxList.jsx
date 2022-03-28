@@ -230,7 +230,7 @@ function PageBoxList({ match }) {
                     className="page-box bg-cover rounded-lg border-2 border-gray-400 border-dashed">
                     <Card.Header 
                         //style={{backgroundColor: pageBox.boxColor}}
-                        className='w-full bg-white hidden box-header z-10 h-20 border border-b-0 rounded-t-xl'>                            
+                        className='w-full bg-white box-header z-10 h-20 border border-b-0 rounded-t-xl'>                            
                         <div className="flex flex-row">
                             <div className="flex-grow md:flex">
                                 <BoxTypeInfo boxType={pageBox.boxType} boxId={pageBox.pageBoxId} />
