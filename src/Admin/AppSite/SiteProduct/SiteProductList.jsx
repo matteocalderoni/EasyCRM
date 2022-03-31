@@ -63,7 +63,7 @@ function SiteProductList({ match }) {
                         </span>
                         {siteProduct.siteProductType && siteProduct.siteProductType.category === 1 && 
                         <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-                            € {siteProduct.price}
+                            € {siteProduct.price} - Qty {siteProduct.stockQuantity}
                         </div>}
                         {/* <div className="mt-2 text-slate-500">
                             {siteProduct.description && parse(siteProduct.description)}

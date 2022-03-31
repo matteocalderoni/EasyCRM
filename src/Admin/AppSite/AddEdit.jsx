@@ -305,11 +305,27 @@ class AddEdit extends React.Component {
                         </Form.Group>
                     </div>
 
+                    <div className="flex">
+                        <Form.Group className="flex-1 mt-2">
+                            <Form.Check type="checkbox" label="Attivo Whatsapp" name="whatsappEnabled" checked={this.state.appSite.whatsappEnabled} onChange={this.handleChangeBool} />
+                            <Form.Text>
+                                Con questa opzione si attiva il bottone Whatsapp alla fine di ordine.
+                            </Form.Text>
+                        </Form.Group>
+
+                        <Form.Group className="flex-1 mt-2">
+                            <Form.Check type="checkbox" label="Attiva Telefono" name="phoneEnabled" checked={this.state.appSite.phoneEnabled} onChange={this.handleChangeBool} />
+                            <Form.Text>
+                                Con questa opzione si attiva il bottone telefono alla fine di ordine.
+                            </Form.Text>
+                        </Form.Group>
+                    </div>
+
                     {this.state.appSite.shopEnabled && 
                     <div className='flex space-x-2'>
                         <Form.Group className='flex-1'>
                             <Form.Label>Stripe Secret Key</Form.Label>
-                            <input type="text" className="form-control" name="stripeSecretKey" value={this.state.appSite.stripeSecretKey} onChange={this.handleChange} />
+                            <input type="password" className="form-control" name="stripeSecretKey" value={this.state.appSite.stripeSecretKey} onChange={this.handleChange} />
                             <Form.Text className="text-muted">
                                 Inserire la chiave secreta collegata ad account Stripe per pagamenti. Attenzione non mostrare a nessuna questa chiave.
                             </Form.Text>

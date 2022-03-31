@@ -242,6 +242,14 @@ class SiteProductAddEdit extends React.Component {
                                 </Form.Group>}    
 
                                 <Form.Group>
+                                    <Form.Label>Disponibilità</Form.Label>
+                                    <input type="number" className="form-control" name="stockQuantity" value={this.state.siteProduct.stockQuantity} onChange={this.handleChangeNumber} />
+                                    <Form.Text className="text-muted">
+                                        Quantità disponibile. Lasciare a -1 per non mettere limiti.
+                                    </Form.Text>
+                                </Form.Group> 
+
+                                <Form.Group>
                                     <Form.Label>Prezzo</Form.Label>
                                     <input type="number" className="form-control" name="price" value={this.state.siteProduct.price} onChange={this.handleChangeNumber} />
                                     <Form.Text className="text-muted">
