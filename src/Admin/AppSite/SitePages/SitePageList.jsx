@@ -70,21 +70,21 @@ function SitePageList (props)
                                 </div>
                             </Card.Title>                                                        
                         </Card.Header>                        
-                        <Card.Body className="mx-full">                                       
-                            <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900">
+                        <Card.Body className="mx-full md:flex space-y-2 md:space-x-2">                                       
+                            <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex flex-1 items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900">
                                 <BsPencil className="mr-2" /> modifica pagina
                             </Link>
-                            <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex items-center justify-center rounded-full bg-blue-200 mt-1 p-1 text-blue-900">
+                            <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex flex-1 items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900">
                                 <FaBoxes className="mr-2" /> gestione contenuti
                             </Link>
-                            {sitePage.sitePageId === 1 && 
-                            <div className="rounded border mt-2">
-                                <p className="text-red-400">La pagina iniziale non può essere eliminata.</p>
-                            </div>}                            
                             {sitePage.sitePageId > 1 &&
-                            <div className="mt-2 rounded-full block bg-red-500">
+                            <div className="mt-2 flex-1 rounded-full block bg-red-500">
                                 <DeleteConfirmation onConfirm={() => deleteSitePage(sitePage)} /> Elimina
                             </div>}
+                            {sitePage.sitePageId === 1 && 
+                            <div className="rounded border mt-2 flex-none">
+                                <p className="text-red-400">La pagina iniziale non può essere eliminata.</p>
+                            </div>}                            
                         </Card.Body>
                     </Card>                                            
                 </div>                    

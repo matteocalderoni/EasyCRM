@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import { appSiteService } from '../_services';
-import { Image } from 'react-bootstrap';
+import { FaCircle } from 'react-icons/fa';
 
-const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
+//const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
  
-const AnyReactComponent = ({ imageUrl }) => <div><Image style={{height:30}} fluid src={baseImageUrl+imageUrl} /></div>;
+const AnyReactComponent = ({ imageUrl }) => <FaCircle className='h-12 w-12 fill-red-600' />;
 //const AnyReactComponent = ({ imageUrl }) => <b>[+]</b>;
  
 class SimpleMap extends Component {
   static defaultProps = {
-    center: {
-      lat: 59.95,
-      lng: 30.33
-    },
+    center: { lat: 59.95, lng: 30.33 },
     zoom: 22
   };
 
@@ -54,7 +51,7 @@ class SimpleMap extends Component {
                   <AnyReactComponent
                     lat={this.state.appSite.latitude}
                     lng={this.state.appSite.longitude}
-                    imageUrl={this.state.appSite.companyLogo}
+                    //imageUrl={this.state.appSite.companyLogo}
                   />
                 </GoogleMapReact>                
               </div>                

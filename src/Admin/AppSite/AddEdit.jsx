@@ -302,10 +302,16 @@ class AddEdit extends React.Component {
                             <Form.Text>
                                 Con questa opzione si attiva la possibilità di effettuare ordini dal sito: viene visualizzato il carello di utente.
                             </Form.Text>
-                        </Form.Group>
+                        </Form.Group>                        
                     </div>
 
                     <div className="flex">
+                        <Form.Group className="flex-1 mt-2">
+                            <Form.Check type="checkbox" label="Pagamento opzionale" name="optionalPay" checked={this.state.appSite.optionalPay} onChange={this.handleChangeBool} />
+                            <Form.Text>
+                                Con questa opzione si attiva il bottone per pagare alla consegna (saltando paga online).
+                            </Form.Text>
+                        </Form.Group>
                         <Form.Group className="flex-1 mt-2">
                             <Form.Check type="checkbox" label="Attivo Whatsapp" name="whatsappEnabled" checked={this.state.appSite.whatsappEnabled} onChange={this.handleChangeBool} />
                             <Form.Text>

@@ -58,9 +58,19 @@ function Home() {
                 <Card.Body>
                     <ul className="list-group">
                         <li className="list-group-item">
+                            <b className="text-blue-800">Ver 1.4.5.29 (Aprile 2022)</b>: ecco gli ultimi aggiornamenti:                             
+                            <ul className="list-disc ml-3">  
+                                <li><b>Ricerca</b>: abbiamo integrato la un motore di ricerca nel sito pubblico (libreria Meilisearch). Questa funzione utilizza un indice ad alte prestazioni che viene aggiornato ad ogni modifica su pagine e contenuti.</li>                                                              
+                                <li><b>Pagamento opzionale</b>: permetti agli utenti di pagare alla consegna (rimuove obbligo del pagamento online per concludere un ordine).</li>                                                              
+                                <li><b>bug</b>: sistemazione dei problemi che ci segnalate, grazie per la vostra fondamentale collaborazione.</li>                                
+                            </ul>                            
+                        </li>
+                        <li className="list-group-item">
                             <b className="text-blue-800">Ver 1.4.4.28 (Marzo 2022)</b>: ecco gli ultimi aggiornamenti:                             
                             <ul className="list-disc ml-3">  
                                 <li>Nuova gestione <b>Prodotti</b>: abbiamo aggiunto 4 modelli diversi per esporre i prodotti del sito. Tramite i prodotti è possibile creare contenitori riutilizzabili. In fase di sviluppo la possibilità di collegare i prodotti per creare delle opzioni o dei gruppi.</li>                                                              
+                                <li><b>Disponibilità</b>: è possibile assegnare una disponibilità ai prodotti per limitare gli acquisti. Appena il prodotto viene aggiunto al carello viene rimosso da disponibilità. Lasciare a -1 per disponibilità illimitata.</li>
+                                <li><b>Mail di conferma</b>: invio della mail solo dopo il pagamento effettuato. Nuovo modello della mail con dettagli di pagamento.</li>
                                 <li><b>bug</b>: sistemazione dei problemi che ci segnalate, grazie per la vostra fondamentale collaborazione.</li>                                
                             </ul>                            
                         </li>
