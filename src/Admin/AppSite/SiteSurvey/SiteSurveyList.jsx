@@ -5,6 +5,7 @@ import { surveyService, appSiteService } from '../../../_services';
 import { SiteSurveyModal } from './SiteSurveyModal';
 import { FcHome } from 'react-icons/fc';
 import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
+import { FooterNav } from '../../../_components/FooterNav';
 
 function SiteSurveyList ({ match }){
     const appSiteId = parseInt(match.params.appSiteId);
@@ -45,52 +46,65 @@ function SiteSurveyList ({ match }){
     }
     
     return (
-        <Container fluid>
-            <ul className="breadcrumb">
-                <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito <b>{appSite && appSite.name}</b></Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin/sites/sitepages/${appSiteId}`}>Pagine del Sito <b>{appSite && appSite.name}</b></Link></li>                
-                <li className="breadcrumb-item active">
-                    Percorsi del Sito <b>{appSite && appSite.name}</b>
-                </li>
-            </ul>
-            <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
+        <>
+            <Container fluid>
+                <ul className="breadcrumb">
+                    <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
+                    <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
+                    <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
+                    <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito <b>{appSite && appSite.name}</b></Link></li>                
+                    <li className="breadcrumb-item"><Link to={`/admin/sites/sitepages/${appSiteId}`}>Pagine del Sito <b>{appSite && appSite.name}</b></Link></li>                
+                    <li className="breadcrumb-item active">
+                        Percorsi del Sito <b>{appSite && appSite.name}</b>
+                    </li>
+                </ul>
+                <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
+                    <Row>
+                        <Col sm={8}>
+                            <h1 className="text-blue-900 font-bold">Gestione <b>Percorsi del Sito</b></h1>
+                            {appSite && <h1>{appSite.name}</h1>}                
+                            <p className="text-muted">Tramite questa sezione si configurano i percorsi del sito relative al sito.</p>
+                        </Col>
+                        <Col sm={2} className="flex">
+                            
+                        </Col>
+                        <Col sm={2} className="flex text-right">
+                            
+                        </Col>
+                    </Row>                
+                </div>            
+                {loading && <Col className="text-center mart2">
+                    <ProgressBar animated now={100} />
+                </Col>}
                 <Row>
-                    <Col sm={8}>
-                        <h1 className="text-blue-900 font-bold">Gestione <b>Percorsi del Sito</b></h1>
-                        {appSite && <h1>{appSite.name}</h1>}                
-                        <p className="text-muted">Tramite questa sezione si configurano i percorsi del sito relative al sito.</p>
-                    </Col>
-                    <Col sm={2} className="flex">
-                        <Link to={`/admin/sites/sitesurveys/outcometypes/${appSiteId}`} className="btn btn-primary mr-1">Esiti percorsi</Link>
-                    </Col>
-                    <Col sm={2} className="flex text-right">
-                        <SiteSurveyModal appSiteId={appSiteId} siteSurveyId={0} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
-                    </Col>
+                {siteSurveys && siteSurveys.map(siteSurvey =>                                    
+                    <Col sm={6} md={4} key={siteSurvey.siteSurveyId}>
+                        <Card className="rounded-xl shadow-xl">
+                            <Card.Body style={{backgroundColor: siteSurvey.boxColor}}>                                
+                                <Card.Title>
+                                    {siteSurvey.siteSurveyName} 
+                                </Card.Title>                           
+                                <Link to={`edit/${siteSurvey.appSiteId}/${siteSurvey.siteSurveyId}`} className="btn btn-primary mr-1">dettagli</Link>
+                                {/* <Button variant="danger" onClick={() => deleteSiteSurvey(siteSurvey)}>elimina</Button> */}
+                                <DeleteConfirmation onConfirm={() => deleteSiteSurvey(siteSurvey)} />
+                            </Card.Body>
+                        </Card>                                            
+                    </Col>                    
+                )}                                                
                 </Row>                
-            </div>            
-            {loading && <Col className="text-center mart2">
-                <ProgressBar animated now={100} />
-            </Col>}
-            <Row>
-            {siteSurveys && siteSurveys.map(siteSurvey =>                                    
-                <Col sm={6} md={4} key={siteSurvey.siteSurveyId}>
-                    <Card className="rounded-xl shadow-xl">
-                        <Card.Body style={{backgroundColor: siteSurvey.boxColor}}>                                
-                            <Card.Title>
-                                {siteSurvey.siteSurveyName} 
-                            </Card.Title>                           
-                            <Link to={`edit/${siteSurvey.appSiteId}/${siteSurvey.siteSurveyId}`} className="btn btn-primary mr-1">dettagli</Link>
-                            {/* <Button variant="danger" onClick={() => deleteSiteSurvey(siteSurvey)}>elimina</Button> */}
-                            <DeleteConfirmation onConfirm={() => deleteSiteSurvey(siteSurvey)} />
-                        </Card.Body>
-                    </Card>                                            
-                </Col>                    
-            )}                                                
-            </Row>                
-        </Container>
+            </Container>
+
+            <div className='relative'>
+                <div className="fixed flex items-center bottom-20 md:bottom-16 left-2">
+                    <Link to={`/admin/sites/sitesurveys/outcometypes/${appSiteId}`} className="text-white px-4 pt-2 w-auto h-16 bg-cyan-500 rounded-full hover:bg-cyan-700 border-cyan-500 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">Esiti</Link>
+                </div>
+                
+                <SiteSurveyModal appSiteId={appSiteId} siteSurveyId={0} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
+            </div>
+
+            <FooterNav appSiteId={appSiteId} />
+
+        </>
     );
 }
 

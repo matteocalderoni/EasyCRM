@@ -48,7 +48,7 @@ function SitePageList (props)
     return (
         <Container fluid>            
             {parentPageId === 0 && 
-            <Form.Group className='rounded-xl border p-1 pt-2 mt-2 md:flex md:space-x-2'>
+            <Form.Group className='rounded-xl space-y-2 border p-1 pt-2 mt-2 md:flex md:space-x-2'>
                 <div className='flex-1'>
                     <input type="text" placeholder='Ricerca per titolo' className="form-control" value={searchText} onChange={(e) => setSearchText(e.target.value)}  />
                 </div>

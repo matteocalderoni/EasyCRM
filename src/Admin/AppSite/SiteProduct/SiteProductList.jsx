@@ -7,6 +7,7 @@ import { FcHome } from 'react-icons/fc';
 import { productService } from '../../../_services';
 import { SiteProductModal } from './SiteProductModal';
 import parse from 'html-react-parser';
+import { FooterNav } from '../../../_components/FooterNav';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -83,27 +84,23 @@ function SiteProductList({ match }) {
                 </div>                    
             )}   
         </div>
-        <Navbar fixed="bottom" variant="dark" bg="dark">
-            <Nav className="mr-right space-x-2">
-                <SiteProductModal appSiteId={appSiteId} siteProductId={0} handleAddEdit={(appSiteId) => getSiteProducts()} /> 
-                
-                <Link to={`/admin/sites/edit/${appSiteId}`}
-                    className="flex items-center justify-center rounded-full  bg-blue-500 text-white p-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                    </svg>
-                    Sito
-                </Link>
 
+        <div className='relative'>
+            <div className="fixed flex items-center bottom-20 md:bottom-16 left-2">
                 <Link to={`/admin/sites/siteproducts/siteproducttypes/${appSiteId}`}
-                    className="flex items-center justify-center rounded-full  bg-blue-500 text-white p-2">
+                    className="text-white px-4 pt-2 w-auto h-16 bg-cyan-500 rounded-full hover:bg-cyan-700 border-cyan-500 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>
                     Tipi
                 </Link>
-            </Nav>
-        </Navbar>
+            </div>
+
+            <SiteProductModal appSiteId={appSiteId} siteProductId={0} handleAddEdit={(appSiteId) => getSiteProducts()} /> 
+        </div>
+
+        <FooterNav appSiteId={appSiteId} />
+        
     </Container>
   );
 };

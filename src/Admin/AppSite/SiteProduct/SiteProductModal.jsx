@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap'
-
+import { BsPlus,BsPencil } from 'react-icons/bs';
 import { SiteProductAddEdit } from './SiteProductAddEdit'; 
 
 class SiteProductModal extends React.Component {
@@ -17,13 +17,8 @@ class SiteProductModal extends React.Component {
          };
     }
     
-    handleShow = () => {    
-        this.setState({ setShow: true });        
-    }
-
-    handleClose = () => {
-        this.setState({ setShow: false });
-    }            
+    handleShow = () => this.setState({ setShow: true });            
+    handleClose = () => this.setState({ setShow: false });    
 
     handleSaved = () => {
         this.setState({ setShow: false });
@@ -32,18 +27,20 @@ class SiteProductModal extends React.Component {
 
     render() {
         return (            
-          <>
-            <Button variant="primary" className="mr-1 bg-green-500 border-0 rounded-full" onClick={this.handleShow}>
-                {this.state.siteProduct.siteProductId > 0 ? 'Modifica prodotto' : 'Aggiungi prodotto'}
-            </Button>
+          <div className='relative'>
+            <div className={`fixed ${(this.props.pageBoxId > 0 ? 'bottom-2' : 'bottom-20 md:bottom-16')} right-2`}>
+                <Button variant="primary" className="text-white px-4 w-auto h-16 bg-green-600 rounded-full hover:bg-green-700 border-green-500 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none" onClick={this.handleShow}>
+                    {this.state.siteProduct.siteProductId > 0 && <BsPencil title="Modifica prodotto" />} 
+                    {this.state.siteProduct.siteProductId === 0 && <BsPlus title="Aggiungi prodotto" />}                                                        
+                </Button>
+            </div>
             <Modal show={this.state.setShow} size="lg" onHide={this.handleClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>{this.state.siteProduct.siteProductId > 0 ? 'Modifica prodotto' : 'Aggiungi prodotto'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {this.state.setShow &&
-                        <SiteProductAddEdit appSiteId={this.state.appSiteId} siteProductId={this.state.siteProduct.siteProductId} handleSaved={this.handleSaved} />
-                    }                    
+                    <SiteProductAddEdit appSiteId={this.state.appSiteId} siteProductId={this.state.siteProduct.siteProductId} handleSaved={this.handleSaved} />}                    
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.handleClose} variant="default">
@@ -51,7 +48,7 @@ class SiteProductModal extends React.Component {
                     </Button> 
                 </Modal.Footer>
             </Modal>              
-          </>          
+          </div>          
         );
     }
 }

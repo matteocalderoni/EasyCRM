@@ -532,7 +532,8 @@ class PageBoxAddEdit extends React.Component {
                 <Navbar fixed="bottom" variant="dark" bg="dark">
                     <Nav className="mr-auto">
                         <Button onClick={this.onSubmit}  className="flex items-center justify-center rounded-full bg-green-500">
-                            <FaSave className="mr-2" /> Salva
+                            <FaSave className="mr-2" /> 
+                            <span className='hidden md:block'>Salva</span>
                         </Button>                         
                         <Button onClick={() =>this.props.onClose()}  className="flex items-center justify-center rounded-full bg-gray-200 text-black ml-2">
                             <FaUndo className="mr-2" /> annulla

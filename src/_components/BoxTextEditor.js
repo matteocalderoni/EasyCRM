@@ -108,16 +108,19 @@ function BoxTextEditor({pageBox,prefix,handleSaved}) {
                 </LanguageEditor>}              
                 
             </div>
-            <div className='flex'>
+            <div className='absolute bottom-2 left-2'>
                 <div className="flex-1">
                     {languageCode === '' &&
-                    <Button onClick={() => updatePageBox()} variant="success" className="w-full bg-green-600 mr-1 rounded-lg">
-                        Salva
+                    <Button onClick={() => updatePageBox()} variant="success" className="flex items-center space-x-2 mr-3 h-16 justify-center rounded-full bg-green-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                        </svg>
+                        <span className='hidden md:block'>Salva testo</span>
                     </Button>}                         
                 </div>
-                <Form inline className='flex-1'>
+                {/* <Form inline className='flex-1'>
                     <LanguageSelect appSiteId={pageBoxData.appSiteId} onLanguageChange={(lang) => setLanguageCode(lang)} />                   
-                </Form>
+                </Form> */}
             </div>                             
         </>          
     );

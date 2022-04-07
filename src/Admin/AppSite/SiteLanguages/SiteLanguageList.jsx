@@ -5,6 +5,7 @@ import { languageService, appSiteService } from '../../../_services';
 import { SiteLanguageModal } from './SiteLanguageModal';
 import { FcHome } from 'react-icons/fc';
 import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
+import { FooterNav } from '../../../_components/FooterNav';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
@@ -47,54 +48,55 @@ function SiteLanguageList ({ match }){
     }
     
     return (
-        <Container fluid>
-            <ul className="breadcrumb">
-                <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
-                <li className="breadcrumb-item active">
-                    Lingue del Sito {appSite && <b>{appSite.name}</b>}                
-                </li>
-            </ul>
-            <Jumbotron className="small-jumbotron">
+        <>
+            <Container fluid>
+                <ul className="breadcrumb">
+                    <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
+                    <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
+                    <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
+                    <li className="breadcrumb-item active">
+                        Lingue del Sito {appSite && <b>{appSite.name}</b>}                
+                    </li>
+                </ul>
+                <Jumbotron className="small-jumbotron">
+                    <h5>Gestione <b>Lingue del Sito</b></h5>
+                    {appSite && <h1>{appSite.name}</h1>}                
+                    <p>
+                        Tramite questa sezione si configurano le pagine del sito relative al sito.<br />
+                        Utilizzare immagini ottimizzate per un caricamento rapido.
+                    </p>
+                </Jumbotron>            
+                {loading && 
+                <div className="text-center mart2">
+                    <ProgressBar animated now={100} />
+                </div>}
                 <Row>
-                    <Col sm={8}>
-                        <h5>Gestione <b>Lingue del Sito</b></h5>
-                        {appSite && <h1>{appSite.name}</h1>}                
-                        <p>
-                            Tramite questa sezione si configurano le pagine del sito relative al sito.<br />
-                            Utilizzare immagini ottimizzate per un caricamento rapido.
-                        </p>
-                    </Col>
-                    <Col sm={4} className="text-right">
-                        <SiteLanguageModal appSiteId={appSiteId} code={''} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
-                    </Col>
+                {siteLanguages && siteLanguages.map(siteLanguage =>                                    
+                    <Col sm={6} md={4} key={siteLanguage.code}>
+                        <Card className="mart2 text-center">
+                            <Card.Img variant="top" src={baseImageUrl+siteLanguage.imageUrl} />
+                            <Card.Body>                                
+                                <Card.Title>
+                                    {siteLanguage.code} 
+                                </Card.Title>                                                        
+                                <Card.Text>                                
+                                    {siteLanguage.description}
+                                </Card.Text>                            
+                                <Link to={`edit/${siteLanguage.appSiteId}/${siteLanguage.code}`} className="btn btn-primary mr-1">dettagli</Link>
+                                {/* <Button variant="danger" onClick={() => deleteSiteLanguage(siteLanguage)}>elimina</Button> */}
+                                <DeleteConfirmation onConfirm={() => deleteSiteLanguage(siteLanguage)} />
+                            </Card.Body>
+                        </Card>                                            
+                    </Col>                    
+                )}                                                
                 </Row>                
-            </Jumbotron>            
-            {loading && <Col className="text-center mart2">
-                <ProgressBar animated now={100} />
-            </Col>}
-            <Row>
-            {siteLanguages && siteLanguages.map(siteLanguage =>                                    
-                <Col sm={6} md={4} key={siteLanguage.code}>
-                    <Card className="mart2 text-center">
-                        <Card.Img variant="top" src={baseImageUrl+siteLanguage.imageUrl} />
-                        <Card.Body>                                
-                            <Card.Title>
-                                {siteLanguage.code} 
-                            </Card.Title>                                                        
-                            <Card.Text>                                
-                                {siteLanguage.description}
-                            </Card.Text>                            
-                            <Link to={`edit/${siteLanguage.appSiteId}/${siteLanguage.code}`} className="btn btn-primary mr-1">dettagli</Link>
-                            {/* <Button variant="danger" onClick={() => deleteSiteLanguage(siteLanguage)}>elimina</Button> */}
-                            <DeleteConfirmation onConfirm={() => deleteSiteLanguage(siteLanguage)} />
-                        </Card.Body>
-                    </Card>                                            
-                </Col>                    
-            )}                                                
-            </Row>                
-        </Container>
+            </Container>
+
+            <SiteLanguageModal appSiteId={appSiteId} code={''} handleAddEdit={(appSiteId) => handleAddEdit(appSiteId)} />
+            
+            <FooterNav appSiteId={appSiteId} />
+        
+        </>
     );
 
 }

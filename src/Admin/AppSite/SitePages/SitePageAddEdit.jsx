@@ -11,6 +11,7 @@ import { fetchWrapper } from '../../../_helpers/fetch-wrapper';
 import { PageTypeSelect } from '../../../_components/Select/PageTypeSelect';
 import { NavPositionSelect } from '../../../_components/Select/NavPositionSelect';
 import { NavAlignSelect } from '../../../_components/Select/NavAlignSelect';
+import { FooterNav } from '../../../_components/FooterNav';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -254,6 +255,8 @@ class SitePageAddEdit extends React.Component {
                                 </Form.Group>}
                             </div>
                         </div>}
+
+                        {this.state.sitePage.sitePageId > 0 &&                 
                         <div className="p-2 rounded-xl mt-2 shadow-sm bg-white">                            
                                                         
                             <div className="flex flex-col lg:flex-row">
@@ -341,63 +344,20 @@ class SitePageAddEdit extends React.Component {
                                 </div>
 
                             </div>    
-                        </div>
+                        </div>}
+
                     </div>    
-
-                    {this.state.languageCode == '' && 
-                    <Form.Group className="mt-2">
-                        <Form.Label className="text-xl"><b>Titolo</b> per Navigazione</Form.Label>                                
-                        <div className="border rounded-lg ring ring-blue-200 p-1" style={{backgroundColor: this.state.sitePage.navColor}}>
-                            <Editor
-                                apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                initialValue={this.state.sitePage.titleNav}                                
-                                inline={true}
-                                init={{
-                                    height: 500,                                        
-                                    menubar: menuSettings,
-                                    plugins: pluginsSettings,
-                                    toolbar: toolbarSettings,
-                                    font_formats: fontSettings,
-                                    content_style: styleSettings,
-                                    images_upload_handler: this.tiny_image_upload_handler
-                                }}
-                                onEditorChange={this.handleTitleNavEditorChange}
-                                >
-                            </Editor> 
-                        </div>
-                        <Form.Text className="text-muted text-xs">
-                            Titolo della pagina per il menù di navigazione: viene visualizzato nel menù di navigazione in alto nella pagina.                                    
-                        </Form.Text>
-                    </Form.Group>}
-
-                    {this.state.languageCode && this.state.languageCode !== '' &&
+                    
+                    {this.state.sitePage.sitePageId > 0 &&                 
                     <div>
-                        <LanguageEditor 
-                            originalText={this.state.sitePage.titleNav}
-                            appSiteId={this.state.sitePage.appSiteId} 
-                            code={this.state.languageCode}
-                            inline={true}
-                            labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-TitleNav`}>                                    
-                        </LanguageEditor>                                
-                    </div>} 
 
-                    <div style={{ backgroundColor: this.state.sitePage.boxColor, backgroundImage: `url(${baseImageUrl+this.state.sitePage.imageUrl})`}} 
-                        className="fixed-background bg-fixed bg-no-repeat bg-contain bg-center border rounded-xl mt-2 p-2">
-                        <Row>
-                            {(this.state.sitePage.logoPosition === 1 || this.state.sitePage.logoPosition === 2) && 
-                            <Col sm={this.state.sitePage.logoPosition === 1 ? 12 : 6} className="text-center">
-                                <Image className="slide-logo" src={baseImageUrl+this.state.companyLogo}></Image>
-                            </Col>}
-                            <Col sm={(this.state.sitePage.logoPosition === 2 || this.state.sitePage.logoPosition === 4) ? 6 : 12}>
-                                
-                            {this.state.languageCode == '' && 
-                            <Form.Group>
-                            <Form.Label className="text-xl">Titolo della Slide</Form.Label>
-                            {/* <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} /> */}
-                            <div className="border rounded-lg ring ring-blue-200 p-1">
+                        {this.state.languageCode == '' && 
+                        <Form.Group className="mt-2">
+                            <Form.Label className="text-xl"><b>Titolo</b> per Navigazione</Form.Label>                                
+                            <div className="border rounded-lg ring ring-blue-200 p-1" style={{backgroundColor: this.state.sitePage.navColor}}>
                                 <Editor
                                     apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                    initialValue={this.state.sitePage.title}                                
+                                    initialValue={this.state.sitePage.titleNav}                                
                                     inline={true}
                                     init={{
                                         height: 500,                                        
@@ -408,37 +368,46 @@ class SitePageAddEdit extends React.Component {
                                         content_style: styleSettings,
                                         images_upload_handler: this.tiny_image_upload_handler
                                     }}
-                                    onEditorChange={this.handleTitleEditorChange}
+                                    onEditorChange={this.handleTitleNavEditorChange}
                                     >
                                 </Editor> 
                             </div>
-
                             <Form.Text className="text-muted text-xs">
-                                Titolo della Slide: visualizzato sopra testo slide, posizionato in base a logo.
+                                Titolo della pagina per il menù di navigazione: viene visualizzato nel menù di navigazione in alto nella pagina.                                    
                             </Form.Text>
                         </Form.Group>}
 
                         {this.state.languageCode && this.state.languageCode !== '' &&
                         <div>
                             <LanguageEditor 
-                                originalText={this.state.sitePage.title}
+                                originalText={this.state.sitePage.titleNav}
                                 appSiteId={this.state.sitePage.appSiteId} 
                                 code={this.state.languageCode}
                                 inline={true}
-                                labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-Title`}>                                    
+                                labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-TitleNav`}>                                    
                             </LanguageEditor>                                
-                        </div>}   
+                        </div>} 
 
-                        {this.state.sitePage.sitePageId > 0 && this.state.languageCode == '' &&
-                            <div>
-                                <label className="text-xl">Testo della Slide</label>
+                        <div style={{ backgroundColor: this.state.sitePage.boxColor, backgroundImage: `url(${baseImageUrl+this.state.sitePage.imageUrl})`}} 
+                            className="fixed-background bg-fixed bg-no-repeat bg-contain bg-center border rounded-xl mt-2 p-2">
+                            <Row>
+                                {(this.state.sitePage.logoPosition === 1 || this.state.sitePage.logoPosition === 2) && 
+                                <Col sm={this.state.sitePage.logoPosition === 1 ? 12 : 6} className="text-center">
+                                    <Image className="slide-logo" src={baseImageUrl+this.state.companyLogo}></Image>
+                                </Col>}
+                                <Col sm={(this.state.sitePage.logoPosition === 2 || this.state.sitePage.logoPosition === 4) ? 6 : 12}>
+                                    
+                                {this.state.languageCode == '' && 
+                                <Form.Group>
+                                <Form.Label className="text-xl">Titolo della Slide</Form.Label>
+                                {/* <input type="text" className="form-control" name="title" value={this.state.sitePage.title} onChange={this.handleChange} maxLength={200} /> */}
                                 <div className="border rounded-lg ring ring-blue-200 p-1">
                                     <Editor
                                         apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                        initialValue={this.state.sitePage.slideText}      
-                                        inline={true}                          
+                                        initialValue={this.state.sitePage.title}                                
+                                        inline={true}
                                         init={{
-                                            height: 500,
+                                            height: 500,                                        
                                             menubar: menuSettings,
                                             plugins: pluginsSettings,
                                             toolbar: toolbarSettings,
@@ -446,30 +415,70 @@ class SitePageAddEdit extends React.Component {
                                             content_style: styleSettings,
                                             images_upload_handler: this.tiny_image_upload_handler
                                         }}
-                                        onEditorChange={this.handleEditorChange}
-                                    />
+                                        onEditorChange={this.handleTitleEditorChange}
+                                        >
+                                    </Editor> 
                                 </div>
-                            </div>
-                        }
 
-                        {this.state.languageCode && this.state.languageCode !== '' &&
-                        <div>
-                            <LanguageEditor 
-                                originalText={this.state.sitePage.slideText}
-                                appSiteId={this.state.sitePage.appSiteId} 
-                                code={this.state.languageCode}
-                                inline={true}
-                                labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-SlideText`}>                                    
-                            </LanguageEditor>
-                        </div>}
+                                <Form.Text className="text-muted text-xs">
+                                    Titolo della Slide: visualizzato sopra testo slide, posizionato in base a logo.
+                                </Form.Text>
+                            </Form.Group>}
 
-                            </Col>
-                            {(this.state.sitePage.logoPosition === 3 || this.state.sitePage.logoPosition === 4) && <Col sm={this.state.sitePage.logoPosition === 3 ? 12 : 6} className="text-center">
-                                <Image className="slide-logo" src={baseImageUrl+this.state.companyLogo}></Image>
-                            </Col>}
-                        </Row>     
-                    </div>
+                            {this.state.languageCode && this.state.languageCode !== '' &&
+                            <div>
+                                <LanguageEditor 
+                                    originalText={this.state.sitePage.title}
+                                    appSiteId={this.state.sitePage.appSiteId} 
+                                    code={this.state.languageCode}
+                                    inline={true}
+                                    labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-Title`}>                                    
+                                </LanguageEditor>                                
+                            </div>}   
+
+                            {this.state.sitePage.sitePageId > 0 && this.state.languageCode == '' &&
+                                <div>
+                                    <label className="text-xl">Testo della Slide</label>
+                                    <div className="border rounded-lg ring ring-blue-200 p-1">
+                                        <Editor
+                                            apiKey={process.env.REACT_APP_TINTMCE_KEY}
+                                            initialValue={this.state.sitePage.slideText}      
+                                            inline={true}                          
+                                            init={{
+                                                height: 500,
+                                                menubar: menuSettings,
+                                                plugins: pluginsSettings,
+                                                toolbar: toolbarSettings,
+                                                font_formats: fontSettings,
+                                                content_style: styleSettings,
+                                                images_upload_handler: this.tiny_image_upload_handler
+                                            }}
+                                            onEditorChange={this.handleEditorChange}
+                                        />
+                                    </div>
+                                </div>
+                            }
+
+                            {this.state.languageCode && this.state.languageCode !== '' &&
+                            <div>
+                                <LanguageEditor 
+                                    originalText={this.state.sitePage.slideText}
+                                    appSiteId={this.state.sitePage.appSiteId} 
+                                    code={this.state.languageCode}
+                                    inline={true}
+                                    labelKey={`SITEPAGE_${this.state.sitePage.appSiteId}_${this.state.sitePage.sitePageId}-SlideText`}>                                    
+                                </LanguageEditor>
+                            </div>}
+
+                                </Col>
+                                {(this.state.sitePage.logoPosition === 3 || this.state.sitePage.logoPosition === 4) && <Col sm={this.state.sitePage.logoPosition === 3 ? 12 : 6} className="text-center">
+                                    <Image className="slide-logo" src={baseImageUrl+this.state.companyLogo}></Image>
+                                </Col>}
+                            </Row>     
+                        </div>
                     
+                    </div>}
+
                     <div className='md:flex p-2 mt-2 rounded-xl shadow-sm content-center bg-white'>
                         <div className='flex-1'>
                             <Form.Group className="mt-2">
@@ -490,33 +499,11 @@ class SitePageAddEdit extends React.Component {
                     </div>
 
                 </Card.Body>    
-            </Card>                    
-            <Navbar fixed="bottom" className="flex bg-blue-800">
-                <Nav className="flex space-x-3 text-sm font-medium mr-auto">
-                    <Button onClick={() => this.onSubmit()} className="flex items-center justify-center rounded-full bg-green-500">
-                        <FaSave className="mr-2" /> Salva
-                    </Button> 
-                    {this.state.sitePage.sitePageId > 0 && 
-                    <Link title="Vai a gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${this.state.sitePage.appSiteId}/${this.state.sitePage.sitePageId}`} 
-                        className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-                        </svg>
-                        Contenitori
-                    </Link>}
-                    {this.state.sitePage.sitePageId > 0 && 
-                    <Link to={`/admin/sites/edit/${this.state.sitePage.appSiteId}`}
-                        className="flex items-center justify-center rounded-full  bg-blue-500 text-white p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                        </svg>
-                        Modifica Sito
-                    </Link>}
-                </Nav>
-                <Form inline>
-                    <LanguageSelect appSiteId={this.state.sitePage.appSiteId} onLanguageChange={(code) => this.handleLanguageCode(code)} />
-                </Form>
-            </Navbar>                
+            </Card>     
+
+            <FooterNav appSiteId={this.state.sitePage.appSiteId} sitePageId={this.state.sitePage.sitePageId}
+                onSave={() => this.onSubmit()} onLanguageChange={(code) => this.handleLanguageCode(code)} />
+                          
           </>          
         );
     }

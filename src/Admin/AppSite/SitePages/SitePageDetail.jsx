@@ -42,20 +42,20 @@ function SitePageDetail({ match }) {
         <Container fluid className="pb-8">
             <ul className="breadcrumb">
             <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin`}>Admin</Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
-                <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito <b>{appSite && appSite.name}</b></Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito</Link></li>                
                 <li className="breadcrumb-item">
-                    <Link to={'/admin/sites/sitepages/'+ appSiteId}>Pagine del Sito {appSite && <b>{appSite.name}</b>}</Link>                    
+                    <Link to={'/admin/sites/sitepages/'+ appSiteId}>Pagine</Link>                    
                 </li>                
                 <li className="breadcrumb-item active">
-                    Pagina {sitePage && sitePage.title && parse(sitePage.titleUrl)}
+                    Pagina {sitePage && sitePage.titleUrl && parse(sitePage.titleUrl)}
                 </li>
             </ul>
             <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
-                <small>Gestione della pagina</small>                
+                <small>Gestione della pagina del sito {appSite && <b>{appSite.name}</b>}</small>                
                 <div>
-                    <h1 className="text-xl text-blue-600">{sitePage && !loading && sitePage.titleUrl && parse(sitePage.titleUrl)}</h1>
+                    <h1 className="text-4xl text-blue-600">{sitePage && !loading && sitePage.titleUrl && parse(sitePage.titleUrl)}</h1>
                 </div>
                 <p className="text-muted">Modifica dettagli relativi alla pagine: modifica immagine di sfondo, il titolo per il menù di navigazione e il testo per la slide.</p>                    
             </div>

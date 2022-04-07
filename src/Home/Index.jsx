@@ -62,6 +62,8 @@ function Home() {
                             <ul className="list-disc ml-3">  
                                 <li><b>Ricerca</b>: abbiamo integrato la un motore di ricerca nel sito pubblico (libreria Meilisearch). Questa funzione utilizza un indice ad alte prestazioni che viene aggiornato ad ogni modifica su pagine e contenuti.</li>                                                              
                                 <li><b>Pagamento opzionale</b>: permetti agli utenti di pagare alla consegna (rimuove obbligo del pagamento online per concludere un ordine).</li>                                                              
+                                <li><b>Nuovi Bottoni e Navigazione fondo pagina</b>: abbiamo aggiornato i bottoni più importanti per poterli utilizzare comodamente in tutti i layout. 
+                                    Inoltre abbiamo aggiornato la barra di navigazione in fondo alla pagina permettendo di passare rapidamente nelle varie sezioni di gestione del sito.</li>                                                              
                                 <li><b>bug</b>: sistemazione dei problemi che ci segnalate, grazie per la vostra fondamentale collaborazione.</li>                                
                             </ul>                            
                         </li>

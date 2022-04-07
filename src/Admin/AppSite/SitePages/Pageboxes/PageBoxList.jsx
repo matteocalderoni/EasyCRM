@@ -21,6 +21,7 @@ import { BoxTypeInfo } from '../../../../_components/BoxTypeInfo';
 
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import { SiteProductPreview } from '../../../../_components/SiteProductPreview';
+import { FooterNav } from '../../../../_components/FooterNav';
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -142,17 +143,17 @@ function PageBoxList({ match }) {
                 <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
                 <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>          
                 <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                      
-                <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito <b>{appSite && appSite.name}</b></Link></li>                
+                <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito</Link></li>                
                 <li className="breadcrumb-item"><Link to={'/admin/sites/sitepages/'+ appSiteId}>Elenco Pagine</Link></li>
                 <li className="breadcrumb-item"><Link to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`}>Pagina <b>{sitePage && sitePage.title && parse(sitePage.titleUrl)}</b></Link></li>                
                 <li className="breadcrumb-item active">
-                    Contenitori della Pagina <b>{sitePage && sitePage.title && parse(sitePage.titleUrl)}</b>
+                    Contenitori della Pagina <b>{sitePage && sitePage.titleUrl && parse(sitePage.titleUrl)}</b>
                 </li>
             </ul>
-            <div className="rounded-t-xl border mt-2 bg-gray-100 p-8 flex">
+            <div className="rounded-t-xl border mt-2 bg-gray-100 p-4 flex">
                 <div className='flex-grow'>
-                    <small className='font-bold'>Contenuti della pagina</small>   
-                    {sitePage && <h1 className="text-xl text-blue-500">{sitePage.title && parse(sitePage.titleUrl)}</h1>}
+                    <small className='font-bold'>Contenuti della pagina del sito <b>{appSite && appSite.name}</b></small>   
+                    {sitePage && <h1 className="text-4xl text-blue-500">{sitePage.titleUrl && parse(sitePage.titleUrl)}</h1>}
                     <p className="text-muted text-sm">
                         Tramite questa sezione è possibile gestire i contenitori della pagina. Si possono creare, modificare o eliminare diverse tipologie di contenitori.<br />
                         Sotto viene visualizzata un anteprima dei contenitori aggiunti (anche quelli non pubblici).
@@ -230,23 +231,23 @@ function PageBoxList({ match }) {
                     className="page-box bg-cover rounded-lg border-2 border-gray-400 border-dashed">
                     <Card.Header 
                         //style={{backgroundColor: pageBox.boxColor}}
-                        className='w-full bg-white box-header z-10 h-20 border border-b-0 rounded-t-xl'>                            
-                        <div className="flex flex-row">
-                            <div className="flex-grow md:flex">
+                        className='w-full bg-white box-header z-10 h-12 pt-1 border shadow-lg rounded-t-xl'>                            
+                        <div className="w-full flex flex-row">
+                            <div className="flex-grow flex items-center">
                                 <BoxTypeInfo boxType={pageBox.boxType} boxId={pageBox.pageBoxId} />
-                                <label className='w-24'>{BoxTypes && BoxTypes[pageBox.boxType - 1].label}</label>
+                                <label className='w-36'>{BoxTypes && BoxTypes[pageBox.boxType - 1].label}</label>
                                 {/* <span className="ml-2">{pageBox.title && parse(pageBox.title)}</span>                                         */}
                             </div>
-                            <div className="flex-none">
+                            <div>
                                 {pageBox.landingPageId > 0 &&
-                                <div className="p-2 rounded-full mr-4">
+                                <div className="flex items-center pt-2 rounded-full mr-4">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="Pagina collegata">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                     </svg>
                                 </div>}
                             </div>
                             <div className="flex flex-none align-middle mt-1">                                    
-                                <div className='drag-btn p-2 rounded-full bg-violet-400 mr-1'>
+                                <div className='drag-btn cursor-move p-1 rounded-full bg-violet-400 mr-1'>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                                     </svg>
@@ -324,34 +325,23 @@ function PageBoxList({ match }) {
                 </ResponsiveGridLayout>}
             </div>}
 
-            <Navbar fixed="bottom" className="flex bg-blue-800">
-                <Nav className="mr-auto">
-                    <Link className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-1" to={`/admin/sites/sitepages/edit/${appSiteId}/${pageId}`} title="Modifica la Pagina">
-                        <BsPencil className="mr-2" /> Pagina
-                    </Link>
-                    <Link className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-2" to={`/admin/sites/sitelanguages/${appSiteId}`} title="Gestione Lingue del sito">
-                        <FaLanguage className="mr-2" /> Lingue
-                    </Link>
-                    <Link className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-2" to={`/admin/sites/siteproducts/${appSiteId}`} title="Gestione Prodotti del sito">
-                        <FaCubes className="mr-2" /> Prodotti
-                    </Link>
-                    <Link className="flex items-center justify-center rounded-full  bg-blue-400 text-white p-2 ml-2" to={`/admin/sites/sitesurveys/${appSiteId}`} title="Gestione Percorsi del sito">
-                        <FaRoad className="mr-2" /> Percorsi
-                    </Link>
-                </Nav>
-                <Nav className="mr-left">
-                    <Button className="bg-green-500 text-white rounded-full mr-1" onClick={() => savePageLayouts()}>
+            <div className='relative'>
+                <div className="fixed flex items-center bottom-16 left-2">
+                    <Button className="text-white px-4 w-auto h-16 bg-cyan-500 rounded-full hover:bg-cyan-700 border-cyan-500 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none" onClick={() => savePageLayouts()}>
                         Salva Layout                        
                     </Button>
-                    <PageBoxModal 
-                        appSiteId={appSiteId} 
-                        sitePageId={pageId} 
-                        pageBoxId={0} 
-                        sortId={1} 
-                        title={''}
-                        handleAddEdit={(_pageBox) => handleAddEdit(_pageBox) } />
-                </Nav>
-            </Navbar> 
+                </div>        
+                <PageBoxModal 
+                    appSiteId={appSiteId} 
+                    sitePageId={pageId} 
+                    pageBoxId={0} 
+                    sortId={1} 
+                    title={''}
+                    handleAddEdit={(_pageBox) => handleAddEdit(_pageBox) } />
+            </div>
+
+            <FooterNav appSiteId={appSiteId} />
+            
         </Container>
     );
 
