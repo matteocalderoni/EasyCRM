@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
 import { BsPencil} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
 import { productService } from '../../../_services';
 import { SiteProductModal } from './SiteProductModal';
-import parse from 'html-react-parser';
 import { FooterNav } from '../../../_components/FooterNav';
 
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
@@ -88,7 +87,7 @@ function SiteProductList({ match }) {
         <div className='relative'>
             <div className="fixed flex items-center bottom-20 md:bottom-16 left-2">
                 <Link to={`/admin/sites/siteproducts/siteproducttypes/${appSiteId}`}
-                    className="text-white px-4 pt-2 w-auto h-16 bg-cyan-500 rounded-full hover:bg-cyan-700 border-cyan-500 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
+                    className="text-white flex items-center space-x-2 px-4 w-auto h-16 bg-cyan-500 rounded-full hover:bg-cyan-700 border-cyan-500 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>

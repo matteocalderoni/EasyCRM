@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, Navbar, Nav } from 'react-bootstrap';
+import { Container, Card } from 'react-bootstrap';
 import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
 import { BsPencil} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
@@ -45,6 +45,7 @@ function SiteOrderList({ match }) {
             <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
             <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
             <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>
+            <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito</Link></li>                
             <li className="breadcrumb-item active">Elenco Ordini ({total})</li>
         </ul>
 
@@ -56,7 +57,7 @@ function SiteOrderList({ match }) {
             {siteOrders && siteOrders.map(siteOrder =>                                    
                 <div className="block mt-1" key={siteOrder.orderId}>
                     <Card>
-                        <Card.Header className={`${(siteOrder.orderState === 2 ? 'bg-green-200' : 'bg-orange-100' )} border rounded-lg`}>
+                        <Card.Header className={`${(siteOrder.orderState === 3 ? 'bg-green-200' : 'bg-orange-100' )} border rounded-lg`}>
                             <div className="flex space-x-2">             
                                 <div className='w-32'>
                                     <p className='font-semibold'>{siteOrder.orderYear}-{siteOrder.orderId}</p>                                                        

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Container, Card, ProgressBar } from 'react-bootstrap';
 import { surveyService, appSiteService } from '../../../_services';
 import { SiteSurveyModal } from './SiteSurveyModal';
 import { FcHome } from 'react-icons/fc';
@@ -53,45 +53,36 @@ function SiteSurveyList ({ match }){
                     <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
                     <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
                     <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito <b>{appSite && appSite.name}</b></Link></li>                
-                    <li className="breadcrumb-item"><Link to={`/admin/sites/sitepages/${appSiteId}`}>Pagine del Sito <b>{appSite && appSite.name}</b></Link></li>                
+                    {/* <li className="breadcrumb-item"><Link to={`/admin/sites/sitepages/${appSiteId}`}>Pagine del Sito <b>{appSite && appSite.name}</b></Link></li>*/}
                     <li className="breadcrumb-item active">
                         Percorsi del Sito <b>{appSite && appSite.name}</b>
                     </li>
                 </ul>
                 <div className="shadow rounded-xl mt-2 bg-gray-100 p-4">
-                    <Row>
-                        <Col sm={8}>
-                            <h1 className="text-blue-900 font-bold">Gestione <b>Percorsi del Sito</b></h1>
-                            {appSite && <h1>{appSite.name}</h1>}                
-                            <p className="text-muted">Tramite questa sezione si configurano i percorsi del sito relative al sito.</p>
-                        </Col>
-                        <Col sm={2} className="flex">
-                            
-                        </Col>
-                        <Col sm={2} className="flex text-right">
-                            
-                        </Col>
-                    </Row>                
+                <h1 className="text-blue-900 font-bold">Gestione <b>Percorsi del Sito</b></h1>
+                {appSite && <h1>{appSite.name}</h1>}                
+                <p className="text-muted">Tramite questa sezione si configurano i percorsi del sito relative al sito.</p>
                 </div>            
-                {loading && <Col className="text-center mart2">
+                {loading && 
+                <div className="text-center mart2">
                     <ProgressBar animated now={100} />
-                </Col>}
-                <Row>
+                </div>}
+                <div className="mt-2 flex flex-wrap space-x-2">
                 {siteSurveys && siteSurveys.map(siteSurvey =>                                    
-                    <Col sm={6} md={4} key={siteSurvey.siteSurveyId}>
-                        <Card className="rounded-xl shadow-xl">
-                            <Card.Body style={{backgroundColor: siteSurvey.boxColor}}>                                
-                                <Card.Title>
-                                    {siteSurvey.siteSurveyName} 
-                                </Card.Title>                           
+                    <div className="mt-2 rounded-xl border w-80 mx-auto overflow-hidden" key={siteSurvey.siteSurveyId}>
+                        <Card>
+                            <Card.Header className='bg-gray-200'>
+                                {siteSurvey.siteSurveyName}                                     
+                            </Card.Header>
+                            <Card.Body className='flex flex-wrap' style={{backgroundColor: siteSurvey.boxColor}}>                                
                                 <Link to={`edit/${siteSurvey.appSiteId}/${siteSurvey.siteSurveyId}`} className="btn btn-primary mr-1">dettagli</Link>
                                 {/* <Button variant="danger" onClick={() => deleteSiteSurvey(siteSurvey)}>elimina</Button> */}
                                 <DeleteConfirmation onConfirm={() => deleteSiteSurvey(siteSurvey)} />
                             </Card.Body>
                         </Card>                                            
-                    </Col>                    
+                    </div>                    
                 )}                                                
-                </Row>                
+                </div>                
             </Container>
 
             <div className='relative'>

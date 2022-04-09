@@ -2,16 +2,12 @@ import React from 'react';
 import { productService, alertService } from '../../../../../_services';
 import { Uploader } from '../../../../../_components'
 import { Image, Form, Button, Modal, Navbar, Nav } from 'react-bootstrap'
-import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../../../_components/Select/LanguageSelect';
 import { SiteProductSelect } from '../../../../../_components/Select/SiteProductSelect';
 import { LanguageEditor } from '../../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../../_components/LanguageInput';
-import { menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../_helpers/tinySettings';
-import { fetchWrapper } from '../../../../../_helpers/fetch-wrapper';
 import { FaSave } from 'react-icons/fa';
 
-const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class ProductAddEdit extends React.Component {
@@ -146,17 +142,6 @@ class ProductAddEdit extends React.Component {
         }
     }
 
-    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
-        const fileName = (this.props.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
-
-        // Request made to the backend api 
-        // Send formData object 
-        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
-            .then((result) => {
-                success(`${baseImageUrl}${result.fileName}`);                
-            });         
-    };
-
     createProduct() {
         productService.createProduct({ product: this.state.product })
             .then(result => {
@@ -256,45 +241,18 @@ class ProductAddEdit extends React.Component {
                         </div>
                     </div>
 
-                    {/* <LanguageSelect appSiteId={this.state.product.appSiteId} onLanguageChange={this.handleLanguageCode} /> */}                    
-
-                    {/* <Form.Group>
-                        <Form.Label>Ordinamento</Form.Label>
-                        <input type="number" className="form-control" name="sortId" value={this.state.product.sortId} onChange={this.handleChangeNumber}  />
-                        <Form.Text className="text-muted">
-                            Valore per ordinamento crescente.
-                        </Form.Text>
-                    </Form.Group>    */}                       
-
-                    {this.state.product && !this.state.loading && this.state.languageCode === '' &&       
+                    {this.state.product && !this.state.loading &&
                     <div>
-                        <label>Descrizione estesa</label>
-                        <Editor
-                            apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                            initialValue={this.state.product.description}
-                            init={{
-                                height: 500,
-                                menubar: menuSettings,
-                                plugins: pluginsSettings,
-                                toolbar: toolbarSettings,
-                                font_formats: fontSettings,
-                                content_style: styleSettings,
-                                images_upload_handler: this.tiny_image_upload_handler
-                            }}
-                            onEditorChange={this.handleEditorChange}
-                        />                                            
-                    </div>}
-
-                    {this.state.languageCode && this.state.languageCode !== '' &&
-                    <div>
+                        <label>Descrizione estesa</label>                                                                 
                         <LanguageEditor 
-                            originalText={this.state.product.description}
                             appSiteId={this.state.product.appSiteId} 
+                            originalText={this.state.product.description}
+                            onChange={(content) => this.handleEditorChange(content)}
                             code={this.state.languageCode}
-                            labelKey={`PRODUCT_${this.state.product.appSiteId}_${this.state.product.sitePageId}_${this.state.product.pageBoxId}_${this.state.product.productId}-Description`}>                                    
-                        </LanguageEditor>
-                    </div>}                                               
-
+                            labelKey={`PRODUCT_${this.state.product.appSiteId}_${this.state.product.sitePageId}_${this.state.product.pageBoxId}_${this.state.product.productId}-Description`}
+                            inline={false} />
+                    </div>}                                 
+                    
                     <Form.Group>
                         <Form.Check type="checkbox" label="Pubblico" name="isPublished" checked={this.state.product.isPublished} onChange={this.handleChangeBool} />
                         <Form.Text>

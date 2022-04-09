@@ -54,6 +54,7 @@ function SiteLanguageList ({ match }){
                     <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
                     <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
                     <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>                
+                    <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito</Link></li>                
                     <li className="breadcrumb-item active">
                         Lingue del Sito {appSite && <b>{appSite.name}</b>}                
                     </li>

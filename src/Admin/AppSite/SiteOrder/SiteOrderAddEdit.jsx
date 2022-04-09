@@ -126,7 +126,7 @@ class SiteOrderAddEdit extends React.Component
                     <ProgressBar animated now={100} />
                 </div>}
                 {!this.state.loading && 
-                <div className={`${(this.state.siteOrder.orderState === 2 ? 'bg-green-100' : '')} p-2 border rounded-b-lg`}>                            
+                <div className={`${(this.state.siteOrder.orderState === 3 ? 'bg-green-100' : '')} p-2 border rounded-b-lg`}>                            
                     <Form onSubmit={() => this.onSubmit()}>                                        
                         
                         <div className='md:flex md:space-x-2'>

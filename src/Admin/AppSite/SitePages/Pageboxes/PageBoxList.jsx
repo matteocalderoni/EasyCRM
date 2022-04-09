@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, Button, ProgressBar,  Navbar, Nav } from 'react-bootstrap';
+import { Container, Card, Button, ProgressBar } from 'react-bootstrap';
 import { appSiteService, alertService } from '../../../../_services';
 import { PageBoxModal } from './PageBoxModal';
 import { EmployeeList } from './Employee/EmployeeList';
@@ -11,9 +11,7 @@ import { ProductList } from './Product';
 import { ArticleList } from './Article';
 import { BoxTextEditor, SimpleMap } from '../../../../_components';
 import parse from 'html-react-parser';
-import { BsPencil} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
-import { FaCubes, FaLanguage, FaRoad } from 'react-icons/fa';
 import { BoxTypes } from '../../../../_helpers'
 import { DeleteConfirmation,FacebookFeed,InstagramFeed,YoutubeVideo } from '../../../../_components';
 import { SiteSurveyBox } from '../../SiteSurvey/SiteSurveyBox/SiteSurveyBox';
@@ -34,6 +32,7 @@ function PageBoxList({ match }) {
     const [pageBoxes, setPageBoxes] = useState(null)
     const [loading, setLoading] = useState(false)
     const [loadingLayouts, setLoadingLayouts] = useState(false)
+    const [languageCode, setLanguageCode] = useState('')
 
     //const originalLayouts = getFromLS("layouts") || {};
 
@@ -84,6 +83,8 @@ function PageBoxList({ match }) {
                 setPageBoxes(pageBoxes.filter((box) => box.pageBoxId !== _pageBox.pageBoxId))
             });
     } 
+
+    
 
     function handleAddEdit(_pageBox) {        
         var _pageBoxes = []
@@ -283,7 +284,7 @@ function PageBoxList({ match }) {
                             style={{backgroundColor: (pageBox.sortId > 0 ? pageBox.boxColor : '')}} 
                             className={`${(pageBox.sortId === 2 ? 'rounded-full' : (pageBox.sortId === 3 ? 'rounded-xl' : 'rounded'))}`}>
                             <BoxTextEditor 
-                                prefix={pageBox.appSiteId} 
+                                languageCode={languageCode} 
                                 pageBox={pageBox} 
                                 handleSaved={(_pageBox) => handleAddEdit(_pageBox)}>                                        
                             </BoxTextEditor>
@@ -340,7 +341,7 @@ function PageBoxList({ match }) {
                     handleAddEdit={(_pageBox) => handleAddEdit(_pageBox) } />
             </div>
 
-            <FooterNav appSiteId={appSiteId} />
+            <FooterNav appSiteId={appSiteId} languageCode={languageCode} onLanguageChange={(code) => setLanguageCode(code)} />
             
         </Container>
     );

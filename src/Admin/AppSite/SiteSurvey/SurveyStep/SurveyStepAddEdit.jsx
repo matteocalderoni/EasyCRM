@@ -3,12 +3,6 @@ import { surveyService, alertService } from '../../../../_services';
 import { LanguageEditor } from '../../../../_components'
 import { Form, Button, Card, ProgressBar } from 'react-bootstrap';
 import { CompactPicker,SliderPicker } from 'react-color';
-import { Editor } from "@tinymce/tinymce-react";
-import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../_helpers/tinySettings';
-import { fetchWrapper } from '../../../../_helpers/fetch-wrapper';
-
-const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
-const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class SurveyStepAddEdit extends React.Component {
 
@@ -78,12 +72,6 @@ class SurveyStepAddEdit extends React.Component {
             this.createSurveyStep();                    
     }
 
-    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
-        const fileName = (this.state.surveyStep.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
-        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
-            .then((result) => success(`${baseImageUrl}${result.fileName}`));         
-      };                  
-
     createSurveyStep() {
         surveyService.createSurveyStep({ surveyStep: this.state.surveyStep })
             .then(result => {
@@ -129,46 +117,18 @@ class SurveyStepAddEdit extends React.Component {
                             </Form.Text>
                         </Form.Group>   
 
-                        {!this.state.loading && this.state.languageCode == '' &&
+                        {!this.state.loading &&
                         <div>
                             <label>Descrizione dello Step</label>
-                            <div>
-                                <Editor
-                                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                    initialValue={this.state.surveyStep.description}      
-                                    inline={false}                          
-                                    init={{
-                                        height: 200,
-                                        menubar: menuSettings,
-                                        plugins: pluginsSettings,
-                                        toolbar: toolbarSettings,
-                                        font_formats: fontSettings,
-                                        content_style: styleSettings,
-                                        images_upload_handler: this.tiny_image_upload_handler
-                                    }}
-                                    onEditorChange={this.handleEditorChange}
-                                />
-                            </div>
-                        </div>}
-
-                        {this.state.languageCode && this.state.languageCode !== '' &&
-                        <div>
                             <LanguageEditor 
-                                originalText={this.state.surveyStep.description}
                                 appSiteId={this.state.surveyStep.appSiteId} 
+                                originalText={this.state.surveyStep.description}
+                                onChange={(content) => this.handleEditorChange(content)}
                                 code={this.state.languageCode}
-                                inline={true}
-                                labelKey={`SURVEYSTEP_${this.state.surveyStep.appSiteId}_${this.state.surveyStep.siteSurveyId}-${this.state.surveyStep.surveyStepId}-Description`}>                                    
-                            </LanguageEditor>
+                                labelKey={`SURVEYSTEP_${this.state.surveyStep.appSiteId}_${this.state.surveyStep.siteSurveyId}-${this.state.surveyStep.surveyStepId}-Description`}
+                                inline={false} />                                                                
                         </div>}
 
-                        {/* <Form.Group>
-                            <Form.Label>Descrizione</Form.Label>
-                            <input type="text" className="form-control" name="description" value={this.state.surveyStep.description} onChange={this.handleChange} maxLength={200} />
-                            <Form.Text className="text-muted">
-                                La descrizione viene mostrata nello step e serve per presentare il passaggio.
-                            </Form.Text>
-                        </Form.Group>                 */}
                         {this.state.surveyStep && !this.state.loading && 
                         <Form.Group>
                             <div className="flex flex-col md:flex:row">                            

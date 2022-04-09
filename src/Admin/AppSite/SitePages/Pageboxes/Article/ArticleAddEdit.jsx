@@ -3,15 +3,10 @@ import { articleService, alertService } from '../../../../../_services';
 import { Uploader } from '../../../../../_components'
 import { CardSizes } from '../../../../../_helpers/cardSize';
 import { Image, Form, Button, Modal, Row, Col } from 'react-bootstrap'
-import { Editor } from "@tinymce/tinymce-react";
-import './article.css';
-import { LanguageSelect } from '../../../../../_components/Select/LanguageSelect';
 import { LanguageEditor } from '../../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../../_components/LanguageInput';
-import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../_helpers/tinySettings';
-import { fetchWrapper } from '../../../../../_helpers/fetch-wrapper';
+import './article.css';
 
-const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class ArticleAddEdit extends React.Component {
@@ -154,17 +149,6 @@ class ArticleAddEdit extends React.Component {
         }
     }
 
-    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
-        const fileName = (this.state.article.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
-
-        // Request made to the backend api 
-        // Send formData object 
-        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
-            .then((result) => {
-                success(`${baseImageUrl}${result.fileName}`);                
-            });         
-    };                  
-
     createArticle() {
         articleService.createArticle({ article: this.state.article })
             .then(result => {
@@ -218,9 +202,7 @@ class ArticleAddEdit extends React.Component {
                             <Uploader prefix={this.state.article.appSiteId} fileName={this.state.article.imageUrl} onFileNameChange={this.handleFileName} />      
                             <small>Utilizzare immagini con formato 640 X 640 px.</small>
                         </Col>
-                        <Col sm={4}>
-
-                            <LanguageSelect appSiteId={this.state.article.appSiteId} onLanguageChange={this.handleLanguageCode} />                           
+                        <Col sm={4}>                            
 
                             <Form.Group>
                                 <Form.Label>Categoria articolo</Form.Label>
@@ -251,34 +233,14 @@ class ArticleAddEdit extends React.Component {
                                 </LanguageInput>
                             </div>}                  
 
-                            {this.state.article && !this.state.loading && this.state.languageCode === '' &&                                         
-                            <div>
-                                <label>Descrizione</label>
-                                <Editor
-                                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                    initialValue={this.state.article.description}
-                                    init={{
-                                        height: 500,
-                                        menubar: menuSettings,
-                                        plugins: pluginsSettings,
-                                        toolbar: toolbarSettings,
-                                        font_formats: fontSettings,
-                                        content_style: styleSettings,
-                                        images_upload_handler: this.tiny_image_upload_handler
-                                    }}
-                                    onEditorChange={this.handleEditorChangeDescription}
-                                />
-                            </div>}
-
-                            {this.state.languageCode && this.state.languageCode !== '' &&
-                            <div>
-                                <LanguageEditor 
-                                    originalText={this.state.article.description}
-                                    appSiteId={this.state.article.appSiteId} 
-                                    code={this.state.languageCode}
-                                    labelKey={`ARTICLE_${this.state.article.appSiteId}_${this.state.article.sitePageId}_${this.state.article.pageBoxId}_${this.state.article.articleId}-Description`}>                                    
-                                </LanguageEditor>
-                            </div>} 
+                            {this.state.article && !this.state.loading && 
+                            <LanguageEditor 
+                                appSiteId={this.state.article.appSiteId} 
+                                originalText={this.state.article.description}
+                                onChange={(content) => this.handleEditorChangeDescription(content)}
+                                code={this.state.languageCode}
+                                labelKey={`ARTICLE_${this.state.article.appSiteId}_${this.state.article.sitePageId}_${this.state.article.pageBoxId}_${this.state.article.articleId}-Description`}
+                                inline={false} />}                                                                                              
 
                             <Form.Group>
                                 <Form.Label>Dimensione</Form.Label>
@@ -302,63 +264,26 @@ class ArticleAddEdit extends React.Component {
 
                         </Col>
                         <Col sm={4}>
-                            {this.state.article && !this.state.loading && this.state.languageCode === '' &&                                         
-                            <div>
-                                <label>Paragrafo 1</label>
-                                <Editor
-                                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                    initialValue={this.state.article.markdown}
-                                    init={{
-                                        height: 500,
-                                        menubar: menuSettings,
-                                        plugins: pluginsSettings,
-                                        toolbar: toolbarSettings,
-                                        font_formats: fontSettings,
-                                        content_style: styleSettings,
-                                        images_upload_handler: this.tiny_image_upload_handler
-                                    }}
-                                    onEditorChange={this.handleEditorChangeMarkdown}
-                                />                                            
-                            </div>}
+                            
+                            {this.state.article && !this.state.loading && 
+                            <LanguageEditor 
+                                appSiteId={this.state.article.appSiteId} 
+                                originalText={this.state.article.markdown}
+                                onChange={(content) => this.handleEditorChangeMarkdown(content)}
+                                code={this.state.languageCode}
+                                labelKey={`ARTICLE_${this.state.article.appSiteId}_${this.state.article.sitePageId}_${this.state.article.pageBoxId}_${this.state.article.articleId}-Markdown`}
+                                inline={false} />}                                  
 
-                            {this.state.languageCode && this.state.languageCode !== '' &&
-                            <div>
-                                <LanguageEditor 
-                                    originalText={this.state.article.markdown}
-                                    appSiteId={this.state.article.appSiteId} 
-                                    code={this.state.languageCode}
-                                    labelKey={`ARTICLE_${this.state.article.appSiteId}_${this.state.article.sitePageId}_${this.state.article.pageBoxId}_${this.state.article.articleId}-Markdown`}>                                    
-                                </LanguageEditor>
-                            </div>} 
+                            
+                            {this.state.article && !this.state.loading && 
+                            <LanguageEditor 
+                                appSiteId={this.state.article.appSiteId} 
+                                originalText={this.state.article.html}
+                                onChange={(content) => this.handleEditorChangeHtml(content)}
+                                code={this.state.languageCode}
+                                labelKey={`ARTICLE_${this.state.article.appSiteId}_${this.state.article.sitePageId}_${this.state.article.pageBoxId}_${this.state.article.articleId}-Html`}
+                                inline={false} />}
 
-                            {this.state.article && !this.state.loading && this.state.languageCode === '' &&                                         
-                            <div>
-                                <label>Paragrafo 2</label>
-                                <Editor
-                                    apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                    initialValue={this.state.article.html}
-                                    init={{
-                                        height: 500,
-                                        menubar: menuSettings,
-                                        plugins: pluginsSettings,
-                                        toolbar: toolbarSettings,
-                                        font_formats: fontSettings,
-                                        content_style: styleSettings,
-                                        images_upload_handler: this.tiny_image_upload_handler
-                                    }}
-                                    onEditorChange={this.handleEditorChangeHtml}
-                                />                                            
-                            </div>}
-
-                            {this.state.languageCode && this.state.languageCode !== '' &&
-                            <div>
-                                <LanguageEditor 
-                                    originalText={this.state.article.html}
-                                    appSiteId={this.state.article.appSiteId} 
-                                    code={this.state.languageCode}
-                                    labelKey={`ARTICLE_${this.state.article.appSiteId}_${this.state.article.sitePageId}_${this.state.article.pageBoxId}_${this.state.article.articleId}-Html`}>                                    
-                                </LanguageEditor>
-                            </div>} 
                         </Col>
                     </Row>                                    
 

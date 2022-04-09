@@ -3,14 +3,10 @@ import { appSiteService, alertService } from '../../../../../_services';
 import { Uploader } from '../../../../../_components'
 import { Image, Form, Button, Modal, Row, Col } from 'react-bootstrap'
 import { CardSizes } from '../../../../../_helpers/cardSize';
-import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../../../_components/Select/LanguageSelect';
 import { LanguageEditor } from '../../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../../_components/LanguageInput';
-import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../_helpers/tinySettings';
-import { fetchWrapper } from '../../../../../_helpers/fetch-wrapper';
 
-const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class EmployeeAddEdit extends React.Component {
@@ -116,17 +112,6 @@ class EmployeeAddEdit extends React.Component {
         }
     }
 
-    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
-        const fileName = (this.state.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';
-
-        // Request made to the backend api 
-        // Send formData object 
-        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
-            .then((result) => {
-                success(`${baseImageUrl}${result.fileName}`);                
-            });         
-    };
-
     createEmployee() {
         appSiteService.createEmployee({ employee: this.state })
             .then(() => {
@@ -222,36 +207,16 @@ class EmployeeAddEdit extends React.Component {
                                 </Form.Text>
                             </Form.Group>                    
                         </Col>
-                    </Row>                           
-
-                    {!this.state.loading && this.state.languageCode === '' && 
-                    <div>
-                        <label>Descrizione</label>
-                        <Editor
-                            apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                            initialValue={this.state.description}
-                            init={{
-                                height: 500,
-                                menubar: menuSettings,
-                                plugins: pluginsSettings,
-                                toolbar: toolbarSettings,
-                                font_formats: fontSettings,
-                                content_style: styleSettings,
-                                images_upload_handler: this.tiny_image_upload_handler
-                            }}
-                            onEditorChange={this.handleEditorChange}
-                        />                
-                    </div>}
+                    </Row>                                               
                     
-                    {this.state.languageCode && this.state.languageCode !== '' &&
-                    <div>
-                        <LanguageEditor 
-                            originalText={this.state.description}
-                            appSiteId={this.state.appSiteId} 
-                            code={this.state.languageCode}
-                            labelKey={`EMPLOYEE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.employeeId}-Description`}>                                    
-                        </LanguageEditor>
-                    </div>}                           
+                    {!this.state.loading && 
+                    <LanguageEditor 
+                        appSiteId={this.state.appSiteId} 
+                        originalText={this.state.description}
+                        onChange={(content) => this.handleEditorChange(content)}
+                        code={this.state.languageCode}
+                        labelKey={`EMPLOYEE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.employeeId}-Description`}
+                        inline={false} />}                                                                           
 
                     <Form.Group>
                         <Form.Label>Dimensione</Form.Label>

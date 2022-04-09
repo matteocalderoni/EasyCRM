@@ -19,28 +19,19 @@ function UserSurveyBox({appSiteId, siteSurveyId, userSurveyId}) {
     },[appSiteId,siteSurveyId,userSurveyId])
 
     return (
-        <>
-            {userSurvey && 
-            <div>
-                <label>{userSurvey.userSurveyId}</label>
-            </div>}
-
+        <>            
             <UserSiteSurveyBox appSiteId={appSiteId} siteSurveyId={siteSurveyId} />
-            
+                        
+            {userAnswers && userAnswers.length > 0 && userAnswers.map(_userAnswer => 
             <div>
-                <ul>
-                    {userAnswers && userAnswers.length > 0 && userAnswers.map(_userAnswer => 
-                    <li>
-                        <UserSurveyAnswerBox 
-                            appSiteId={_userAnswer.appSiteId} 
-                            siteSurveyId={_userAnswer.siteSurveyId} 
-                            surveyStepId={_userAnswer.surveyStepId} 
-                            stepQuestionId={_userAnswer.stepQuestionId} 
-                            questionAnswerId={_userAnswer.questionAnswerId} />
-                    </li>
-                    )}
-                </ul>
-            </div>
+                <UserSurveyAnswerBox 
+                    appSiteId={_userAnswer.appSiteId} 
+                    siteSurveyId={_userAnswer.siteSurveyId} 
+                    surveyStepId={_userAnswer.surveyStepId} 
+                    stepQuestionId={_userAnswer.stepQuestionId} 
+                    questionAnswerId={_userAnswer.questionAnswerId}
+                    quantity={_userAnswer.quantity} />
+            </div>)}            
         </>
     );
 }

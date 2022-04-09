@@ -3,11 +3,9 @@ import { appSiteService, alertService } from '../../../../../_services';
 import { Uploader } from '../../../../../_components';
 import { Image, Form, Button, Modal, ProgressBar, Row,Col } from 'react-bootstrap'
 import { CardSizes } from '../../../../../_helpers/cardSize';
-import { Editor } from "@tinymce/tinymce-react";
 import { LanguageSelect } from '../../../../../_components/Select/LanguageSelect';
 import { LanguageEditor } from '../../../../../_components/LanguageEditor';
 import { LanguageInput } from '../../../../../_components/LanguageInput';
-import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../../../../_helpers/tinySettings';
 import { fetchWrapper } from '../../../../../_helpers/fetch-wrapper';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
@@ -208,35 +206,18 @@ class TopServiceAddEdit extends React.Component {
                             </div>}      
 
                             <div>
-                                {this.props.topServiceId > 0 && !this.state.loading && this.state.languageCode === '' &&
-                                <>
-                                    <label>Descrizione</label>
-                                    <Editor
-                                        apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                                        initialValue={this.state.description}
-                                        init={{
-                                            height: 500,
-                                            menubar: menuSettings,
-                                            plugins: pluginsSettings,
-                                            toolbar: toolbarSettings,
-                                            font_formats: fontSettings,
-                                            content_style: styleSettings,
-                                            images_upload_handler: this.tiny_image_upload_handler
-                                        }}
-                                        onEditorChange={this.handleEditorChange}
-                                    />
-                                </>}
-                            </div>         
-
-                            {this.state.languageCode && this.state.languageCode !== '' &&
-                            <div>
-                                <LanguageEditor 
-                                    originalText={this.state.description}
-                                    appSiteId={this.state.appSiteId} 
-                                    code={this.state.languageCode}
-                                    labelKey={`TOPSERVICE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.topServiceId}-Description`}>                                    
-                                </LanguageEditor>
-                            </div>}                           
+                                {this.props.topServiceId > 0 && !this.state.loading &&
+                                <div>
+                                    <label>Descrizione</label>                                   
+                                    <LanguageEditor 
+                                        appSiteId={this.state.appSiteId} 
+                                        originalText={this.state.description}
+                                        onChange={(content) => this.handleEditorChange(content)}
+                                        code={this.state.languageCode}
+                                        labelKey={`TOPSERVICE_${this.state.appSiteId}_${this.state.sitePageId}_${this.state.pageBoxId}_${this.state.topServiceId}-Description`}
+                                        inline={false} />                                    
+                                </div>}
+                            </div>                             
 
                             <Form.Group>
                                 <Form.Label>Dimensione</Form.Label>

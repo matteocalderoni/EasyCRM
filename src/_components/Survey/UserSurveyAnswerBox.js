@@ -3,7 +3,7 @@ import { surveyService } from '../../_services/survey.service'
 import parse from 'html-react-parser';
 import { SiteProductPreviewSmall } from "../SiteProductPreviewSmall";
 
-function UserSurveyAnswerBox({appSiteId, siteSurveyId, surveyStepId, stepQuestionId, questionAnswerId}) {
+function UserSurveyAnswerBox({appSiteId, siteSurveyId, surveyStepId, stepQuestionId, questionAnswerId, quantity}) {
         
     const [questionAnswer, setQuestionAnswer] = useState()    
 
@@ -13,11 +13,13 @@ function UserSurveyAnswerBox({appSiteId, siteSurveyId, surveyStepId, stepQuestio
     }, [appSiteId, siteSurveyId, surveyStepId, stepQuestionId, questionAnswerId])            
     
     return (
-        <div>
+        <div className="flex">
+            <div className="rounded-full overflow-hidden p-2 px-3 bg-green-700 text-white">
+                {quantity}
+            </div>
             {questionAnswer && 
-            <div>
-                <label>{questionAnswer.answerText && parse(questionAnswer.answerText)}</label>
-                
+            <div className="p-1 w-full">
+                {questionAnswer.answerText && questionAnswer.siteProductId === 0  && <label>{parse(questionAnswer.answerText)}</label>}
                 {questionAnswer.siteProductId > 0 &&
                 <SiteProductPreviewSmall 
                     appSiteId={questionAnswer.appSiteId} 
@@ -25,8 +27,7 @@ function UserSurveyAnswerBox({appSiteId, siteSurveyId, surveyStepId, stepQuestio
                     onChange={() => null}
                     readOnly={true}
                     />}
-            </div>}
-            
+            </div>}            
         </div>
     );
 }

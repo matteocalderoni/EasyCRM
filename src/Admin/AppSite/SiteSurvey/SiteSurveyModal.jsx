@@ -17,15 +17,11 @@ class SiteSurveyModal extends React.Component {
     }
     
     handleShow = () => {    
-        this.setState({
-            setShow: true
-        });        
+        this.setState({ setShow: true });        
     }
 
     handleClose = () => {
-        this.setState({
-            setShow: false
-        });
+        this.setState({ setShow: false });
     }            
 
     handleSaved = () => {
@@ -37,9 +33,12 @@ class SiteSurveyModal extends React.Component {
         return (            
           <div className='relative'>
               <div className={`fixed ${(this.state.siteSurvey.siteSurveyId > 0 ? 'bottom-2' : 'bottom-20 md:bottom-16')} right-2`}>
-                <Button variant="primary" className="text-white px-4 w-auto h-16 bg-green-600 rounded-full hover:bg-green-700 border-green-500 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none" onClick={this.handleShow}>
-                    {this.state.siteSurvey.siteSurveyId > 0 && <BsPencil title="Modifica percorso" />} 
-                    {this.state.siteSurvey.siteSurveyId === 0 && <BsPlus title="Aggiungi percorso" />}                                                    
+                <Button variant="primary" className="text-white flex items-center px-4 w-auto h-12 bg-green-600 rounded-full hover:bg-green-700 border-green-500 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none" onClick={this.handleShow}>
+                    {this.state.siteSurvey.siteSurveyId > 0 && <BsPencil className='h-6 w-6' title="Modifica percorso" />} 
+                    {this.state.siteSurvey.siteSurveyId === 0 && <BsPlus className='h-6 w-6' title="Aggiungi percorso" />}                                                    
+                    <span className='hidden md:block'>
+                        {(this.state.siteSurvey.siteSurveyId > 0 ? 'Modifica percorso' : 'Aggiungi percorso')}
+                    </span>
                 </Button>
               </div>
             <Modal show={this.state.setShow} size="lg" onHide={this.handleClose} backdrop="static" keyboard={false}>

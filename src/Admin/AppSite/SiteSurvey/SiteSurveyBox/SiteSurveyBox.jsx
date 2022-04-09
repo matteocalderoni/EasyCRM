@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { surveyService } from '../../../../_services';
-import { SiteSurveyBoxNav } from './SiteSurveyBoxNav';
-import { SiteSurveyBoxStep } from './SiteSurveyBoxStep';
 import { Link } from 'react-router-dom';
 import { BsPencil} from 'react-icons/bs';
 

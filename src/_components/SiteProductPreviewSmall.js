@@ -18,9 +18,10 @@ function SiteProductPreviewSmall({ appSiteId, siteProductId }) {
     return (
         <>
             {siteProduct && 
-            <div className='border rounded-xl overflow-hidden md:flex' style={{backgroundColor: siteProduct.boxColor}}>
-                <Image className='w-full md:w-24 h-12' src={baseImageUrl+siteProduct.imageUrl} fluid />                    
-                <div className='h-12'>
+            <div className='border bg-white rounded-xl overflow-hidden md:flex' style={{backgroundColor: siteProduct.boxColor}}>
+                {siteProduct.imageUrl && 
+                <Image className='w-full md:w-24 h-12' src={baseImageUrl+siteProduct.imageUrl} fluid />}
+                <div>
                     <label className='font-semibold text-sm'>{siteProduct.code} <b>€ {siteProduct.price}</b></label>                    
                 </div>
             </div>}

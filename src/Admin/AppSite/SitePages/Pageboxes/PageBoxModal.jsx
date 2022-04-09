@@ -38,10 +38,12 @@ class PageBoxModal extends React.Component {
           <div className='relative'>
             <div className={`fixed ${(this.props.pageBoxId > 0 ? 'bottom-2' : 'bottom-16')} right-2`}>
                 <Button className="text-white flex items-center space-x-2 px-4 w-auto h-16 bg-green-600 rounded-full hover:bg-green-700 border-green-500 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none" onClick={this.handleShow}>
-                    {this.props.pageBoxId > 0 && <BsPencil title="Modifica il contenitore" />} 
-                    {this.props.pageBoxId === 0 && <BsPlus title="Aggiungi un nuovo contenitore" />}                
-                    {this.props.pageBoxId === 0 && <span>Aggiungi contenitore</span>}                                    
-                    {this.props.pageBoxId > 0 && <span>Modifica</span>}                                    
+                    {this.props.pageBoxId > 0 && <BsPencil className='h-6 w-6' title="Modifica il contenitore" />} 
+                    {this.props.pageBoxId === 0 && <BsPlus className='h-8 w-8' title="Aggiungi un nuovo contenitore" />}                
+                    <span className='hidden md:block'>
+                        {this.props.pageBoxId === 0 && <span>Aggiungi contenitore</span>}                                    
+                        {this.props.pageBoxId > 0 && <span>Modifica</span>}                                    
+                    </span>
                 </Button>
             </div>
             <Modal show={this.state.setShow} dialogClassName="modal-90w" onHide={this.handleClose} backdrop="static" keyboard={false}>

@@ -48,7 +48,7 @@ function SitePageList (props)
     return (
         <Container fluid>            
             {parentPageId === 0 && 
-            <Form.Group className='rounded-xl space-y-2 border p-1 pt-2 mt-2 md:flex md:space-x-2'>
+            <Form.Group className='rounded-xl space-y-2 border p-1 pt-2 mt-2 md:flex md:space-x-2 md:space-y-0'>
                 <div className='flex-1'>
                     <input type="text" placeholder='Ricerca per titolo' className="form-control" value={searchText} onChange={(e) => setSearchText(e.target.value)}  />
                 </div>
@@ -71,10 +71,12 @@ function SitePageList (props)
                             </Card.Title>                                                        
                         </Card.Header>                        
                         <Card.Body className="mx-full md:flex space-y-2 md:space-x-2">                                       
-                            <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex flex-1 items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900">
+                            <Link title="Modifica la pagina" to={`/admin/sites/sitepages/edit/${sitePage.appSiteId}/${sitePage.sitePageId}`} 
+                                className="flex flex-1 items-center justify-center rounded-full bg-green-500 p-1 text-white">
                                 <BsPencil className="mr-2" /> modifica pagina
                             </Link>
-                            <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} className="flex flex-1 items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900">
+                            <Link title="Gestione contenuti della pagina" to={`/admin/sites/sitepages/pageboxes/${sitePage.appSiteId}/${sitePage.sitePageId}`} 
+                                className="flex flex-1 items-center justify-center rounded-full bg-blue-200 p-1 text-blue-900">
                                 <FaBoxes className="mr-2" /> gestione contenuti
                             </Link>
                             {sitePage.sitePageId > 1 &&

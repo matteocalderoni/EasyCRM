@@ -8,7 +8,6 @@ import { LanguageEditor } from '../../../../_components/LanguageEditor';
 import { CompactPicker,SliderPicker } from 'react-color';
 import { FaSave, FaUndo} from 'react-icons/fa';
 import { SiteSurveySelect } from '../../../../_components/Select/SiteSurveySelect';
-import parse from 'html-react-parser';
 import { ShapeSelect } from '../../../../_components/Select/ShapeSelect';
 import { SiteProductPreview } from '../../../../_components/SiteProductPreview';
 import { BoxTemplateSelect } from '../../../../_components/Select/BoxTemplateSelect';
@@ -53,143 +52,71 @@ class PageBoxAddEdit extends React.Component {
     componentDidMount() {
         // get sub pages 
         appSiteService.getPagesOfAppSite('',this.props.appSiteId,-1,-1).then((x) => { 
-            if (x.totalCount > 0) {
-                // Filter current page
-                this.setState({                
-                    sitePages: x.result,
-                    loadingPages: false
-                })
-            } else this.setState({sitePages: [], loadingPages: false})            
+            if (x.totalCount > 0)
+                this.setState({ sitePages: x.result, loadingPages: false })
+            else 
+                this.setState({sitePages: [], loadingPages: false})            
         });
         this.handleOpen()
     }
 
     handleChange(evt) {
-        const value = evt.target.value;
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                [evt.target.name]: value
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, [evt.target.name]: evt.target.value }});
     }
 
     handleFileName = (fileName) => {        
-        this.setState({ 
-            pageBox: {
-                ...this.state.pageBox,
-                imageUrl: fileName
-            }
-        });        
+        this.setState({ pageBox: { ...this.state.pageBox, imageUrl: fileName }});        
     }
 
-    handleChangeNumber(evt) {
-        const value = +evt.target.value;
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                [evt.target.name]: value                
-            }          
-        });
+    handleChangeNumber(evt) {        
+        this.setState({ pageBox: { ...this.state.pageBox, [evt.target.name]: +evt.target.value }});
     }
 
     handleChangeShape(shape) {
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                sortId: shape                
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, sortId: shape }});
     }
 
     handleChangeBool(evt) {  
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                [evt.target.name]: evt.target.checked                 
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, [evt.target.name]: evt.target.checked }});
     }
 
     handleEditorChange = (content, editor) => {
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                description: content                 
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, description: content }});
     }
 
     handleColorChange = (color) => {
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                boxColor: color.hex                 
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, boxColor: color.hex }});
     };
 
     handleSiteSurveyChange = (siteSurveyId) => {
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                siteSurveyId: siteSurveyId                 
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, siteSurveyId: siteSurveyId }});
     };
 
     handleSiteProductChange = (siteProductId) => {
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                siteProductId: siteProductId                 
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, siteProductId: siteProductId }});
     };
 
     handleFieldReset = (field) => {
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                [field]: ''                 
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, [field]: '' }});
     }
 
     handleLanguageCode = (code) => {        
-        this.setState({ 
-            languageCode: code
-        });        
+        this.setState({ languageCode: code });        
     }
 
     handleBoxTemplateChange = (_template) => {
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                boxTemplate: _template                 
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, boxTemplate: _template }});
     }
 
     handleTitleEditorChange = (content, editor) => {
-        this.setState({
-            pageBox: {
-                ...this.state.pageBox,
-                title: content                 
-            }          
-        });
+        this.setState({ pageBox: { ...this.state.pageBox, title: content }});
     }
 
     handleOpen = () => {                  
         if (this.props.appSiteId > 0 && this.props.sitePageId > 0 && this.props.pageBoxId > 0) {
             this.setState({loading: true})
             appSiteService.getPageBoxById(this.props.appSiteId, this.props.sitePageId, this.props.pageBoxId)
-                .then(_pageBox => { 
-                    this.setState({
-                        pageBox: _pageBox,
-                        loading: false
-                    });      
-                });
+                .then(_pageBox => this.setState({ pageBox: _pageBox, loading: false }));
         }         
     }
 
@@ -210,9 +137,7 @@ class PageBoxAddEdit extends React.Component {
                     this.props.handleSaved(result);                
                 }             
             })
-            .catch(error => {
-                alertService.error(error);
-            });
+            .catch(error => alertService.error(error));
     }
 
     updatePageBox() {
@@ -225,9 +150,7 @@ class PageBoxAddEdit extends React.Component {
                     this.props.handleSaved(result);            
                 }                
             })
-            .catch(error => {
-                alertService.error(error);
-            });
+            .catch(error => alertService.error(error));
     }
 
     render() {
@@ -238,6 +161,7 @@ class PageBoxAddEdit extends React.Component {
                         {this.state.loading && <div className="text-center mart2">
                             <ProgressBar animated now={100} />
                         </div>}
+
                         <Form.Group>
                             <Form.Label>Tipo di contenuto</Form.Label>
                             <Form.Control as="select" disabled={this.state.pageBox.pageBoxId > 0} value={this.state.pageBox.boxType} name="boxType" onChange={this.handleChangeNumber}>
@@ -292,44 +216,21 @@ class PageBoxAddEdit extends React.Component {
                             </Form.Group>}
                         </div>
                         
-                        <Row>
-                            {/* <Col sm={6}>
-                                <Form.Group>
-                                    <Form.Label className="font-bold">Ordinamento</Form.Label>
-                                    <input type="number" className="form-control" name="sortId" value={this.state.pageBox.sortId} onChange={this.handleChangeNumber}  />
-                                    <Form.Text className="text-muted">
-                                        Valore per ordinamento crescente dei contenitori nella pagina. E' consigliato utilizzare valori con step di 10 (10,10,30,ecc) per avere la possibilità di inserire pagine intermedie in futuro.
-                                    </Form.Text>
-                                </Form.Group>      
-                            </Col> */}
-                            <Col sm={12}>
-                                {!this.state.loading && this.state.languageCode == '' &&
-                                <Form.Group>
-                                    <Form.Label className="font-bold">Titolo</Form.Label>                                    
-                                    {this.state.pageBox.pageBoxId > 0 && this.state.pageBox.boxType === 1 &&
-                                    <div className="ring-2 rounded-lg p-1">
-                                        {parse(this.state.pageBox.title)}
-                                    </div>}
-                                    {(this.state.pageBox.pageBoxId < 1 || this.state.pageBox.boxType !== 1) && 
-                                    <input type="text" className="form-control" name="title" value={this.state.pageBox.title} onChange={this.handleChange}  />}
-                                    <Form.Text className="text-muted">
-                                            Titolo del contenuto. Attenzione una volta creato il contenitore testo le modifiche al titolo sono valide solo da anteprima.
-                                    </Form.Text>
-                                </Form.Group>}                                       
-
-                                {this.state.languageCode !== '' &&
-                                <div>
-                                    <LanguageEditor 
-                                        originalText={this.state.pageBox.title}
-                                        appSiteId={this.state.pageBox.appSiteId} 
-                                        code={this.state.languageCode}
-                                        inline={true}
-                                        labelKey={`PAGEBOX_${this.state.pageBox.appSiteId}_${this.state.pageBox.sitePageId}_${this.state.pageBox.pageBoxId}-Title`}>
-                                    </LanguageEditor>
-                                </div>}  
-                            </Col>
-                        </Row>
-
+                        {!this.state.loading &&
+                        <Form.Group>
+                            <Form.Label className="font-bold">Titolo</Form.Label>                                                                        
+                            <LanguageEditor 
+                                appSiteId={this.state.pageBox.appSiteId} 
+                                originalText={this.state.pageBox.title}
+                                onChange={(content) => this.handleTitleEditorChange(content)}
+                                code={this.state.languageCode}
+                                inline={true}
+                                labelKey={`PAGEBOX_${this.state.pageBox.appSiteId}_${this.state.pageBox.sitePageId}_${this.state.pageBox.pageBoxId}-Title`} />
+                            <Form.Text className="text-muted">
+                                    Titolo del contenuto. Attenzione una volta creato il contenitore testo le modifiche al titolo sono valide solo da anteprima.
+                            </Form.Text>
+                        </Form.Group>}                                       
+                        
                         {this.state.pageBox && this.state.sitePages && !this.state.loadingPages && 
                         <Form.Group>
                             <Form.Label>Landing Page (pagina di approdo):</Form.Label>

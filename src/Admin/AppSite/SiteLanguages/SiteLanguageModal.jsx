@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap'
-
+import { BsPlus,BsPencil } from 'react-icons/bs';
 import { SiteLanguageAddEdit } from './SiteLanguageAddEdit'; 
 
 class SiteLanguageModal extends React.Component {
@@ -37,8 +37,12 @@ class SiteLanguageModal extends React.Component {
         return (            
           <div className='relative'>
             <div className="fixed flex items-center bottom-16 right-2">
-                <Button variant="primary" className="text-white px-4 w-auto h-16 bg-green-600 rounded-full hover:bg-green-700 border-green-500 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none" onClick={this.handleShow}>                    
-                    {(this.state.siteLanguage.code != null && this.state.siteLanguage.code !== '') ? 'Modifica la lingua' : 'Aggiungi una lingua'}
+                <Button variant="primary" className="text-white flex items-center px-4 w-auto h-12 bg-green-600 rounded-full hover:bg-green-700 border-green-500 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none" onClick={this.handleShow}>                    
+                    {this.state.siteLanguage.code == null && <BsPencil className='h-6 w-6' title="Modifica percorso" />} 
+                    {this.state.siteLanguage.code != null && <BsPlus className='h-6 w-6' title="Aggiungi percorso" />}
+                    <span className='hidden md:block'>
+                        {(this.state.siteLanguage.code != null && this.state.siteLanguage.code !== '') ? 'Modifica la lingua' : 'Aggiungi una lingua'}
+                    </span>
                 </Button>
             </div>
 

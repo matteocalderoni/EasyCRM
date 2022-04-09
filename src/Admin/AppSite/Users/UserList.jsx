@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, Navbar, Nav } from 'react-bootstrap';
+import { Container, Card } from 'react-bootstrap';
 import { DeleteConfirmation } from '../../../_components/DeleteConfirmation';
 import { BsPencil} from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
 import { userService } from '../../../_services';
 import { UserModal } from './UserModal';
+import { FooterNav } from '../../../_components/FooterNav';
 
 function UserList({ match }) {
     const appSiteId = parseInt(match.params.appSiteId);
@@ -42,6 +43,7 @@ function UserList({ match }) {
             <li className="breadcrumb-item"><Link to={`/`}><FcHome /></Link></li>                
             <li className="breadcrumb-item"><Link to={`/admin`}>Dashboard</Link></li>                
             <li className="breadcrumb-item"><Link to={`/admin/sites`}>Elenco Siti</Link></li>
+            <li className="breadcrumb-item"><Link to={`/admin/sites/edit/${appSiteId}`}>Sito</Link></li>                
             <li className="breadcrumb-item active">Elenco Utenti ({total})</li>
         </ul>
 
@@ -71,19 +73,12 @@ function UserList({ match }) {
                 </div>                    
             )}   
         </div>
-        <Navbar fixed="bottom" variant="dark" bg="dark">
-            <Nav className="mr-right">
-                <UserModal appSiteId={appSiteId} id={0} handleAddEdit={(appSiteId) => getUsers()} /> 
-                
-                <Link to={`/admin/sites/edit/${appSiteId}`}
-                    className="flex items-center justify-center rounded-full  bg-blue-500 text-white p-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                    </svg>
-                    Modifica sito
-                </Link>
-            </Nav>
-        </Navbar>
+
+        <div className='relative'>                        
+            <UserModal appSiteId={appSiteId} id={0} handleAddEdit={(appSiteId) => getUsers()} /> 
+        </div>
+
+        <FooterNav appSiteId={appSiteId} />
     </Container>
   );
 };

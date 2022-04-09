@@ -1,16 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { appSiteService, alertService, languageService } from '../../_services';
-import { Uploader } from '../../_components'
-import { Image, Row, Col, Form, Button, Card, Container, ProgressBar,Navbar, Nav } from 'react-bootstrap'
-import { LanguageSelect } from '../../_components/Select/LanguageSelect';
+import { LanguageEditor, Uploader } from '../../_components'
+import { Image, Row, Col, Form, Card, Container, ProgressBar } from 'react-bootstrap'
 import { FcHome } from 'react-icons/fc';
-import { Editor } from "@tinymce/tinymce-react";
-import {menuSettings,pluginsSettings,toolbarSettings,fontSettings,styleSettings } from '../../_helpers/tinySettings';
-import { fetchWrapper } from '../../_helpers/fetch-wrapper';
 import { FooterNav } from '../../_components/FooterNav';
 
-const baseUrl = `${process.env.REACT_APP_API_URL}/upload`;
 const baseImageUrl = `${process.env.REACT_APP_STORAGE_URL}/`;
 
 class AddEdit extends React.Component {
@@ -83,9 +78,8 @@ class AddEdit extends React.Component {
         this.setState({ appSite: { ...this.state.appSite, [evt.target.name]: evt.target.value } })
     }
 
-    handleChangeNumber(evt) {
-        const value = parseFloat(evt.target.value);
-        this.setState({ appSite: { ...this.state.appSite, [evt.target.name]: value } })
+    handleChangeNumber(evt) {        
+        this.setState({ appSite: { ...this.state.appSite, [evt.target.name]: parseFloat(evt.target.value) } })
     }
 
     handleEditorChange = (content, editor) => {
@@ -108,15 +102,6 @@ class AddEdit extends React.Component {
         if (this.state.appSite.appSiteId > 0) this.updateAppSite()
         else this.createAppSite()            
     }
-
-    // Upload image for text area
-    tiny_image_upload_handler = (blobInfo, success, failure, progress) => {
-        const fileName = (this.state.appSite.appSiteId + '/' || '') + new Date().getTime() + '.jpeg';            
-        fetchWrapper.postFile(`${baseUrl}/CloudUpload`, blobInfo.blob(), fileName)
-            .then((result) => {
-                success(`${baseImageUrl}${result.fileName}`);                
-            });         
-      };                  
 
     createAppSite() {
         appSiteService.createAppSite({ appSite: this.state.appSite })
@@ -150,7 +135,7 @@ class AddEdit extends React.Component {
                 <li className="breadcrumb-item active">Sito <b>{this.state.appSite.name}</b></li>
             </ul>
 
-            {this.state.loading &&
+            {this.state.loading && this.state.appSite.appSiteId > 0 &&
             <Row className="m-4 mb-4">
                 <Col className="text-center rounded bg-blue-400 text-white mt-2 p-2">
                     Caricamento dettagli del sito in corso... Attende prego...
@@ -247,24 +232,16 @@ class AddEdit extends React.Component {
 
                     <div>
                         <label><b>'Su di noi'</b>: la tua mission o il motto aziendale...</label>
-                        {!this.state.loading && (this.state.languageCode === undefined || this.state.languageCode === '') && 
-                        <Editor
-                            apiKey={process.env.REACT_APP_TINTMCE_KEY}
-                            initialValue={this.state.appSite.description}
-                            init={{
-                                height: 300,
-                                menubar: menuSettings,  
-                                plugins: pluginsSettings, 
-                                toolbar: toolbarSettings,
-                                font_formats: fontSettings,
-                                content_style: styleSettings, 
-                                images_upload_handler: this.tiny_image_upload_handler
-                            }}
-                            onEditorChange={this.handleEditorChange}
-                        />}       
+                        {!this.state.loading && 
+                        <LanguageEditor 
+                            appSiteId={this.state.appSite.appSiteId} 
+                            originalText={this.state.appSite.description}
+                            onChange={(content) => this.handleEditorChange(content)}
+                            code={this.state.languageCode}
+                            labelKey={`APPSITE_${this.state.appSite.appSiteId}-Description`}
+                            inline={false} />}                        
                         <Form.Text className="text-muted">
-                            Questo testo è molto importante perchè viene riportato su tutte le pagine del sito, nel fondo pagina. Utilizzare parole utili per la visibilità nei motori di ricerca.
-                            
+                            Questo testo è molto importante perchè viene riportato su tutte le pagine del sito, nel fondo pagina. Utilizzare parole utili per la visibilità nei motori di ricerca.                            
                         </Form.Text>                                     
                     </div>                    
                     
@@ -368,7 +345,7 @@ class AddEdit extends React.Component {
                     </div>}
                 </Card.Body>
             </Card>      
-
+            
             <FooterNav appSiteId={this.state.appSite.appSiteId} onSave={() => this.onSubmit()} onLanguageChange={this.handleLanguageCode} />
             
           </Container>
