@@ -142,8 +142,7 @@ class SiteProductAddEdit extends React.Component {
                         <Form onSubmit={() => this.onSubmit()}>
                             
                             <div>
-                                {this.state.siteProduct && this.state.siteProduct.siteProductId > 0 && 
-                                    !this.state.loading && 
+                                {this.state.siteProduct && !this.state.loading && 
                                 <div className='md:flex md:space-x-2'>
                                     <div className="flex-1 text-center flex-row space-x-2">
                                         <Form.Label className="font-bold">Immagine del prodotto</Form.Label>
@@ -208,7 +207,7 @@ class SiteProductAddEdit extends React.Component {
                                 </div>
                             </div>
 
-                            {this.state.siteProduct.siteProductId > 0 && 
+                            
                             <Form.Group className="mt-2">
                                 <Form.Label className="text-xl">Descrizione</Form.Label>                                
                                 <div className="border rounded-lg p-1">                                
@@ -223,7 +222,7 @@ class SiteProductAddEdit extends React.Component {
                                 <Form.Text className="text-muted">
                                     Descrizione.                                    
                                 </Form.Text>
-                            </Form.Group>}
+                            </Form.Group>
                                                         
                             {this.state.siteProduct.siteProductId > 0 && 
                             <div className='md:flex md:space-x-2'>                            
