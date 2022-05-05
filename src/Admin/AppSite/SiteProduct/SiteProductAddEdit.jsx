@@ -155,7 +155,7 @@ class SiteProductAddEdit extends React.Component {
                                                     Rimuovi immagine
                                             </Button>
                                         </div>}                                    
-                                        {this.state.siteProduct.imageUrl == null &&
+                                        {(this.state.siteProduct.imageUrl == null || this.state.siteProduct.imageUrl === '') &&
                                         <Uploader prefix={this.state.siteProduct.appSiteId} fileName={this.state.siteProduct.imageUrl} onFileNameChange={this.handleFileName} />}
                                         <small>Utilizzare immagini con formato ottimizzate per il web.</small>  
                                     </div>                                    
